@@ -31,3 +31,6 @@ debug.log
 
 # 项目现存显式备份，按用户要求不推送
 artifacts/framework_playwright_mcp_explore_20260901_111335/backups/
+# 历史规则快照，不入库
+artifacts/runtime/orchestrator.before_*.md
+skills/ui-test-page-map-sync/SKILL.before_*.md
