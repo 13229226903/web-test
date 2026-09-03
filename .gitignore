@@ -34,3 +34,6 @@ artifacts/framework_playwright_mcp_explore_20260901_111335/backups/
 # 历史规则快照，不入库
 artifacts/runtime/orchestrator.before_*.md
 skills/ui-test-page-map-sync/SKILL.before_*.md
+# 根目录历史备份文件，不入库
+*.bak
+*.bak_*
