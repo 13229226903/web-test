@@ -1,0 +1,434 @@
+{
+  "out": [
+    {
+      "console": "warning: [Vue warn]: Hydration style mismatch on JSHandle@node \n  - rendered on server: style=\"top:65px;bottom:0px;\"\n  - expected on client: style=\"top:63px;bottom:0px;\"\n  Note: this mismatch is check-only. Th"
+    },
+    {
+      "console": "error: Hydration completed but contains mismatches."
+    },
+    {
+      "console": "warning: [Vue warn]: Hydration text content mismatch on JSHandle@node \n  - rendered on server:  offer ending soon24:00:00\n  - expected on client:  offer ending soon23:59:59"
+    },
+    {
+      "console": "warning: [Vue warn]: Hydration node mismatch:\n- rendered on server: JSHandle@node  \n- expected on client: Symbol(v-cmt)"
+    },
+    {
+      "console": "warning: [Vue warn]: Hydration node mismatch:\n- rendered on server: JSHandle@node  \n- expected on client: div"
+    },
+    {
+      "console": "error: Failed to load resource: the server responded with a status of 404 (Page not found: /gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/7ed26ea8b8d14db5)"
+    },
+    {
+      "console": "error: Failed to load resource: the server responded with a status of 404 (Page not found: /gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG)"
+    },
+    {
+      "console": "error: Failed to load resource: the server responded with a status of 404 (Page not found: /gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/7ed26ea8b8d14db5)"
+    },
+    {
+      "console": "error: Failed to load resource: the server responded with a status of 404 (Page not found: /gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG)"
+    },
+    {
+      "console": "error: Failed to load resource: the server responded with a status of 404 (Page not found: /gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG)"
+    },
+    {
+      "console": "error: Failed to load resource: the server responded with a status of 404 (Page not found: /gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG)"
+    },
+    {
+      "console": "warning: Timer '预加载密钥' does not exist"
+    },
+    {
+      "console": "warning: [postForm] authToken is empty, url: /gateway/pokecut/api/9968163fcd32c00f79283c5de267e89d/iV83i7139Pp0l5Le"
+    },
+    {
+      "console": "error: Failed to load resource: the server responded with a status of 404 (Page not found: /gateway/pokecut/api/9968163fcd32c00f79283c5de267e89d/iV83i7139Pp0l5Le)"
+    },
+    {
+      "step": "after_login",
+      "has_login_btn": true,
+      "has_avatar_user": false
+    },
+    {
+      "console": "error: Failed to load resource: net::ERR_CONNECTION_TIMED_OUT"
+    },
+    {
+      "console": "warning: [GoogleLogin][gis-button-render-failed] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/ai-image-text-enhancer, online: true, gaPageType: none, isLogin: true}"
+    },
+    {
+      "step": "after_upload",
+      "primary_text": "Enhance  Free",
+      "primary_class": "relative h-[5rem] w-[23.75rem] mt-[1.5rem] px-[1.25rem] rounded-[1.25rem] flex flex-row items-center justify-center can-enhance-btn-bg cursor-pointer",
+      "cost_state": "free"
+    },
+    {
+      "step": "before_click",
+      "box": {
+        "x": 956.15625,
+        "y": 793.484375,
+        "width": 368.125,
+        "height": 77.5
+      }
+    },
+    {
+      "step": "after_click"
+    },
+    {
+      "console": "warning: [postForm] authToken is empty, url: /gateway/pokecut/api/7eef1564e8fa0a07f4ed2c419a25d05b/Ha3Z4puGYF3M0H1b"
+    },
+    {
+      "console": "error: Failed to load resource: the server responded with a status of 404 (Page not found: /gateway/pokecut/api/7eef1564e8fa0a07f4ed2c419a25d05b/Ha3Z4puGYF3M0H1b)"
+    },
+    {
+      "console": "error: Failed to load resource: the server responded with a status of 404 (Page not found: /gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG)"
+    },
+    {
+      "t": 5,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 10,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 15,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 20,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 25,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 30,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 35,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 40,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 45,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 50,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 55,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    },
+    {
+      "t": 60,
+      "primary_text": "Enhance  Free",
+      "kw": {
+        "Choose the Effect": true,
+        "Upscale to": true,
+        "Continue Enhancing": false,
+        "Edit More": false,
+        "Download": true,
+        "Before": false,
+        "Now": false,
+        "Uploading": false,
+        "Processing": true,
+        "Enhancing": false,
+        "failed": true,
+        "error": false,
+        "purchase": false
+      }
+    }
+  ],
+  "reqs": [
+    {
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "method": "GET"
+    },
+    {
+      "resp": 200,
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer"
+    },
+    {
+      "url": "http://10.17.1.66:3001/icons/svg/seo-function-sidebar/enhancer-combined-active.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://10.17.1.66:3001/img/text-enhance/document-scanner-selected-icon@3x.png",
+      "method": "GET"
+    },
+    {
+      "resp": 200,
+      "url": "http://10.17.1.66:3001/icons/svg/seo-function-sidebar/enhancer-combined-active.svg"
+    },
+    {
+      "resp": 200,
+      "url": "http://10.17.1.66:3001/img/text-enhance/document-scanner-selected-icon@3x.png"
+    },
+    {
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/7ed26ea8b8d14db5",
+      "method": "POST"
+    },
+    {
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG",
+      "method": "POST"
+    },
+    {
+      "url": "http://10.17.2.54:8091/pokecutres/webseo/burry-text-image-before-making-enhancement.webp",
+      "method": "GET"
+    },
+    {
+      "resp": 200,
+      "url": "http://10.17.2.54:8091/pokecutres/webseo/burry-text-image-before-making-enhancement.webp"
+    },
+    {
+      "resp": 404,
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/7ed26ea8b8d14db5"
+    },
+    {
+      "resp": 404,
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG"
+    },
+    {
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG",
+      "method": "POST"
+    },
+    {
+      "resp": 404,
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG"
+    },
+    {
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG",
+      "method": "POST"
+    },
+    {
+      "resp": 404,
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG"
+    },
+    {
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/9968163fcd32c00f79283c5de267e89d/iV83i7139Pp0l5Le",
+      "method": "POST"
+    },
+    {
+      "resp": 404,
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/9968163fcd32c00f79283c5de267e89d/iV83i7139Pp0l5Le"
+    },
+    {
+      "url": "http://10.17.1.66:3001/img/text-enhance/enhance-free-badge-bg@3x.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://10.17.1.66:3001/icons/svg/enhance_icon_contrast.svg",
+      "method": "GET"
+    },
+    {
+      "resp": 200,
+      "url": "http://10.17.1.66:3001/img/text-enhance/enhance-free-badge-bg@3x.png"
+    },
+    {
+      "resp": 200,
+      "url": "http://10.17.1.66:3001/icons/svg/enhance_icon_contrast.svg"
+    },
+    {
+      "url": "http://10.17.1.66:3001/icons/svg/ai_tools_edit_sub_icon_enhancer_text_select.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://10.17.1.66:3001/img/text-enhance/document-scanner-icon@3x.png",
+      "method": "GET"
+    },
+    {
+      "resp": 200,
+      "url": "http://10.17.1.66:3001/icons/svg/ai_tools_edit_sub_icon_enhancer_text_select.svg"
+    },
+    {
+      "resp": 200,
+      "url": "http://10.17.1.66:3001/img/text-enhance/document-scanner-icon@3x.png"
+    },
+    {
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/7eef1564e8fa0a07f4ed2c419a25d05b/Ha3Z4puGYF3M0H1b",
+      "method": "POST"
+    },
+    {
+      "resp": 404,
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/7eef1564e8fa0a07f4ed2c419a25d05b/Ha3Z4puGYF3M0H1b"
+    },
+    {
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG",
+      "method": "POST"
+    },
+    {
+      "resp": 404,
+      "url": "http://10.17.1.66:3001/gateway/pokecut/api/031c42463dcde77a15ff47a027a3d5b8/1E91GtH795Lv0qXG"
+    }
+  ]
+}

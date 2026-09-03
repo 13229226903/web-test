@@ -1,0 +1,69 @@
+# Pokecut 无限画布页 - 页面地图
+# 进入方式: /create → 关闭定价弹窗 → 点击 "Start from a Photo" → 上传图片
+page: Infinite Canvas
+url: /agent?pid=<uuid>
+landmark:
+  selector: "button:has-text('Remove BG')"
+  description: 编辑工具栏中的背景移除按钮（页面唯一标识）
+entry:
+  from: /create
+  trigger: 点击 "Start from a Photo" → 文件选择器弹出 → 选择图片上传
+  selector: "div.cursor-pointer:has-text('Start from a Photo')"
+  file_chooser: true  # 该入口触发浏览器文件选择器
+elements:
+  # 编辑工具栏（顶部两行）
+  toolbar_chat:
+    selector: "button:has-text('Chat To Edit')"
+    description: AI 对话编辑入口
+  toolbar_remove_bg:
+    selector: "button:has-text('Remove BG')"
+    description: 背景移除功能按钮（工具栏 + 底部各一个）
+  toolbar_enhance:
+    selector: "button:has-text('Enhance')"
+    description: 图片增强
+  toolbar_change_bg:
+    selector: "button:has-text('Change BG')"
+    description: 更换背景
+  toolbar_erase:
+    selector: "button:has-text('Erase')"
+    description: 擦除
+  toolbar_expand:
+    selector: "button:has-text('Expand')"
+    description: 图片扩展
+  toolbar_ai_tools:
+    selector: "button:has-text('AI Tools')"
+    description: AI 工具集合
+  toolbar_crop:
+    selector: "button:has-text('Crop')"
+    description: 裁切
+
+  # 底部快捷入口
+  bottom_remove_bg:
+    selector: "button:has-text('Remove BG'):visible"
+    description: 底部快捷入口 - 背景移除
+  bottom_inspiration:
+    selector: "button:has-text('Inspiration')"
+    description: 灵感推荐
+
+  # 结果区
+  result_image:
+    selector: "img[alt*='Remove BG']"
+    description: 背景移除后的结果图（右侧），src 为 blob URL
+  original_image:
+    selector: "img:not([alt*='Remove BG'])[src^='blob:']"
+    description: 原始图片（左侧）
+
+  # 用户信息
+  credits_display:
+    selector: "span:has-text('Credits')"
+    description: 顶部 credits 余额显示
+  username_display:
+    selector: "div.fixed.top-0 span:has-text('User')"
+    description: 顶部用户名显示
+
+  # 定价弹窗（进入 /create 时可能出现）
+  pricing_modal:
+    selector: "div.fixed.bg-[rgba(0,0,0,0.3)]"
+    description: 定价弹窗遮罩，JS 移除可关闭
+tabs: {}
+modals: {}

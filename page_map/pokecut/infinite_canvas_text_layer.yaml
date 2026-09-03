@@ -1,0 +1,153 @@
+# Pokecut 无限画布 - 文字图层功能页面地图
+# 进入方式: /create → Start from a Photo → 上传图片 → 进入 /agent?pid=...
+page: Infinite Canvas Text Layer
+url: /agent?pid=<uuid>
+landmark:
+  selector: "button[data-tool-id='text']"
+  description: 左侧工具栏中的文字图层按钮（第 2 个，data-tool-id="text"）
+entry:
+  from: /agent 无限画布页
+  trigger: 上传图片后自动进入
+  selector: "div.absolute.left-[24px].top-1/2"
+
+# ── 左侧工具栏（7 个工具）────────────────────────────
+elements:
+  # 左侧栏完整工具列表
+  sidebar_container:
+    selector: "div.absolute.left-[24px].top-1/2.z-[60]"
+    description: 左侧浮动工具栏容器，垂直排列 7 个工具按钮
+  tool_image:
+    selector: "button[data-tool-id='image']"
+    description: 图片工具（第 1 个）
+  tool_text:
+    selector: "button[data-tool-id='text']"
+    description: 文字图层工具（第 2 个）— 点击在画布上添加可编辑文字图层
+  tool_sticker:
+    selector: "button[data-tool-id='sticker']"
+    description: 贴纸工具（第 3 个）
+  tool_brush:
+    selector: "button[data-tool-id='brush']"
+    description: 画笔工具（第 4 个）
+  tool_line:
+    selector: "button[data-tool-id='line']"
+    description: 线条工具（第 5 个）
+  tool_shape:
+    selector: "button[data-tool-id='shape']"
+    description: 形状工具（第 6 个）
+  tool_layer:
+    selector: "button[data-tool-id='layer']"
+    description: 图层管理（第 7 个）
+
+  # ── 文字图层编辑工具栏 ────────────────────────────
+  # 添加文字图层后出现
+  text_edit_bar:
+    selector: "div.flex button:has-text('Adjust')"
+    description: 文字编辑工具栏（出现于画布上方区域）
+  text_edit_adjust:
+    selector: "button:has-text('Adjust'):visible"
+    description: 调整按钮
+  text_edit_move_up:
+    selector: "button:has-text('Move Up')"
+    description: 上移图层
+  text_edit_move_down:
+    selector: "button:has-text('Move Down')"
+    description: 下移图层
+  text_edit_to_top:
+    selector: "button:has-text('To Top')"
+    description: 置顶图层
+  text_edit_to_bottom:
+    selector: "button:has-text('To Bottom')"
+    description: 置底层
+  text_edit_flip_h:
+    selector: "button:has-text('Flip H')"
+    description: 水平翻转
+  text_edit_flip_v:
+    selector: "button:has-text('Flip V')"
+    description: 垂直翻转
+  text_edit_delete:
+    selector: "button:has-text('Delete')"
+    description: 删除文字图层
+  text_edit_rotation:
+    selector: "button:has-text('Rotation')"
+    description: 旋转文字
+
+  # ── 右侧属性面板（概览）─────────────────────────────
+  # 位于画布右侧 x≈1132, y≈497，宽度约 300px
+  # 顶层 Tab: Basic | Adjust
+  # Basic 内容: Alignment / Font / Fill
+  # Adjust 内容: Space / Reflection / Background / Outline（4 个可折叠项）
+  text_property_panel:
+    selector: "div:has(button:has-text('Basic')):has(button:has-text('Adjust'))"
+    description: 右侧文字属性面板容器
+
+  # ── 顶层 Tab 切换 ──────────────────────────────────
+  text_prop_tab_basic:
+    selector: "button:has-text('Basic')"
+    description: 顶层 Tab — 基础属性。激活态 class 含 bg-[#3338EE] text-white，非激活 text-[#54576C]
+  text_prop_tab_adjust:
+    selector: "button:has-text('Adjust')"
+    description: 顶层 Tab — 调整属性。激活态 class 含 bg-[#3338EE] text-white
+
+  # ── Basic Tab 子控件 ───────────────────────────────
+  # 展开 Basic tab 后显示以下三个设置区
+  text_prop_basic_alignment:
+    selector: "p:has-text('Alignment')"
+    description: 文字对齐方式标签。实际对齐按钮为自定义组件，非标准 HTML，需坐标点击
+  text_prop_basic_font:
+    selector: "button:has-text('Font')"
+    description: 字体选择按钮。点击可展开字体列表（字体列表为自定义组件，下拉项 selector 待实地确认）
+  text_prop_basic_fill:
+    selector: "p:has-text('Fill')"
+    description: 文字颜色标签。颜色选择器为自定义组件，非 input[type=color]，需坐标点击
+
+  # ── Adjust Tab 子控件（4 个可折叠 section）─────────
+  # 展开 Adjust tab 后显示以下 4 个折叠项
+  text_prop_adjust_space:
+    selector: "button:has-text('Space')"
+    description: 间距折叠项，点击展开显示 Width / Height 数值输入
+  text_prop_adjust_space_width:
+    selector: "span:has-text('Width')"
+    description: 文字宽度数值，默认值 "0"，自定义组件非标准 input
+  text_prop_adjust_space_height:
+    selector: "span:has-text('Height')"
+    description: 文字高度数值，默认值 "0"，自定义组件非标准 input
+  text_prop_adjust_reflection:
+    selector: "button:has-text('Reflection')"
+    description: 镜像反射折叠项。展开后子控件待实地确认
+  text_prop_adjust_background:
+    selector: "button:has-text('Background')"
+    description: 文字背景色折叠项。展开后可设置文字图层背景颜色/透明度
+  text_prop_adjust_outline:
+    selector: "button:has-text('Outline')"
+    description: 文字描边折叠项。展开后可设置描边颜色/粗细
+
+  # ── AI 文本输入 ───────────────────────────────────
+  chat_input:
+    selector: "textarea[placeholder='What do you want to design today?']"
+    description: AI 对话输入框，可输入文字内容生成文字图层
+  chat_placeholder_text:
+    selector: "text='Add Text'"
+    description: 添加文字图层后的提示文字
+
+  # ── 顶部用户信息 ──────────────────────────────────
+  credits:
+    selector: "span:has-text('Credits')"
+    description: 用户 credits 余额
+  username:
+    selector: "span:has-text('User8JY')"
+    description: 当前登录用户名
+
+tabs:
+  property_panel_top:
+    - Basic       # 基础属性（Font / Fill / Alignment）
+    - Adjust      # 调整属性（Space / Reflection / Background / Outline）
+  property_panel_adjust_sections:
+    - Space       # 间距：Width / Height
+    - Reflection  # 镜像反射
+    - Background  # 文字背景
+    - Outline     # 文字描边
+
+modals: {}
+# ⚠️ 注意: 属性面板子控件（字体下拉、颜色选择器、对齐按钮、宽高滑块）
+# 均为自定义 Vue 组件，非标准 HTML input/select/range 元素。
+# Playwright 自动化需通过坐标点击或 JS 注入操作。

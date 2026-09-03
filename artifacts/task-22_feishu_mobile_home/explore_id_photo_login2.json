@@ -1,0 +1,9 @@
+{
+  "switched": true,
+  "filled": true,
+  "submitted": true,
+  "after_login_url": "http://10.17.1.66:3001/",
+  "auth_dialog_visible": true,
+  "header_text": "Sign up\n\nUnlock Pokecut VIP for just\n\n23\n\n:\n\n59\n\n:\n\n42\n\nAll-in-One AI Photo Editor & Generator\nStart Creating for Free\nPokecut Pro\nGenerate\nRemove Background\nClothes Changer\nHD Photo Coverter\nID Photo Maker\nBody Editor\nAI Replace\nMore Pokecut Tools\nCreate Faster with Pokecut's AI Templates\n\nBrowse r",
+  "id_success_error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"ID Photo Maker\").first\n    - locator resolved to <button type=\"button\" data-v-3dd17f9f=\"\" aria-label=\"ID Photo Maker\" class=\"mobile-popular-feature-card relative h-[5.71875rem] overflow-hidden rounded-[1.1"
+}

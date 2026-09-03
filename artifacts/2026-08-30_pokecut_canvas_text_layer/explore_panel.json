@@ -1,0 +1,770 @@
+{
+  "steps": [
+    {
+      "name": "adjust_default",
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1150,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1332,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Space",
+          "x": 1132,
+          "y": 491
+        },
+        {
+          "tag": "SPAN",
+          "text": "Space",
+          "x": 1152,
+          "y": 511
+        },
+        {
+          "tag": "SPAN",
+          "text": "Reflection",
+          "x": 1152,
+          "y": 572
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Background",
+          "x": 1132,
+          "y": 613
+        },
+        {
+          "tag": "SPAN",
+          "text": "Background",
+          "x": 1152,
+          "y": 633
+        },
+        {
+          "tag": "SPAN",
+          "text": "Outline",
+          "x": 1152,
+          "y": 694
+        }
+      ]
+    },
+    {
+      "name": "click_basic_tab",
+      "result": {
+        "x": 1150,
+        "y": 436,
+        "w": 182,
+        "h": 50
+      }
+    },
+    {
+      "name": "basic_default",
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1150,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1332,
+          "y": 436
+        },
+        {
+          "tag": "P",
+          "text": "Alignment",
+          "x": 1152,
+          "y": 506
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Font",
+          "x": 1152,
+          "y": 600
+        },
+        {
+          "tag": "P",
+          "text": "Font",
+          "x": 1152,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "name": "click_font",
+      "result": {
+        "x": 1152,
+        "y": 600,
+        "w": 360,
+        "h": 20
+      }
+    },
+    {
+      "name": "font_open",
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1150,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1332,
+          "y": 436
+        },
+        {
+          "tag": "P",
+          "text": "Alignment",
+          "x": 1152,
+          "y": 506
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Font",
+          "x": 1152,
+          "y": 600
+        },
+        {
+          "tag": "P",
+          "text": "Font",
+          "x": 1152,
+          "y": 600
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Fill",
+          "x": 1152,
+          "y": 640
+        },
+        {
+          "tag": "P",
+          "text": "Fill",
+          "x": 1152,
+          "y": 640
+        }
+      ]
+    },
+    {
+      "name": "click_fill",
+      "result": null
+    },
+    {
+      "name": "fill_open",
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1150,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1332,
+          "y": 436
+        },
+        {
+          "tag": "P",
+          "text": "Alignment",
+          "x": 1152,
+          "y": 506
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Font",
+          "x": 1152,
+          "y": 600
+        },
+        {
+          "tag": "P",
+          "text": "Font",
+          "x": 1152,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "name": "expand_space",
+      "result": {
+        "x": 1132,
+        "y": 491,
+        "w": 400,
+        "h": 60
+      },
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1150,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1332,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Space",
+          "x": 1132,
+          "y": 491
+        },
+        {
+          "tag": "SPAN",
+          "text": "Space",
+          "x": 1152,
+          "y": 511
+        },
+        {
+          "tag": "SPAN",
+          "text": "Width",
+          "x": 1152,
+          "y": 551
+        },
+        {
+          "tag": "SPAN",
+          "text": "0",
+          "x": 1504,
+          "y": 551
+        },
+        {
+          "tag": "INPUT",
+          "text": "0",
+          "x": 1152,
+          "y": 588
+        },
+        {
+          "tag": "SPAN",
+          "text": "Height",
+          "x": 1152,
+          "y": 617
+        },
+        {
+          "tag": "SPAN",
+          "text": "0",
+          "x": 1504,
+          "y": 617
+        },
+        {
+          "tag": "INPUT",
+          "text": "0",
+          "x": 1152,
+          "y": 654
+        },
+        {
+          "tag": "SPAN",
+          "text": "Reflection",
+          "x": 1152,
+          "y": 708
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Background",
+          "x": 1132,
+          "y": 749
+        },
+        {
+          "tag": "SPAN",
+          "text": "Background",
+          "x": 1152,
+          "y": 769
+        }
+      ]
+    },
+    {
+      "name": "space_width_adjusted",
+      "value": "40",
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1103,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1285,
+          "y": 436
+        },
+        {
+          "tag": "SPAN",
+          "text": "Space",
+          "x": 1105,
+          "y": 511
+        },
+        {
+          "tag": "SPAN",
+          "text": "Width",
+          "x": 1105,
+          "y": 551
+        },
+        {
+          "tag": "SPAN",
+          "text": "40",
+          "x": 1449,
+          "y": 551
+        },
+        {
+          "tag": "INPUT",
+          "text": "40",
+          "x": 1105,
+          "y": 588
+        },
+        {
+          "tag": "SPAN",
+          "text": "Height",
+          "x": 1105,
+          "y": 617
+        },
+        {
+          "tag": "SPAN",
+          "text": "0",
+          "x": 1457,
+          "y": 617
+        },
+        {
+          "tag": "INPUT",
+          "text": "0",
+          "x": 1105,
+          "y": 654
+        },
+        {
+          "tag": "SPAN",
+          "text": "Reflection",
+          "x": 1105,
+          "y": 708
+        },
+        {
+          "tag": "SPAN",
+          "text": "Background",
+          "x": 1105,
+          "y": 769
+        }
+      ]
+    },
+    {
+      "name": "expand_reflection",
+      "result": {
+        "x": 1453,
+        "y": 834
+      },
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1103,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1285,
+          "y": 436
+        },
+        {
+          "tag": "SPAN",
+          "text": "Space",
+          "x": 1105,
+          "y": 511
+        },
+        {
+          "tag": "SPAN",
+          "text": "Width",
+          "x": 1105,
+          "y": 551
+        },
+        {
+          "tag": "SPAN",
+          "text": "40",
+          "x": 1449,
+          "y": 551
+        },
+        {
+          "tag": "INPUT",
+          "text": "40",
+          "x": 1105,
+          "y": 588
+        },
+        {
+          "tag": "SPAN",
+          "text": "Height",
+          "x": 1105,
+          "y": 617
+        },
+        {
+          "tag": "SPAN",
+          "text": "0",
+          "x": 1457,
+          "y": 617
+        },
+        {
+          "tag": "INPUT",
+          "text": "0",
+          "x": 1105,
+          "y": 654
+        },
+        {
+          "tag": "SPAN",
+          "text": "Reflection",
+          "x": 1105,
+          "y": 708
+        },
+        {
+          "tag": "SPAN",
+          "text": "Background",
+          "x": 1105,
+          "y": 769
+        }
+      ]
+    },
+    {
+      "name": "toggle_reflection",
+      "result": {
+        "x": 1401,
+        "y": 706
+      },
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1103,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1285,
+          "y": 436
+        },
+        {
+          "tag": "SPAN",
+          "text": "Space",
+          "x": 1105,
+          "y": 511
+        },
+        {
+          "tag": "SPAN",
+          "text": "Width",
+          "x": 1105,
+          "y": 551
+        },
+        {
+          "tag": "SPAN",
+          "text": "40",
+          "x": 1449,
+          "y": 551
+        },
+        {
+          "tag": "INPUT",
+          "text": "40",
+          "x": 1105,
+          "y": 588
+        },
+        {
+          "tag": "SPAN",
+          "text": "Height",
+          "x": 1105,
+          "y": 617
+        },
+        {
+          "tag": "SPAN",
+          "text": "0",
+          "x": 1457,
+          "y": 617
+        },
+        {
+          "tag": "INPUT",
+          "text": "0",
+          "x": 1105,
+          "y": 654
+        },
+        {
+          "tag": "SPAN",
+          "text": "Reflection",
+          "x": 1105,
+          "y": 708
+        },
+        {
+          "tag": "SPAN",
+          "text": "Background",
+          "x": 1105,
+          "y": 769
+        }
+      ]
+    },
+    {
+      "name": "expand_background",
+      "result": null,
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1103,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1285,
+          "y": 436
+        },
+        {
+          "tag": "SPAN",
+          "text": "Space",
+          "x": 1105,
+          "y": 511
+        },
+        {
+          "tag": "SPAN",
+          "text": "Width",
+          "x": 1105,
+          "y": 551
+        },
+        {
+          "tag": "SPAN",
+          "text": "40",
+          "x": 1449,
+          "y": 551
+        },
+        {
+          "tag": "INPUT",
+          "text": "40",
+          "x": 1105,
+          "y": 588
+        },
+        {
+          "tag": "SPAN",
+          "text": "Height",
+          "x": 1105,
+          "y": 617
+        },
+        {
+          "tag": "SPAN",
+          "text": "0",
+          "x": 1457,
+          "y": 617
+        },
+        {
+          "tag": "INPUT",
+          "text": "0",
+          "x": 1105,
+          "y": 654
+        },
+        {
+          "tag": "SPAN",
+          "text": "Reflection",
+          "x": 1105,
+          "y": 708
+        },
+        {
+          "tag": "SPAN",
+          "text": "Background",
+          "x": 1105,
+          "y": 769
+        }
+      ]
+    },
+    {
+      "name": "expand_outline",
+      "result": null,
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1103,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1285,
+          "y": 436
+        },
+        {
+          "tag": "SPAN",
+          "text": "Space",
+          "x": 1105,
+          "y": 511
+        },
+        {
+          "tag": "SPAN",
+          "text": "Width",
+          "x": 1105,
+          "y": 551
+        },
+        {
+          "tag": "SPAN",
+          "text": "40",
+          "x": 1449,
+          "y": 551
+        },
+        {
+          "tag": "INPUT",
+          "text": "40",
+          "x": 1105,
+          "y": 588
+        },
+        {
+          "tag": "SPAN",
+          "text": "Height",
+          "x": 1105,
+          "y": 617
+        },
+        {
+          "tag": "SPAN",
+          "text": "0",
+          "x": 1457,
+          "y": 617
+        },
+        {
+          "tag": "INPUT",
+          "text": "0",
+          "x": 1105,
+          "y": 654
+        },
+        {
+          "tag": "SPAN",
+          "text": "Reflection",
+          "x": 1105,
+          "y": 708
+        },
+        {
+          "tag": "SPAN",
+          "text": "Background",
+          "x": 1105,
+          "y": 769
+        }
+      ]
+    },
+    {
+      "name": "toggle_outline",
+      "result": null,
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1103,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1285,
+          "y": 436
+        },
+        {
+          "tag": "SPAN",
+          "text": "Space",
+          "x": 1105,
+          "y": 511
+        },
+        {
+          "tag": "SPAN",
+          "text": "Width",
+          "x": 1105,
+          "y": 551
+        },
+        {
+          "tag": "SPAN",
+          "text": "40",
+          "x": 1449,
+          "y": 551
+        },
+        {
+          "tag": "INPUT",
+          "text": "40",
+          "x": 1105,
+          "y": 588
+        },
+        {
+          "tag": "SPAN",
+          "text": "Height",
+          "x": 1105,
+          "y": 617
+        },
+        {
+          "tag": "SPAN",
+          "text": "0",
+          "x": 1457,
+          "y": 617
+        },
+        {
+          "tag": "INPUT",
+          "text": "0",
+          "x": 1105,
+          "y": 654
+        },
+        {
+          "tag": "SPAN",
+          "text": "Reflection",
+          "x": 1105,
+          "y": 708
+        },
+        {
+          "tag": "SPAN",
+          "text": "Background",
+          "x": 1105,
+          "y": 769
+        }
+      ]
+    },
+    {
+      "name": "final_adjust",
+      "visible": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic",
+          "x": 1103,
+          "y": 436
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust",
+          "x": 1285,
+          "y": 436
+        },
+        {
+          "tag": "P",
+          "text": "Types",
+          "x": 1117,
+          "y": 453
+        },
+        {
+          "tag": "P",
+          "text": "Color",
+          "x": 1117,
+          "y": 555
+        },
+        {
+          "tag": "LABEL",
+          "text": "Size · 20",
+          "x": 1117,
+          "y": 785
+        },
+        {
+          "tag": "SPAN",
+          "text": "Size · 20",
+          "x": 1117,
+          "y": 785
+        },
+        {
+          "tag": "INPUT",
+          "text": "20",
+          "x": 1117,
+          "y": 809
+        }
+      ]
+    }
+  ]
+}

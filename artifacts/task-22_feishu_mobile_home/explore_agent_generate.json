@@ -1,0 +1,7 @@
+{
+  "generate_disabled_before_text": true,
+  "generate_disabled_after_text": false,
+  "generate_class_after_text": "mt-[0.75rem] flex h-[3rem] w-full items-center justify-center gap-[0.5rem] rounded-r3 text-pmd-normal-btn font-bold text-white bg-[var(--bc-blue-1)]",
+  "url_after_generate": "http://10.17.1.66:3001/create/edit?pid=aa31fdf9-0840-45bb-b440-8e4f4d9258f8",
+  "body_head_after": "Upgrade to Premium\nSign up\nInspiration\nPokecut Pro\n1:1\nGenerate\nAI Tools\nInsert\nAI Image\nBackground\nLayer\nAdjust\nSign Up to Get Up to 30 Credits\nContinue With Google\nContinue With Apple\nOr\nSend\n\nBy signing up, you agree to our Terms of Use and Privacy Policy.\n\nSign up\nAlready have an account?\nLog in\nDEBUG"
+}

@@ -1,0 +1,296 @@
+{
+  "task": "2026-08-30_pokecut_canvas_text_layer",
+  "steps": [
+    {
+      "name": "00_create_loaded",
+      "url": "http://10.17.1.66:3001/create"
+    },
+    {
+      "name": "10_canvas_loaded",
+      "url": "http://10.17.1.66:3001/agent?pid=b495b7ed-0fdb-41b0-abb8-3cfeeac0da92#"
+    },
+    {
+      "name": "11_after_add_text",
+      "panel_visible": true,
+      "toolbar": [
+        {
+          "text": "Adjust",
+          "x": 560,
+          "y": 422,
+          "w": 77,
+          "h": 32
+        },
+        {
+          "text": "Move Up",
+          "x": 653,
+          "y": 422,
+          "w": 93,
+          "h": 32
+        },
+        {
+          "text": "Move Down",
+          "x": 748,
+          "y": 422,
+          "w": 111,
+          "h": 32
+        },
+        {
+          "text": "To Top",
+          "x": 861,
+          "y": 422,
+          "w": 79,
+          "h": 32
+        },
+        {
+          "text": "To Bottom",
+          "x": 942,
+          "y": 422,
+          "w": 101,
+          "h": 32
+        },
+        {
+          "text": "Flip h",
+          "x": 1045,
+          "y": 422,
+          "w": 71,
+          "h": 32
+        },
+        {
+          "text": "Flip v",
+          "x": 1119,
+          "y": 422,
+          "w": 71,
+          "h": 32
+        },
+        {
+          "text": "Delete",
+          "x": 1191,
+          "y": 422,
+          "w": 78,
+          "h": 32
+        },
+        {
+          "text": "Rotation",
+          "x": 1271,
+          "y": 422,
+          "w": 89,
+          "h": 32
+        },
+        {
+          "text": "Basic",
+          "x": 1150,
+          "y": 436,
+          "w": 182,
+          "h": 50
+        },
+        {
+          "text": "Adjust",
+          "x": 1332,
+          "y": 436,
+          "w": 182,
+          "h": 50
+        }
+      ]
+    },
+    {
+      "name": "toolbar_adjust_clicked",
+      "before_panel": true,
+      "after_panel": true,
+      "button": {
+        "text": "Adjust",
+        "x": 560,
+        "y": 422,
+        "w": 77,
+        "h": 32
+      },
+      "body_snippet": "Credits:0 | offer ending soon | 23 | : | 59 | : | 34 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | Basic | Adjust | Space | Reflection | Background | Outline | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Port"
+    },
+    {
+      "name": "toolbar_move_up_clicked",
+      "before_panel": true,
+      "after_panel": false,
+      "button": {
+        "text": "Move Up",
+        "x": 653,
+        "y": 422,
+        "w": 93,
+        "h": 32
+      },
+      "body_snippet": "Credits:0 | offer ending soon | 23 | : | 59 | : | 33 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Portrait Editor | Clothes Changer | 0/3000 | 1/9 | Nano Banan"
+    },
+    {
+      "name": "toolbar_move_down_clicked",
+      "before_panel": false,
+      "after_panel": false,
+      "button": {
+        "text": "Move Down",
+        "x": 748,
+        "y": 422,
+        "w": 111,
+        "h": 32
+      },
+      "body_snippet": "Credits:0 | offer ending soon | 23 | : | 59 | : | 30 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Portrait Editor | Clothes Changer | 0/3000 | 1/9 | Nano Banan"
+    },
+    {
+      "name": "toolbar_to_top_clicked",
+      "before_panel": false,
+      "after_panel": false,
+      "button": {
+        "text": "To Top",
+        "x": 861,
+        "y": 422,
+        "w": 79,
+        "h": 32
+      },
+      "body_snippet": "Credits:0 | offer ending soon | 23 | : | 59 | : | 28 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Portrait Editor | Clothes Changer | 0/3000 | 1/9 | Nano Banan"
+    },
+    {
+      "name": "toolbar_to_bottom_clicked",
+      "before_panel": false,
+      "after_panel": false,
+      "button": {
+        "text": "To Bottom",
+        "x": 942,
+        "y": 422,
+        "w": 101,
+        "h": 32
+      },
+      "body_snippet": "Credits:0 | offer ending soon | 23 | : | 59 | : | 26 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Portrait Editor | Clothes Changer | 0/3000 | 1/9 | Nano Banan"
+    },
+    {
+      "name": "toolbar_flip_h_clicked",
+      "before_panel": false,
+      "after_panel": false,
+      "button": {
+        "text": "Flip h",
+        "x": 1045,
+        "y": 422,
+        "w": 71,
+        "h": 32
+      },
+      "body_snippet": "Credits:0 | offer ending soon | 23 | : | 59 | : | 24 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Portrait Editor | Clothes Changer | 0/3000 | 1/9 | Nano Banan"
+    },
+    {
+      "name": "toolbar_flip_v_clicked",
+      "before_panel": false,
+      "after_panel": false,
+      "button": {
+        "text": "Flip v",
+        "x": 1119,
+        "y": 422,
+        "w": 71,
+        "h": 32
+      },
+      "body_snippet": "Credits:0 | offer ending soon | 23 | : | 59 | : | 22 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Portrait Editor | Clothes Changer | 0/3000 | 1/9 | Nano Banan"
+    },
+    {
+      "name": "toolbar_rotation_clicked",
+      "before_panel": false,
+      "after_panel": false,
+      "button": {
+        "text": "Rotation",
+        "x": 1271,
+        "y": 422,
+        "w": 89,
+        "h": 32
+      },
+      "body_snippet": "Credits:0 | offer ending soon | 23 | : | 59 | : | 19 | Sign up | Log in | 450 x 234 | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Portrait Editor | Clothes Changer | 0/3000 | 1/9 | Nano Banana | 10 | DEBUG"
+    },
+    {
+      "name": "toolbar_delete_clicked",
+      "before_panel": true,
+      "after_panel": true,
+      "button": {
+        "text": "Delete",
+        "x": 1191,
+        "y": 422,
+        "w": 78,
+        "h": 32
+      },
+      "body_snippet": "Credits:0 | offer ending soon | 23 | : | 59 | : | 16 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | Basic | Adjust |  | Alignment |  | Font |  | Fill |  | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Portrait Editor | "
+    },
+    {
+      "name": "29_toolbar_after_explore",
+      "panel_visible": true,
+      "toolbar": [
+        {
+          "text": "Adjust",
+          "x": 560,
+          "y": 422,
+          "w": 77,
+          "h": 32
+        },
+        {
+          "text": "Move Up",
+          "x": 653,
+          "y": 422,
+          "w": 93,
+          "h": 32
+        },
+        {
+          "text": "Move Down",
+          "x": 748,
+          "y": 422,
+          "w": 111,
+          "h": 32
+        },
+        {
+          "text": "To Top",
+          "x": 861,
+          "y": 422,
+          "w": 79,
+          "h": 32
+        },
+        {
+          "text": "To Bottom",
+          "x": 942,
+          "y": 422,
+          "w": 101,
+          "h": 32
+        },
+        {
+          "text": "Flip h",
+          "x": 1045,
+          "y": 422,
+          "w": 71,
+          "h": 32
+        },
+        {
+          "text": "Flip v",
+          "x": 1119,
+          "y": 422,
+          "w": 71,
+          "h": 32
+        },
+        {
+          "text": "Delete",
+          "x": 1191,
+          "y": 422,
+          "w": 78,
+          "h": 32
+        },
+        {
+          "text": "Rotation",
+          "x": 1271,
+          "y": 422,
+          "w": 89,
+          "h": 32
+        },
+        {
+          "text": "Basic",
+          "x": 1150,
+          "y": 436,
+          "w": 182,
+          "h": 50
+        },
+        {
+          "text": "Adjust",
+          "x": 1332,
+          "y": 436,
+          "w": 182,
+          "h": 50
+        }
+      ]
+    }
+  ]
+}

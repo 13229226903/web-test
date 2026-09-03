@@ -1,0 +1,183 @@
+page: pokecut_ai_face_reader
+url: https://pokecut-dev.guangzhuiyuan.com/tools/ai-face-reader
+version: v2
+source: pure_playwright_mcp_exploration
+updated_at: "2026-09-01 14:26:00"
+landmark:
+  selector: 'h1:has-text("AI Face Reader")'
+  description: SEO 首屏 AI Face Reader 工具页；上传前保持 SEO 内容，不展示结果编辑三栏。
+entry:
+  from: direct_url
+  trigger: open https://pokecut-dev.guangzhuiyuan.com/tools/ai-face-reader
+  selector: 'a[href="/tools/ai-face-reader"]'
+elements:
+  header:
+    logo: 'img[alt="pokecut logo"]'
+    nav_buttons:
+      - 'button:has-text("AI Free Tools")'
+      - 'button:has-text("Portrait Editor")'
+      - 'button:has-text("Discover")'
+      - 'a[href="/pricing"]'
+  upload:
+    input: '#img2imgFirstScreenUploadInput'
+    primary_button: 'text=Try Image to Image AI Now'
+    sample_buttons: 'upload area image-only buttons under supported formats'
+    terms_links:
+      - 'a[href="/term-of-use"]'
+      - 'a[href="/privacy-policy"]'
+states:
+  seo_default_desktop:
+    description: PC 未上传默认态；首屏 H1、SEO 描述、上传框和示例图片按钮可见；无三栏结果态。
+    trigger: page.goto + wait csr
+    url_or_state_key: /tools/ai-face-reader#seo_default_desktop
+    buttons:
+      upload_primary:
+        selector: 'text=Try Image to Image AI Now'
+        role_or_text: Try Image to Image AI Now
+        visible_condition: 上传框可见
+        enabled_condition: 登录态/匿名均可点；匿名会要求登录
+        action_result: 打开文件选择器；选择图片后进入结果编辑三栏
+        reversible: true
+        explore_status: covered
+        dependencies: ['test_images/有人脸.JPG']
+        assertions_hint: 上传前断言不存在 Original Image/Analysis Result/Optimized Result
+        notes: 纯 MCP 证据 mcp_face_default_snapshot.md、mcp_face_default_viewport.png。
+      sample_image:
+        selector: 'upload sample image buttons (image-only buttons)'
+        role_or_text: empty image buttons
+        visible_condition: 上传框下方四张示例图可见
+        enabled_condition: 可点击
+        action_result: 点击第一张示例图后进入结果三栏并触发生成
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后 Original Image 区出现且 Upload Image disabled
+        notes: 纯 MCP 通过首张示例图验证，结果仍 Server busy。
+  analysis_server_busy_desktop:
+    description: PC 上传/点击示例后，三栏容器出现；分析结果失败，优化区保持等待态。
+    trigger: 登录会员账号 + 上传 test_images/有人脸.JPG 或点击首张示例图
+    url_or_state_key: /tools/ai-face-reader#analysis_server_busy_desktop
+    buttons:
+      upload_image_disabled:
+        selector: 'button:has-text("Upload Image")'
+        role_or_text: Upload Image
+        visible_condition: Original Image 区域
+        enabled_condition: disabled while generating/failure not recovered
+        action_result: 不可点击样式
+        reversible: false
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Original Image 下 Upload Image disabled
+        notes: 符合生成中或未恢复状态。
+      change_image:
+        selector: 'button:has-text("Change Image")'
+        role_or_text: Change Image
+        visible_condition: Analysis Result 显示 Server busy 后出现
+        enabled_condition: 可点击
+        action_result: 预期打开文件选择器并重新走生成；本轮未重复执行
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 与 Server busy 文案同屏
+        notes: 失败逻辑 covered。
+      try_again:
+        selector: 'button:has-text("Try again")'
+        role_or_text: Try again
+        visible_condition: Analysis Result 显示 Server busy 后出现
+        enabled_condition: 可点击
+        action_result: 触发重试；实测重试后仍返回同一 Server busy 失败态
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后状态刷新，失败态可再次出现
+        notes: 证据 mcp_face_retry_snapshot.md。
+      analysis_download_disabled:
+        selector: 'section:has-text("Analysis Result") button:has-text("Download")'
+        role_or_text: Download
+        visible_condition: Analysis Result 区域
+        enabled_condition: disabled until analysis image success
+        action_result: 不可下载
+        reversible: false
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Download disabled
+        notes: covered。
+      optimized_download_disabled:
+        selector: 'section:has-text("Optimized Result") button:has-text("Download")'
+        role_or_text: Download
+        visible_condition: Optimized Result 区域
+        enabled_condition: disabled until optimized image success
+        action_result: 不可下载
+        reversible: false
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Waiting for analysis... 时 Download disabled
+        notes: covered。
+      continue_portrait_disabled:
+        selector: 'button:has-text("Continue in Portrait Editor")'
+        role_or_text: Continue in Portrait Editor
+        visible_condition: Optimized Result 区域
+        enabled_condition: disabled until optimized image success
+        action_result: 不跳转
+        reversible: false
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Waiting for analysis... 时 Continue disabled
+        notes: covered。
+  expected_success_three_columns_uncovered:
+    description: 需求要求成功态展示 Original Image、Analysis Result、Optimized Result 三栏和两个 Download/Continue 按钮；本轮测试服后端一直 Server busy，未获得成功图。
+    trigger: successful analysis + optimized result generation
+    url_or_state_key: /tools/ai-face-reader#success_three_columns
+    buttons:
+      upload_image_enabled:
+        selector: 'button:has-text("Upload Image")'
+        role_or_text: Upload Image
+        visible_condition: success state
+        enabled_condition: 分析图与优化图均生成完成后恢复可用
+        action_result: 打开文件选择器并重新生成
+        reversible: true
+        explore_status: blocked_by_dependency
+        dependencies: ['后端生成成功']
+        assertions_hint: 成功态后按钮 enabled
+        notes: 测试服未达成功态，不能伪装 covered。
+      analysis_download:
+        selector: 'Analysis Result >> button:has-text("Download")'
+        role_or_text: Download
+        visible_condition: analysis image success
+        enabled_condition: enabled after analysis result image visible
+        action_result: 下载 jpg
+        reversible: true
+        explore_status: blocked_by_dependency
+        dependencies: ['后端生成成功']
+        assertions_hint: 下载文件扩展名 .jpg
+        notes: 未覆盖。
+      optimized_download:
+        selector: 'Optimized Result >> button:has-text("Download")'
+        role_or_text: Download
+        visible_condition: optimized image success
+        enabled_condition: enabled after optimized result image visible
+        action_result: 下载 jpg
+        reversible: true
+        explore_status: blocked_by_dependency
+        dependencies: ['后端生成成功']
+        assertions_hint: 下载文件扩展名 .jpg
+        notes: 未覆盖。
+      continue_portrait:
+        selector: 'button:has-text("Continue in Portrait Editor")'
+        role_or_text: Continue in Portrait Editor
+        visible_condition: optimized image success
+        enabled_condition: enabled after optimized result image visible
+        action_result: PC 端应带入原图、分析图、优化图并选中优化结果图打开 Portrait Editor
+        reversible: true
+        explore_status: blocked_by_dependency
+        dependencies: ['后端生成成功']
+        assertions_hint: /agent?pid=；三张图层；优化图选中；Portrait Editor 功能弹窗打开
+        notes: 未覆盖。
+modals:
+  auth_modal:
+    fields: ['[data-testid="auth-email-input"]', '[data-testid="auth-code-input"]']
+    buttons: ['[data-testid="auth-submit"]']
+  purchase_modal:
+    trigger: credits 不足
+    buttons: ['.purchase-dialog__close', 'text=Get Started', 'text=Credits Purchase']
+    notes: 本轮主要使用会员账号；免费账号路径在 nose 页触发购买弹窗。

@@ -1,0 +1,66 @@
+{
+  "initial": [
+    {
+      "cls": "help-v2-mobile-faq-item help-v2-mobile-faq-item--open",
+      "q": "What is Pokecut?",
+      "a": "Pokecut is an all-in-one AI photo editing platform for portraits, travel photos, product images, and creative content. You can remove backgrounds, erase objects, enhance image, create collages, use templates, and generate AI images.",
+      "open": true
+    },
+    {
+      "cls": "help-v2-mobile-faq-item__question",
+      "q": null,
+      "a": null,
+      "open": false
+    },
+    {
+      "cls": "help-v2-mobile-faq-item__answer",
+      "q": null,
+      "a": null,
+      "open": false
+    },
+    {
+      "cls": "help-v2-mobile-faq-item",
+      "q": "What can I use Pokecut for?",
+      "a": null,
+      "open": false
+    },
+    {
+      "cls": "help-v2-mobile-faq-item__question",
+      "q": null,
+      "a": null,
+      "open": false
+    },
+    {
+      "cls": "help-v2-mobile-faq-item",
+      "q": "Is Pokecut free?",
+      "a": null,
+      "open": false
+    }
+  ],
+  "after_click_2nd": [
+    {
+      "cls": "help-v2-mobile-faq-item",
+      "open": false
+    },
+    {
+      "cls": "help-v2-mobile-faq-item__question",
+      "open": false
+    },
+    {
+      "cls": "help-v2-mobile-faq-item help-v2-mobile-faq-item--open",
+      "open": true
+    },
+    {
+      "cls": "help-v2-mobile-faq-item__question",
+      "open": false
+    },
+    {
+      "cls": "help-v2-mobile-faq-item__answer",
+      "open": false
+    },
+    {
+      "cls": "help-v2-mobile-faq-item",
+      "open": false
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_debug_panel_snapshot.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_face_reloaded_default_snapshot.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_face_reupload_success_snapshot.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_face_sample_after_wait_snapshot.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_nose_after_drop_snapshot.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_nose_after_drop2_snapshot.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_nose_after_login_modal_closed.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_nose_after_upload_snapshot.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_nose_default_snapshot.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_nose_getitnow_canvas_snapshot.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_nose_purchase_gift_modal_snapshot.md
+D:\Test\web-test\artifacts\new_feature_detection_ui_20260901_124711\shots\mcp_nose_signup_modal_snapshot.md

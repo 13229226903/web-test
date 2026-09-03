@@ -1,0 +1,204 @@
+{
+  "steps": [
+    {
+      "name": "baseline",
+      "panel": true,
+      "toolbar": [
+        {
+          "text": "Adjust",
+          "x": 560,
+          "y": 422,
+          "w": 77,
+          "h": 32
+        },
+        {
+          "text": "Move Up",
+          "x": 653,
+          "y": 422,
+          "w": 93,
+          "h": 32
+        },
+        {
+          "text": "Move Down",
+          "x": 748,
+          "y": 422,
+          "w": 111,
+          "h": 32
+        },
+        {
+          "text": "To Top",
+          "x": 861,
+          "y": 422,
+          "w": 79,
+          "h": 32
+        },
+        {
+          "text": "To Bottom",
+          "x": 942,
+          "y": 422,
+          "w": 101,
+          "h": 32
+        },
+        {
+          "text": "Flip h",
+          "x": 1045,
+          "y": 422,
+          "w": 71,
+          "h": 32
+        },
+        {
+          "text": "Flip v",
+          "x": 1119,
+          "y": 422,
+          "w": 71,
+          "h": 32
+        },
+        {
+          "text": "Delete",
+          "x": 1191,
+          "y": 422,
+          "w": 78,
+          "h": 32
+        },
+        {
+          "text": "Rotation",
+          "x": 1271,
+          "y": 422,
+          "w": 89,
+          "h": 32
+        },
+        {
+          "text": "Basic",
+          "x": 1150,
+          "y": 436,
+          "w": 182,
+          "h": 50
+        },
+        {
+          "text": "Adjust",
+          "x": 1332,
+          "y": 436,
+          "w": 182,
+          "h": 50
+        }
+      ]
+    },
+    {
+      "name": "click_adjust",
+      "before_panel": true,
+      "after_panel": true,
+      "button": {
+        "x": 598,
+        "y": 438,
+        "txt": "Adjust",
+        "w": 77,
+        "h": 32
+      },
+      "body": "Credits:0 | offer ending soon | 23 | : | 59 | : | 34 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | Basic | Adjust | Space | Reflection | Background | Outline | 71% | Hold Right-click or Space + Left-click to drag the canvas | I"
+    },
+    {
+      "name": "click_move_up",
+      "before_panel": true,
+      "after_panel": false,
+      "button": {
+        "x": 699,
+        "y": 438,
+        "txt": "Move Up",
+        "w": 93,
+        "h": 32
+      },
+      "body": "Credits:0 | offer ending soon | 23 | : | 59 | : | 33 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Por"
+    },
+    {
+      "name": "click_move_down",
+      "before_panel": true,
+      "after_panel": false,
+      "button": {
+        "x": 803,
+        "y": 438,
+        "txt": "Move Down",
+        "w": 111,
+        "h": 32
+      },
+      "body": "Credits:0 | offer ending soon | 23 | : | 59 | : | 29 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Por"
+    },
+    {
+      "name": "click_to_top",
+      "before_panel": true,
+      "after_panel": false,
+      "button": {
+        "x": 901,
+        "y": 438,
+        "txt": "To Top",
+        "w": 79,
+        "h": 32
+      },
+      "body": "Credits:0 | offer ending soon | 23 | : | 59 | : | 26 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Por"
+    },
+    {
+      "name": "click_to_bottom",
+      "before_panel": true,
+      "after_panel": false,
+      "button": {
+        "x": 993,
+        "y": 438,
+        "txt": "To Bottom",
+        "w": 101,
+        "h": 32
+      },
+      "body": "Credits:0 | offer ending soon | 23 | : | 59 | : | 22 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Por"
+    },
+    {
+      "name": "click_flip_h",
+      "before_panel": true,
+      "after_panel": false,
+      "button": {
+        "x": 1081,
+        "y": 438,
+        "txt": "Flip h",
+        "w": 71,
+        "h": 32
+      },
+      "body": "Credits:0 | offer ending soon | 23 | : | 59 | : | 19 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Por"
+    },
+    {
+      "name": "click_flip_v",
+      "before_panel": true,
+      "after_panel": true,
+      "button": {
+        "x": 1154,
+        "y": 438,
+        "txt": "Flip v",
+        "w": 71,
+        "h": 32
+      },
+      "body": "Credits:0 | offer ending soon | 23 | : | 59 | : | 15 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | Basic | Adjust |  | Alignment |  | Font |  | Fill |  | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | R"
+    },
+    {
+      "name": "click_rotation",
+      "before_panel": true,
+      "after_panel": true,
+      "button": {
+        "x": 1316,
+        "y": 438,
+        "txt": "Rotation",
+        "w": 89,
+        "h": 32
+      },
+      "body": "Credits:0 | offer ending soon | 23 | : | 59 | : | 13 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | Basic | Adjust |  | Alignment |  | Font |  | Fill |  | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | R"
+    },
+    {
+      "name": "click_delete",
+      "before_panel": true,
+      "after_panel": true,
+      "button": {
+        "x": 1230,
+        "y": 438,
+        "txt": "Delete",
+        "w": 78,
+        "h": 32
+      },
+      "body": "Credits:0 | offer ending soon | 23 | : | 59 | : | 09 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | Basic | Adjust |  | Alignment |  | Font |  | Fill |  | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | R"
+    }
+  ]
+}

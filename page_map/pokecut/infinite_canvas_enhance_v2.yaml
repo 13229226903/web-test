@@ -1,0 +1,218 @@
+# Pokecut 无限画布 Enhance 面板 - 页面地图
+# 进入方式: /create → Trending Tools → Start from a Photo → 上传 test_images/文字测例.jpg → /agent?pid=<uuid>
+# 采集环境: 测试服 http://10.17.1.66:3001，匿名，PC 1920x1080，en-US
+# 采集时间: 2026-08-29 (v2)
+page: Infinite Canvas Enhance
+url: /agent?pid=<uuid>
+landmark:
+  selector: "div[data-no-capture='true']:has-text('AI Enhancer')"
+  description: 顶部工具栏 Enhance 打开后出现的右侧 AI Enhancer 面板，标题为 AI Enhancer
+entry:
+  from: /create
+  trigger: 点击 Trending Tools 下第一个工具卡 "Start from a Photo"，文件选择器选择图片后进入 /agent?pid=<uuid>
+  selector: "div.cursor-pointer:has(p:text-is('Start from a Photo'))"
+  file_chooser: true
+  note: 进入 /create 可能弹出 VIP 定价弹窗遮罩；Playwright 需先 JS 移除全屏半透明遮罩，否则点不到工具卡
+
+elements:
+  canvas_toolbar_enhance:
+    selector: "button.toolbar-hover-button:has-text('Enhance')"
+    description: 画布顶部工具栏 Enhance 按钮，点击打开 AI Enhancer 面板
+    visible_condition: 上传图片进入 /agent 后可见
+  bottom_enhance:
+    selector: "button:has-text('Enhance')"
+    description: 底部 Inspiration 快捷区的 Enhance 按钮（与顶部按钮作用一致，页面上有 2 个 Enhance 文本按钮）
+  enhance_panel:
+    selector: "div[data-no-capture='true']:has-text('AI Enhancer')"
+    description: AI Enhancer 右侧浮动面板
+  enhance_panel_title:
+    selector: "div[data-no-capture='true'] div:has-text('AI Enhancer')"
+    description: 面板标题
+  mode_row_standard:
+    selector: "[data-enhance-row]:has-text('Standard Mode')"
+    description: 标准增强模式，默认选中；展示 1080px*1440px → 2160px*2880px（2x）
+  mode_row_old_photo:
+    selector: "[data-enhance-row].old-photo-card:has-text('Old Photo Mode')"
+    description: 老照片修复模式；展开后展示 Fix blur / Restore old photo color / Remove scratches
+  mode_row_portrait:
+    selector: "[data-enhance-row]:has-text('Portrait Mode')"
+    description: 人像增强模式；展示 1080px*1440px → 2160px*2880px
+  mode_row_text:
+    selector: "[data-enhance-row]:has-text('Text Mode')"
+    description: 文字增强模式；展示 1080px*1440px → 3000px*4000px
+  mode_row_ultra_hd:
+    selector: "[data-enhance-row]:has-text('Ultra HD Mode')"
+    description: Ultra HD 模式，右上角有 pro 皇冠；展示 1080px*1440px → 3072px*4096px
+  mode_help_icon:
+    selector: "img[src*='enhance_help']"
+    description: 各模式行的问号帮助图标，hover 显示模式说明 tooltip
+  enhance_primary_button:
+    selector: "div[data-no-capture='true'] button:has-text('Enhance')"
+    description: 面板底部主按钮 Enhance，触发生成（本轮只观察，未点击生成）
+
+tabs: {}
+modals: {}
+
+states:
+  enhance_panel_default:
+    description: 上传图片后点击顶部 Enhance 打开的默认面板；Standard Mode 默认选中
+    trigger: 点击 canvas_toolbar_enhance
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      standard_mode:
+        selector: "[data-enhance-row]:has-text('Standard Mode')"
+        role_or_text: Standard Mode
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选
+        action_result: 选中 Standard Mode，展示 1080px*1440px → 2160px*2880px，其他模式取消选中
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 面板打开后 Standard Mode 默认选中（class 含 ring-c-theme）
+        notes: 未发现 PRD 所述 Choose the Effect / 四种效果 / 2k-4k-8k 分辨率区
+      old_photo_mode:
+        selector: "[data-enhance-row].old-photo-card:has-text('Old Photo Mode')"
+        role_or_text: Old Photo Mode
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选
+        action_result: 选中 Old Photo Mode，展示 Fix blur / Restore old photo color / Remove scratches
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后行 class 出现选中态
+        notes: 不属于需求四种效果
+      portrait_mode:
+        selector: "[data-enhance-row]:has-text('Portrait Mode')"
+        role_or_text: Portrait Mode
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选
+        action_result: 选中 Portrait Mode，展示 1080px*1440px → 2160px*2880px
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后行 class 出现选中态
+        notes: 不属于需求四种效果
+      text_mode:
+        selector: "[data-enhance-row]:has-text('Text Mode')"
+        role_or_text: Text Mode
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选
+        action_result: 选中 Text Mode，展示 1080px*1440px → 3000px*4000px
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后行 class 出现选中态
+        notes: 需求中的 Enhance Text / Remove Glare / Remove Moire / Document Scanner 四效果未出现
+      ultra_hd_mode:
+        selector: "[data-enhance-row]:has-text('Ultra HD Mode')"
+        role_or_text: Ultra HD Mode
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选，右上角有 pro 皇冠
+        action_result: 选中 Ultra HD Mode，展示 1080px*1440px → 3072px*4096px
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后行 class 出现选中态
+        notes: 不属于需求四种效果
+      primary_enhance:
+        selector: "div[data-no-capture='true'] button:has-text('Enhance')"
+        role_or_text: Enhance
+        visible_condition: 面板打开即可见
+        enabled_condition: 可见可点击（未点击，避免真实生成消耗）
+        action_result: 未验证；预期触发所选模式的增强生成
+        reversible: false
+        explore_status: skipped
+        dependencies: [登录/credits/生成配额]
+        assertions_hint: 点击前建议确认账号态与 credits；本轮未执行
+        notes: 不执行未授权的真实生成
+
+  enhance_panel_mode_tooltips:
+    description: 各模式问号 tooltip 文案
+    trigger: hover 各 mode_help_icon
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      standard_mode_tooltip:
+        selector: "img[src*='enhance_help']"
+        role_or_text: Standard Mode help
+        visible_condition: hover Standard Mode 行问号后可见
+        enabled_condition: 始终
+        action_result: 显示 Balanced enhancement for everyday photos.
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 文本包含 Balanced enhancement for everyday photos.
+        notes: 实测 tooltip 文本
+      old_photo_mode_tooltip:
+        selector: "img[src*='enhance_help']"
+        role_or_text: Old Photo Mode help
+        visible_condition: hover Old Photo Mode 行问号后可见
+        enabled_condition: 始终
+        action_result: 显示 AI colorize and restore black & white photos online.
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 文本包含 AI colorize and restore black & white photos online.
+        notes: 实测 tooltip 文本
+      portrait_mode_tooltip:
+        selector: "img[src*='enhance_help']"
+        role_or_text: Portrait Mode help
+        visible_condition: hover Portrait Mode 行问号后可见
+        enabled_condition: 始终
+        action_result: 显示 Optimized for faces with natural skin and clear details.
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 文本包含 Optimized for faces with natural skin and clear details.
+        notes: 实测 tooltip 文本
+      text_mode_tooltip:
+        selector: "img[src*='enhance_help']"
+        role_or_text: Text Mode help
+        visible_condition: hover Text Mode 行问号后可见
+        enabled_condition: 始终
+        action_result: 显示 Sharpen text and UI elements for crisp, readable details.
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 文本包含 Sharpen text and UI elements for crisp, readable details.
+        notes: 实测 tooltip 文本
+      ultra_hd_mode_tooltip:
+        selector: "img[src*='enhance_help']"
+        role_or_text: Ultra HD Mode help
+        visible_condition: hover Ultra HD Mode 行问号后可见
+        enabled_condition: 始终
+        action_result: 显示 Maximum enhancement for ultra-clear, finely detailed images.
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 文本包含 Maximum enhancement for ultra-clear, finely detailed images.
+        notes: 实测 tooltip 文本
+
+
+# ── 分辨率/尺寸补充（v2 新增）────────────────────────
+# 实测：Enhance 面板没有独立的 2K/4K/8K 选择器；模式行只展示输入→输出固定尺寸。
+# 这与需求文档「PC 无限画布新增 2K、4K、8K 选择」不一致，判定 gap / bug candidate。
+resolution_observed:
+  no_2k_4k_8k_selector: true
+  display_format: "<输入长边>px*<输入短边>px → <输出长边>px*<输出短边>px"
+  observed_samples:
+    1K.jpg_standard: "1200px*1600px → 2400px*3200px"
+    1K_text: "1080px*1440px → 3000px*4000px（文字测例.jpg）"
+    4K.jpg_standard: "2730px*4096px → 2730px*4096px（输入已达 4K，Standard 不放大）"
+    4K.png_standard: "4096px*2730px → 4096px*2730px"
+    8K.jpg_standard: "3072px*4096px → 3072px*4096px"
+    低分辨率.JPG_standard: "512px*768px → 1024px*1536px"
+  conclusion: "未出现 2K/4K/8K 分段选择，也未出现需求所述默认预选与置灰规则"
+
+elements_resolution:
+  resolution_segment_2k:
+    selector: null
+    description: 需求应存在的 2K 分段选择；真实页面未发现
+    explore_status: gap
+  resolution_segment_4k:
+    selector: null
+    description: 需求应存在的 4K 分段选择；真实页面未发现
+    explore_status: gap
+  resolution_segment_8k:
+    selector: null
+    description: 需求应存在的 8K 分段选择；真实页面未发现
+    explore_status: gap

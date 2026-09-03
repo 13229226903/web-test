@@ -1,0 +1,195 @@
+# 项目指南（Pokecut — UI 自动化测试）
+
+> 这是本仓库的项目约定文件，Codex 主控和各个角色 agent 都读它来自适应项目。
+> 运行规则分两层：
+> - 路由 / 状态机 / Gate / 调用上限：`artifacts/runtime/orchestrator.md`
+> - 共享红线 / Artifact 接力 / progress / journal：`artifacts/runtime/common.md`
+> - 角色职责与输出：`skills/<role>/SKILL.md`
+
+## 必读文件
+
+每次写代码 / 写测试 / 补页面地图前，先读：
+
+- `rule.md` — 编码规则与技术避坑（selector 写法、等待时机、组件行为）
+- `artifacts/runtime/common.md` — 共享红线、Artifact 接力、progress / journal
+- `artifacts/runtime/orchestrator.md` — 路由、状态机、Gate、角色派发
+- 当前角色的 `skills/<role>/SKILL.md` — 该角色的职责、输入输出与红线
+- 相关的 `page_map/*.yaml` — 当前页面元素地图
+
+发现新知识主动回写：技术坑 → `rule.md`；页面元素变化 → 对应 `page_map/*.yaml`。
+
+---
+
+## 项目约定
+
+| 约定 | 本项目取值 |
+|---|---|
+| 站点基础 URL | `http://10.17.1.66:3001`（见 `pytest.ini` 的 `--base-url`） |
+| 页面地图目录 | `page_map/`（按 `page_map/<模块>/<页面>.yaml` 组织） |
+| 测试数据目录 | `data/`（YAML） |
+| 测试代码目录 | `tests/`（不嵌套模块子目录） |
+| 测试运行命令 | `python -m pytest tests/ -v` |
+| 登录逻辑 | 部分功能需登录（下载、credits 等），匿名可浏览首页和工具页；登录 fixture 见 `conftest.py` |
+| 失败 DOM 落盘目录 | `data/debug/`（调试用，已 gitignore） |
+| 后端环境 | 生成态探索默认先用测试服；测试服生成失败时，再在目标页 `DEBUG` 面板切到 `预部署` 并重新登录复试；预部署仍失败则标记 skipped |
+| 当前任务指针 | `artifacts/.current_task`（journal 用，任务终态清除） |
+
+### 生成态探索 / 生成回归素材与环境
+
+- 上传素材只能取自 `test_images/` 现有文件，禁止自行生成、下载或临时创建测试图。
+- 图片类型 / 分辨率用例按文件命名选择素材：
+
+  | 测试目的 | 选图规则 / 示例 |
+  |---|---|
+  | 无人脸 | 优先选择文件名包含 `无人脸` 的图片 |
+  | 单人脸 / 有人脸 | 优先选择文件名包含 `有人脸` 的图片 |
+  | 多人脸 | 优先选择文件名包含 `多人脸` 的图片 |
+  | 低分辨率 / 低清 | 优先选择文件名包含 `低分辨率` 的图片 |
+  | 1K / 2K / 4K / 8K 分辨率边界 | 优先选择文件名包含 `1K`、`2K`、`4K`、`8K` 的图片；同档多张时优先尺寸/格式最贴近用例的现有文件 |
+  | 损坏图 / 异常文件 | 优先选择文件名包含 `损坏` 的图片，只用于异常上传校验，不用于生成态主流程 |
+
+  当前典型素材：`1K.jpg`、`4K.jpg`、`4K.png`、`8K.jpg`、`低分辨率.JPG`、`有人脸.JPG`、`多人脸.jpg`、`无人脸.jpg`、`损坏的图.png`、`文字测例.jpg`。
+
+- 测试服与预部署验证码均固定为 `123456`；可直接填写验证码，不需要点击 Send。
+- 测试账号按账号态选择：
+
+  | 账号态 / 适用场景 | 邮箱 | 验证码 |
+  |---|---|---|
+  | 会员账号（会员权益、订阅态、会员免扣点 / Free icon 等） | `450832596@qq.com` | `123456` |
+  | 单项购买账号（单项购买权益、单功能授权等） | `03201449879@qq.com` | `123456` |
+  | 免费账号（免费次数、新用户、普通登录态） | 任意未使用邮箱 | `123456` |
+
+  免费账号建议脚本生成唯一邮箱，避免复用导致免费次数污染。
+
+- 生成态环境顺序：先在测试服登录并尝试生成；只有测试服生成失败时，才通过 `DEBUG` 面板切到 `预部署`，重新登录并复试；预部署也失败，则在 `sync.md` / page_map 中标记 `skipped` 并写明两边失败现象与证据。
+- 购买、订阅、credits / 配额消耗类探索同样遵循「测试服优先、失败再预部署」；回归脚本以 confirmed `cases.md` 声明的环境为准。
+
+---
+
+## 编排模式
+
+### 任务类型
+
+- `new_feature_test`：新 PRD / 大改版 / 首次提测，必须需求先行。
+- `existing_feature_first_exploration`：功能已存在但缺 confirmed page_map / sync / cases，先补页面资产。
+- `stable_regression`：registry 已登记且 confirmed 资产齐全，优先复用脚本，仅漂移 / 差异 / 需求变更局部回退。
+- `single_agent`：用户明确只要地图、用例、脚本或审查时，只执行对应角色。
+
+类型不确定时先按 PRD、URL 和已有资产判断；仍无法判断才向用户确认。
+
+### Codex 执行模式
+
+- `codex_single_context`（默认）：主控在同一上下文按角色顺序模拟，进入每个角色前必须完整读取 `skills/<role>/SKILL.md`，不得跨角色混写。
+- `codex_subagent`（推荐用于长流水线 / 需隔离审计）：主控用 Codex 的 multi-agent `spawn_agent` 把角色拆到独立上下文；子代理只读 `common.md` + 对应 `SKILL.md` + 当前 state + 最近确认 artifact。
+
+执行模式必须写进 `state.md`。
+
+### 主流程路由
+
+- 新功能 / 大改版 / 首次提测：`test-case-design(requirement_draft) → page-map-sync → sync gate → test-case-design(final_after_sync) → cases gate → test-writing → review → test-writing(report-output) → regression-archive gate`
+- 存量首次探索 / 补资产：`page-map-sync → sync gate → test-case-design(final_after_sync) → cases gate → test-writing → review → report-output → regression-archive gate`
+- 稳定回归：优先执行 registry 登记脚本；仅 selector 漂移 / 页面差异 / 需求变更才局部回退。
+
+### Gate
+
+- `sync.md pending_review` / `cases.md pending_review`：必须停下等用户确认，确认后改 confirmed。
+- review / visual-review 通过后，先执行 report-output 生成并核对 `allure-results-matrix/` 与 `allure-report-matrix/`。
+- 用户确认归档后才更新 `artifacts/regression_registry.md`、同步 `archive/<module>/`，并标记 `stable_regression`。
+
+---
+
+## 项目背景
+
+- **项目名称**：Pokecut — AI 图片编辑 & 图片生成器
+- **技术栈**：Nuxt.js / Vue，SPA 单页应用
+- **核心功能**：AI 改图、背景移除/替换、证件照、图片增强、拼贴制作、批量编辑等
+- **用户体系**：支持匿名使用 + 注册登录，含 credits 点数系统
+- **注意**：页面多为客户端渲染（CSR），Playwright 探索时需等待 JS 渲染完成后再采集元素
+
+---
+
+## 开发原则
+
+- 所有字段都填（含非必填）、都断言
+- 绝不删断言来让测试通过——失败就是 bug
+- `expected` 避免用 `"0"`，用有语义的值
+- 注释用中文
+- selector 优先 ID / role / 稳定属性，禁用 hash class / `:nth-child` / xpath 位置索引（详见 `rule.md`）
+
+用例矩阵必须写清楚：Layer、执行层级、需求点、页面位置、前置、操作路径、实际输入/预期结果、断言点、截图点、是否需要 AI 审查、是否需要登录/上传/后端环境切换、特殊数据或破坏性操作风险。矩阵确认前不进入 test-writing。
+
+### L1~L6 分层与执行策略
+
+| Layer | 含义 | 默认执行策略 |
+|---|---|---|
+| L1 | 页面元素存在性 | `regression` |
+| L2 | 交互行为 | 默认全量 |
+| L3 | 异常 / 权限 / 兼容流程 | 默认全量 |
+| L4 | PRD AC / 验收标准 | `regression` |
+| L5 | 数据边界值 | 默认全量；必须参数化并显示实际值 |
+| L6 | 核心 Happy Path / E2E | `smoke` |
+
+---
+
+## 测试命令
+
+```bash
+# 全部测试
+python -m pytest tests/ -v
+
+# 单个文件 / 单个用例
+python -m pytest tests/test_ai_image_text_enhancer_experiment.py -v
+python -m pytest tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_upload_in_page_and_default_state -v
+
+# 只跑核心链路
+python -m pytest tests/ -m smoke -v
+
+# 跑核心回归
+python -m pytest tests/ -m regression -v
+
+# 看得见浏览器（调试）
+python -m pytest tests/ -v --headed
+
+# 生成 Allure 报告（pytest 运行后执行）
+allure generate reports/allure-results -o reports/allure-report --clean
+```
+
+---
+
+## 完整回归链路
+
+```
+pytest 执行          visual-review         inject               allure generate
+（--alluredir）  →   （多模态审查）    →   （注入 Allure）  →   （HTML 报告）
+```
+
+1. `python -m pytest tests/ -v` — 执行测试，落盘 allure-results + 截图
+2. `python scripts/visual_check.py ...` — 对视觉期望调用多模态 API，产出 visual_review_results.json
+3. `python scripts/inject_visual_to_allure.py --results ... --allure-dir ...` — 注入 allure-results
+4. `allure generate reports/allure-results -o reports/allure-report --clean` — 产出 HTML 报告
+
+- 截图必须挂在明确的 `allure.step(...)` 下，报告里要能看出「哪个操作边界截图」。
+- AI 视觉审查 `verdict=fail` 时，对应测试必须标记失败。
+- 归档后复跑脚本，结果另存 `allure-results-archive/` 与 `allure-report-archive/`。
+
+---
+
+## 开始测试（三种常见用法）
+
+在 Codex 中给主对话一句话即可启动编排；主控会判定 task_type 并自动选择 M1/M2，写进 state.md。
+
+### 场景一：走全流程
+- 新功能首次提测：
+  > 把这份 PRD 走完整流程到归档，PRD 在 `<path>`，入口 `<url>`
+- 功能已上线但缺资产：
+  > `<url>` 这个功能已经上线了，帮我补页面地图、用例、脚本，走完整流程到 Allure 报告
+
+### 场景二：已有脚本的功能有改动，改脚本
+> `<url>` 这个功能最近有改动（比如按钮文案变了），更新一下已归档的回归脚本，跑通并更新 Allure 报告
+
+### 场景三：回归已有归档脚本
+> 回归一下「<功能名>」已登记的脚本
+> 或：跑一下 `tests/<file>.py` 回归并出 Allure 报告
+
+主流程路由：`page-map-sync →(确认 sync.md)→ test-case-design →(确认 cases.md)→ test-writing → review → report-output →(确认归档)`；新功能在 page-map-sync 前多一步 `requirement_draft`。每个角色进入时读取对应 `skills/<role>/SKILL.md`。
+

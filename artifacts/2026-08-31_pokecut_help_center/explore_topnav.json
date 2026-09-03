@@ -1,0 +1,91 @@
+{
+  "/": {
+    "url": "http://10.17.1.66:3001/",
+    "headers_with_links": [
+      {
+        "tag": "header",
+        "cls": "cinematic-hero",
+        "links": [
+          {
+            "tag": "button",
+            "text": "Start Creating for Free",
+            "href": null
+          }
+        ]
+      }
+    ],
+    "contact_els": [
+      {
+        "tag": "a",
+        "text": "Contact us",
+        "href": "/help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us",
+        "cls": "flex min-h-[2.1875rem] items-center rounded-r2 px-[0.9375rem] py-[0.25rem] text-[1rem] leading-[1.25rem] text-[var(--tc-gray-h3)] hover:bg-c-light-purple hover:font-bold"
+      },
+      {
+        "tag": "button",
+        "text": "Contact us",
+        "href": null,
+        "cls": "mb-[0.5rem] flex h-[3.25rem] w-full flex-row items-center rounded-[0.625rem] text-left transition-colors hover:bg-c-light-purple"
+      },
+      {
+        "tag": "a",
+        "text": "Contact us",
+        "href": "/help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us",
+        "cls": ""
+      }
+    ]
+  },
+  "/help": {
+    "url": "http://10.17.1.66:3001/help",
+    "headers_with_links": [],
+    "contact_els": [
+      {
+        "tag": "a",
+        "text": "Contact us",
+        "href": "/help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us",
+        "cls": "router-link-active router-link-exact-active flex min-h-[2.1875rem] items-center rounded-r2 px-[0.9375rem] py-[0.25rem] text-[1rem] leading-[1.25rem] text-[var(--tc-gray-h3)] hover:bg-c-light-purple hover:font-bold"
+      },
+      {
+        "tag": "button",
+        "text": "Contact us",
+        "href": null,
+        "cls": "mb-[0.5rem] flex h-[3.25rem] w-full flex-row items-center rounded-[0.625rem] text-left transition-colors hover:bg-c-light-purple"
+      },
+      {
+        "tag": "button",
+        "text": "Contact us",
+        "href": null,
+        "cls": "help-v2-support-cta-section__button"
+      },
+      {
+        "tag": "a",
+        "text": "Contact us",
+        "href": "/help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us",
+        "cls": "router-link-active router-link-exact-active"
+      }
+    ]
+  },
+  "/create": {
+    "url": "http://10.17.1.66:3001/create",
+    "headers_with_links": [],
+    "contact_els": [
+      {
+        "tag": "button",
+        "text": "Contact us",
+        "href": null,
+        "cls": "mb-[0.5rem] flex h-[3.25rem] w-full flex-row items-center rounded-[0.625rem] text-left transition-colors hover:bg-c-light-purple"
+      },
+      {
+        "tag": "a",
+        "text": "Contact us",
+        "href": "/help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us",
+        "cls": "w-full"
+      }
+    ]
+  },
+  "/tools/ai-photo-enhancer": {
+    "url": "http://10.17.1.66:3001/tools/ai-photo-enhancer",
+    "headers_with_links": [],
+    "contact_els": []
+  }
+}

@@ -1,0 +1,44 @@
+warning: in the working copy of 'artifacts/runtime/orchestrator.md', LF will be replaced by CRLF the next time Git touches it
+diff --git a/artifacts/framework_playwright_mcp_explore_20260901_111335/backups/artifacts_runtime_orchestrator.md b/artifacts/runtime/orchestrator.md
+index 5f728c0..d2c6751 100644
+--- a/artifacts/framework_playwright_mcp_explore_20260901_111335/backups/artifacts_runtime_orchestrator.md
++++ b/artifacts/runtime/orchestrator.md
+@@ -21,6 +21,14 @@
+ 6. 紧耦合、连续交互的页面操作，或无法使用子代理 → `codex_single_context`（无法使用时在 `state.md` 记录原因）
+ 
+ 同一次任务可混用：`state.md` 的 `execution_mode` 记录整体模式，各角色实际派发方式在 `progress.log` 单独记录。
++
++## 探索驱动
++
++- `page-map-sync` 的探索驱动固定为 Playwright MCP only，并在 `state.md` 记录：`exploration_driver: playwright_mcp_only`、`diagnostic_driver: none`。
++- Playwright MCP 只作为页面观察与交互驱动层；MCP snapshot / screenshot / console 等输出是探索证据，不替代 `page_map`、`sync.md`、`progress.log` 或后续 pytest / Playwright 可复跑脚本。
++- Chrome DevTools MCP 不作为默认诊断工具；如果仅凭 Playwright MCP 无法判定按钮无响应、接口异常、白屏、性能问题或 JS 根因，应在 `sync.md` 记录 `diagnostic_limit: playwright_mcp_only_no_devtools_trace`，并按 `bug_candidate` / `blocked` 处理，不扩大工具链。
++- selector 规则不因 MCP 改变：仍优先 ID、role、稳定属性、文本，禁止 hash class、`:nth-child`、位置 XPath；不得把 Playwright MCP 临时 element ref 直接沉淀为测试 selector。
++
+ ## 任务声明
+ 
+ ```yaml
+@@ -30,11 +38,13 @@ entry_url: <url>
+ entry_path: <path>
+ scope: <coverage>
+ stop_at: sync_review | cases_review | regression_archive | final_report
++exploration_driver: playwright_mcp_only
++diagnostic_driver: none
+ forbidden: <forbidden stages/skills>
+ assets: <accounts/data/environment>
+ ```
+ 
+-缺字段时采用合理默认值，并把假设写入 `state.md`。除下方 schema 外，`state.md` 还需记录 requirement_doc、target_url、entry_path、scope、stop_at、assumptions、artifacts、next_step、blockers。
++缺字段时采用合理默认值，并把假设写入 `state.md`。除下方 schema 外，`state.md` 还需记录 requirement_doc、target_url、entry_path、scope、stop_at、exploration_driver、diagnostic_driver、assumptions、artifacts、next_step、blockers。
+ 
+ 也支持自然语言下达，主控会自动补齐 scope / stop_at / 账号态 / assets 等并写进 state.md 的 assumptions；只有 PRD 路径与入口 URL 缺失时才向用户确认。示例：
+ 
+@@ -62,7 +72,7 @@ assets: <accounts/data/environment>
+ 
+ - 一次只执行一个角色 skill 的一个 round。
+ - 每个角色 skill / 子任务只读取 common.md、对应角色 SKILL.md、当前 state.md、最近一次确认的阶段 artifact 和必要 handoff 包，不得默认读取整条历史对话。
+-- 角色 skill 输入自包含：task_id、task_type、role、entry_url、entry_path、scope、输入 artifact、输出 artifact、stop_at、forbidden、账号态和授权边界。
++- 角色 skill 输入自包含：task_id、task_type、role、entry_url、entry_path、scope、exploration_driver、diagnostic_driver、输入 artifact、输出 artifact、stop_at、forbidden、账号态和授权边界。
+ - 每次角色 skill 执行返回后先更新 state，再进入下一步。
+ - Codex 单上下文中，当前角色 artifact 未落盘、state/progress 未更新，不得进入下一角色。
+ - 角色 skill 不得嵌套执行；review 物理只读，由 orchestrator 落盘 review.md。

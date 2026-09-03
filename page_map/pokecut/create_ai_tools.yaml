@@ -1,0 +1,167 @@
+# Pokecut Create 页 - 工具区「常用工具」区块页面地图
+# 说明: 用户口径的「AI 工具 - 常用工具」在页面上的实际标题为 "Trending Tools"
+#       （/create 页工具区最显眼的工具入口网格，15 个常用 AI 图片工具卡片）。
+# 采集方式: 登录(验证码 123456) → 自动落地 /create → JS 移除定价遮罩 → 采集 Trending Tools 网格。
+# 采集时间: 2026-07-13
+page: Create Trending Tools
+url: /create
+landmark:
+  selector: "p:text-is('Trending Tools')"
+  description: 工具区「常用工具」分组标题（页面唯一标识），实际文案为 "Trending Tools"
+entry:
+  from: Login / Home
+  trigger: 登录成功后自动跳转 /create；工具区第一屏即为 Trending Tools 网格
+  selector: "p:text-is('Trending Tools')"
+  note: 进入 /create 可能弹出 VIP 定价弹窗遮罩，需 JS 移除 div[class*="fixed"] 半透明遮罩
+
+# 分组信息（用户口径「AI 工具 - 常用工具」）
+group:
+  name_cn: 常用工具
+  name_on_page: Trending Tools
+  header_selector: "p:text-is('Trending Tools')"
+  header_tag: p
+  header_position: {x: 238, y: 469}
+  container_hint: "Trending Tools 标题下方的工具卡网格（每个卡片为一个 div.cursor-pointer，含 svg 图标 + 文案）"
+  tool_count: 15
+  card_pattern: "div.cursor-pointer:has(p:text-is('<工具文案>'))  # 每卡=图标+文案，无 href/id/data 属性"
+  more_entry: null   # 该区块无「更多/展开」入口，工具卡直接平铺；分类浏览在左侧导航 Tools(→ /tools)
+
+# 常用工具卡片（每个工具一个 element；真实文案 + 稳定文本选择器 + 图标 + 落点）
+elements:
+  tool_start_from_photo:
+    text: "Start from a Photo"
+    selector: "div.cursor-pointer:has(p:text-is('Start from a Photo'))"
+    icon: "/icons/svg/creat_icon_start.svg"
+    file_chooser: true
+    landing: "/agent?pid=<uuid> 无限画布编辑器（见 infinite_canvas.yaml，已确认）"
+    description: 从照片开始 - 上传图片进入无限画布编辑器
+
+  tool_remove_background:
+    text: "Remove Background"
+    selector: "div.cursor-pointer:has(p:text-is('Remove Background'))"
+    icon: "/icons/svg/creat_icon_removebg.svg"
+    file_chooser: true
+    landing: "/agent?pid=<uuid> 编辑器（本次探索已确认；进入后工具栏含 Remove BG/Enhance/Background 等）"
+    description: 背景移除
+
+  tool_ai_background:
+    text: "AI Background"
+    selector: "div.cursor-pointer:has(p:text-is('AI Background'))"
+    icon: "/icons/svg/creat_icon_ai_bg.svg"
+    file_chooser: true
+    landing: "/agent?pid=<uuid> 编辑器（本次探索已确认）"
+    description: AI 背景生成/替换
+
+  tool_ai_expand:
+    text: "AI Expand"
+    selector: "div.cursor-pointer:has(p:text-is('AI Expand'))"
+    icon: "/icons/svg/creat_icon_extend.svg"
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: AI 图片扩展
+
+  tool_ai_erase:
+    text: "AI Erase"
+    selector: "div.cursor-pointer:has(p:text-is('AI Erase'))"
+    icon: "/icons/svg/creat_icon_eraser.svg"
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: AI 擦除
+
+  tool_id_photo_maker:
+    text: "ID Photo Maker"
+    selector: "div.cursor-pointer:has(p:text-is('ID Photo Maker'))"
+    icon: "/icons/svg/creat_icon_id_photo.svg"
+    file_chooser: true
+    landing: "上传触发文件选择器；本次观察被 VIP 定价弹窗拦截(Credits:0)，落点未确认。历史资料显示 id-photo 相关落点为 /tools/id-photo-edit，需下游复核"
+    description: 证件照制作
+
+  tool_blur_background:
+    text: "Blur Background"
+    selector: "div.cursor-pointer:has(p:text-is('Blur Background'))"
+    icon: "/icons/svg/creat_icon_bg_blur.svg"
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: 背景虚化
+
+  tool_hd_photo_converter:
+    text: "HD Photo Converter"
+    selector: "div.cursor-pointer:has(p:text-is('HD Photo Converter'))"
+    icon: "/icons/svg/creat_icon_photp_enhancer.svg"   # 图标名 photp_enhancer(原站拼写)，对应图片增强
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: 高清照片转换（图标复用 photo_enhancer）
+
+  tool_add_person_to_photo:
+    text: "Add Person to Photo"
+    selector: "div.cursor-pointer:has(p:text-is('Add Person to Photo'))"
+    icon: "/icons/svg/creat_icon_bg_change.svg"
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: 向照片添加人物
+
+  tool_text_enhancer:
+    text: "Text Enhancer"
+    selector: "div.cursor-pointer:has(p:text-is('Text Enhancer'))"
+    icon: "/icons/svg/creat_icon_text_enhancer.svg"
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: 文字增强
+
+  tool_watermark_remover:
+    text: "Watermark Remover"
+    selector: "div.cursor-pointer:has(p:text-is('Watermark Remover'))"
+    icon: "/icons/svg/creat_icon_remove_watermark.svg"
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: 水印移除
+
+  tool_logo_extractor:
+    text: "Logo Extractor"
+    selector: "div.cursor-pointer:has(p:text-is('Logo Extractor'))"
+    icon: "/icons/svg/creat_icon_logo_remove_bg.svg"
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: Logo 提取
+
+  tool_censor_remover:
+    text: "Censor Remover"
+    selector: "div.cursor-pointer:has(p:text-is('Censor Remover'))"
+    icon: "/icons/svg/creat_icon_remove_mosaic.svg"
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: 去马赛克/去码
+
+  tool_beard_remover:
+    text: "Beard Remover"
+    selector: "div.cursor-pointer:has(p:text-is('Beard Remover'))"
+    icon: "/icons/svg/creat_icon_remove_beard.svg"
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: 去胡须
+
+  tool_add_signature:
+    text: "Add Signature to Photo"
+    selector: "div.cursor-pointer:has(p:text-is('Add Signature to Photo'))"
+    icon: "/icons/svg/creat_icon_adda_sign.svg"
+    file_chooser: true
+    landing: "上传后进入编辑器（推断为 /agent 无限画布，未逐一确认）"
+    description: 为照片添加签名
+
+# 辅助元素（用于测试上下文断言）
+aux:
+  credits_display:
+    selector: "span:has-text('Credits')"
+    description: 顶部 credits 余额显示（探索中该账号一度降为 Credits:0）
+  username_display:
+    selector: "text=User8JY"
+    description: 顶部用户名（登录态标识）
+  chat_to_edit_heading:
+    selector: "h2:has-text('Chat to Edit')"
+    description: 工具区顶部 Chat to Edit 标题（位于 Trending Tools 上方）
+  pricing_modal:
+    selector: "div[class*='fixed']"
+    description: 进入 /create 或点击工具后可能出现的 VIP 定价弹窗遮罩，JS 移除半透明遮罩可关闭
+
+tabs: {}
+modals: {}

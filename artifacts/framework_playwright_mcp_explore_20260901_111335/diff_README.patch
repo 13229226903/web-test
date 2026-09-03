@@ -1,0 +1,31 @@
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+diff --git a/artifacts/framework_playwright_mcp_explore_20260901_111335/backups/README.md b/README.md
+index c7dc71b..c2def1a 100644
+--- a/artifacts/framework_playwright_mcp_explore_20260901_111335/backups/README.md
++++ b/README.md
+@@ -40,7 +40,7 @@ state.md=completed，收工
+ 
+ | 角色 | skill | 产出 |
+ |---|---|---|
+-| page-map-sync | ui-test-page-map-sync | page_map_vN.yaml + sync.md |
++| page-map-sync | ui-test-page-map-sync | Playwright MCP 探索 → page_map_vN.yaml + sync.md |
+ | test-case-design | ui-test-test-case-design | requirement_draft / cases.md |
+ | test-writing | ui-test-test-writing | tests/ + data/*.yaml + impl.md |
+ | review | ui-test-review | review.md |
+@@ -80,8 +80,16 @@ state.md=completed，收工
+ - **artifact 接力**：阶段之间只靠版本化文档接力；`pending_review` 必停，`confirmed` 才能继续。
+ - **三个人工 gate**：sync_review、cases_review、regression-archive。
+ - **执行模式**：`codex_single_context`（单上下文） / `codex_subagent`（子代理隔离），由主控按 task_type 自动选择。
++- **探索驱动**：`page-map-sync` 固定使用 `exploration_driver: playwright_mcp_only`；Chrome DevTools MCP 不作为默认诊断工具。
+ - **共享红线**：selector / 断言 / skipped / 上传素材等见 `artifacts/runtime/common.md`。
+ 
++
++## Playwright MCP 探索试用
++
++当前框架的探索阶段已切换为 Playwright MCP only：`page-map-sync` 通过 Playwright MCP 进行页面打开、accessibility snapshot、点击、输入、hover、滚动、上传和截图留证；最终仍按既有 schema 写入版本化 `page_map` 与 `sync.md`，并停在 sync gate 等人工确认。后续 `test-writing` 仍生成 pytest / Playwright 可复跑脚本与 Allure 报告，不以 MCP 会话替代正式回归资产。
++
++如 Playwright MCP 无法定位深层网络、性能或 JS 根因，探索阶段只在 `sync.md` 记录诊断边界与 `bug_candidate` / `blocked`，不默认引入 Chrome DevTools MCP。
++
+ ## 项目约定
+ 
+ 本项目对接 Pokecut：站点 / 账号 / 素材白名单 / DEBUG 切换等见 `PROJECT.md`；编码与技术避坑见 `rule.md`，不在此重复。

@@ -1,0 +1,173 @@
+# Pokecut PC 首页 v3.0 页面地图
+# 来源: 首页改版需求 + 2026-08-21 对 http://10.17.1.66:3001/ 的 Playwright 探索
+page: PokecutHomeV3
+url: /
+landmark:
+  selector: "text=All-in-One AI Photo Editor & Generator"
+  description: 首页 v3 首屏标题
+entry:
+  from: Direct
+  trigger: 直接访问站点根路径
+  selector: "body"
+  note: 未登录态应显示 Sign up / Log in；登录态显示用户菜单
+
+elements:
+  nav_logo:
+    selector: "header a[href='/'], a[href='/']:has(img)"
+    text: "Pokecut logo"
+    expected_order: 1
+    description: 顶部 Logo 入口
+  nav_all_free_tools:
+    selector: "button:has-text('AI Free Tools')"
+    text: "AI Free Tools"
+    expected_order: 2
+    dropdown: true
+    description: 工具下拉入口；按当前页面文案作为回归基线
+  nav_portrait_editor:
+    selector: "button:has-text('Portrait Editor')"
+    text: "Portrait Editor"
+    expected_order: 3
+    dropdown: true
+    description: 人像编辑下拉入口
+  nav_discover:
+    selector: "button:has-text('Discover')"
+    text: "Discover"
+    expected_order: 4
+    dropdown_items: ["FAQ", "Contact us", "About us"]
+    description: Discover 下拉按当前页面展示回归
+  nav_pricing:
+    selector: "a[href='/pricing'], a[href$='/pricing']"
+    text: "Pricing"
+    expected_order: 5
+    description: Pricing 跳转入口
+  auth_signup:
+    selector: "button:has-text('Sign up')"
+    text: "Sign up"
+  auth_login:
+    selector: "button:has-text('Log in')"
+    text: "Log in"
+
+  hero_title:
+    selector: "text=All-in-One AI Photo Editor & Generator"
+    text: "All-in-One AI Photo Editor & Generator"
+  hero_desc:
+    selector: "text=Use Pokecut to create, edit, and enhance images in one place with top AI models, practical photo editing tools, and ready-to-use creative workflows."
+  hero_cta:
+    selector: "button:has-text('Start Creating for Free')"
+    text: "Start Creating for Free"
+    landing: "/agent"
+    file_chooser: false
+  hero_prompt_upload:
+    selector: "button[aria-label='Upload image']"
+    file_chooser: true
+  hero_prompt_model:
+    selector: "button:has-text('Pokecut Pro')"
+  hero_prompt_settings:
+    selector: "button[aria-label='Prompt settings']"
+  hero_prompt_generate:
+    selector: "button[aria-label='Generate']"
+
+  feature_bikini:
+    selector: "button:has-text('AI Bikini Try-On')"
+    text: "AI Bikini Try-On"
+    image_suffix: "homepagerefresh_featurebikini1_26071315000102.webp"
+    file_chooser: true
+    landing: "/agent"
+  feature_text:
+    selector: "button:has-text('Enhance Text in Images')"
+    text: "Enhance Text in Images"
+    image_suffix: "homepagerefresh_featuretext1_26071315000103.webp"
+    file_chooser: true
+    landing: "/agent"
+  feature_portrait:
+    selector: "button:has-text('AI Portrait Editor')"
+    text: "AI Portrait Editor"
+    image_suffix: "homepagerefresh_featureportrait1_26071315000104.webp"
+    file_chooser: true
+    landing: "/agent"
+  feature_more_tools:
+    selector: "button:has-text('More Pokecut AI Tools')"
+    text: "More Pokecut AI Tools"
+    href: null
+
+  models_section:
+    selector: "text=Choose the Right AI Model for Any Image"
+    model_button_selector: "button[aria-label]"
+    expected_order:
+      - "Nano Banana 2"
+      - "Seedream 5.0 Lite"
+      - "Nano Banana Pro"
+      - "Seedream 5.0 Pro"
+      - "Pokecut Pro"
+      - "ChatGPT Image 2.0"
+      - "Seedream 4.0"
+      - "Pokecut Basic"
+      - "Nano Banana 2 Lite"
+
+  templates_title:
+    selector: "text=Start Faster with Pokecut's AI Templates"
+  templates_cta:
+    selector: "button:has-text('See More Creations')"
+    text: "See More Creations"
+    href: null
+
+  test_panel:
+    selector: "text=Test Your Photo Before You Edit"
+    image_suffix: null
+    links:
+      Pretty Scale: "/tools/pretty-scale"
+      Ethnicity Guesser: "/tools/ethnicity-guesser-ai"
+      Eye Color Detector: "/tools/eye-color-detector"
+      Body Shape Detector: "/tools/body-shape-detector"
+
+  portrait_section:
+    selector: "text=AI Portrait Detail Studio"
+    title: "Upgrade Every Portrait Details with Pokecut"
+    tabs: ["Retouch Face", "Change Hair", "Retouch Body", "Change Background"]
+    note: 需求说明卡片最终配置待产品确认，自动化只断言结构、切换不跳转和可点击链接
+
+  batch_section:
+    selector: "text=Edit up to 50 Photos in One Batch"
+    image_suffix: "homepagerefresh_batch_26071315000124.webp"
+    actions: ["Remove BG", "Resize", "Enhance", "Change BG"]
+    note: "四个按钮当前都应触发文件选择器，选图后进入 /batch-edit/edit 批量编辑页。"
+  enhance_section:
+    selector: "text=Enhance Photo Quality for Every Detail"
+    image_suffix: "homepagerefresh_enhance_26071315000130.webp"
+    actions: ["HD Enhance", "Text Enhance", "Portrait Enhance", "Ultra Enhance"]
+    note: "HD Enhance / Text Enhance 直接进入对应工具页；Portrait Enhance / Ultra Enhance 先弹出系统文件选择器，选图后进入 /agent 画布页。"
+
+  trust_section:
+    selector: "text=Pokecut is Trusted by Creators for Every Photo Creation"
+    stats: ["3M+ creators", "200+ AI tools", "500M+ edits processed", "#2 Product Hunt"]
+  reviews_section:
+    selector: "a:has-text('Jessica Miller')"
+    users:
+      Jessica Miller: "https://www.producthunt.com/@jessica_miller_7"
+      Angelina Peng: "https://www.producthunt.com/@angelina__s"
+      Leo Y.: "https://www.producthunt.com/@leo_ye"
+      Zepeng She: "https://www.producthunt.com/@rocsheh"
+      Rachit Magon: "https://www.producthunt.com/@rachitmagon"
+    expected_image_suffix:
+      Jessica Miller: "homepagerefresh_reviewportrait1_26071315000138.webp"
+      Angelina Peng: "homepagerefresh_reviewbatch1_26071315000139.webp"
+      Leo Y.: "homepagerefresh_reviewgenerate1_26071315000140.webp"
+      Zepeng She: "homepagerefresh_reviewproduct1_26071315000141.webp"
+      Rachit Magon: "homepagerefresh_reviewtemplate1_26071315000142.webp"
+  faq_section:
+    selector: "text=Frequently Asked Questions"
+    expected_question_count: 8
+    links:
+      pricing: "/pricing"
+      term_of_use: "/term-of-use"
+      refund_ticket: "[data-submit-ticket='refund']"
+  mobile_app:
+    selector: "text=Pokecut Mobile App"
+  footer:
+    selector: "footer, text=Copyright © 2026 Pokecut All Rights Reserved."
+  debug_feedback:
+    selector: "text=DEBUG"
+    expected_visible: false
+
+tabs: {}
+modals: {}

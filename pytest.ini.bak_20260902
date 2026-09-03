@@ -1,0 +1,17 @@
+[pytest]
+# 默认浏览器、基础 URL
+addopts = --tb=short --base-url=http://10.17.1.66:3001 --html=reports/report.html --self-contained-html --alluredir=reports/allure-results
+testpaths = tests
+filterwarnings =
+    ignore::pytest.PytestCollectionWarning
+
+# 自定义标记
+markers =
+    regression: SEO/功能回归测试
+    login_required: 需要登录
+    no_login: 无需登录
+    full: 全量用例
+    seo: SEO 页面检测
+    seo_new: SEO 新页面零配置三层检测
+    smoke: 冒烟测试
+    p0: P0 优先级用例

@@ -1,0 +1,17 @@
+{
+  "deeplink": {
+    "url": "http://10.17.1.66:3001/help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us",
+    "active_nav": "Commercial, Safety & Support5",
+    "open_questions": [
+      "How do I contact Pokecut support?"
+    ],
+    "open_answers": [
+      "If you have any questions and suggestions, please contact us by submitting a ticket."
+    ],
+    "total_items": 5
+  },
+  "popular_section": {
+    "has_popular_questions": false,
+    "heads": []
+  }
+}

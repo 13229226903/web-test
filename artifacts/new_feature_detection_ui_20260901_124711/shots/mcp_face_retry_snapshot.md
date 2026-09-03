@@ -1,0 +1,529 @@
+- generic [ref=f6e2]:
+  - generic [ref=f6e3]:
+    - generic [ref=f6e5]:
+      - link [ref=f6e6] [cursor=pointer]:
+        - /url: /
+        - img "pokecut logo" [ref=f6e7]
+      - generic [ref=f6e8]:
+        - button "AI Free Tools" [ref=f6e10] [cursor=pointer]
+        - button "Portrait Editor" [ref=f6e14] [cursor=pointer]
+        - button "Discover" [ref=f6e18] [cursor=pointer]
+        - link "Pricing 60% OFF" [ref=f6e22] [cursor=pointer]:
+          - /url: /pricing
+          - generic [ref=f6e25]:
+            - text: Pricing
+            - generic [ref=f6e26]: 60% OFF
+      - generic [ref=f6e28]: User8JY
+    - generic [ref=f6e34]:
+      - paragraph [ref=f6e36]:
+        - link "Home" [ref=f6e37] [cursor=pointer]:
+          - /url: /
+        - link "> Tools" [ref=f6e38] [cursor=pointer]:
+          - /url: /tools
+        - text: "> AI Face Reader Online: Free Personality & Emotion Test"
+      - navigation "All Free Tools" [ref=f6e40]:
+        - list [ref=f6e41]:
+          - listitem [ref=f6e42]:
+            - button "AI Image" [ref=f6e43] [cursor=pointer]
+          - listitem [ref=f6e46]:
+            - button "Enhance" [ref=f6e47] [cursor=pointer]
+          - listitem [ref=f6e50]:
+            - button "Remove Background" [ref=f6e51] [cursor=pointer]
+          - listitem [ref=f6e54]:
+            - button "Clothes Changer" [ref=f6e55] [cursor=pointer]
+          - listitem [ref=f6e58]:
+            - button "Eraser" [ref=f6e59] [cursor=pointer]
+          - listitem [ref=f6e62]:
+            - button "AI Background" [ref=f6e63] [cursor=pointer]
+          - listitem [ref=f6e66]:
+            - button "AI Replace" [ref=f6e67] [cursor=pointer]
+          - listitem [ref=f6e70]:
+            - button "AI Extend" [ref=f6e71] [cursor=pointer]
+          - listitem [ref=f6e74]:
+            - button "ID Photo" [ref=f6e75] [cursor=pointer]
+          - listitem [ref=f6e78]:
+            - button "Resize" [ref=f6e79] [cursor=pointer]
+          - listitem [ref=f6e82]:
+            - button "Batch Edit" [ref=f6e83] [cursor=pointer]
+      - generic [ref=f6e86]:
+        - generic [ref=f6e674]:
+          - generic [ref=f6e675]:
+            - generic [ref=f6e676]:
+              - generic [ref=f6e677]: "1"
+              - heading "Original Image" [level=3] [ref=f6e678]
+            - img "Original Image" [ref=f6e680]
+            - button "Upload Image" [disabled] [ref=f6e682]
+          - generic [ref=f6e683]:
+            - generic [ref=f6e684]:
+              - generic [ref=f6e685]: "2"
+              - heading "Analysis Result" [level=3] [ref=f6e686]
+            - generic [ref=f6e689]:
+              - paragraph [ref=f6e691]: Server busy. We're fixing it now. No credits deducted.
+              - generic [ref=f6e738]:
+                - button "Change Image" [ref=f6e739] [cursor=pointer]
+                - button "Try again" [ref=f6e740] [cursor=pointer]
+            - button "Download" [disabled] [ref=f6e693]
+          - generic [ref=f6e694]:
+            - generic [ref=f6e695]:
+              - generic [ref=f6e696]: "3"
+              - heading "Optimized Result" [level=3] [ref=f6e697]
+            - paragraph [ref=f6e701]: Waiting for analysis...
+            - generic [ref=f6e703]:
+              - button "Download" [disabled] [ref=f6e704]
+              - button "Continue in Portrait Editor" [disabled] [ref=f6e705]
+        - generic [ref=f6e124]:
+          - heading "What Can You Explore From AI Face Reader?" [level=2] [ref=f6e125]
+          - generic [ref=f6e126]:
+            - generic [ref=f6e131]:
+              - heading "Read Facial Expressions in Daily Photos" [level=3] [ref=f6e132]
+              - paragraph [ref=f6e133]: Use AI face reader when you want clearer feedback from a real photo, not a vague guess. Pokecut studies the eyes, mouth, brows, and small muscle tension that shape first impressions. That makes it useful before meetings, interviews, dates, or school talks when you want to know whether your expression reads calm, guarded, friendly, or unsure.Compare multiple selfies to see how your look changes across moments. Treat it like a practical facial expressions test that helps you notice patterns, adjust your delivery, and understand how your face may come across before the conversation begins.
+            - generic [ref=f6e138]:
+              - heading "Explore Face Reading Personality Signals" [level=3] [ref=f6e139]
+              - paragraph [ref=f6e140]: Some users want emotion feedback. Others want to explore face reading personality clues that may shape first impressions. Pokecut gives both in one place. It reviews visible traits like face balance, brow shape, eye spacing, and jaw flow, then turns them into a short report about social style, confidence, and personal energy that is easy to scan.If you follow chinese face reading or face reading astrology content online, this tool gives you a photo-based way to explore the idea without long manuals. Use it for curiosity, self-reflection, or shareable content from one portrait.
+        - generic [ref=f6e142]:
+          - heading "When Can You Use Pokecut's AI Face Reader?" [level=2] [ref=f6e143]
+          - generic [ref=f6e144]:
+            - generic [ref=f6e149]:
+              - heading "Capture Your Overlooked Micro-expressions" [level=3] [ref=f6e150]
+              - paragraph [ref=f6e151]: A facial expression test helps you see signals you usually miss in your own face. Upload a few photos with different looks, then compare how your smile, eyes, and brows shift from calm to nervous or confident. That makes practice more useful than guessing in a mirror.Use the score before a speech, job interview, class talk, or date. Pokecut shows which expression reads warm, steady, or tense, so you can adjust your face before the real moment starts. It is a simple way to train better reactions with one photo.
+            - generic [ref=f6e156]:
+              - heading "The Fun Personality Blind Box Challenge" [level=3] [ref=f6e157]
+              - paragraph [ref=f6e158]:
+                - text: When a group chat goes quiet or a party needs a new topic,
+                - link "Pokecut's palm reading" [ref=f6e159] [cursor=pointer]:
+                  - /url: /tools/ai-palm-reading
+                - text: and face reading tools gives people something playful to react to. Friends can upload photos and compare who looks like the natural leader, the calm observer, or the most open person in the room.Pokecut turns one picture into a quick face reading report people can share and talk about together. It works well for casual events, team games, and social posts where you want fast interaction without extra tools first.
+            - generic [ref=f6e164]:
+              - heading "See What Face Reading Personality Hints Suggest" [level=3] [ref=f6e165]
+              - paragraph [ref=f6e166]:
+                - text: Many people want to know what their face seems to say before they speak. Pokecut
+                - link "looks at facial balance" [ref=f6e167] [cursor=pointer]:
+                  - /url: /tools/golden-ratio-face-calculator
+                - text: ", eye shape, brow direction, and other visible traits to build a face reading personality summary that is easy to follow. You get a starting point for how others may read your energy, drive, or warmth.Some users also enjoy the cultural angle behind chinese face reading ideas. The tool presents playful patterns and clear notes for self-reflection, conversation, or content, giving you a new way to think about your first impression from one portrait."
+            - generic [ref=f6e172]:
+              - heading "Make Shareable AI Face Reader Score Cards" [level=3] [ref=f6e173]
+              - paragraph [ref=f6e174]:
+                - text: If you post quiz content, reaction cards, or quick personality topics, an AI face reader score card gives you an easy format to share. Upload one selfie and turn it into a visual report with mood cues, expression patterns, and face reading notes people can discuss.
+                - link "Pokecut's image to image feature" [ref=f6e175] [cursor=pointer]:
+                  - /url: /image-to-image-ai
+                - text: helps you move from photo to post without a long edit process. Use the finished card for TikTok, Xiaohongshu, or story updates when you want comments and fast replies. It is a practical content angle for creators who need fresh interaction.
+        - generic [ref=f6e176]:
+          - heading "Why Try Pokecut's AI Face Reader?" [level=2] [ref=f6e177]
+          - generic [ref=f6e178]: Pokecut offers a unique blend of speed and wisdom. It is the best choice to read faces for anyone looking to discover deep insights into their life and character instantly.
+          - generic [ref=f6e179]:
+            - generic [ref=f6e185]:
+              - heading "Scan Tiny Facial Signals" [level=3] [ref=f6e186]
+              - paragraph [ref=f6e187]: AI face reader studies small changes in the eyes, brows, and mouth to show mood patterns. It gives you a fast read when you want clearer feedback from one photo.
+            - generic [ref=f6e193]:
+              - heading "Keep Every Photo Private" [level=3] [ref=f6e194]
+              - paragraph [ref=f6e195]: Your upload is used for analysis only. Pokecut processes the photo in a protected flow, then removes it after the report is ready, so you can explore face reading without extra worry.
+            - generic [ref=f6e201]:
+              - heading "Blend Modern and Classic Reading" [level=3] [ref=f6e202]
+              - paragraph [ref=f6e203]: The report combines visual pattern analysis with ideas users know from chinese face reading. That gives you a broader, more interesting summary of mood, style, and first-impression traits.
+        - generic [ref=f6e707]:
+          - heading "How to Use Pokecut's AI Face Reader?" [level=2] [ref=f6e708]
+          - generic [ref=f6e709]:
+            - generic [ref=f6e711]:
+              - generic [ref=f6e713]: "01"
+              - generic [ref=f6e714]:
+                - 'heading "Step 1: Upload Your Photo" [level=3] [ref=f6e715]'
+                - paragraph [ref=f6e716]: Choose a clear face photo with good light. A front view helps the AI face reader catch expression details and face shape clues.
+            - generic [ref=f6e718]:
+              - generic [ref=f6e720]: "02"
+              - generic [ref=f6e721]:
+                - 'heading "Step 2: Run the Face Reading" [level=3] [ref=f6e722]'
+                - paragraph [ref=f6e723]: Let the tool scan your eyes, brows, smile, and facial balance. In a short time, you get mood hints and a face reading report.
+            - generic [ref=f6e725]:
+              - generic [ref=f6e727]: "03"
+              - generic [ref=f6e728]:
+                - 'heading "Step 3: Review and Download Results" [level=3] [ref=f6e729]'
+                - paragraph [ref=f6e730]: Read the report online, compare different photos, and save the result when you want to keep the emotion check or personality summary.
+        - generic [ref=f6e235]:
+          - heading "Explore More Features of Pokecut" [level=2] [ref=f6e238]
+          - generic [ref=f6e240]:
+            - link "AI Hair Color Analysis" [ref=f6e242] [cursor=pointer]:
+              - /url: /tools/ai-hair-color-analysis
+            - link "Lips Shape Detector" [ref=f6e245] [cursor=pointer]:
+              - /url: /tools/lips-shape-detector
+            - link "Body Shape Detector" [ref=f6e248] [cursor=pointer]:
+              - /url: /tools/body-shape-detector
+            - link "Gender Detector" [ref=f6e251] [cursor=pointer]:
+              - /url: /tools/gender-detector
+            - link "AI Hairstyle Finder" [ref=f6e254] [cursor=pointer]:
+              - /url: /tools/ai-hairstyle-finder
+            - link "Kibbe Body Type Test" [ref=f6e257] [cursor=pointer]:
+              - /url: /tools/kibbe-body-type-test
+        - generic [ref=f6e259]:
+          - heading "What Do Users Say About Pokecut's AI Face Reader?" [level=2] [ref=f6e260]
+          - paragraph [ref=f6e261]: Users like how easy it is to test expressions and read face cues.
+          - generic "Trusted by more than 800 thousand users" [ref=f6e262]:
+            - strong [ref=f6e264]: 800k+
+          - generic [ref=f6e266]:
+            - generic [ref=f6e267]:
+              - article [ref=f6e268]:
+                - heading "Linda P." [level=3] [ref=f6e269]
+                - generic "5 stars" [ref=f6e270]
+                - paragraph [ref=f6e271]: "\"I used this before a video interview because I wanted to know if I looked tense. The report made it easier to soften my expression and look more open on camera.\""
+              - article [ref=f6e272]:
+                - heading "Marcus T." [level=3] [ref=f6e273]
+                - generic "5 stars" [ref=f6e274]
+                - paragraph [ref=f6e275]: "\"My friends tried it during a party, and it turned into a fun face reading game fast. Everyone wanted to compare the mood scores and personality notes from their own photos.\""
+              - article [ref=f6e276]:
+                - heading "Jade R." [level=3] [ref=f6e277]
+                - generic "5 stars" [ref=f6e278]
+                - paragraph [ref=f6e279]: "\"I make short social posts, so the score-card style worked well for me. One selfie gave me something visual that people could comment on right away.\""
+              - article [ref=f6e280]:
+                - heading "Ethan C." [level=3] [ref=f6e281]
+                - generic "5 stars" [ref=f6e282]
+                - paragraph [ref=f6e283]: "\"The expression check was more useful than I expected. I uploaded a few versions of the same portrait and could see which one looked calm instead of awkward.\""
+              - article [ref=f6e284]:
+                - heading "Sofia M." [level=3] [ref=f6e285]
+                - generic "5 stars" [ref=f6e286]
+                - paragraph [ref=f6e287]: "\"I came for the chinese face reading angle and stayed for the clear layout. The tool kept the ideas simple enough to read without feeling like a long lecture.\""
+              - article [ref=f6e288]:
+                - heading "Noah B." [level=3] [ref=f6e289]
+                - generic "5 stars" [ref=f6e290]
+                - paragraph [ref=f6e291]: "\"It was helpful for checking how my expression changed between work photos and casual selfies. The side-by-side feel made the report easy to use for real situations.\""
+              - article [ref=f6e292]:
+                - heading "Linda P." [level=3] [ref=f6e293]
+                - generic "5 stars" [ref=f6e294]
+                - paragraph [ref=f6e295]: "\"I used this before a video interview because I wanted to know if I looked tense. The report made it easier to soften my expression and look more open on camera.\""
+              - article [ref=f6e296]:
+                - heading "Marcus T." [level=3] [ref=f6e297]
+                - generic "5 stars" [ref=f6e298]
+                - paragraph [ref=f6e299]: "\"My friends tried it during a party, and it turned into a fun face reading game fast. Everyone wanted to compare the mood scores and personality notes from their own photos.\""
+              - article [ref=f6e300]:
+                - heading "Jade R." [level=3] [ref=f6e301]
+                - generic "5 stars" [ref=f6e302]
+                - paragraph [ref=f6e303]: "\"I make short social posts, so the score-card style worked well for me. One selfie gave me something visual that people could comment on right away.\""
+              - article [ref=f6e304]:
+                - heading "Ethan C." [level=3] [ref=f6e305]
+                - generic "5 stars" [ref=f6e306]
+                - paragraph [ref=f6e307]: "\"The expression check was more useful than I expected. I uploaded a few versions of the same portrait and could see which one looked calm instead of awkward.\""
+              - article [ref=f6e308]:
+                - heading "Sofia M." [level=3] [ref=f6e309]
+                - generic "5 stars" [ref=f6e310]
+                - paragraph [ref=f6e311]: "\"I came for the chinese face reading angle and stayed for the clear layout. The tool kept the ideas simple enough to read without feeling like a long lecture.\""
+              - article [ref=f6e312]:
+                - heading "Noah B." [level=3] [ref=f6e313]
+                - generic "5 stars" [ref=f6e314]
+                - paragraph [ref=f6e315]: "\"It was helpful for checking how my expression changed between work photos and casual selfies. The side-by-side feel made the report easy to use for real situations.\""
+              - article [ref=f6e316]:
+                - heading "Linda P." [level=3] [ref=f6e317]
+                - generic "5 stars" [ref=f6e318]
+                - paragraph [ref=f6e319]: "\"I used this before a video interview because I wanted to know if I looked tense. The report made it easier to soften my expression and look more open on camera.\""
+              - article [ref=f6e320]:
+                - heading "Marcus T." [level=3] [ref=f6e321]
+                - generic "5 stars" [ref=f6e322]
+                - paragraph [ref=f6e323]: "\"My friends tried it during a party, and it turned into a fun face reading game fast. Everyone wanted to compare the mood scores and personality notes from their own photos.\""
+              - article [ref=f6e324]:
+                - heading "Jade R." [level=3] [ref=f6e325]
+                - generic "5 stars" [ref=f6e326]
+                - paragraph [ref=f6e327]: "\"I make short social posts, so the score-card style worked well for me. One selfie gave me something visual that people could comment on right away.\""
+              - article [ref=f6e328]:
+                - heading "Ethan C." [level=3] [ref=f6e329]
+                - generic "5 stars" [ref=f6e330]
+                - paragraph [ref=f6e331]: "\"The expression check was more useful than I expected. I uploaded a few versions of the same portrait and could see which one looked calm instead of awkward.\""
+              - article [ref=f6e332]:
+                - heading "Sofia M." [level=3] [ref=f6e333]
+                - generic "5 stars" [ref=f6e334]
+                - paragraph [ref=f6e335]: "\"I came for the chinese face reading angle and stayed for the clear layout. The tool kept the ideas simple enough to read without feeling like a long lecture.\""
+              - article [ref=f6e336]:
+                - heading "Noah B." [level=3] [ref=f6e337]
+                - generic "5 stars" [ref=f6e338]
+                - paragraph [ref=f6e339]: "\"It was helpful for checking how my expression changed between work photos and casual selfies. The side-by-side feel made the report easy to use for real situations.\""
+              - article [ref=f6e340]:
+                - heading "Linda P." [level=3] [ref=f6e341]
+                - generic "5 stars" [ref=f6e342]
+                - paragraph [ref=f6e343]: "\"I used this before a video interview because I wanted to know if I looked tense. The report made it easier to soften my expression and look more open on camera.\""
+              - article [ref=f6e344]:
+                - heading "Marcus T." [level=3] [ref=f6e345]
+                - generic "5 stars" [ref=f6e346]
+                - paragraph [ref=f6e347]: "\"My friends tried it during a party, and it turned into a fun face reading game fast. Everyone wanted to compare the mood scores and personality notes from their own photos.\""
+              - article [ref=f6e348]:
+                - heading "Jade R." [level=3] [ref=f6e349]
+                - generic "5 stars" [ref=f6e350]
+                - paragraph [ref=f6e351]: "\"I make short social posts, so the score-card style worked well for me. One selfie gave me something visual that people could comment on right away.\""
+              - article [ref=f6e352]:
+                - heading "Ethan C." [level=3] [ref=f6e353]
+                - generic "5 stars" [ref=f6e354]
+                - paragraph [ref=f6e355]: "\"The expression check was more useful than I expected. I uploaded a few versions of the same portrait and could see which one looked calm instead of awkward.\""
+              - article [ref=f6e356]:
+                - heading "Sofia M." [level=3] [ref=f6e357]
+                - generic "5 stars" [ref=f6e358]
+                - paragraph [ref=f6e359]: "\"I came for the chinese face reading angle and stayed for the clear layout. The tool kept the ideas simple enough to read without feeling like a long lecture.\""
+              - article [ref=f6e360]:
+                - heading "Noah B." [level=3] [ref=f6e361]
+                - generic "5 stars" [ref=f6e362]
+                - paragraph [ref=f6e363]: "\"It was helpful for checking how my expression changed between work photos and casual selfies. The side-by-side feel made the report easy to use for real situations.\""
+              - article [ref=f6e364]:
+                - heading "Linda P." [level=3] [ref=f6e365]
+                - generic "5 stars" [ref=f6e366]
+                - paragraph [ref=f6e367]: "\"I used this before a video interview because I wanted to know if I looked tense. The report made it easier to soften my expression and look more open on camera.\""
+              - article [ref=f6e368]:
+                - heading "Marcus T." [level=3] [ref=f6e369]
+                - generic "5 stars" [ref=f6e370]
+                - paragraph [ref=f6e371]: "\"My friends tried it during a party, and it turned into a fun face reading game fast. Everyone wanted to compare the mood scores and personality notes from their own photos.\""
+              - article [ref=f6e372]:
+                - heading "Jade R." [level=3] [ref=f6e373]
+                - generic "5 stars" [ref=f6e374]
+                - paragraph [ref=f6e375]: "\"I make short social posts, so the score-card style worked well for me. One selfie gave me something visual that people could comment on right away.\""
+              - article [ref=f6e376]:
+                - heading "Ethan C." [level=3] [ref=f6e377]
+                - generic "5 stars" [ref=f6e378]
+                - paragraph [ref=f6e379]: "\"The expression check was more useful than I expected. I uploaded a few versions of the same portrait and could see which one looked calm instead of awkward.\""
+              - article [ref=f6e380]:
+                - heading "Sofia M." [level=3] [ref=f6e381]
+                - generic "5 stars" [ref=f6e382]
+                - paragraph [ref=f6e383]: "\"I came for the chinese face reading angle and stayed for the clear layout. The tool kept the ideas simple enough to read without feeling like a long lecture.\""
+              - article [ref=f6e384]:
+                - heading "Noah B." [level=3] [ref=f6e385]
+                - generic "5 stars" [ref=f6e386]
+                - paragraph [ref=f6e387]: "\"It was helpful for checking how my expression changed between work photos and casual selfies. The side-by-side feel made the report easy to use for real situations.\""
+            - generic [ref=f6e388]:
+              - article [ref=f6e389]:
+                - heading "Ethan C." [level=3] [ref=f6e390]
+                - generic "5 stars" [ref=f6e391]
+                - paragraph [ref=f6e392]: "\"The expression check was more useful than I expected. I uploaded a few versions of the same portrait and could see which one looked calm instead of awkward.\""
+              - article [ref=f6e393]:
+                - heading "Sofia M." [level=3] [ref=f6e394]
+                - generic "5 stars" [ref=f6e395]
+                - paragraph [ref=f6e396]: "\"I came for the chinese face reading angle and stayed for the clear layout. The tool kept the ideas simple enough to read without feeling like a long lecture.\""
+              - article [ref=f6e397]:
+                - heading "Noah B." [level=3] [ref=f6e398]
+                - generic "5 stars" [ref=f6e399]
+                - paragraph [ref=f6e400]: "\"It was helpful for checking how my expression changed between work photos and casual selfies. The side-by-side feel made the report easy to use for real situations.\""
+              - article [ref=f6e401]:
+                - heading "Linda P." [level=3] [ref=f6e402]
+                - generic "5 stars" [ref=f6e403]
+                - paragraph [ref=f6e404]: "\"I used this before a video interview because I wanted to know if I looked tense. The report made it easier to soften my expression and look more open on camera.\""
+              - article [ref=f6e405]:
+                - heading "Marcus T." [level=3] [ref=f6e406]
+                - generic "5 stars" [ref=f6e407]
+                - paragraph [ref=f6e408]: "\"My friends tried it during a party, and it turned into a fun face reading game fast. Everyone wanted to compare the mood scores and personality notes from their own photos.\""
+              - article [ref=f6e409]:
+                - heading "Jade R." [level=3] [ref=f6e410]
+                - generic "5 stars" [ref=f6e411]
+                - paragraph [ref=f6e412]: "\"I make short social posts, so the score-card style worked well for me. One selfie gave me something visual that people could comment on right away.\""
+              - article [ref=f6e413]:
+                - heading "Ethan C." [level=3] [ref=f6e414]
+                - generic "5 stars" [ref=f6e415]
+                - paragraph [ref=f6e416]: "\"The expression check was more useful than I expected. I uploaded a few versions of the same portrait and could see which one looked calm instead of awkward.\""
+              - article [ref=f6e417]:
+                - heading "Sofia M." [level=3] [ref=f6e418]
+                - generic "5 stars" [ref=f6e419]
+                - paragraph [ref=f6e420]: "\"I came for the chinese face reading angle and stayed for the clear layout. The tool kept the ideas simple enough to read without feeling like a long lecture.\""
+              - article [ref=f6e421]:
+                - heading "Noah B." [level=3] [ref=f6e422]
+                - generic "5 stars" [ref=f6e423]
+                - paragraph [ref=f6e424]: "\"It was helpful for checking how my expression changed between work photos and casual selfies. The side-by-side feel made the report easy to use for real situations.\""
+              - article [ref=f6e425]:
+                - heading "Linda P." [level=3] [ref=f6e426]
+                - generic "5 stars" [ref=f6e427]
+                - paragraph [ref=f6e428]: "\"I used this before a video interview because I wanted to know if I looked tense. The report made it easier to soften my expression and look more open on camera.\""
+              - article [ref=f6e429]:
+                - heading "Marcus T." [level=3] [ref=f6e430]
+                - generic "5 stars" [ref=f6e431]
+                - paragraph [ref=f6e432]: "\"My friends tried it during a party, and it turned into a fun face reading game fast. Everyone wanted to compare the mood scores and personality notes from their own photos.\""
+              - article [ref=f6e433]:
+                - heading "Jade R." [level=3] [ref=f6e434]
+                - generic "5 stars" [ref=f6e435]
+                - paragraph [ref=f6e436]: "\"I make short social posts, so the score-card style worked well for me. One selfie gave me something visual that people could comment on right away.\""
+              - article [ref=f6e437]:
+                - heading "Ethan C." [level=3] [ref=f6e438]
+                - generic "5 stars" [ref=f6e439]
+                - paragraph [ref=f6e440]: "\"The expression check was more useful than I expected. I uploaded a few versions of the same portrait and could see which one looked calm instead of awkward.\""
+              - article [ref=f6e441]:
+                - heading "Sofia M." [level=3] [ref=f6e442]
+                - generic "5 stars" [ref=f6e443]
+                - paragraph [ref=f6e444]: "\"I came for the chinese face reading angle and stayed for the clear layout. The tool kept the ideas simple enough to read without feeling like a long lecture.\""
+              - article [ref=f6e445]:
+                - heading "Noah B." [level=3] [ref=f6e446]
+                - generic "5 stars" [ref=f6e447]
+                - paragraph [ref=f6e448]: "\"It was helpful for checking how my expression changed between work photos and casual selfies. The side-by-side feel made the report easy to use for real situations.\""
+              - article [ref=f6e449]:
+                - heading "Linda P." [level=3] [ref=f6e450]
+                - generic "5 stars" [ref=f6e451]
+                - paragraph [ref=f6e452]: "\"I used this before a video interview because I wanted to know if I looked tense. The report made it easier to soften my expression and look more open on camera.\""
+              - article [ref=f6e453]:
+                - heading "Marcus T." [level=3] [ref=f6e454]
+                - generic "5 stars" [ref=f6e455]
+                - paragraph [ref=f6e456]: "\"My friends tried it during a party, and it turned into a fun face reading game fast. Everyone wanted to compare the mood scores and personality notes from their own photos.\""
+              - article [ref=f6e457]:
+                - heading "Jade R." [level=3] [ref=f6e458]
+                - generic "5 stars" [ref=f6e459]
+                - paragraph [ref=f6e460]: "\"I make short social posts, so the score-card style worked well for me. One selfie gave me something visual that people could comment on right away.\""
+              - article [ref=f6e461]:
+                - heading "Ethan C." [level=3] [ref=f6e462]
+                - generic "5 stars" [ref=f6e463]
+                - paragraph [ref=f6e464]: "\"The expression check was more useful than I expected. I uploaded a few versions of the same portrait and could see which one looked calm instead of awkward.\""
+              - article [ref=f6e465]:
+                - heading "Sofia M." [level=3] [ref=f6e466]
+                - generic "5 stars" [ref=f6e467]
+                - paragraph [ref=f6e468]: "\"I came for the chinese face reading angle and stayed for the clear layout. The tool kept the ideas simple enough to read without feeling like a long lecture.\""
+              - article [ref=f6e469]:
+                - heading "Noah B." [level=3] [ref=f6e470]
+                - generic "5 stars" [ref=f6e471]
+                - paragraph [ref=f6e472]: "\"It was helpful for checking how my expression changed between work photos and casual selfies. The side-by-side feel made the report easy to use for real situations.\""
+              - article [ref=f6e473]:
+                - heading "Linda P." [level=3] [ref=f6e474]
+                - generic "5 stars" [ref=f6e475]
+                - paragraph [ref=f6e476]: "\"I used this before a video interview because I wanted to know if I looked tense. The report made it easier to soften my expression and look more open on camera.\""
+              - article [ref=f6e477]:
+                - heading "Marcus T." [level=3] [ref=f6e478]
+                - generic "5 stars" [ref=f6e479]
+                - paragraph [ref=f6e480]: "\"My friends tried it during a party, and it turned into a fun face reading game fast. Everyone wanted to compare the mood scores and personality notes from their own photos.\""
+              - article [ref=f6e481]:
+                - heading "Jade R." [level=3] [ref=f6e482]
+                - generic "5 stars" [ref=f6e483]
+                - paragraph [ref=f6e484]: "\"I make short social posts, so the score-card style worked well for me. One selfie gave me something visual that people could comment on right away.\""
+              - article [ref=f6e485]:
+                - heading "Ethan C." [level=3] [ref=f6e486]
+                - generic "5 stars" [ref=f6e487]
+                - paragraph [ref=f6e488]: "\"The expression check was more useful than I expected. I uploaded a few versions of the same portrait and could see which one looked calm instead of awkward.\""
+              - article [ref=f6e489]:
+                - heading "Sofia M." [level=3] [ref=f6e490]
+                - generic "5 stars" [ref=f6e491]
+                - paragraph [ref=f6e492]: "\"I came for the chinese face reading angle and stayed for the clear layout. The tool kept the ideas simple enough to read without feeling like a long lecture.\""
+              - article [ref=f6e493]:
+                - heading "Noah B." [level=3] [ref=f6e494]
+                - generic "5 stars" [ref=f6e495]
+                - paragraph [ref=f6e496]: "\"It was helpful for checking how my expression changed between work photos and casual selfies. The side-by-side feel made the report easy to use for real situations.\""
+              - article [ref=f6e497]:
+                - heading "Linda P." [level=3] [ref=f6e498]
+                - generic "5 stars" [ref=f6e499]
+                - paragraph [ref=f6e500]: "\"I used this before a video interview because I wanted to know if I looked tense. The report made it easier to soften my expression and look more open on camera.\""
+              - article [ref=f6e501]:
+                - heading "Marcus T." [level=3] [ref=f6e502]
+                - generic "5 stars" [ref=f6e503]
+                - paragraph [ref=f6e504]: "\"My friends tried it during a party, and it turned into a fun face reading game fast. Everyone wanted to compare the mood scores and personality notes from their own photos.\""
+              - article [ref=f6e505]:
+                - heading "Jade R." [level=3] [ref=f6e506]
+                - generic "5 stars" [ref=f6e507]
+                - paragraph [ref=f6e508]: "\"I make short social posts, so the score-card style worked well for me. One selfie gave me something visual that people could comment on right away.\""
+          - paragraph [ref=f6e509]: "Reviews from: Reddit, Product Hunt, G2, TrustRadius, Google Play, App Store, and more."
+        - generic [ref=f6e511]:
+          - heading "Pokecut Trusted by Millions of Leaders and Users" [level=2] [ref=f6e512]
+          - generic [ref=f6e513]:
+            - generic [ref=f6e514]:
+              - article [ref=f6e516]:
+                - img "1M+ Users Worldwide" [ref=f6e518]
+                - heading "1M+ Users Worldwide" [level=3] [ref=f6e519]
+                - paragraph [ref=f6e520]: Pokecut generates over 500,000 images every day
+              - article [ref=f6e522]:
+                - img "#2 on Product Hunt" [ref=f6e524]
+                - heading "#2 on Product Hunt" [level=3] [ref=f6e525]:
+                  - link "#2 on Product Hunt" [ref=f6e526] [cursor=pointer]:
+                    - /url: https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut
+                - paragraph [ref=f6e527]: "Pokecut launched and won #2 product of the day"
+            - generic [ref=f6e528]:
+              - article [ref=f6e529]:
+                - img "Professional Privacy Protection" [ref=f6e531]
+                - heading "Professional Privacy Protection" [level=3] [ref=f6e532]
+                - paragraph [ref=f6e533]: Ensure 100% data privacy for every photo
+              - article [ref=f6e534]:
+                - img "Trusted by Well-known Brands" [ref=f6e536]
+                - heading "Trusted by Well-known Brands" [level=3] [ref=f6e537]
+                - paragraph [ref=f6e538]: Apple, Google, PayPal, Stripe, Product Hunt, G2, TrustRadius
+        - generic [ref=f6e540]:
+          - heading "FAQs About AI Face Reader" [level=2] [ref=f6e541]
+          - generic [ref=f6e543]:
+            - heading "What kind of photo works best for the AI Face Reader?" [level=3] [ref=f6e546] [cursor=pointer]
+            - paragraph [ref=f6e549]: For the best face reading personality report, use a clear, front-facing portrait with good lighting. Avoid wearing glasses or hats that obscure your features, and try to maintain a neutral or natural expression for the initial scan.
+          - generic [ref=f6e551]:
+            - heading "What is the difference between face reading and a facial expression test?" [level=3] [ref=f6e554] [cursor=pointer]
+            - paragraph [ref=f6e557]: Face reading typically looks at permanent facial structures to infer personality traits, while a facial expression test focuses on temporary muscle movements to identify current emotions. Our tool combines both for a comprehensive analysis.
+          - generic [ref=f6e559]:
+            - heading "Is this AI face reader free to try?" [level=3] [ref=f6e562] [cursor=pointer]
+            - paragraph [ref=f6e565]:
+              - text: Yes. You can enjoy 20 free editing credits to experience this tool. This allows you to create your face reading result at no cost. If you find yourself needing more creative power or advanced features, feel free to
+              - link "check out store" [ref=f6e566] [cursor=pointer]:
+                - /url: /pricing
+              - text: for flexible premium plans.
+          - generic [ref=f6e568]:
+            - heading "Do I need a clear front photo for better results?" [level=3] [ref=f6e571] [cursor=pointer]
+            - paragraph [ref=f6e574]: A clear front photo usually works best. Good light, a visible face, and a natural pose help the tool read small details around the eyes, brows, and mouth. Blurry photos, heavy filters, or strong side angles can make the result less useful.
+          - generic [ref=f6e576]:
+            - heading "Will my face photo be stored after analysis?" [level=3] [ref=f6e579] [cursor=pointer]
+            - paragraph [ref=f6e582]: Your privacy matters here. The uploaded photo is used to run the face analysis, then removed after processing. That means you can try the AI face reader, check your report, and explore expression or personality clues without keeping your picture on the server longer than needed.
+    - generic [ref=f6e584]:
+      - generic [ref=f6e585]:
+        - generic [ref=f6e586]:
+          - generic [ref=f6e587]: POKECUT
+          - link "Pokecut - Use AI to create photos with just a few click or a prompt | Product Hunt" [ref=f6e588] [cursor=pointer]:
+            - /url: https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut
+            - img "Pokecut - Use AI to create photos with just a few click or a prompt | Product Hunt"
+        - generic [ref=f6e590]:
+          - generic [ref=f6e591]:
+            - generic [ref=f6e592]: AI Tools for Free
+            - generic [ref=f6e593]:
+              - link "All Tools" [ref=f6e595] [cursor=pointer]:
+                - /url: /tools
+              - link "Photo Collage Maker" [ref=f6e597] [cursor=pointer]:
+                - /url: /collage-maker
+              - link "Batch Photo Edit" [ref=f6e599] [cursor=pointer]:
+                - /url: /batch-edit
+              - link "Image to Image AI" [ref=f6e601] [cursor=pointer]:
+                - /url: /image-to-image-ai
+              - link "AI Replace" [ref=f6e603] [cursor=pointer]:
+                - /url: /ai-replace
+              - link "AI Background" [ref=f6e605] [cursor=pointer]:
+                - /url: /ai-background
+              - link "AI Image Generator" [ref=f6e607] [cursor=pointer]:
+                - /url: /ai-image-generator
+              - link "AI Background Remover" [ref=f6e609] [cursor=pointer]:
+                - /url: /tools/background-remover
+              - link "AI Background Changer" [ref=f6e611] [cursor=pointer]:
+                - /url: /tools/background-changer
+              - link "Magic eraser" [ref=f6e613] [cursor=pointer]:
+                - /url: /tools/magic-eraser-with-ai-detection
+              - link "AI Photo Enhancer" [ref=f6e615] [cursor=pointer]:
+                - /url: /tools/photo-enhancer
+              - link "AI ID Photo" [ref=f6e617] [cursor=pointer]:
+                - /url: /tools/id-photo-maker
+              - link "AI Image Extender" [ref=f6e619] [cursor=pointer]:
+                - /url: /tools/ai-image-extender
+          - generic [ref=f6e620]:
+            - generic [ref=f6e621]: Help
+            - generic [ref=f6e622]:
+              - link "FAQ" [ref=f6e624] [cursor=pointer]:
+                - /url: /help
+              - link "Contact us" [ref=f6e626] [cursor=pointer]:
+                - /url: /help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us
+              - link "Privacy Policy" [ref=f6e628] [cursor=pointer]:
+                - /url: /privacy-policy
+              - link "Term of Service" [ref=f6e630] [cursor=pointer]:
+                - /url: /term-of-use
+              - link "Payment Terms" [ref=f6e632] [cursor=pointer]:
+                - /url: /payment-terms
+          - generic [ref=f6e633]:
+            - generic [ref=f6e634]: Company
+            - link "About us" [ref=f6e637] [cursor=pointer]:
+              - /url: /about
+        - generic [ref=f6e638]:
+          - generic [ref=f6e639]:
+            - link [ref=f6e641] [cursor=pointer]:
+              - /url: https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944
+              - generic [ref=f6e642]:
+                - paragraph [ref=f6e643]: Download on the
+                - paragraph [ref=f6e644]: App Store
+            - link [ref=f6e646] [cursor=pointer]:
+              - /url: https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en
+              - generic [ref=f6e647]:
+                - paragraph [ref=f6e648]: GET IT ON
+                - paragraph [ref=f6e649]: Google Play
+          - generic [ref=f6e651]:
+            - link "Instagram" [ref=f6e653] [cursor=pointer]:
+              - /url: https://www.instagram.com/pokecut_app/
+            - link "Threads" [ref=f6e656] [cursor=pointer]:
+              - /url: https://www.threads.net/@pokecut_app
+            - link "Youtube" [ref=f6e659] [cursor=pointer]:
+              - /url: https://www.youtube.com/@Pokecut_com
+            - link "Tiktok" [ref=f6e662] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@pokecut
+            - link "X" [ref=f6e665] [cursor=pointer]:
+              - /url: https://x.com/Pokecut_
+            - link "Discord" [ref=f6e668] [cursor=pointer]:
+              - /url: https://discord.gg/KaPUfqb65b
+      - paragraph [ref=f6e670]: Copyright © 2026 Pokecut All Rights Reserved.
+  - button "DEBUG" [ref=f6e672] [cursor=pointer]

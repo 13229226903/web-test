@@ -1,0 +1,282 @@
+- generic [ref=f13e2]:
+  - generic [ref=f13e3]:
+    - generic [ref=f13e5]:
+      - link [ref=f13e6] [cursor=pointer]:
+        - /url: /
+        - img "pokecut logo" [ref=f13e7]
+      - generic [ref=f13e8]:
+        - button "AI Free Tools" [ref=f13e10] [cursor=pointer]
+        - button "Portrait Editor" [ref=f13e14] [cursor=pointer]
+        - button "Discover" [ref=f13e18] [cursor=pointer]
+        - link "Pricing 60% OFF" [ref=f13e22] [cursor=pointer]:
+          - /url: /pricing
+          - generic [ref=f13e25]:
+            - text: Pricing
+            - generic [ref=f13e26]: 60% OFF
+      - generic [ref=f13e28]: UserFE85363C09
+    - generic [ref=f13e34]:
+      - paragraph [ref=f13e36]:
+        - link "Home" [ref=f13e37] [cursor=pointer]:
+          - /url: /
+        - link "> Tools" [ref=f13e38] [cursor=pointer]:
+          - /url: /tools
+        - text: "> AI Face Reader Online: Free Personality & Emotion Test"
+      - navigation "All Free Tools" [ref=f13e40]:
+        - list [ref=f13e41]:
+          - listitem [ref=f13e42]:
+            - button "AI Image" [ref=f13e43] [cursor=pointer]
+          - listitem [ref=f13e46]:
+            - button "Enhance" [ref=f13e47] [cursor=pointer]
+          - listitem [ref=f13e50]:
+            - button "Remove Background" [ref=f13e51] [cursor=pointer]
+          - listitem [ref=f13e54]:
+            - button "Clothes Changer" [ref=f13e55] [cursor=pointer]
+          - listitem [ref=f13e58]:
+            - button "Eraser" [ref=f13e59] [cursor=pointer]
+          - listitem [ref=f13e62]:
+            - button "AI Background" [ref=f13e63] [cursor=pointer]
+          - listitem [ref=f13e66]:
+            - button "AI Replace" [ref=f13e67] [cursor=pointer]
+          - listitem [ref=f13e70]:
+            - button "AI Extend" [ref=f13e71] [cursor=pointer]
+          - listitem [ref=f13e74]:
+            - button "ID Photo" [ref=f13e75] [cursor=pointer]
+          - listitem [ref=f13e78]:
+            - button "Resize" [ref=f13e79] [cursor=pointer]
+          - listitem [ref=f13e82]:
+            - button "Batch Edit" [ref=f13e83] [cursor=pointer]
+          - listitem [ref=f13e86]:
+            - button "Template" [ref=f13e87] [cursor=pointer]
+      - generic [ref=f13e90]:
+        - generic [ref=f13e431]:
+          - generic [ref=f13e432]:
+            - generic [ref=f13e433]:
+              - generic [ref=f13e434]: "1"
+              - heading "Original Image" [level=3] [ref=f13e435]
+            - img "Original Image" [ref=f13e437]
+            - button "Upload Image" [ref=f13e439] [cursor=pointer]
+          - generic [ref=f13e440]:
+            - generic [ref=f13e441]:
+              - generic [ref=f13e442]: "2"
+              - heading "Analysis Result" [level=3] [ref=f13e443]
+            - img "Analysis Result" [ref=f13e492]
+            - button "Download" [ref=f13e450] [cursor=pointer]
+          - generic [ref=f13e451]:
+            - generic [ref=f13e452]:
+              - generic [ref=f13e453]: "3"
+              - heading "Optimized Result" [level=3] [ref=f13e454]
+            - img "Optimized Result" [ref=f13e494]
+            - generic [ref=f13e495]:
+              - button "Download" [ref=f13e496] [cursor=pointer]
+              - button "Continue in Portrait Editor" [ref=f13e497] [cursor=pointer]
+        - generic [ref=f13e128]:
+          - heading "What Can You Explore From AI Face Reader?" [level=2] [ref=f13e129]
+          - generic [ref=f13e130]:
+            - generic [ref=f13e135]:
+              - heading "Read Facial Expressions in Daily Photos" [level=3] [ref=f13e136]
+              - paragraph [ref=f13e137]: Use AI face reader when you want clearer feedback from a real photo, not a vague guess. Pokecut studies the eyes, mouth, brows, and small muscle tension that shape first impressions. That makes it useful before meetings, interviews, dates, or school talks when you want to know whether your expression reads calm, guarded, friendly, or unsure.Compare multiple selfies to see how your look changes across moments. Treat it like a practical facial expressions test that helps you notice patterns, adjust your delivery, and understand how your face may come across before the conversation begins.
+            - generic [ref=f13e142]:
+              - heading "Explore Face Reading Personality Signals" [level=3] [ref=f13e143]
+              - paragraph [ref=f13e144]: Some users want emotion feedback. Others want to explore face reading personality clues that may shape first impressions. Pokecut gives both in one place. It reviews visible traits like face balance, brow shape, eye spacing, and jaw flow, then turns them into a short report about social style, confidence, and personal energy that is easy to scan.If you follow chinese face reading or face reading astrology content online, this tool gives you a photo-based way to explore the idea without long manuals. Use it for curiosity, self-reflection, or shareable content from one portrait.
+        - generic [ref=f13e146]:
+          - heading "When Can You Use Pokecut's AI Face Reader?" [level=2] [ref=f13e147]
+          - generic [ref=f13e148]:
+            - generic [ref=f13e153]:
+              - heading "Capture Your Overlooked Micro-expressions" [level=3] [ref=f13e154]
+              - paragraph [ref=f13e155]: A facial expression test helps you see signals you usually miss in your own face. Upload a few photos with different looks, then compare how your smile, eyes, and brows shift from calm to nervous or confident. That makes practice more useful than guessing in a mirror.Use the score before a speech, job interview, class talk, or date. Pokecut shows which expression reads warm, steady, or tense, so you can adjust your face before the real moment starts. It is a simple way to train better reactions with one photo.
+            - generic [ref=f13e160]:
+              - heading "The Fun Personality Blind Box Challenge" [level=3] [ref=f13e161]
+              - paragraph [ref=f13e162]:
+                - text: When a group chat goes quiet or a party needs a new topic,
+                - link "Pokecut's palm reading" [ref=f13e163] [cursor=pointer]:
+                  - /url: /tools/ai-palm-reading
+                - text: and face reading tools gives people something playful to react to. Friends can upload photos and compare who looks like the natural leader, the calm observer, or the most open person in the room.Pokecut turns one picture into a quick face reading report people can share and talk about together. It works well for casual events, team games, and social posts where you want fast interaction without extra tools first.
+            - generic [ref=f13e168]:
+              - heading "See What Face Reading Personality Hints Suggest" [level=3] [ref=f13e169]
+              - paragraph [ref=f13e170]:
+                - text: Many people want to know what their face seems to say before they speak. Pokecut
+                - link "looks at facial balance" [ref=f13e171] [cursor=pointer]:
+                  - /url: /tools/golden-ratio-face-calculator
+                - text: ", eye shape, brow direction, and other visible traits to build a face reading personality summary that is easy to follow. You get a starting point for how others may read your energy, drive, or warmth.Some users also enjoy the cultural angle behind chinese face reading ideas. The tool presents playful patterns and clear notes for self-reflection, conversation, or content, giving you a new way to think about your first impression from one portrait."
+            - generic [ref=f13e176]:
+              - heading "Make Shareable AI Face Reader Score Cards" [level=3] [ref=f13e177]
+              - paragraph [ref=f13e178]:
+                - text: If you post quiz content, reaction cards, or quick personality topics, an AI face reader score card gives you an easy format to share. Upload one selfie and turn it into a visual report with mood cues, expression patterns, and face reading notes people can discuss.
+                - link "Pokecut's image to image feature" [ref=f13e179] [cursor=pointer]:
+                  - /url: /image-to-image-ai
+                - text: helps you move from photo to post without a long edit process. Use the finished card for TikTok, Xiaohongshu, or story updates when you want comments and fast replies. It is a practical content angle for creators who need fresh interaction.
+        - generic [ref=f13e180]:
+          - heading "Why Try Pokecut's AI Face Reader?" [level=2] [ref=f13e181]
+          - generic [ref=f13e182]: Pokecut offers a unique blend of speed and wisdom. It is the best choice to read faces for anyone looking to discover deep insights into their life and character instantly.
+          - generic [ref=f13e183]:
+            - generic [ref=f13e189]:
+              - heading "Scan Tiny Facial Signals" [level=3] [ref=f13e190]
+              - paragraph [ref=f13e191]: AI face reader studies small changes in the eyes, brows, and mouth to show mood patterns. It gives you a fast read when you want clearer feedback from one photo.
+            - generic [ref=f13e197]:
+              - heading "Keep Every Photo Private" [level=3] [ref=f13e198]
+              - paragraph [ref=f13e199]: Your upload is used for analysis only. Pokecut processes the photo in a protected flow, then removes it after the report is ready, so you can explore face reading without extra worry.
+            - generic [ref=f13e205]:
+              - heading "Blend Modern and Classic Reading" [level=3] [ref=f13e206]
+              - paragraph [ref=f13e207]: The report combines visual pattern analysis with ideas users know from chinese face reading. That gives you a broader, more interesting summary of mood, style, and first-impression traits.
+        - generic [ref=f13e464]:
+          - heading "How to Use Pokecut's AI Face Reader?" [level=2] [ref=f13e465]
+          - generic [ref=f13e466]:
+            - generic [ref=f13e468]:
+              - generic [ref=f13e470]: "01"
+              - generic [ref=f13e471]:
+                - 'heading "Step 1: Upload Your Photo" [level=3] [ref=f13e472]'
+                - paragraph [ref=f13e473]: Choose a clear face photo with good light. A front view helps the AI face reader catch expression details and face shape clues.
+            - generic [ref=f13e475]:
+              - generic [ref=f13e477]: "02"
+              - generic [ref=f13e478]:
+                - 'heading "Step 2: Run the Face Reading" [level=3] [ref=f13e479]'
+                - paragraph [ref=f13e480]: Let the tool scan your eyes, brows, smile, and facial balance. In a short time, you get mood hints and a face reading report.
+            - generic [ref=f13e482]:
+              - generic [ref=f13e484]: "03"
+              - generic [ref=f13e485]:
+                - 'heading "Step 3: Review and Download Results" [level=3] [ref=f13e486]'
+                - paragraph [ref=f13e487]: Read the report online, compare different photos, and save the result when you want to keep the emotion check or personality summary.
+        - generic [ref=f13e239]:
+          - heading "Explore More Features of Pokecut" [level=2] [ref=f13e242]
+          - generic [ref=f13e244]:
+            - link "AI Hair Color Analysis" [ref=f13e246] [cursor=pointer]:
+              - /url: /tools/ai-hair-color-analysis
+            - link "Lips Shape Detector" [ref=f13e249] [cursor=pointer]:
+              - /url: /tools/lips-shape-detector
+            - link "Body Shape Detector" [ref=f13e252] [cursor=pointer]:
+              - /url: /tools/body-shape-detector
+            - link "Gender Detector" [ref=f13e255] [cursor=pointer]:
+              - /url: /tools/gender-detector
+            - link "AI Hairstyle Finder" [ref=f13e258] [cursor=pointer]:
+              - /url: /tools/ai-hairstyle-finder
+            - link "Kibbe Body Type Test" [ref=f13e261] [cursor=pointer]:
+              - /url: /tools/kibbe-body-type-test
+        - generic [ref=f13e263]:
+          - heading "What Do Users Say About Pokecut's AI Face Reader?" [level=2] [ref=f13e264]
+          - paragraph [ref=f13e265]: Users like how easy it is to test expressions and read face cues.
+          - paragraph [ref=f13e266]: "Reviews from: Reddit, Product Hunt, G2, TrustRadius, Google Play, App Store, and more."
+        - generic [ref=f13e268]:
+          - heading "Pokecut Trusted by Millions of Leaders and Users" [level=2] [ref=f13e269]
+          - generic [ref=f13e270]:
+            - generic [ref=f13e271]:
+              - article [ref=f13e273]:
+                - img "1M+ Users Worldwide" [ref=f13e275]
+                - heading "1M+ Users Worldwide" [level=3] [ref=f13e276]
+                - paragraph [ref=f13e277]: Pokecut generates over 500,000 images every day
+              - article [ref=f13e279]:
+                - img "#2 on Product Hunt" [ref=f13e281]
+                - heading "#2 on Product Hunt" [level=3] [ref=f13e282]:
+                  - link "#2 on Product Hunt" [ref=f13e283] [cursor=pointer]:
+                    - /url: https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut
+                - paragraph [ref=f13e284]: "Pokecut launched and won #2 product of the day"
+            - generic [ref=f13e285]:
+              - article [ref=f13e286]:
+                - img "Professional Privacy Protection" [ref=f13e288]
+                - heading "Professional Privacy Protection" [level=3] [ref=f13e289]
+                - paragraph [ref=f13e290]: Ensure 100% data privacy for every photo
+              - article [ref=f13e291]:
+                - img "Trusted by Well-known Brands" [ref=f13e293]
+                - heading "Trusted by Well-known Brands" [level=3] [ref=f13e294]
+                - paragraph [ref=f13e295]: Apple, Google, PayPal, Stripe, Product Hunt, G2, TrustRadius
+        - generic [ref=f13e297]:
+          - heading "FAQs About AI Face Reader" [level=2] [ref=f13e298]
+          - generic [ref=f13e300]:
+            - heading "What kind of photo works best for the AI Face Reader?" [level=3] [ref=f13e303] [cursor=pointer]
+            - paragraph [ref=f13e306]: For the best face reading personality report, use a clear, front-facing portrait with good lighting. Avoid wearing glasses or hats that obscure your features, and try to maintain a neutral or natural expression for the initial scan.
+          - generic [ref=f13e308]:
+            - heading "What is the difference between face reading and a facial expression test?" [level=3] [ref=f13e311] [cursor=pointer]
+            - paragraph [ref=f13e314]: Face reading typically looks at permanent facial structures to infer personality traits, while a facial expression test focuses on temporary muscle movements to identify current emotions. Our tool combines both for a comprehensive analysis.
+          - generic [ref=f13e316]:
+            - heading "Is this AI face reader free to try?" [level=3] [ref=f13e319] [cursor=pointer]
+            - paragraph [ref=f13e322]:
+              - text: Yes. You can enjoy 20 free editing credits to experience this tool. This allows you to create your face reading result at no cost. If you find yourself needing more creative power or advanced features, feel free to
+              - link "check out store" [ref=f13e323] [cursor=pointer]:
+                - /url: /pricing
+              - text: for flexible premium plans.
+          - generic [ref=f13e325]:
+            - heading "Do I need a clear front photo for better results?" [level=3] [ref=f13e328] [cursor=pointer]
+            - paragraph [ref=f13e331]: A clear front photo usually works best. Good light, a visible face, and a natural pose help the tool read small details around the eyes, brows, and mouth. Blurry photos, heavy filters, or strong side angles can make the result less useful.
+          - generic [ref=f13e333]:
+            - heading "Will my face photo be stored after analysis?" [level=3] [ref=f13e336] [cursor=pointer]
+            - paragraph [ref=f13e339]: Your privacy matters here. The uploaded photo is used to run the face analysis, then removed after processing. That means you can try the AI face reader, check your report, and explore expression or personality clues without keeping your picture on the server longer than needed.
+    - generic [ref=f13e341]:
+      - generic [ref=f13e342]:
+        - generic [ref=f13e343]:
+          - generic [ref=f13e344]: POKECUT
+          - link "Pokecut - Use AI to create photos with just a few click or a prompt | Product Hunt" [ref=f13e345] [cursor=pointer]:
+            - /url: https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut
+            - img "Pokecut - Use AI to create photos with just a few click or a prompt | Product Hunt"
+        - generic [ref=f13e347]:
+          - generic [ref=f13e348]:
+            - generic [ref=f13e349]: AI Tools for Free
+            - generic [ref=f13e350]:
+              - link "All Tools" [ref=f13e352] [cursor=pointer]:
+                - /url: /tools
+              - link "Photo Collage Maker" [ref=f13e354] [cursor=pointer]:
+                - /url: /collage-maker
+              - link "Batch Photo Edit" [ref=f13e356] [cursor=pointer]:
+                - /url: /batch-edit
+              - link "Image to Image AI" [ref=f13e358] [cursor=pointer]:
+                - /url: /image-to-image-ai
+              - link "AI Replace" [ref=f13e360] [cursor=pointer]:
+                - /url: /ai-replace
+              - link "AI Background" [ref=f13e362] [cursor=pointer]:
+                - /url: /ai-background
+              - link "AI Image Generator" [ref=f13e364] [cursor=pointer]:
+                - /url: /ai-image-generator
+              - link "AI Background Remover" [ref=f13e366] [cursor=pointer]:
+                - /url: /tools/background-remover
+              - link "AI Background Changer" [ref=f13e368] [cursor=pointer]:
+                - /url: /tools/background-changer
+              - link "Magic eraser" [ref=f13e370] [cursor=pointer]:
+                - /url: /tools/magic-eraser-with-ai-detection
+              - link "AI Photo Enhancer" [ref=f13e372] [cursor=pointer]:
+                - /url: /tools/photo-enhancer
+              - link "AI ID Photo" [ref=f13e374] [cursor=pointer]:
+                - /url: /tools/id-photo-maker
+              - link "AI Image Extender" [ref=f13e376] [cursor=pointer]:
+                - /url: /tools/ai-image-extender
+          - generic [ref=f13e377]:
+            - generic [ref=f13e378]: Help
+            - generic [ref=f13e379]:
+              - link "FAQ" [ref=f13e381] [cursor=pointer]:
+                - /url: /help
+              - link "Contact us" [ref=f13e383] [cursor=pointer]:
+                - /url: /help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us
+              - link "Privacy Policy" [ref=f13e385] [cursor=pointer]:
+                - /url: /privacy-policy
+              - link "Term of Service" [ref=f13e387] [cursor=pointer]:
+                - /url: /term-of-use
+              - link "Payment Terms" [ref=f13e389] [cursor=pointer]:
+                - /url: /payment-terms
+          - generic [ref=f13e390]:
+            - generic [ref=f13e391]: Company
+            - link "About us" [ref=f13e394] [cursor=pointer]:
+              - /url: /about
+        - generic [ref=f13e395]:
+          - generic [ref=f13e396]:
+            - link [ref=f13e398] [cursor=pointer]:
+              - /url: https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944
+              - generic [ref=f13e399]:
+                - paragraph [ref=f13e400]: Download on the
+                - paragraph [ref=f13e401]: App Store
+            - link [ref=f13e403] [cursor=pointer]:
+              - /url: https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en
+              - generic [ref=f13e404]:
+                - paragraph [ref=f13e405]: GET IT ON
+                - paragraph [ref=f13e406]: Google Play
+          - generic [ref=f13e408]:
+            - link "Instagram" [ref=f13e410] [cursor=pointer]:
+              - /url: https://www.instagram.com/pokecut_app/
+            - link "Threads" [ref=f13e413] [cursor=pointer]:
+              - /url: https://www.threads.net/@pokecut_app
+            - link "Youtube" [ref=f13e416] [cursor=pointer]:
+              - /url: https://www.youtube.com/@Pokecut_com
+            - link "Tiktok" [ref=f13e419] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@pokecut
+            - link "X" [ref=f13e422] [cursor=pointer]:
+              - /url: https://x.com/Pokecut_
+            - link "Discord" [ref=f13e425] [cursor=pointer]:
+              - /url: https://discord.gg/KaPUfqb65b
+      - paragraph [ref=f13e427]: Copyright © 2026 Pokecut All Rights Reserved.
+  - button "DEBUG" [ref=f13e429] [cursor=pointer]

@@ -1,0 +1,7 @@
+[2026-09-01 11:38:51] orchestrator start task=check_playwright_mcp_20260901_112000 execution_mode=codex_single_context
+[2026-09-01 11:40:09] page-map-sync start driver=playwright_mcp_only smoke_check
+[2026-09-01 11:40:09] page-map-sync step:mcp_tabs list ok
+[2026-09-01 11:40:09] page-map-sync step:mcp_snapshot smoke_page ok
+[2026-09-01 11:40:09] page-map-sync step:mcp_action click smoke_button ok
+[2026-09-01 11:40:09] page-map-sync step:screenshot artifacts/check_playwright_mcp_20260901_112000/shots/playwright_mcp_smoke.png
+[2026-09-01 11:40:09] orchestrator done playwright_mcp_smoke_check passed

@@ -1,0 +1,214 @@
+{
+  "images": [
+    {
+      "img": "1K.jpg",
+      "url": "http://10.17.1.66:3001/agent?pid=cdf712c6-3c11-4bd3-bd48-8bbea6c154bb#",
+      "row_data": [
+        {
+          "idx": 0,
+          "text": "Standard Mode | 1200px*1600px | → | 2400px*3200px",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[4.6875rem] ring-inset ring-[0.1875rem] ring-c-theme"
+        },
+        {
+          "idx": 1,
+          "text": "Old Photo Mode",
+          "class": "old-photo-card relative flex w-full shrink-0 flex-col items-start justify-center gap-[0.5rem] overflow-hidden rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left h-[3.75rem] cursor-pointer hover:opacity-80"
+        },
+        {
+          "idx": 2,
+          "text": "Portrait Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        },
+        {
+          "idx": 3,
+          "text": "Text Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        },
+        {
+          "idx": 4,
+          "text": "Ultra HD Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        }
+      ],
+      "body": "AI Enhancer\nStandard Mode\n1200px*1600px\n→\n2400px*3200px\nOld Photo Mode\nPortrait Mode\nText Mode\nUltra HD Mode\nEnhance",
+      "strings": {
+        "2K": false,
+        "4K": false,
+        "8K": false,
+        "2048": false,
+        "4096": false,
+        "8192": false,
+        "Upscale": false,
+        "resolution": false
+      }
+    },
+    {
+      "img": "4K.jpg",
+      "url": "http://10.17.1.66:3001/agent?pid=fb0ceef4-97e2-4611-9443-e61fd99e114b#",
+      "row_data": [
+        {
+          "idx": 0,
+          "text": "Standard Mode | 2730px*4096px | → | 2730px*4096px",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[4.6875rem] ring-inset ring-[0.1875rem] ring-c-theme"
+        },
+        {
+          "idx": 1,
+          "text": "Old Photo Mode",
+          "class": "old-photo-card relative flex w-full shrink-0 flex-col items-start justify-center gap-[0.5rem] overflow-hidden rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left h-[3.75rem] cursor-pointer hover:opacity-80"
+        },
+        {
+          "idx": 2,
+          "text": "Portrait Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        },
+        {
+          "idx": 3,
+          "text": "Text Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        },
+        {
+          "idx": 4,
+          "text": "Ultra HD Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        }
+      ],
+      "body": "AI Enhancer\nStandard Mode\n2730px*4096px\n→\n2730px*4096px\nOld Photo Mode\nPortrait Mode\nText Mode\nUltra HD Mode\nEnhance",
+      "strings": {
+        "2K": false,
+        "4K": false,
+        "8K": false,
+        "2048": false,
+        "4096": true,
+        "8192": false,
+        "Upscale": false,
+        "resolution": false
+      }
+    },
+    {
+      "img": "4K.png",
+      "url": "http://10.17.1.66:3001/agent?pid=5a2eaa41-3a73-488b-a5a6-11fba351c435#",
+      "row_data": [
+        {
+          "idx": 0,
+          "text": "Standard Mode | 4096px*2730px | → | 4096px*2730px",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[4.6875rem] ring-inset ring-[0.1875rem] ring-c-theme"
+        },
+        {
+          "idx": 1,
+          "text": "Old Photo Mode",
+          "class": "old-photo-card relative flex w-full shrink-0 flex-col items-start justify-center gap-[0.5rem] overflow-hidden rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left h-[3.75rem] cursor-pointer hover:opacity-80"
+        },
+        {
+          "idx": 2,
+          "text": "Portrait Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        },
+        {
+          "idx": 3,
+          "text": "Text Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        },
+        {
+          "idx": 4,
+          "text": "Ultra HD Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        }
+      ],
+      "body": "AI Enhancer\nStandard Mode\n4096px*2730px\n→\n4096px*2730px\nOld Photo Mode\nPortrait Mode\nText Mode\nUltra HD Mode\nEnhance",
+      "strings": {
+        "2K": false,
+        "4K": false,
+        "8K": false,
+        "2048": false,
+        "4096": true,
+        "8192": false,
+        "Upscale": false,
+        "resolution": false
+      }
+    },
+    {
+      "img": "8K.jpg",
+      "url": "http://10.17.1.66:3001/agent?pid=9b745262-6fa3-49ae-877a-f59d2f10bd0f#",
+      "row_data": [
+        {
+          "idx": 0,
+          "text": "Standard Mode | 3072px*4096px | → | 3072px*4096px",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[4.6875rem] ring-inset ring-[0.1875rem] ring-c-theme"
+        },
+        {
+          "idx": 1,
+          "text": "Old Photo Mode",
+          "class": "old-photo-card relative flex w-full shrink-0 flex-col items-start justify-center gap-[0.5rem] overflow-hidden rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left h-[3.75rem] cursor-pointer hover:opacity-80"
+        },
+        {
+          "idx": 2,
+          "text": "Portrait Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        },
+        {
+          "idx": 3,
+          "text": "Text Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        },
+        {
+          "idx": 4,
+          "text": "Ultra HD Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        }
+      ],
+      "body": "AI Enhancer\nStandard Mode\n3072px*4096px\n→\n3072px*4096px\nOld Photo Mode\nPortrait Mode\nText Mode\nUltra HD Mode\nEnhance",
+      "strings": {
+        "2K": false,
+        "4K": false,
+        "8K": false,
+        "2048": false,
+        "4096": true,
+        "8192": false,
+        "Upscale": false,
+        "resolution": false
+      }
+    },
+    {
+      "img": "低分辨率.JPG",
+      "url": "http://10.17.1.66:3001/agent?pid=8db2f9b0-ab5a-44e7-b7a9-262ac202e4f3#",
+      "row_data": [
+        {
+          "idx": 0,
+          "text": "Standard Mode | 512px*768px | → | 1024px*1536px",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[4.6875rem] ring-inset ring-[0.1875rem] ring-c-theme"
+        },
+        {
+          "idx": 1,
+          "text": "Old Photo Mode",
+          "class": "old-photo-card relative flex w-full shrink-0 flex-col items-start justify-center gap-[0.5rem] overflow-hidden rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left h-[3.75rem] cursor-pointer hover:opacity-80"
+        },
+        {
+          "idx": 2,
+          "text": "Portrait Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        },
+        {
+          "idx": 3,
+          "text": "Text Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        },
+        {
+          "idx": 4,
+          "text": "Ultra HD Mode",
+          "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80"
+        }
+      ],
+      "body": "AI Enhancer\nStandard Mode\n512px*768px\n→\n1024px*1536px\nOld Photo Mode\nPortrait Mode\nText Mode\nUltra HD Mode\nEnhance",
+      "strings": {
+        "2K": false,
+        "4K": false,
+        "8K": false,
+        "2048": false,
+        "4096": false,
+        "8192": false,
+        "Upscale": false,
+        "resolution": false
+      }
+    }
+  ]
+}

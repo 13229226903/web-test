@@ -1,0 +1,96 @@
+page: AiFaceReader
+url: https://pokecut-dev.guangzhuiyuan.com/tools/ai-face-reader
+source_prd: D:/downloads/用例/task-39-飞书文档_ 检测类功能适配UI需求文档 (1)/检测类功能适配UI需求文档.md
+landmark:
+  selector: 'h1:text-is("AI Face Reader: Read Your Expressions Online for Free")'
+  description: 上传前 SEO Hero 主标题，页面唯一标识
+entry:
+  from: DirectUrl
+  trigger: 直接打开 /tools/ai-face-reader
+  selector: 'a[href*="/tools/ai-face-reader"]'
+exploration:
+  task_id: new_feature_detection_ui_20260901_124711
+  tested_url: https://pokecut-dev.guangzhuiyuan.com/tools/ai-face-reader
+  viewport_pc: 1920x1080
+  driver: playwright_mcp_only
+  environment_strategy: 测试服 guangzhuiyuan；需登录（会员账号）才能上传生成；上传素材 test_images/有人脸.JPG
+
+elements:
+  upload_input:
+    selector: '#img2imgFirstScreenUploadInput'
+    type: file
+    note: 同 nose-shape-detector，label 拦截点击，需 force/坐标点击
+  seo_h1:
+    selector: 'h1'
+    text: AI Face Reader: Read Your Expressions Online for Free
+  seo_desc:
+    selector: 'p:has-text("Unlock the secrets of your soul")'
+  upload_button:
+    selector: 'button:has-text("Choose File")'
+  result_col_original:
+    selector: 'text=Original Image'
+  result_col_analysis:
+    selector: 'text=Analysis Result'
+  result_col_optimized:
+    selector: 'text=Optimized Result'
+
+states:
+  seo_initial:
+    description: 上传前 SEO 首屏，无三栏结果态
+    trigger: 打开页面等待 H1 可见
+    url_or_state_key: /tools/ai-face-reader
+    buttons:
+      btn_choose_file:
+        selector: '#img2imgFirstScreenUploadInput'
+        role_or_text: 'Choose File'
+        action_result: 触发系统文件选择器
+        reversible: true
+  result_analysis_waiting:
+    description: 分析生成中 + 优化等待态（Waiting for analysis...）
+    trigger: 上传有人脸图后立即
+    url_or_state_key: /tools/ai-face-reader（页内状态切换）
+    buttons:
+      btn_upload_image:
+        selector: 'text=Upload Image'
+        enabled_condition: 生成中置灰
+      btn_analysis_download:
+        selector: 'text=Download'
+        enabled_condition: 生成中置灰
+      btn_continue:
+        selector: 'text=Continue in Portrait Editor'
+        enabled_condition: 生成中置灰
+  result_optimized_loading:
+    description: 分析完成，优化结果生成中（Generating optimized result...）
+    trigger: 分析结果图展示后
+    url_or_state_key: /tools/ai-face-reader（页内）
+    buttons:
+      btn_continue_loading:
+        selector: 'text=Continue in Portrait Editor'
+        enabled_condition: 优化生成中置灰
+  result_complete_optimized:
+    description: 分析+优化均完成，三栏结果态
+    trigger: 优化结果图生成完成后
+    url_or_state_key: /tools/ai-face-reader（页内）
+    buttons:
+      btn_analysis_download_done:
+        selector: 'text=Download'
+        action_result: 下载分析结果图 jpg
+      btn_optimized_download:
+        selector: 'text=Download >> nth=1'
+        action_result: 下载优化结果图 jpg
+      btn_continue_done:
+        selector: 'text=Continue in Portrait Editor'
+        action_result: 带原图/分析图/优化图进入 Portrait Editor（选中优化图）
+        reversible: false
+
+selector_semantic_gaps:
+  - 三栏结果态 Download 按钮有多个，需按区域 nth 区分
+  - 上传按钮底层为 input#img2imgFirstScreenUploadInput，label 拦截点击
+
+prd_only_or_unverified_states:
+  - Continue in Portrait Editor 带入三张图未点击验证
+  - Download 未真实验证下载文件格式
+
+notes:
+  - 加载态文案：分析区 "Generating analysis..."，优化区 "Waiting for analysis..." → "Generating optimized result..."
+  - 三栏：Original Image / Analysis Result / Optimized Result

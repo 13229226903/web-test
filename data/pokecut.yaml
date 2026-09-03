@@ -1,0 +1,42 @@
+# Pokecut 背景移除功能测试数据
+site: Pokecut
+base_url: http://10.17.1.66:3001
+
+# 图片
+images:
+  # 真实测试图片目录（115 张 JPG）
+  dir: test_images/
+  # 选取策略：按文件大小升序，取第 3 张（优先小图加快上传）
+
+# 背景移除编辑器
+bg_remover:
+  tool_url: /tools/background-remover
+  file_input: "#file-upload"
+  remove_bg_button: "button:has-text('Remove BG')"
+  result_img_alt: "Remove BG"
+  # 编辑器工具栏（验证进入编辑器）
+  toolbar_buttons:
+    - "Chat To Edit"
+    - "Enhance"
+    - "Remove BG"
+    - "Change BG"
+    - "Erase"
+    - "Expand"
+    - "AI Tools"
+    - "Crop"
+
+# 登录
+login:
+  email: "450832596@qq.com"
+  verification_code: "123456"
+  header_login_btn: "Log in"
+  modal_login_tab: "button:has-text('Log in')"
+  email_input: 'input[type="email"]'
+  code_input: 'input[placeholder="Verification Code"]'
+  success_indicator: "Credits"
+
+# 断言阈值
+assertions:
+  min_image_size_bytes: 100
+  result_img_timeout_ms: 30000
+  process_timeout_ms: 60000

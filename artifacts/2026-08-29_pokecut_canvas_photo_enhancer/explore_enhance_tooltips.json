@@ -1,0 +1,69 @@
+{
+  "steps": [
+    {
+      "name": "04_tooltips",
+      "tips": {
+        "Standard Mode": [
+          "1/9",
+          "1/9",
+          "1/9",
+          "Nano Banana10",
+          "Nano Banana",
+          "Nano Banana",
+          "10",
+          "10",
+          "DEBUG",
+          "DEBUG"
+        ],
+        "Old Photo Mode": [
+          "1/9",
+          "1/9",
+          "1/9",
+          "Nano Banana10",
+          "Nano Banana",
+          "Nano Banana",
+          "10",
+          "10",
+          "DEBUG",
+          "DEBUG"
+        ],
+        "Portrait Mode": [
+          "1/9",
+          "1/9",
+          "1/9",
+          "Nano Banana10",
+          "Nano Banana",
+          "Nano Banana",
+          "10",
+          "10",
+          "DEBUG",
+          "DEBUG"
+        ],
+        "Text Mode": [
+          "1/9",
+          "1/9",
+          "1/9",
+          "Nano Banana10",
+          "Nano Banana",
+          "Nano Banana",
+          "10",
+          "10",
+          "DEBUG",
+          "DEBUG"
+        ],
+        "Ultra HD Mode": [
+          "1/9",
+          "1/9",
+          "1/9",
+          "Nano Banana10",
+          "Nano Banana",
+          "Nano Banana",
+          "10",
+          "10",
+          "DEBUG",
+          "DEBUG"
+        ]
+      }
+    }
+  ]
+}

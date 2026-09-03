@@ -1,0 +1,64 @@
+{
+  "steps": [
+    {
+      "name": "click_background_picker_mode",
+      "clicked": {
+        "index": 2,
+        "html": "<svg data-v-6a2086f1=\"\" class=\"size-[1.25rem] text-[#54576C]\" viewBox=\"0 0 20 20\" fill=\"currentColor\"><path data-v-6a208"
+      },
+      "body_snippet": "Credits:0 | offer ending soon | 23 | : | 59 | : | 32 | Sign up | Log in | 450 x 234 | Adjust | Move Up | Move Down | To Top | To Bottom | Flip h | Flip v | Delete | Rotation | Basic | Adjust | Space | Reflection | Background | Outline | 71% | Hold Right-click or Space + Left-click to drag the canvas | Inspiration | Remove BG | Enhance | Erase | AI Replace | Portrait Editor | Clothes Changer | 0/3000 | 1/9 | Nano Banana | 10 | DEBUG",
+      "diff_mode": {
+        "bbox": [
+          0,
+          30,
+          1614,
+          1080
+        ],
+        "nonzero_pixels": 437532,
+        "mean_abs": 0.03511
+      }
+    },
+    {
+      "name": "click_canvas_apply_picker_color",
+      "after_buttons": [
+        {
+          "i": 0,
+          "x": 1063,
+          "y": 673,
+          "w": 67.1875,
+          "h": 67.1875,
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors border-transparent",
+          "html": "<svg data-v-6a2086f1=\"\" class=\"size-[1.25rem] text-[#54576C]\" viewBox=\"0 0 20 20\" fill=\"currentColor\"><path data-v-6a208"
+        },
+        {
+          "i": 1,
+          "x": 1136.1875,
+          "y": 673,
+          "w": 67.203125,
+          "h": 67.203125,
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors border-[#3338EE]",
+          "html": "<img data-v-6a2086f1=\"\" src=\"/icons/img/edit_icon_color_picker.png\" alt=\"picker\" class=\"size-[1.25rem]\">"
+        },
+        {
+          "i": 2,
+          "x": 1209.390625,
+          "y": 673,
+          "w": 67.203125,
+          "h": 67.203125,
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border border-transparent bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors",
+          "html": "<svg data-v-6a2086f1=\"\" class=\"size-[1.25rem] text-[#54576C]\" viewBox=\"0 0 20 20\" fill=\"currentColor\"><path data-v-6a208"
+        }
+      ],
+      "diff_applied": {
+        "bbox": [
+          0,
+          30,
+          1614,
+          1080
+        ],
+        "nonzero_pixels": 423026,
+        "mean_abs": 0.043807
+      }
+    }
+  ]
+}

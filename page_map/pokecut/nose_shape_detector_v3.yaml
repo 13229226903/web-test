@@ -1,0 +1,83 @@
+page: pokecut_nose_shape_detector
+url: https://pokecut-dev.guangzhuiyuan.com/tools/nose-shape-detector
+version: v3
+source: pure_playwright_mcp_supplemental_generation_interactions
+updated_at: "2026-09-01 19:56:00"
+base_version: page_map/pokecut/nose_shape_detector_v2.yaml
+landmark:
+  selector: 'h1:has-text("Free AI Nose Shape Detector")'
+  description: SEO 首屏鼻型检测工具页；无优化结果图页面，生成完成后展示分析结果图与 Optimized Result 模糊承接位。
+entry:
+  from: direct_url
+  trigger: open https://pokecut-dev.guangzhuiyuan.com/tools/nose-shape-detector
+  selector: 'a[href="/tools/nose-shape-detector"]'
+elements:
+  upload:
+    input: '#img2imgFirstScreenUploadInput'
+    primary_button: 'text=Try Image to Image AI Now'
+  result_columns:
+    original_title: 'text=Original Image'
+    analysis_title: 'text=Analysis Result'
+    optimized_title: 'text=Optimized Result'
+    analysis_download: 'button:has-text("Download")'
+    get_it_now: 'button:has-text("Get It Now")'
+states:
+  predeploy_analysis_success_blur_desktop:
+    description: 预部署环境生成完成；Original Image、Analysis Result、Optimized Result 三块横向展示；Analysis 有真实结果图和 Download；Optimized 保留模糊承接位与 Get It Now，无 Download。
+    trigger: DEBUG 后端环境切预部署，重新登录 450832596@qq.com，上传 test_images/有人脸.JPG，等待分析成功。
+    url_or_state_key: /tools/nose-shape-detector#predeploy_analysis_success_blur_desktop
+    buttons:
+      upload_image_enabled:
+        selector: 'button:has-text("Upload Image")'
+        role_or_text: Upload Image
+        visible_condition: 原图区生成完成态
+        enabled_condition: 分析结果图生成成功后恢复可用
+        action_result: 打开系统文件选择器并重新走生成流程
+        reversible: true
+        explore_status: covered
+        dependencies: ['predeploy backend', 'logged-in member account']
+        assertions_hint: 成功态 Upload Image 不带 disabled 且 cursor pointer
+        notes: 证据 shots/mcp_nose_predeploy_success_blur_snapshot.md。
+      analysis_download:
+        selector: 'button:has-text("Download")'
+        role_or_text: Download
+        visible_condition: Analysis Result 真实图片可见
+        enabled_condition: 分析结果图生成成功
+        action_result: 下载 jpg 文件 pokecut-analysis-result-*.jpg
+        reversible: true
+        explore_status: covered
+        dependencies: ['predeploy backend']
+        assertions_hint: 下载文件名匹配 pokecut-analysis-result-*.jpg，扩展名 .jpg
+        notes: 证据 shots/downloads/pokecut-analysis-result-20260901-114822.jpg。
+      get_it_now_after_analysis_success:
+        selector: 'button:has-text("Get It Now")'
+        role_or_text: Get It Now
+        visible_condition: Optimized Result 模糊承接位可见
+        enabled_condition: 分析结果图生成成功后可点击
+        action_result: 跳转 /agent?pid=<uuid>；仅带入原图 1 张，原图图层选中，Portrait Editor/Face 面板打开；Generate disabled 表示未选模板
+        reversible: true
+        explore_status: covered
+        dependencies: ['predeploy backend', 'logged-in member account']
+        assertions_hint: URL 包含 /agent?pid=；画布 snapshot 仅出现 图片 1；Portrait Editor/Face 面板可见；Generate disabled
+        notes: 证据 shots/mcp_nose_predeploy_getitnow_canvas_snapshot.md、shots/mcp_nose_predeploy_getitnow_canvas.png。
+  analysis_server_busy_desktop:
+    description: 测试服上传后分析失败；Analysis 显示 Server busy，Optimized 仍显示 Get It Now，属于 BUG-NOSE-001。
+    trigger: 测试服登录后上传 test_images/有人脸.JPG
+    url_or_state_key: /tools/nose-shape-detector#analysis_server_busy_desktop
+    buttons:
+      get_it_now_wrongly_enabled:
+        selector: 'button:has-text("Get It Now")'
+        role_or_text: Get It Now
+        visible_condition: Analysis Server busy 时错误出现
+        enabled_condition: 错误可点击
+        action_result: 错误跳转 /agent?pid=<uuid>
+        reversible: true
+        explore_status: covered
+        dependencies: ['test backend server busy']
+        assertions_hint: 作为 bug 断言：Server busy 时不应存在/可点 Get It Now
+        notes: v2 已记录；v3 保留 bug candidate。
+modals:
+  debug_panel:
+    trigger: 'button:has-text("DEBUG")'
+    buttons: ['button:has-text("测试服")', 'button:has-text("预部署")', 'button:has-text("正式服")']
+    notes: 切换后端环境会刷新页面；按 PROJECT.md 切预部署后必须重新登录。

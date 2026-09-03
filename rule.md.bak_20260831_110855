@@ -1,0 +1,316 @@
+# 编码规则与技术避坑
+
+> agent（尤其 page-map-sync / test-writing）写代码、探索页面前先读本文件。
+> 踩到新的坑（selector 写法、等待时机、组件行为）→ 主动回写这里。
+
+## Selector 优先级（从高到低）
+
+1. **语义 ID / role**：`page.get_by_role("button", name="Save")`、`#firstName`
+2. **稳定属性**：`[placeholder="..."]`、`[aria-label="..."]`、`[data-testid="..."]`、`[href*="/topics/"]`
+3. **文本定位**：`page.get_by_text(...)`、`button:has-text("提交")`
+4. **避免**：hash class（随构建变化的 `.css-1a2b3c`）、`:nth-child(n)`、xpath 位置索引
+
+## 等待时机
+
+- 导航后用 `page.wait_for_load_state("networkidle")` 再采集元素，别靠固定 sleep
+- 断言用 Playwright 的 `expect(...)`（自带自动重试），不要 `assert locator.is_visible()`
+- 浮层（下拉/菜单/弹窗）出现后再操作，必要时 `expect(locator).to_be_visible()` 卡一下
+
+## 组件行为（通用）
+
+- 三点菜单 / hover 菜单：先 hover 行，再点触发图标，菜单才渲染
+- 某些按钮在 headless 下点击不切换视图 → 加 hover 再 click，或退化为 URL 直达
+- popconfirm / tooltip 经常没有 `role=dialog`，按文本或就近容器定位
+
+## 测试设计
+
+- 所有字段都填（含非必填），所有有意义的字段都断言
+- `expected` 用有语义的值，不要用 `"0"` / `"-"` / 空字符串
+- 文本型断言用「包含子串」而非精确相等，避免格式漂移
+- 注释用中文
+
+---
+
+## Pokecut 项目特有规则（来自实战踩坑）
+
+### Vue 自定义组件交互
+
+- **Playwright 原生 `click()` 对 Vue 组件不生效**，必须用 `dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true}))`
+- **例外**: 坐标点击 (`page.mouse.click(x, y)`) 对大部分 Vue 组件有效，优先使用
+- 登录提交按钮需要用 `dispatchEvent`（`click()` / `force=True` 均无效）
+
+### 登录
+
+- 测试服与预部署验证码均固定为 `123456`，直接填入即可，不需点 Send
+- 登录后自动跳转 `/create`，可能弹出 VIP 定价弹窗，需 JS 删除 `div[class*="fixed"]` 遮罩
+- 会话级复用: 用 `session_context` + `session_page` fixture，全局只登录一次
+- 生成态探索默认先在测试服登录并尝试生成；测试服生成失败时，再点目标页 `DEBUG` 浮标切到 `预部署`，重新登录后复试；预部署也失败则标记 `skipped` 并记录证据
+- 切换后不要复用旧登录态，必须重新走一次登录，确认进入新环境后再开始上传和生成流程
+
+### 编排模式分流
+
+- **新功能测试**：需求是正确答案，页面是验证对象。先按 PRD 拆解 AC、应有状态、业务规则、边界和异常，形成测试点 / 用例初稿；新功能提测后再做页面探索、page_map 和需求-实现差异对照。
+- **存量功能首次探索 / 补资产**：功能已存在但缺少 confirmed page_map / cases.md / sync.md；以当前稳定页面状态为主补齐资产，若有历史需求或业务认知，也要记录差异。
+- **稳定功能回归**：优先复用已 confirmed 的 page_map / cases.md / sync.md，只有 selector 漂移、页面差异、账号 / 环境变化时才做局部探索，不要重做整页。
+- **bug 前置规则**：新功能提测后，在页面探索 + sync.md 差异对照阶段发现 `gap` / `bug candidate` 即可提 bug；不需要等 test-writing 或 pytest 脚本产出。
+- **`skipped` 的定义**：只用于受环境、数据、权限、授权或不可逆风险限制而无法验证的情况；不能把“需求有但页面错了”记成 skipped。
+
+### 生成态探索 / 生成回归的素材与环境硬规则
+
+- 上传素材只能取自 `test_images/` 现有文件；禁止为了测试自行生成、下载或临时创建图片（历史 `data/debug/test_photo.png` 不再作为生成态默认素材）。
+- 按测试目标从 `test_images` 文件名选择图片，不要随意拿默认图覆盖所有图片类型场景：
+  - 无人脸：文件名包含 `无人脸`。
+  - 单人脸 / 有人脸：文件名包含 `有人脸`。
+  - 多人脸：文件名包含 `多人脸`。
+  - 低分辨率 / 低清：文件名包含 `低分辨率`。
+  - 1K / 2K / 4K / 8K 分辨率边界：文件名包含对应 `1K`、`2K`、`4K`、`8K`；同档多文件时优先选尺寸/格式最贴近用例目的的现有文件。
+  - 损坏图 / 异常文件：文件名包含 `损坏`，只用于异常上传校验，不用于生成态主流程。
+- 当前典型素材：`1K.jpg`、`4K.jpg`、`4K.png`、`8K.jpg`、`低分辨率.JPG`、`有人脸.JPG`、`多人脸.jpg`、`无人脸.jpg`、`损坏的图.png`。
+- 生成、购买、订阅、credits / 配额相关测试必须按目标账号态选择测试账号；后续遇到对应 UI 或逻辑可直接使用这里的账号，不再额外询问：
+
+  | 账号态 / 适用场景 | 邮箱 | 验证码 | 规则 |
+  |---|---|---|---|
+  | 会员账号：会员权益、订阅态、会员免扣点 / Free icon | `450832596@qq.com` | `123456` | 只用于需要会员态的用例 |
+  | 单项购买账号：单项购买权益、单功能授权、单项免扣点 / Free icon | `03201449879@qq.com` | `123456` | 只用于需要单项购买态的用例 |
+  | 免费账号：免费次数、新用户、非会员、普通登录态 | 任意未使用邮箱 | `123456` | 需要免费 / 新用户态时随机输入一个邮箱；建议脚本生成唯一邮箱，避免复用污染免费次数 |
+
+- 未明确账号态的登录前置：优先按用例目的选择；只验证普通登录 / 免费态时用随机免费账号，不要误用会员或单项购买账号改变 UI 预期。
+- 生成态探索环境顺序：测试服优先。先在测试服完成登录、上传并点击生成 / 购买 / 订阅相关入口；只有测试服生成或关键链路失败时，才在目标页通过现有 `DEBUG` 面板切换到 `预部署`，重新登录并复试。
+- 预部署也失败时不得继续硬测或编造结果，必须在 `sync.md` 覆盖矩阵和 page_map 的 unverified / skipped 区域标记 `skipped`，写清测试服失败现象、预部署失败现象、截图 / 日志证据与后续所需依赖。
+- 预部署切换与登录顺序遵循本节「登录」既有约定，不重新猜测或另建一套切换逻辑；切换后不要复用旧登录态。
+
+### 属性面板 (Adjust 标签页)
+
+- **Section 名称（Reflection / Outline / Background）是 `<span>` 不是 `<button>`**，搜索文本时需同时搜 `button, span`
+- **面板需滚动才能看到全部 section**: 切换到 Adjust 后执行 `scrollTop = scrollHeight`
+- **操作顺序**: 先点 dropdown (16×16 下拉箭头) 展开面板 → 再点 toggle (rounded-full 滑块) 开启功能。反过来会导致面板关闭
+- Toggle 定位: section 行内 x=1360 的 `rounded-full` 按钮 (36×20)
+- Dropdown 定位: section 行内 x=1400 的 16×16 按钮
+
+### 颜色选择
+
+- Fill / Background 的颜色网格 class 为 `grid-cols-5`，色块为 30×30 或 49×49 的 button
+- **搜索红色必须限定 `y > 600`**，否则会误点工具栏的 Delete 按钮（红色，位于 y≈430）
+- 红色判定: `R>100, G<150, B<150, R>(G+B)*0.6`（覆盖深红 #AE292A / 亮红 #EF4444 等变体）
+
+### 滑块交互
+
+- 滑块为 `input[type="range"]` class=`w-full accent-[#3338EE]`（不是 `space-slider`，那是字体宽高用的）
+- 滑块在溢出隐藏区域，需先 `page.mouse.wheel(0, 500)` 滚动面板才能获取到正确的 `getBoundingClientRect`
+- 拖拽: `mousedown` → `mousemove(target_x, cy, steps=10)` → `mouseup`
+
+### 测试代码编写
+
+- login fixture 在 `conftest.py`，用 `session_page` 参数（非 `logged_in_page`）
+- 进入无限画布: `/create` → 关弹窗 → 点 "Start from a Photo" → 用 `page.expect_file_chooser()` 上传图片
+- 添加文字图层: `button[data-tool-id="text"]`
+- 截图用 `allure_screenshot(page, "描述")` 导入自 `conftest`。截图必须放进显式的 Allure 步骤里（例如 `with allure.step("点击生成前"):`），让最终报告能直接看出截图对应的操作边界；不要只裸调用 attach。
+
+---
+
+## SEO 检测类页面（来自 Pretty Scale / Eye Color Detector 实战）
+
+### 上传触发检测流程
+
+- **`label.click()` 不适用于所有页面的 CTA**。检测类 SEO 页面（/tools/pretty-scale 等）的 CTA 按钮是 Vue 组件，需用 `dispatchEvent` 或 `page.mouse.click(x, y)` 触发文件选择器
+- **上传后需等待 AI 处理**：用 `page.wait_for_function("b => b.includes('Generating analysis')", timeout=60000)` 等处理中文案出现，再用轮询等待完成
+- **小图加速**：用 test_images/ 里最小的图片（<500KB），大幅缩短处理等待时间
+
+### 分析→优化串行等待
+
+- Pretty Scale 的分析和优化是**串行**的：先等 "Generating analysis" → 分析完成 → 再等 "Generating optimized result" → 优化完成
+- 两个阶段不能拆成独立用例，必须**一次上传，连续等待**
+- 轮询间隔 15s，总超时设 10 分钟（600s）
+- 完成后用 `wait_for_function` 检查 "Generating" 类文案消失
+
+### 按钮状态检查
+
+- `button_disabled_in_section` 在 Phase 3（全部完成后）可能找不到按钮（DOM 结构变化），需 fallback 到 `button_disabled_global`
+- **require 参数**：`button_disabled_in_section` 默认 `require=True`，按钮未找到会直接 assert fail，避免静默通过
+
+---
+
+## 首页 CTA 回归（来自 homepage 实战）
+
+### browser_context_args 是关键
+
+- **pytest-playwright 默认 context 缺少 `viewport` 和 `locale`**，导致 Vue 组件的文件选择器（file chooser）无法被 Playwright 拦截
+- 在 conftest.py 中覆盖 `browser_context_args` 必须设置 `viewport: {width: 1920, height: 1080}` 和 `locale: "en-US"`
+- 这是最隐蔽的坑：独立脚本能过，pytest 下就是不行，排查了两天才定位到
+
+### 下半页 CTA 点击
+
+- 页面 `goto` 后用 `wait_for_load_state("networkidle")` + `wait_for_timeout(3000)`（不是 10s！等太久反而 Vue 事件丢失）
+- 深滚动区域（y>2500）的 CTA 按钮用 `dispatchEvent` 点击，`locator.click()` 不生效
+- 可以先 `scroll_into_view_if_needed` 再 `dispatchEvent`
+
+### Hero Tab 切换（AI Image Generator）
+
+- Tab 是 DIV 不是 button，CSS 定位：`div[class*="rounded-[1.125rem]"] div:has-text("AI Image Generator")`
+- 注意区分 hero 区域的 tab（y≈346）和 footer 的同名链接（y≈7525）
+- Tab 切换后 textarea/Generate 按钮用 `page.evaluate` 操作（避免 Vue 重渲染竞态）
+- body.inner_text() 不一定能读到新渲染的内容，用 `page.wait_for_selector("button:has-text('Generate'):visible")` 更可靠
+
+### 上传方式优先级
+
+- 优先 `dispatchEvent` 点 CTA → `expect_file_chooser`（带功能上下文）
+- 回退 `page.locator("input[type=file]").set_input_files()`（直接注入，但不带功能上下文）
+- 不要尝试 `label.click()`，首页没有关联的 label
+
+### 批量 / 增强类按钮判定
+
+- 不能只按文案判断按钮类型；`batch` 里的 `Enhance`、`Enhance` 区的 `Portrait Enhance / Ultra Enhance`，以及部分热门卡片，真实链路可能是「点击 -> 文件选择器 -> 选图 -> 进入下一页」
+- 这类按钮的断言点必须放在**选图后**，再确认目标页 URL 或核心面板已经出现；不要在点击瞬间就截全屏，否则很容易误判成“没反应”
+- 若点击后页面不动，优先排查是不是还停在文件选择器之前，而不是先假设按钮失效
+- 截图要贴近交互结果：上传流优先截“选图后进入目标页”的局部或当前页，不要只保留点击前大图
+
+---
+
+## 功能介绍页（来自 background-remover 等 7 页实战）
+
+### 不同页面的编辑入口 URL 不同
+
+- `/agent`：background-remover, photo-enhancer, background-changer, magic-eraser, blur-background
+- `/create/edit`：ai-image-extender
+- `/tools/id-photo-edit`：id-photo-maker
+- 不能假设所有页面都跳 `/agent`，必须**按实际反推断言**
+
+### 面板关键词推断
+
+- 先跑一遍看 body text 实际内容，再定断言关键词
+- 不要假设一定有 "Chat To Edit" 等通用工具名——有些页面进入后 body 只有 "Credits:2751"
+- background-changer 的 Colors 面板关键词是 `Colors`，不是 `Change BG`
+- ai-image-extender 的关键词是 `Extend`，不是 `Expand`
+
+### 首屏和上传分属不同 fixture
+
+- 首屏内容用 `page` fixture（无需登录）
+- 上传流程用 `session_page` fixture（需登录）
+- 可以合并成一条用例，两个 fixture 同时注入
+
+---
+
+## Vue 交互限制与独立脚本验证（来自 help 页/首页实战）
+
+### 已知限制
+
+pytest-playwright 管理的 chromium 在以下 Vue 交互上存在差异，`dispatchEvent` / `force click` / 原生键盘事件**均无效**：
+
+- 搜索按钮点击触发搜索
+- 标签/卡片点击触发筛选/跳转  
+- FAQ 展开/收起（手风琴交互）
+- 分类导航切换
+- 面板弹窗打开（按钮上传后自动打开工具面板）
+
+**但独立 `chromium.launch()` 可正常执行上述全部交互。**
+
+### 应对规则
+
+- **test-writing**：遇到上述交互，在 pytest 用例中标记 `pytest.xfail("独立脚本已验证通过")`
+- **test-case-design**：识别出需要 Vue 交互的用例，注释标注"需独立脚本验证"
+- **orchestrator**：回归流程应包含独立脚本执行步骤
+
+### 独立脚本编写规范
+
+1. 存放位置：`scripts/verify_<模块名>.py`
+2. 环境：`chromium.launch()` + `new_context(viewport=1920x1080, locale="en-US")`
+3. 每个测试独立 page：新建 → goto → 操作 → DOM 断言 → 截图（放在明确的 Allure step 中）→ close
+4. **必须有 DOM 断言**（检查文本/class/元素存在性），**必须截图且截图要有步骤上下文**
+5. Allure 集成：生成 `reports/allure-results/*.json`
+   - `status`: `"passed"/"failed"`（小写）
+   - `stage`: `"finished"`（必须）
+   - `labels`: epic + feature 与 pytest 同级一致，不加单独 story/suite
+6. 回归流程：`pytest → 独立脚本 → cleanup_xfailed.py → allure generate`
+7. 独立脚本列表维护在 `scripts/run_full_regression.py` 中
+8. 被替代的 pytest 用例关键字维护在 `scripts/cleanup_xfailed.py` 中
+
+---
+
+## 已归档补充规则（未写入上文，来自实际踩坑）
+
+以下规则已在多轮实战中验证，agent 执行对应场景时严格遵循：
+
+### Vue 文件选择器触发
+
+- **优先使用 `btn.click(force=True)`**，不是 `page.mouse.click(x,y)` 也不是 `dispatchEvent`。`force=True` 跳过 Playwright actionability 检查，能正确触发 Vue 绑定的文件选择器（首页 CTA 按钮实战验证）。
+- `dispatchEvent(new MouseEvent('click', ...))` 仅在 force click 失败后作为回退，基本无效。
+- 回退 `input[type=file].set_input_files()` 能上传但**丢失 Vue 工具上下文**（如 Body/Manual Mode 不会自动打开）。
+
+### 按钮交互分类
+
+首页/功能页的 CTA 按钮有两种类型，断言策略不同：
+- **文件上传类**（upload）：点击触发 file chooser → 上传 → 跳转 `/agent` → 检查 URL + 面板
+- **页面跳转类**（navigation）：点击触发路由跳转 → 等 URL 变化 → 断言目标 URL（如 "Make Professional Photo Now" → `/tools/id-photo-maker`）
+- 跳转类按钮**不能用** `upload_via_cta`，要用 `dispatchEvent` + `wait_for_timeout` 等导航
+
+### 多语言首页
+
+- 其他语言首页与英文首页保持同一套布局和交互，差异主要是文案
+- 写回归时优先按 `section` 顺序、按钮顺序和 URL 断言，不要复制英文固定文案
+- 文案正确性用 locale-aware 断言或 AI 文案审查补足，结构和点击逻辑用同一套 helper 复用
+- 首页首屏图片不能只靠截图或 AI 文案审查兜底；必须检查可见 `img` 的 `complete/naturalWidth/naturalHeight`，并监听 image 资源 4xx/5xx，请求失败或首屏可见裂图都要让用例 fail
+
+### 页面等待策略
+
+- SPA（Nuxt/Vue）页面：`networkidle` 可能在 Vue 完全水合前触发。**优先用固定 `wait_for_timeout(5000-8000)` 代替 `networkidle`**。
+- Help 页：5-8s 等待后 Vue 才完全初始化，比 `networkidle` 可靠。
+
+### 文案断言
+
+- 同一页面不同语言/版本的 H1 可能相同（模板占位），断言用 `title` 标签或 CJK 字符 fallback
+- CSS 视觉效果可能导致 `textContent` 重复拼接（如 "Pokecut Help Center" ×3），断言用 `contains` 而非 `equals`
+- 面板/弹窗内的文本（如 "Body"、"Manual Mode"）`body.inner_text()` 可能抓不到，需要用 `evaluate` 全局搜所有元素的 `textContent`
+
+### Selector 注意
+
+- Playwright 的 `:has-text()` 是扩展伪类，**不能**传给 `document.querySelector()` 或 `page.evaluate()` 中的 JS
+- 同类文本的歧义（如 Help 页 "Search" 按钮 vs 热门标签 "Search"）：用 y 坐标或 `.first` 区分
+- Contact us 按钮用 **class** selector（`button.help-v2-support-cta-section__button`）而非 `has-text`
+
+### Allure 独立脚本结果
+
+- 必须字段：`status`（小写 passed/failed）、`stage: "finished"`（缺了显示 ?）、`labels`（epic + feature）
+- 独立脚本结果与 pytest 同 feature，不加 story/suite 分类
+
+### 脚本通过后的归档闭环
+
+- `impl.md status=completed` 只表示本轮脚本自跑通过，不等于已经沉淀为稳定回归资产。
+- `review verdict=pass` 且 `visual-review verdict=pass` / 不需要视觉审查后，必须进入 `regression-archive gate`，主动询问用户是否归档。
+- 用户确认归档后，才允许：
+  1. 保留 / 更新 `tests/` 下当前回归入口脚本；
+  2. 同步副本到 `archive/<module>/`；
+  3. 更新 `artifacts/regression_registry.md`；
+  4. 将该功能标记为 `stable_regression`。
+- 用户选择暂不归档时，不更新 registry，不得把该功能当作稳定回归入口。
+
+### 归档规则
+
+- **归档** = 已完善稳定且经过用户确认的回归用例，不是"冷存储"废弃代码
+- `tests/` 和 `archive/` 各有一份副本，新增的归档用例经 regression-archive gate 确认后同步到两边
+- `archive/` 按模块分目录：`tool_pages/`、`homepage/`、`help_page/`、`other_seo/` 等；同步后必须更新 `artifacts/regression_registry.md`
+
+---
+
+## AI 审查模型配置
+
+- 当前使用: `qwen-math-turbo`（DashScope 多模态）
+- 配置位置: `helpers/visual_text_check.py`, `scripts/verify_*.py`, `conftest.py:visual_assert`
+- 免费额度耗尽后依次切换:
+  1. `qwen-math-turbo` → `qwen3-vl-235b-a22b-thinking`
+  2. 之后可尝试 `qwen-vl-plus` / `qwen-vl-max`
+
+### 环境配置
+
+- conftest.py 的 `browser_context_args` 必须设置 `viewport` + `locale: "en-US"`，否则 Vue 文件选择器无法被 Playwright 拦截
+- 切换环境时，conftest.py 的 `session_context` 登录 URL 和 pytest.ini 的 `--base-url` 需**同步修改**到同一端口
+- 独立脚本用 `chromium.launch()` 直连，不受 pytest-playwright 的 browser 管理影响
+
+### Allure 截图步骤规范
+
+- 任何会进入最终 Allure 报告的截图，都必须通过显式步骤包裹：`with allure.step("操作边界/结果态"):` 再 attach。
+- 步骤名应描述“发生了什么”，截图附件名应描述“看到什么”，二者可以相同，但不要只剩一个裸截图附件。
+- 如果使用统一截图 helper，helper 本身要负责创建 Allure step；调用方不再手动重复 attach。
+- 后续流程编排、test-writing、独立脚本和视觉审查注入都沿用这条规则。
+
+- 异常 / 负向用例截图必须贴近异常提示或失败状态：先等待可见错误提示、弹窗、禁用态或失败态；若预期提示未出现，仍要在失败前截图当前态并让用例失败，不要用普通首屏截图伪装异常覆盖。
+- 上传异常类用例优先走真实可见上传按钮 + `expect_file_chooser()`，不要直接 `set_input_files()` 到隐藏 input；隐藏 input 可能绕过业务组件的前端校验 / toast 链路。

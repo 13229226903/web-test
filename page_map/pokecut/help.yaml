@@ -1,0 +1,215 @@
+# Pokecut Help 页 - 帮助中心页面地图
+# 采集方式: Playwright 探索 (headless Chromium, 1920x1080, en-US)
+# 采集时间: 2026-07-22
+# 注意: 本页为 Nuxt/Vue SPA 客户端渲染，探索前需等待 networkidle + 3s
+
+page: Help Center
+url: /help
+landmark:
+  selector: "h1:text-is('How can we help you create faster?')"
+  description: Hero 区 H1 标题，页面唯一标识
+
+entry:
+  from: 顶部导航栏 / Footer
+  trigger: 点击导航栏 "Help" 链接或 Footer "FAQ" 链接
+  selector: "a[href*='help']"
+
+# ============================================================
+# 1. Hero 搜索区
+# ============================================================
+hero:
+  container: "section[class*='hero']"
+  eyebrow:
+    selector: "p.help-v2-hero-section__eyebrow"
+    text: "Pokecut Help Center"
+    description: 标识文案，CSS 重复渲染导致 textContent 重复，断言用包含匹配
+  h1:
+    selector: "h1"
+    text: "How can we help you create faster?"
+  description:
+    selector: "p:has-text('Search guides for account')"
+    text: "Search guides for account, credits, subscriptions, AI tools, downloads, refunds, and commercial use."
+  search_input:
+    selector: 'input[placeholder*="Search by keyword"]'
+    placeholder: "Search by keyword, for example: credits, refund, download"
+    description: 搜索输入框，无 id/name/data-testid，仅能通过 placeholder 定位
+  search_button:
+    selector: 'button:has-text("Search")'
+    position: {x: 1321, y: 512}
+    description: 搜索按钮，注意与热门标签的 "Search" 区分（标签 y≈604）
+
+# ============================================================
+# 2. 热门搜索词标签
+# ============================================================
+popular_tags:
+  container: "位于搜索输入框下方，5 个 button 并排"
+  items:
+    - text: "Credits"
+      selector: 'button:has-text("Credits")'
+      position: {x: 683, y: 604}
+    - text: "Subscription"
+      selector: 'button:has-text("Subscription")'
+      position: {x: 787, y: 604}
+    - text: "Download"
+      selector: 'button:has-text("Download")'
+      position: {x: 929, y: 604}
+    - text: "Batch"
+      selector: 'button:has-text("Batch")'
+      position: {x: 1054, y: 604}
+    - text: "Project"
+      selector: 'button:has-text("Project")'
+      position: {x: 1149, y: 604}
+  behavior: 点击标签 → 填充搜索框 + 客户端过滤 FAQ，不触发页面跳转
+
+# ============================================================
+# 3. 分类卡片
+# ============================================================
+category_cards:
+  container: "section.help-v2-category-section > div.help-v2-category-section__grid"
+  card_class: "button.help-v2-category-card"
+  behavior: 点击卡片 → 页面滚动到 FAQ 区 + 切换分类筛选 + 展开第一条 FAQ
+  items:
+    - title: "Getting Started"
+      subtitle: "Learn what Pokecut is, what you can use it for, free usage, sign-up, and how to start editing."
+      article_count: 5
+      selector: 'button.help-v2-category-card:has-text("Getting Started")'
+      position: {x: 295, y: 736, width: 420, height: 220}
+    - title: "Account & Access"
+      subtitle: "Language switch, credits balance, orders, web/app account relation, and email unsubscribe."
+      article_count: 5
+      selector: 'button.help-v2-category-card:has-text("Account & Access")'
+      position: {x: 750, y: 736, width: 420, height: 220}
+    - title: "Plans, Credits & Billing"
+      subtitle: "Credits, Premium Plan, one-time credits purchase, cancellation, refunds, orders, and payment issues."
+      article_count: 7
+      selector: 'button.help-v2-category-card:has-text("Plans, Credits & Billing")'
+      position: {x: 1205, y: 736, width: 420, height: 220}
+    - title: "AI Tools & Editing"
+      subtitle: "AI tools, upload formats, image upload, Photo Enhancer, Background Changer, Chat to Edit, and failed AI tasks."
+      article_count: 5
+      selector: 'button.help-v2-category-card:has-text("AI Tools & Editing")'
+      position: {x: 295, y: 986, width: 420, height: 220}
+    - title: "Batch, Download & Projects"
+      subtitle: "Batch editing, marketplace sizes, download results, HD export, project history, and recovery issues."
+      article_count: 7
+      selector: 'button.help-v2-category-card:has-text("Batch, Download & Projects")'
+      position: {x: 750, y: 986, width: 420, height: 220}
+    - title: "Commercial, Safety & Support"
+      subtitle: "Commercial use, content safety, privacy, payment terms, and support tickets."
+      article_count: 5
+      selector: 'button.help-v2-category-card:has-text("Commercial, Safety & Support")'
+      position: {x: 1205, y: 986, width: 420, height: 220}
+
+# ============================================================
+# 4. FAQ 区域
+# ============================================================
+faq_section:
+  container: "section.help-v2-faq-section"
+  layout: "左侧分类导航 + 右侧 FAQ 列表"
+  nav:
+    container: "左侧 nav 区域"
+    item_class: "button.help-v2-faq-section__nav-item"
+    active_class: "help-v2-faq-section__nav-item--active"
+    items:
+      - text: "Popular"
+        article_count: 11
+        selector: 'button.help-v2-faq-section__nav-item:has-text("Popular")'
+        position: {y: 1268}
+      - text: "Getting Started"
+        article_count: 5
+        selector: 'button.help-v2-faq-section__nav-item:has-text("Getting Started")'
+        position: {y: 1341}
+      - text: "Account & Access"
+        article_count: 5
+        selector: 'button.help-v2-faq-section__nav-item:has-text("Account & Access")'
+        position: {y: 1414}
+      - text: "Plans, Credits & Billing"
+        article_count: 7
+        selector: 'button.help-v2-faq-section__nav-item:has-text("Plans, Credits & Billing")'
+        position: {y: 1487}
+      - text: "AI Tools & Editing"
+        article_count: 5
+        selector: 'button.help-v2-faq-section__nav-item:has-text("AI Tools & Editing")'
+        position: {y: 1560}
+      - text: "Batch, Download & Projects"
+        article_count: 7
+        selector: 'button.help-v2-faq-section__nav-item:has-text("Batch, Download & Projects")'
+        position: {y: 1633}
+      - text: "Commercial, Safety & Support"
+        article_count: 5
+        selector: 'button.help-v2-faq-section__nav-item:has-text("Commercial, Safety & Support")'
+        position: {y: 1706}
+  faq_items:
+    container: "右侧 FAQ 列表区域"
+    item_class: "article.help-v2-faq-item"
+    open_class: "help-v2-faq-item--open"
+    question_selector: "article.help-v2-faq-item button.help-v2-faq-item__question"
+    answer_selector: "article.help-v2-faq-item div.help-v2-faq-item__answer"
+    behavior: "点击问题 → 展开/收起答案，展开时添加 --open class"
+
+# ============================================================
+# 5. 联系支持 CTA
+# ============================================================
+contact_cta:
+  container: "div.help-v2-support-cta-section"
+  heading:
+    selector: "h2:has-text('Still have questions?')"
+    text: "Still have questions?"
+    position: {y: 2454}
+  description:
+    text: "Start with a photo, a prompt, or a quick edit. Pokecut helps you create polished visuals in minutes."
+  button:
+    selector: "button.help-v2-support-cta-section__button"
+    text: "Contact us"
+    position: {x: 824, y: 2590, width: 272, height: 80}
+    note: "Vue 组件，需用 mouse.click(x,y) 或 dispatchEvent；点击后应弹出工单或跳转到 support FAQ"
+
+# ============================================================
+# 多语言
+# ============================================================
+languages:
+  supported:
+    - { code: "en", url: "/help", title: "FAQ about Pokecut website | Pokecut" }
+    - { code: "zh", url: "/zh/help", title: "关于 Pokecut 网站的常见问题解答 | Pokecut" }
+  unsupported:
+    - { code: "es", status: "timeout (可能重定向到 en)" }
+    - { code: "fr", status: "timeout (可能重定向到 en)" }
+    - { code: "de", status: "timeout (可能重定向到 en)" }
+    - { code: "ja", status: "timeout (可能重定向到 en)" }
+    - { code: "ko", status: "404" }
+    - { code: "pt", status: "404" }
+    - { code: "ru", status: "404" }
+    - { code: "ar", status: "404" }
+    - { code: "th", status: "404" }
+    - { code: "vi", status: "404" }
+    - { code: "id", status: "404" }
+    - { code: "tr", status: "404" }
+
+# ============================================================
+# 移动端适配
+# ============================================================
+mobile:
+  viewport: {width: 375, height: 812}
+  has_horizontal_overflow: false
+  card_layout: "2 列网格 (每列 172px)"
+  tag_layout: "单行排列"
+  faq_layout: "单列，左侧导航隐藏"
+  notes: "响应式布局完善，无溢出"
+
+# ============================================================
+# 辅助元素
+# ============================================================
+aux:
+  promo_banner:
+    selector: "div:has-text('Unlock Pokecut VIP for just')"
+    description: 顶部促销倒计时横幅，可能遮挡 hero 区元素
+  floating_feedback:
+    selector: "div.fixed.bottom-[9rem].right-[1.25rem]"
+    text: "Feedback"
+    description: 右下角浮动反馈按钮，提供 submit ticket / Discord 入口
+  language_banner_zh:
+    selector: "text=You are browsing Simplified Chinese"
+    description: 仅中文版出现，提示用户可切换到英文
+
+tabs: {}
+modals: {}

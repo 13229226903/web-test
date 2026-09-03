@@ -1,0 +1,51 @@
+# Pokecut 背景移除编辑器 - 页面地图
+# 进入方式: 访问 /tools/background-remover → 上传图片 → 进入编辑器
+page: Background Remover Editor
+url: /tools/background-remover
+landmark:
+  selector: "button:has-text('Remove BG')"
+  description: 编辑工具栏中的背景移除按钮（页面唯一标识）
+entry:
+  from: /tools/background-remover
+  trigger: 上传图片（#file-upload）
+  selector: "#file-upload"
+elements:
+  # 左侧工具栏
+  toolbar_remove_bg:
+    selector: "button:has-text('Remove BG'):visible"
+    description: 背景移除功能入口按钮
+  toolbar_chat:
+    selector: "button:has-text('Chat To Edit')"
+    description: AI 对话编辑入口
+  toolbar_enhance:
+    selector: "button:has-text('Enhance')"
+    description: 图片增强
+  toolbar_crop:
+    selector: "button:has-text('Crop')"
+    description: 裁切
+
+  # 底部功能入口
+  bottom_remove_bg:
+    selector: "button:has-text('Remove BG'):visible"
+    description: 底部快捷入口 - 背景移除
+  bottom_enhance:
+    selector: "button:has-text('Enhance'):visible"
+    description: 底部快捷入口 - 增强
+
+  # 结果区
+  result_image:
+    selector: "img[alt*='Remove BG']"
+    description: 背景移除后的结果图（右侧），src 为 blob URL
+  original_image:
+    selector: "img:not([alt*='Remove BG'])[src^='blob:']"
+    description: 原始图片（左侧），src 为 blob URL
+
+  # 用户信息
+  credits_display:
+    selector: "span:has-text('Credits')"
+    description: 顶部 credits 余额显示
+  username_display:
+    selector: "header span:has-text('User')"
+    description: 顶部用户名显示
+tabs: {}
+modals: {}

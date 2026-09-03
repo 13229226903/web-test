@@ -1,0 +1,21 @@
+{
+  "steps": [
+    {
+      "name": "00_create",
+      "url": "http://10.17.1.66:3001/create",
+      "extra": {
+        "title": "A creation page with all AI features and templates | Pokecut",
+        "has_trending": true
+      }
+    },
+    {
+      "name": "01_after_upload",
+      "url": "http://10.17.1.66:3001/agent?pid=25c3301e-09d4-4960-9f67-06637a54c9db#",
+      "extra": {
+        "url": "http://10.17.1.66:3001/agent?pid=25c3301e-09d4-4960-9f67-06637a54c9db#",
+        "title": "Free Infinite Canvas: The Ultimate AI Image Workspace | Pokecut",
+        "body_head": "Credits:0\noffer ending soon\n23\n:\n59\n:\n35\nSign up\nLog in\n1080 x 1440\nChat to edit\nEnhance\nBackground\nPortrait Editor\nErase\nAI Replace\nAI Clothes Changer\nRemove BG\nExpand\nAdjust\nCrop\nToolbox\nDelete\n38%\nHold Right-click or Space + Left-click to drag the canvas\nInspiration\nRemove BG\nEnhance\nErase\nAI Replace\nPortrait Editor\nClothes Changer\n0/3000\n1/9\nNano Banana\n10\nDEBUG"
+      }
+    }
+  ]
+}

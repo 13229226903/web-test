@@ -1,0 +1,244 @@
+{
+  "steps": [
+    {
+      "name": "click_alignment_1",
+      "before": [
+        {
+          "i": 0,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#F3F5F8] text-[#232323]",
+          "x": 1152,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        },
+        {
+          "i": 1,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#3338EE] text-[#E2E3FF]",
+          "x": 1206,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        },
+        {
+          "i": 2,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#F3F5F8] text-[#232323]",
+          "x": 1260,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        }
+      ],
+      "after": [
+        {
+          "i": 0,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#3338EE] text-[#E2E3FF]",
+          "x": 1063,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        },
+        {
+          "i": 1,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#F3F5F8] text-[#232323]",
+          "x": 1117,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        },
+        {
+          "i": 2,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#F3F5F8] text-[#232323]",
+          "x": 1171,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        }
+      ]
+    },
+    {
+      "name": "click_alignment_3",
+      "before": [
+        {
+          "i": 0,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#3338EE] text-[#E2E3FF]",
+          "x": 1063,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        },
+        {
+          "i": 1,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#F3F5F8] text-[#232323]",
+          "x": 1117,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        },
+        {
+          "i": 2,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#F3F5F8] text-[#232323]",
+          "x": 1171,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        }
+      ],
+      "after": [
+        {
+          "i": 0,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#F3F5F8] text-[#232323]",
+          "x": 1063,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        },
+        {
+          "i": 1,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#F3F5F8] text-[#232323]",
+          "x": 1117,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        },
+        {
+          "i": 2,
+          "cls": "flex size-[2.75rem] items-center justify-center rounded-[0.5rem] transition-colors bg-[#3338EE] text-[#E2E3FF]",
+          "x": 1171,
+          "y": 536,
+          "w": 44,
+          "h": 44
+        }
+      ]
+    },
+    {
+      "name": "click_font",
+      "before": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust"
+        },
+        {
+          "tag": "P",
+          "text": "Alignment"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Font"
+        },
+        {
+          "tag": "P",
+          "text": "Font"
+        }
+      ],
+      "after": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust"
+        },
+        {
+          "tag": "P",
+          "text": "Alignment"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Font"
+        },
+        {
+          "tag": "P",
+          "text": "Font"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Fill"
+        },
+        {
+          "tag": "P",
+          "text": "Fill"
+        }
+      ],
+      "clicked": {
+        "x": 1063,
+        "y": 600,
+        "w": 360,
+        "h": 20
+      }
+    },
+    {
+      "name": "click_fill",
+      "before": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust"
+        },
+        {
+          "tag": "P",
+          "text": "Alignment"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Font"
+        },
+        {
+          "tag": "P",
+          "text": "Font"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Fill"
+        },
+        {
+          "tag": "P",
+          "text": "Fill"
+        }
+      ],
+      "after": [
+        {
+          "tag": "BUTTON",
+          "text": "Basic"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Adjust"
+        },
+        {
+          "tag": "P",
+          "text": "Alignment"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Font"
+        },
+        {
+          "tag": "P",
+          "text": "Font"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Fill"
+        },
+        {
+          "tag": "P",
+          "text": "Fill"
+        }
+      ],
+      "clicked": {
+        "x": 1063,
+        "y": 640,
+        "w": 360,
+        "h": 20
+      }
+    }
+  ]
+}

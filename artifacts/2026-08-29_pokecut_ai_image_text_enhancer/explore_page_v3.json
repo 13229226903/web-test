@@ -1,0 +1,63 @@
+{
+  "steps": [
+    {
+      "name": "00_initial",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "h1": "Enhance Text in Image to 8K Online Free",
+        "single_upload_count": 1
+      }
+    },
+    {
+      "name": "01_after_upload_1k",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "choose_effect": true,
+        "supports_multi": true,
+        "upscale": true
+      }
+    },
+    {
+      "name": "02_defaults",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "defaults": {
+          "enhance_text": "true",
+          "remove_glare": "false",
+          "remove_moire": "false",
+          "document_scanner": "false"
+        },
+        "cost": "Free",
+        "primary_text": "Enhance\n\nFree"
+      }
+    },
+    {
+      "name": "03_tooltips",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "tips": {
+          "enhance_text": "Enhance blurry text and improve readability.",
+          "remove_glare": "Remove glare from reflective surfaces.",
+          "remove_moire": "Reduce moire patterns in screens or printed images.",
+          "document_scanner": "Turn a photographed document into a clean scanned page."
+        }
+      }
+    },
+    {
+      "name": "04_non_enhance_only",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "upscale_visible": false,
+        "enhance_pressed": "false"
+      }
+    },
+    {
+      "name": "05_no_effect",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "upscale_visible": false,
+        "primary_class": "relative h-[5rem] w-[23.75rem] mt-[1.5rem] px-[1.25rem] rounded-[1.25rem] flex flex-row items-center justify-center bg-[#DCDDE3] cursor-not-allowed"
+      }
+    }
+  ]
+}

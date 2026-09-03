@@ -1,0 +1,1593 @@
+{
+  "title": "Pokecut: Free Online AI Photo Editor & Image Generator",
+  "url": "http://10.17.1.66:3001/",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "headings": [
+    {
+      "tag": "H1",
+      "text": "All-in-One AI Photo Editor & Generator",
+      "cls": "bg-[linear-gradient(36deg,#353535_32%,#3338ee_102%)] bg-clip-text text-center text-pmd-normal-title font-bold text-trans"
+    },
+    {
+      "tag": "H2",
+      "text": "Create Faster with Pokecut's AI Templates",
+      "cls": "text-pmd-h2-title font-bold text-c-primary-text"
+    },
+    {
+      "tag": "H2",
+      "text": "Test Your Portrait Before You Edit",
+      "cls": "text-center text-pmd-h2-title font-bold text-c-primary-text"
+    },
+    {
+      "tag": "H2",
+      "text": "Upgrade Portrait Details with Pokecut AI",
+      "cls": "text-center text-pmd-h2-title font-bold text-c-primary-text"
+    },
+    {
+      "tag": "H2",
+      "text": "Enhance Photo Quality for Every Detail",
+      "cls": "w-full bg-[linear-gradient(1.47491deg,#000_15.59%,#6a51ff_38.604%,#000_61.618%)] bg-clip-text text-center text-pmd-h2-ti"
+    },
+    {
+      "tag": "H2",
+      "text": "Pokecut is Trusted by Creators",
+      "cls": "w-full text-center text-[2.25rem] font-bold leading-[2.625rem] text-c-primary-text"
+    },
+    {
+      "tag": "H2",
+      "text": "What Users Say About Pokecut?",
+      "cls": "w-full text-center text-[2.25rem] font-bold leading-[2.625rem] text-c-theme-deep-gray"
+    },
+    {
+      "tag": "H2",
+      "text": "Frequently Asked Questions",
+      "cls": "text-[2.25rem] leading-[2.625rem] home-faq-title mb-[1.875rem] text-center font-bold text-c-primary-text md:mb-[2.5rem]"
+    },
+    {
+      "tag": "H3",
+      "text": "What is Pokecut and what can I use it for?",
+      "cls": "text-left text-[1.5rem] font-bold leading-[1.875rem]"
+    },
+    {
+      "tag": "H3",
+      "text": "How do I use Pokecut?",
+      "cls": "text-left text-[1.5rem] font-bold leading-[1.875rem]"
+    },
+    {
+      "tag": "H3",
+      "text": "Is Pokecut free?",
+      "cls": "text-left text-[1.5rem] font-bold leading-[1.875rem]"
+    },
+    {
+      "tag": "H3",
+      "text": "Can I use Pokecut without signing up?",
+      "cls": "text-left text-[1.5rem] font-bold leading-[1.875rem]"
+    },
+    {
+      "tag": "H3",
+      "text": "Can I use Pokecut's AI photo editor for commercial use?",
+      "cls": "text-left text-[1.5rem] font-bold leading-[1.875rem]"
+    },
+    {
+      "tag": "H3",
+      "text": "How can I contact Pokecut's support?",
+      "cls": "text-left text-[1.5rem] font-bold leading-[1.875rem]"
+    },
+    {
+      "tag": "H3",
+      "text": "What makes Pokecut better than other AI photo editing tools?",
+      "cls": "text-left text-[1.5rem] font-bold leading-[1.875rem]"
+    },
+    {
+      "tag": "H3",
+      "text": "Can Pokecut edit images in batches?",
+      "cls": "text-left text-[1.5rem] font-bold leading-[1.875rem]"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "Sign up",
+      "aria": null,
+      "disabled": false,
+      "cls": "flex h-[30px] min-w-[60px] shrink-0 items-center justify-center whitespace-nowrap rounded-[6px] bg-[radial-gradient(circle_at_0_120%,rgba(138,121,255,1)_0,rgba("
+    },
+    {
+      "text": "Start Creating for Free",
+      "aria": null,
+      "disabled": false,
+      "cls": "relative mx-auto mt-[1.40625rem] flex h-[4.4625rem] w-[26.30625rem] items-center justify-center overflow-hidden rounded-[1.125rem] border-[0.1419375rem] border-"
+    },
+    {
+      "text": "Upload reference image",
+      "aria": "Upload reference image",
+      "disabled": false,
+      "cls": "flex size-[2.625rem] shrink-0 items-center justify-center rounded-r2 border border-white/70 bg-[rgba(255,255,255,0.36)]"
+    },
+    {
+      "text": "Pokecut Pro",
+      "aria": null,
+      "disabled": false,
+      "cls": "flex h-[2.625rem] min-w-0 items-center gap-[0.5555625rem] rounded-[0.5625rem] border border-white/70 bg-[rgba(255,255,255,0.36)] px-[1.111125rem] text-[1.125rem"
+    },
+    {
+      "text": "Output Resolution:",
+      "aria": "Output Resolution:",
+      "disabled": false,
+      "cls": "flex size-[2.625rem] items-center justify-center rounded-[0.5625rem] border-0 bg-[rgba(205,205,205,0.27)]"
+    },
+    {
+      "text": "",
+      "aria": null,
+      "disabled": false,
+      "cls": "flex size-[2.625rem] items-center justify-center rounded-[0.5625rem] border-0 bg-[rgba(205,205,205,0.27)]"
+    },
+    {
+      "text": "Generate",
+      "aria": null,
+      "disabled": true,
+      "cls": "cursor-not-allowed bg-[var(--bc-gray-1)] opacity-40 mt-[0.75rem] flex h-[3rem] w-full items-center justify-center gap-[0.5rem] rounded-r3 text-pmd-normal-btn fo"
+    },
+    {
+      "text": "Remove Background",
+      "aria": "Remove Background",
+      "disabled": false,
+      "cls": "mobile-popular-feature-card relative h-[5.71875rem] overflow-hidden rounded-[1.1638rem] text-left disabled:cursor-wait disabled:opacity-70"
+    },
+    {
+      "text": "Clothes Changer",
+      "aria": "Clothes Changer",
+      "disabled": false,
+      "cls": "mobile-popular-feature-card relative h-[5.71875rem] overflow-hidden rounded-[1.1638rem] text-left disabled:cursor-wait disabled:opacity-70"
+    },
+    {
+      "text": "HD Photo Coverter",
+      "aria": "HD Photo Coverter",
+      "disabled": false,
+      "cls": "mobile-popular-feature-card relative h-[5.71875rem] overflow-hidden rounded-[1.1638rem] text-left disabled:cursor-wait disabled:opacity-70"
+    },
+    {
+      "text": "ID Photo Maker",
+      "aria": "ID Photo Maker",
+      "disabled": false,
+      "cls": "mobile-popular-feature-card relative h-[5.71875rem] overflow-hidden rounded-[1.1638rem] text-left disabled:cursor-wait disabled:opacity-70"
+    },
+    {
+      "text": "Body Editor",
+      "aria": "Body Editor",
+      "disabled": false,
+      "cls": "mobile-popular-feature-card relative h-[5.71875rem] overflow-hidden rounded-[1.1638rem] text-left disabled:cursor-wait disabled:opacity-70"
+    },
+    {
+      "text": "AI Replace",
+      "aria": "AI Replace",
+      "disabled": false,
+      "cls": "mobile-popular-feature-card relative h-[5.71875rem] overflow-hidden rounded-[1.1638rem] text-left disabled:cursor-wait disabled:opacity-70"
+    },
+    {
+      "text": "More Pokecut Tools",
+      "aria": null,
+      "disabled": false,
+      "cls": "home-cta-float home-figma-cta mobile-popular-feature-more relative mx-auto mt-[1.875rem] flex h-[4.125rem] w-[17.0625rem] items-center justify-center overflow-h"
+    },
+    {
+      "text": "See More Creations",
+      "aria": null,
+      "disabled": false,
+      "cls": "home-cta-float home-figma-cta relative mx-auto mt-[1.875rem] flex h-[4.125rem] w-[17.0625rem] items-center justify-center overflow-hidden rounded-[1.125rem]"
+    },
+    {
+      "text": "Face",
+      "aria": null,
+      "disabled": false,
+      "cls": "flex min-w-max flex-1 items-center justify-center whitespace-nowrap rounded-[0.5625rem] px-[0.5625rem] text-[1.5rem] leading-normal transition-colors duration-2"
+    },
+    {
+      "text": "Body",
+      "aria": null,
+      "disabled": false,
+      "cls": "flex min-w-max flex-1 items-center justify-center whitespace-nowrap rounded-[0.5625rem] px-[0.5625rem] text-[1.5rem] leading-normal transition-colors duration-2"
+    },
+    {
+      "text": "Hair",
+      "aria": null,
+      "disabled": false,
+      "cls": "flex min-w-max flex-1 items-center justify-center whitespace-nowrap rounded-[0.5625rem] px-[0.5625rem] text-[1.5rem] leading-normal transition-colors duration-2"
+    },
+    {
+      "text": "Background",
+      "aria": null,
+      "disabled": false,
+      "cls": "flex min-w-max flex-1 items-center justify-center whitespace-nowrap rounded-[0.5625rem] px-[0.5625rem] text-[1.5rem] leading-normal transition-colors duration-2"
+    },
+    {
+      "text": "HD Enhance",
+      "aria": "HD Enhance",
+      "disabled": false,
+      "cls": "relative h-[6.09375rem] min-w-0 w-full overflow-hidden rounded-[0.96215625rem] bg-[linear-gradient(180deg,#ceccff_0.66662%,#e5e4ff_79.342%)] shadow-[inset_0_-0."
+    },
+    {
+      "text": "Portrait AI",
+      "aria": "Portrait AI",
+      "disabled": false,
+      "cls": "relative h-[6.09375rem] min-w-0 w-full overflow-hidden rounded-[0.96215625rem] bg-[linear-gradient(180deg,#ceccff_0.66662%,#e5e4ff_79.342%)] shadow-[inset_0_-0."
+    },
+    {
+      "text": "Text Enhance",
+      "aria": "Text Enhance",
+      "disabled": false,
+      "cls": "relative h-[6.09375rem] min-w-0 w-full overflow-hidden rounded-[0.96215625rem] bg-[linear-gradient(180deg,#ceccff_0.66662%,#e5e4ff_79.342%)] shadow-[inset_0_-0."
+    },
+    {
+      "text": "Ultra Enhance",
+      "aria": "Ultra Enhance",
+      "disabled": false,
+      "cls": "relative h-[6.09375rem] min-w-0 w-full overflow-hidden rounded-[0.96215625rem] bg-[linear-gradient(180deg,#ceccff_0.66662%,#e5e4ff_79.342%)] shadow-[inset_0_-0."
+    },
+    {
+      "text": "3M+\ncreators",
+      "aria": "3M+ creators",
+      "disabled": false,
+      "cls": "flex size-full flex-col items-center justify-center gap-[0.58434375rem] rounded-[0.77915625rem] px-[0.5rem] py-[1.36340625rem] text-center transition duration-2"
+    },
+    {
+      "text": "200+\nAI tools",
+      "aria": "200+ AI tools",
+      "disabled": false,
+      "cls": "flex size-full flex-col items-center justify-center gap-[0.58434375rem] rounded-[0.77915625rem] px-[0.5rem] py-[1.36340625rem] text-center transition duration-2"
+    },
+    {
+      "text": "500M+\nedits processed",
+      "aria": "500M+ edits processed",
+      "disabled": false,
+      "cls": "flex size-full flex-col items-center justify-center gap-[0.58434375rem] rounded-[0.77915625rem] px-[0.5rem] py-[1.36340625rem] text-center transition duration-2"
+    },
+    {
+      "text": "Language: English",
+      "aria": null,
+      "disabled": false,
+      "cls": "btn-bg-purple ml-auto mr-[1.875rem] h-[3.375rem] w-[15rem] md:w-[12.5rem] p-[0.9375rem] md:p-[0.625rem] cursor-pointer rounded-[1.125rem] md:rounded-r3 text-t6 "
+    },
+    {
+      "text": "Home",
+      "aria": "Home",
+      "disabled": false,
+      "cls": "home-mobile-bottom-nav-item"
+    },
+    {
+      "text": "All Tools",
+      "aria": "All Tools",
+      "disabled": false,
+      "cls": "home-mobile-bottom-nav-item"
+    },
+    {
+      "text": "Upload",
+      "aria": "Upload",
+      "disabled": false,
+      "cls": "home-mobile-bottom-nav-upload home-mobile-bottom-nav-item"
+    },
+    {
+      "text": "Generate",
+      "aria": "Generate",
+      "disabled": false,
+      "cls": "home-mobile-bottom-nav-item"
+    },
+    {
+      "text": "Pricing",
+      "aria": "Pricing",
+      "disabled": false,
+      "cls": "home-mobile-bottom-nav-pricing home-mobile-bottom-nav-item"
+    },
+    {
+      "text": "DEBUG",
+      "aria": null,
+      "disabled": false,
+      "cls": "debug-float-btn"
+    }
+  ],
+  "links": [
+    {
+      "text": "",
+      "href": "http://10.17.1.66:3001/",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "router-link-active router-link-exact-active"
+    },
+    {
+      "text": "Pretty Scale",
+      "href": "http://10.17.1.66:3001/tools/pretty-scale",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group flex min-h-[3.75rem] min-w-0 items-center gap-[0.9375rem] rounded-r3 px-[0.9375rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-of"
+    },
+    {
+      "text": "Ethnicity Guesser",
+      "href": "http://10.17.1.66:3001/tools/ethnicity-guesser-ai",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group flex min-h-[3.75rem] min-w-0 items-center gap-[0.9375rem] rounded-r3 px-[0.9375rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-of"
+    },
+    {
+      "text": "Eye Color Detector",
+      "href": "http://10.17.1.66:3001/tools/eye-color-detector",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group flex min-h-[3.75rem] min-w-0 items-center gap-[0.9375rem] rounded-r3 px-[0.9375rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-of"
+    },
+    {
+      "text": "Body Shape Detector",
+      "href": "http://10.17.1.66:3001/tools/body-shape-detector",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group flex min-h-[3.75rem] min-w-0 items-center gap-[0.9375rem] rounded-r3 px-[0.9375rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-of"
+    },
+    {
+      "text": "Breast Expansion",
+      "href": "http://10.17.1.66:3001/image-to-image-ai/breast-expansion",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group relative h-[18.75rem] w-[14.0625rem] shrink-0 snap-start overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray focus-visible:outline focus-visible:outlin"
+    },
+    {
+      "text": "Bigger Butt",
+      "href": "http://10.17.1.66:3001/image-to-image-ai/make-butt-bigger-in-photo",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group relative h-[18.75rem] w-[14.0625rem] shrink-0 snap-start overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray focus-visible:outline focus-visible:outlin"
+    },
+    {
+      "text": "Look Taller",
+      "href": "http://10.17.1.66:3001/image-to-image-ai/look-taller-in-photos",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group relative h-[18.75rem] w-[14.0625rem] shrink-0 snap-start overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray focus-visible:outline focus-visible:outlin"
+    },
+    {
+      "text": "Slim Photo Editor",
+      "href": "http://10.17.1.66:3001/body-editor/slim-photo-editor",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group relative h-[18.75rem] w-[14.0625rem] shrink-0 snap-start overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray focus-visible:outline focus-visible:outlin"
+    },
+    {
+      "text": "Six Pack Editor",
+      "href": "http://10.17.1.66:3001/body-editor/six-pack-photo-editor",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group relative h-[18.75rem] w-[14.0625rem] shrink-0 snap-start overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray focus-visible:outline focus-visible:outlin"
+    },
+    {
+      "text": "Fat Filter",
+      "href": "http://10.17.1.66:3001/body-editor/fat-filter",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group relative h-[18.75rem] w-[14.0625rem] shrink-0 snap-start overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray focus-visible:outline focus-visible:outlin"
+    },
+    {
+      "text": "Hourglass Body AI",
+      "href": "http://10.17.1.66:3001/image-to-image-ai/hourglass-body-ai",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group relative h-[18.75rem] w-[14.0625rem] shrink-0 snap-start overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray focus-visible:outline focus-visible:outlin"
+    },
+    {
+      "text": "Body Editor",
+      "href": "http://10.17.1.66:3001/body-editor",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "group relative h-[18.75rem] w-[14.0625rem] shrink-0 snap-start overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray focus-visible:outline focus-visible:outlin"
+    },
+    {
+      "text": "#2",
+      "href": "https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut",
+      "target": "_blank",
+      "rel": "",
+      "submit": null,
+      "cls": "custom-a-d"
+    },
+    {
+      "text": "Jessica Miller",
+      "href": "https://www.producthunt.com/@jessica_miller_7",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Angelina Peng",
+      "href": "https://www.producthunt.com/@angelina__s",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Leo Y.",
+      "href": "https://www.producthunt.com/@leo_ye",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Zepeng She",
+      "href": "https://www.producthunt.com/@rocsheh",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Rachit Magon",
+      "href": "https://www.producthunt.com/@rachitmagon",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Jessica Miller",
+      "href": "https://www.producthunt.com/@jessica_miller_7",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Angelina Peng",
+      "href": "https://www.producthunt.com/@angelina__s",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Leo Y.",
+      "href": "https://www.producthunt.com/@leo_ye",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Zepeng She",
+      "href": "https://www.producthunt.com/@rocsheh",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Rachit Magon",
+      "href": "https://www.producthunt.com/@rachitmagon",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Jessica Miller",
+      "href": "https://www.producthunt.com/@jessica_miller_7",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Angelina Peng",
+      "href": "https://www.producthunt.com/@angelina__s",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Leo Y.",
+      "href": "https://www.producthunt.com/@leo_ye",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Zepeng She",
+      "href": "https://www.producthunt.com/@rocsheh",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "Rachit Magon",
+      "href": "https://www.producthunt.com/@rachitmagon",
+      "target": "_blank",
+      "rel": "nofollow noopener noreferrer",
+      "submit": null,
+      "cls": "home-mobile-review-name block truncate text-[1.125rem] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-them"
+    },
+    {
+      "text": "online store",
+      "href": "http://10.17.1.66:3001/pricing",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "custom-a-d"
+    },
+    {
+      "text": "our Terms of Use",
+      "href": "http://10.17.1.66:3001/term-of-use",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": "custom-a-d"
+    },
+    {
+      "text": "submitting a ticket",
+      "href": "http://10.17.1.66:3001/#",
+      "target": "",
+      "rel": "",
+      "submit": "refund",
+      "cls": "custom-a-d"
+    },
+    {
+      "text": "Download on the\n\nApp Store",
+      "href": "https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944",
+      "target": "_blank",
+      "rel": "",
+      "submit": null,
+      "cls": "flex flex-shrink-0 items-center h-[4.875rem] w-[16.875rem] gap-[0.75rem]  rounded-[0.5625rem] pl-[1.59rem] border-[1px] border-[#A6A6A6] bg-black md:w-[11.25rem"
+    },
+    {
+      "text": "GET IT ON\n\nGoogle Play",
+      "href": "https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en",
+      "target": "_blank",
+      "rel": "",
+      "submit": null,
+      "cls": "flex flex-shrink-0 items-center h-[4.875rem] w-[16.875rem] gap-[0.75rem]  rounded-[0.5625rem] pl-[1.59rem] border-[1px] border-[#A6A6A6] bg-black md:w-[11.25rem"
+    },
+    {
+      "text": "",
+      "href": "https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut",
+      "target": "_blank",
+      "rel": "",
+      "submit": null,
+      "cls": "w-[13.64997rem] h-[3.31875rem] md:w-[15.3125rem] md:h-[3.375rem] absolute top-[6.3125rem] right-[2.565rem] md:static"
+    },
+    {
+      "text": "All Tools",
+      "href": "http://10.17.1.66:3001/tools",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "Photo Collage Maker",
+      "href": "http://10.17.1.66:3001/collage-maker",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "Batch Photo Edit",
+      "href": "http://10.17.1.66:3001/batch-edit",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "Image to Image AI",
+      "href": "http://10.17.1.66:3001/image-to-image-ai",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "AI Replace",
+      "href": "http://10.17.1.66:3001/ai-replace",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "AI Background",
+      "href": "http://10.17.1.66:3001/ai-background",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "AI Image Generator",
+      "href": "http://10.17.1.66:3001/ai-image-generator",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "AI Background Remover",
+      "href": "http://10.17.1.66:3001/tools/background-remover",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "AI Background Changer",
+      "href": "http://10.17.1.66:3001/tools/background-changer",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "Magic eraser",
+      "href": "http://10.17.1.66:3001/tools/magic-eraser-with-ai-detection",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "AI Photo Enhancer",
+      "href": "http://10.17.1.66:3001/tools/photo-enhancer",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "AI ID Photo",
+      "href": "http://10.17.1.66:3001/tools/id-photo-maker",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "AI Image Extender",
+      "href": "http://10.17.1.66:3001/tools/ai-image-extender",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "FAQ",
+      "href": "http://10.17.1.66:3001/help",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "Contact us",
+      "href": "http://10.17.1.66:3001/help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "Privacy Policy",
+      "href": "http://10.17.1.66:3001/privacy-policy",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "Term of Service",
+      "href": "http://10.17.1.66:3001/term-of-use",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "Payment Terms",
+      "href": "http://10.17.1.66:3001/payment-terms",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "About us",
+      "href": "http://10.17.1.66:3001/about",
+      "target": "",
+      "rel": "",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "",
+      "href": "https://www.instagram.com/pokecut_app/",
+      "target": "_blank",
+      "rel": "nofollow",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "",
+      "href": "https://www.threads.net/@pokecut_app",
+      "target": "_blank",
+      "rel": "nofollow",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "",
+      "href": "https://www.youtube.com/@Pokecut_com",
+      "target": "_blank",
+      "rel": "nofollow",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "",
+      "href": "https://www.tiktok.com/@pokecut",
+      "target": "_blank",
+      "rel": "nofollow",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "",
+      "href": "https://x.com/Pokecut_",
+      "target": "_blank",
+      "rel": "nofollow",
+      "submit": null,
+      "cls": ""
+    },
+    {
+      "text": "",
+      "href": "https://discord.gg/KaPUfqb65b",
+      "target": "_blank",
+      "rel": "nofollow",
+      "submit": null,
+      "cls": ""
+    }
+  ],
+  "imgs": [
+    {
+      "src": "http://10.17.1.66:3001/img/top_logo.webp?v=20250115144601",
+      "alt": "pokecut logo",
+      "cls": "max-h-full max-w-full object-contain"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/nav_btn_mun.svg",
+      "alt": "",
+      "cls": "touch-manipulation aspect-square w-[44px]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/limited_offer_icon_gift.svg",
+      "alt": "",
+      "cls": "size-[2.25rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/nav_btn_pop_close_w.svg",
+      "alt": "",
+      "cls": "size-[2.25rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile_home_hero_icon_text.svg",
+      "alt": "",
+      "cls": "mobile-home-agent-hero__icon mobile-home-agent-hero__icon--text"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile_home_hero_icon_popup_img.svg",
+      "alt": "",
+      "cls": "mobile-home-agent-hero__icon mobile-home-agent-hero__icon--popup-img"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile_home_hero_icon_ai-generate.svg",
+      "alt": "",
+      "cls": "mobile-home-agent-hero__icon mobile-home-agent-hero__icon--ai-generate"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/icon_small_star.svg",
+      "alt": "",
+      "cls": "absolute left-[2.8921875rem] top-[2.2321875rem] size-[1.21875rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/icon_small_star.svg",
+      "alt": "",
+      "cls": "absolute left-[4.1109375rem] top-[0.78375rem] size-[0.75rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/icon_small_star.svg",
+      "alt": "",
+      "cls": "absolute right-[4.1821875rem] top-[0.78375rem] size-[1.21875rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/icon_small_star.svg",
+      "alt": "",
+      "cls": "absolute right-[3.2334375rem] top-[2.7009375rem] size-[0.75rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/create_icon_upload_img.svg",
+      "alt": "",
+      "cls": "size-[1.5rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/model_icon_zimageturbo.svg",
+      "alt": "",
+      "cls": "size-[1.40625rem] shrink-0"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/top_icon_unfold.svg",
+      "alt": "",
+      "cls": "size-[1.125rem] shrink-0"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile_resolution_1k.svg",
+      "alt": "",
+      "cls": "size-[2.25rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/ratio_size_1x1.svg",
+      "alt": "1:1",
+      "cls": "size-[2.25rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/create_generate_icon_text.svg",
+      "alt": "",
+      "cls": "size-[1.5rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile-create/remove-background.svg",
+      "alt": "",
+      "cls": "absolute left-[1.125rem] top-[0.46875rem] size-[3rem] object-contain"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile-create/clothes-changer.svg",
+      "alt": "",
+      "cls": "absolute left-[1.125rem] top-[0.46875rem] size-[3rem] object-contain"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile-create/photo-enhance.svg",
+      "alt": "",
+      "cls": "absolute left-[1.125rem] top-[0.46875rem] size-[3rem] object-contain"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile-create/id-photo.svg",
+      "alt": "",
+      "cls": "absolute left-[1.125rem] top-[0.46875rem] size-[3rem] object-contain"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile-create/body-editor.svg",
+      "alt": "",
+      "cls": "absolute left-[1.125rem] top-[0.46875rem] size-[3rem] object-contain"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile-create/ai-replace.svg",
+      "alt": "",
+      "cls": "absolute left-[1.125rem] top-[0.46875rem] size-[3rem] object-contain"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_test_panel_face.svg",
+      "alt": "",
+      "cls": "size-[3.75rem] shrink-0"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_test_panel_hair.svg",
+      "alt": "",
+      "cls": "size-[3.75rem] shrink-0"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_test_panel_eye.svg",
+      "alt": "",
+      "cls": "size-[3.75rem] shrink-0"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_test_panel_body.svg",
+      "alt": "",
+      "cls": "size-[3.75rem] shrink-0"
+    },
+    {
+      "src": "",
+      "alt": "AI body shape editing for a portrait",
+      "cls": "size-full object-cover pointer-events-none w-full h-full object-cover"
+    },
+    {
+      "src": "",
+      "alt": "Slim figure edit for a full-body photo",
+      "cls": "size-full object-cover pointer-events-none w-full h-full object-cover"
+    },
+    {
+      "src": "",
+      "alt": "Make a person look taller in a photo",
+      "cls": "size-full object-cover pointer-events-none w-full h-full object-cover"
+    },
+    {
+      "src": "",
+      "alt": "Slim the body shape in a portrait photo",
+      "cls": "size-full object-cover pointer-events-none w-full h-full object-cover"
+    },
+    {
+      "src": "",
+      "alt": "Add six pack abs to a body photo",
+      "cls": "size-full object-cover pointer-events-none w-full h-full object-cover"
+    },
+    {
+      "src": "",
+      "alt": "Preview a fuller body shape in a photo",
+      "cls": "size-full object-cover pointer-events-none w-full h-full object-cover"
+    },
+    {
+      "src": "",
+      "alt": "Create an hourglass body shape with AI",
+      "cls": "size-full object-cover pointer-events-none w-full h-full object-cover"
+    },
+    {
+      "src": "",
+      "alt": "Edit body shape in a portrait photo",
+      "cls": "size-full object-cover pointer-events-none w-full h-full object-cover"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile_home_entry_btn_icon_enhance.svg",
+      "alt": "",
+      "cls": "absolute left-1/2 top-[0.6140625rem] size-[2.8125rem] -translate-x-1/2"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile_home_entry_btn_icon_portrait.svg",
+      "alt": "",
+      "cls": "absolute left-1/2 top-[0.6140625rem] size-[2.8125rem] -translate-x-1/2"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile_home_entry_btn_icon_text.svg",
+      "alt": "",
+      "cls": "absolute left-1/2 top-[0.6140625rem] size-[2.8125rem] -translate-x-1/2"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/mobile_home_entry_btn_icon_ultrahd.svg",
+      "alt": "",
+      "cls": "absolute left-1/2 top-[0.6140625rem] size-[2.8125rem] -translate-x-1/2"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_brand_promotion_wave.svg",
+      "alt": "",
+      "cls": "absolute left-1/2 top-full z-[1] mt-[-0.1875rem] h-[0.81496875rem] w-[5.7046875rem] -translate-x-1/2 transition-opacity duration-200 motion-reduce:transition-no"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_brand_promotion_wave.svg",
+      "alt": "",
+      "cls": "absolute left-1/2 top-full z-[1] mt-[-0.1875rem] h-[0.81496875rem] w-[5.7046875rem] -translate-x-1/2 transition-opacity duration-200 motion-reduce:transition-no"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_brand_promotion_wave.svg",
+      "alt": "",
+      "cls": "absolute left-1/2 top-full z-[1] mt-[-0.1875rem] h-[0.81496875rem] w-[5.7046875rem] -translate-x-1/2 transition-opacity duration-200 motion-reduce:transition-no"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_brand_promotion_wave.svg",
+      "alt": "",
+      "cls": "absolute left-1/2 top-full z-[1] mt-[-0.1875rem] h-[0.81496875rem] w-[5.7046875rem] -translate-x-1/2 transition-opacity duration-200 motion-reduce:transition-no"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/jessica_miller.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/angelina_peng.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/leo_y.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/zepeng_she.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/rachit_magon.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/jessica_miller.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/angelina_peng.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/leo_y.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/zepeng_she.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/rachit_magon.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/jessica_miller.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/angelina_peng.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/leo_y.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/zepeng_she.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/rachit_magon.webp",
+      "alt": "",
+      "cls": "size-[4.7503125rem] shrink-0 rounded-full"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_feedback_start.svg",
+      "alt": "",
+      "cls": "size-[1.7848125rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/appstore_ios.svg",
+      "alt": "",
+      "cls": "mr-2 size-[3rem] md:size-[2.25rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/appstore_android.svg",
+      "alt": "",
+      "cls": "mr-2 size-[3rem] md:size-[2.25rem]"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/homepagerefresh_app1_26071315000144.webp",
+      "alt": "Pokecut mobile app for AI photo editing",
+      "cls": "absolute top-0 right-0 w-full"
+    },
+    {
+      "src": "http://10.17.2.54:8091/pokecutres/home/homepagerefresh_mobileapp1_26071315000145.webp",
+      "alt": "Pokecut app shown on a mobile phone",
+      "cls": "absolute left-0 bottom-0 w-[5.247rem] md:w-[7.75rem]"
+    },
+    {
+      "src": "http://10.17.1.66:3001/img/bottom_logo.webp",
+      "alt": "",
+      "cls": "ml-[1.875rem] size-[3.375rem] rounded-[1.375rem] xl:ml-0 xl:size-[6.375rem]"
+    },
+    {
+      "src": "https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=982611&theme=light&period=daily&t=1751361811903",
+      "alt": "Pokecut - Use AI to create photos with just a few click or a prompt | Product Hunt",
+      "cls": ""
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_ins_select.svg",
+      "alt": "",
+      "cls": "hidden size-[2rem] group-hover:block"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_ins.svg",
+      "alt": "",
+      "cls": "size-[2rem] group-hover:hidden"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_threads__select.svg",
+      "alt": "",
+      "cls": "hidden size-[2rem] group-hover:block"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_threads.svg",
+      "alt": "",
+      "cls": "size-[2rem] group-hover:hidden"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_utube_select.svg",
+      "alt": "",
+      "cls": "hidden size-[2rem] group-hover:block"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_utube.svg",
+      "alt": "",
+      "cls": "size-[2rem] group-hover:hidden"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_tiktok_select.svg",
+      "alt": "",
+      "cls": "hidden size-[2rem] group-hover:block"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_tiktok.svg",
+      "alt": "",
+      "cls": "size-[2rem] group-hover:hidden"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_twitter_select.svg",
+      "alt": "",
+      "cls": "hidden size-[2rem] group-hover:block"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_twitter.svg",
+      "alt": "",
+      "cls": "size-[2rem] group-hover:hidden"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_discover_select.svg",
+      "alt": "",
+      "cls": "hidden size-[2rem] group-hover:block"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/page_end_social_icon_discover.svg",
+      "alt": "",
+      "cls": "size-[2rem] group-hover:hidden"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_bottom_tools_home.svg",
+      "alt": "",
+      "cls": "home-mobile-bottom-nav-icon"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_bottom_tools_all_tools.svg",
+      "alt": "",
+      "cls": "home-mobile-bottom-nav-icon"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_bottom_tools_upload.svg",
+      "alt": "",
+      "cls": ""
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_bottom_tools_general.svg",
+      "alt": "",
+      "cls": "home-mobile-bottom-nav-icon"
+    },
+    {
+      "src": "http://10.17.1.66:3001/icons/svg/home_bottom_tools_pricing.svg",
+      "alt": "",
+      "cls": "home-mobile-bottom-nav-icon"
+    }
+  ],
+  "fixed_els": [
+    {
+      "tag": "DIV",
+      "cls": "fixed top-0 z-30 flex h-auto w-full flex-col flex",
+      "text": "Sign up",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 40
+      },
+      "z": "30"
+    },
+    {
+      "tag": "NAV",
+      "cls": "home-mobile-bottom-nav",
+      "text": "Home\nAll Tools\nGenerate\nPricing",
+      "rect": {
+        "x": 10,
+        "y": 762,
+        "w": 370,
+        "h": 66
+      },
+      "z": "20"
+    },
+    {
+      "tag": "DIV",
+      "cls": "debug-panel-wrapper",
+      "text": "DEBUG",
+      "rect": {
+        "x": 330,
+        "y": 784,
+        "w": 50,
+        "h": 50
+      },
+      "z": "9999"
+    }
+  ],
+  "body_text": "Sign up\n\nUnlock Pokecut VIP for just\n\n23\n\n:\n\n59\n\n:\n\n50\n\nAll-in-One AI Photo Editor & Generator\nStart Creating for Free\nPokecut Pro\nGenerate\nRemove Background\nClothes Changer\nHD Photo Coverter\nID Photo Maker\nBody Editor\nAI Replace\nMore Pokecut Tools\nCreate Faster with Pokecut's AI Templates\n\nBrowse ready-made looks for portraits, products, seasonal posts, and social content.\n\nButt\nAI Bikini\nMuscle\nAI Bikini\nFlux Gen\nYoung\nSuit\nSpiderman\nGPT-Image2\nBust\nDark Tan\nGPT-Image2\nLofi\nSmile Lines\nGold Tan\nJelly Photo Filter\nHigh Crown\nGlasses-Free 3D\nEye Bags\nFlash Effect\nSlim\nAcne\nNo Tattoo\nTry-On\nSee More Creations\nTest Your Portrait Before You Edit\n\nCheck face, skin tone, body shape, and hairstyle tests before choosing the right edit in Pokecut.\n\nPretty Scale\nEthnicity Guesser\nEye Color Detector\nBody Shape Detector\nUpgrade Portrait Details with Pokecut AI\n\nRefine facial details, body shape, hair, and portrait backgrounds from one mobile page.\n\nFace\nBody\nHair\nBackground\nBreast Expansion\nBigger Butt\nLook Taller\nSlim Photo Editor\nSix Pack Editor\nFat Filter\nHourglass Body AI\nBody Editor\nEnhance Photo Quality for Every Detail\n\nImprove image clarity, sharpen text, or restore portrait details with AI enhancement modes built for different photo needs.\n\nHD Enhance\nPortrait AI\nText Enhance\nUltra Enhance\nPokecut is Trusted by Creators\n\nMillions of users create, retouch, enhance, and export photos with Pokecut across personal, social, and product workflows.\n\n3M+\ncreators\n200+\nAI tools\n500M+\nedits processed\n#2\nProduct Hunt\nWhat Users Say About Pokecut?\n\n172.8K RATINGS\n\nJessica Miller\n\nGTM Director\n\n\"Pokecut creates natural-looking hair without any rough edges, making it a great tool for content creators!\"\n\nAngelina Peng\n\nDigital creator\n\n\"I tried using Pokecut to make thumbnails for my YouTube channel. It has tons of templates and automatically removes the background after you upload a photo. \"\n\nLeo Y.\n\nCEO\n\n\"My grandma's old black and white photo was yellow and blurry, I used Image Enhancer to restore it and it became crystal clear. My whole family was so touched. \"\n\nZepeng She\n\nCo-founder\n\n\"I'm really impressed with how user-friendly it is for both casual users and pros alike! The AI Background remover and the Magic Eraser are absolute game-changers!\"\n\nRachit Magon\n\nDeveloper\n\n\"The range of specialized AI models (portraits, products, anime) is impressive! Love that it's browser-based with no downloads. \"\n\nJessica Miller\n\nGTM Director\n\n\"Pokecut creates natural-looking hair without any rough edges, making it a great tool for content creators!\"\n\nAngelina Peng\n\nDigital creator\n\n\"I tried using Pokecut to make thumbnails for my YouTube channel. It has tons of templates and automatically removes the background after you upload a photo. \"\n\nLeo Y.\n\nCEO\n\n\"My grandma's old black and white photo was yellow and blurry, I used Image Enhancer to restore it and it became crystal clear. My whole family was so touched. \"\n\nZepeng She\n\nCo-founder\n\n\"I'm really impressed with how user-friendly it is for both casual users and pros alike! The AI Background remover and the Magic Eraser are absolute game-changers!\"\n\nRachit Magon\n\nDeveloper\n\n\"The range of specialized AI models (portraits, products, anime) is impressive! Love that it's browser-based with no downloads. \"\n\nJessica Miller\n\nGTM Director\n\n\"Pokecut creates natural-looking hair without any rough edges, making it a great tool for content creators!\"\n\nAngelina Peng\n\nDigital creator\n\n\"I tried using Pokecut to make thumbnails for my YouTube channel. It has tons of templates and automatically removes the background after you upload a photo. \"\n\nLeo Y.\n\nCEO\n\n\"My grandma's old black and white photo was yellow and blurry, I used Image Enhancer to restore it and it became crystal clear. My whole family was so touched. \"\n\nZepeng She\n\nCo-founder\n\n\"I'm really impressed with how user-friendly it is for both casual users and pros alike! The AI Background remover and the Magic Eraser are absolute game-changers!\"\n\nRachit Magon\n\nDeveloper\n\n\"The range of specialized AI models (portraits, products, anime) is impressive! Love that it's browser-based with no downloads. \"\n\nFrequently Asked Questions\n\nExplore the most common questions about Pokecut's free features, usage, account access, and AI editing tools.\n\nWhat is Pokecut and what can I use it for?\n\nPokecut is an all-in-one AI photo editing platform designed for portraits, travel photos, product images, and creative content. You can remove backgrounds, erase objects, enhance quality, create collages, and customise images with stickers, text, and templates, all in one place. With Pokecut's AI image generation, you can also turn prompts into studio-grade portraits, artistic visuals, Christmas scenes, fantasy maps, marketing banners, and more in seconds.\n\nHow do I use Pokecut?\n\nYou can start by uploading a photo, choosing an AI tool, or typing a prompt in the AI generator. Pokecut will guide you into the editor, where you can preview the result, adjust the edit, and export your final image.\n\nIs Pokecut free?\n\nYes, Pokecut is free to use. You can receive free credits to try out basic features, such as photo enhancement and background removal. However, usage is limited. To unlock more edits, higher resolution, and full feature access, you can go to the online store to subscribe to the Pro plan.\n\nCan I use Pokecut without signing up?\n\nYes you can. Pokecut can be used directly without signing up or login.\n\nCan I use Pokecut's AI photo editor for commercial use?\n\nYes, you can. Pokecut allows you to use the images generated by Pokecut's AI Image Editor and AI Image Generator for commercial purposes. But please note that if the image contains design resources not provided by Pokecut, the relevant commercial copyright is not managed by Pokecut. For more information, please refer to our Terms of Use.\n\nHow can I contact Pokecut's support?\n\nIf you have a refund request, please contact us by submitting a ticket.\n\nWhat makes Pokecut better than other AI photo editing tools?\n\nPokecut combines AI image generation, background removal, object erasing, portrait retouching, product cleanup, and batch editing in one platform—features that usually require multiple apps. It's faster, more accurate, and optimized for both daily users and e-commerce teams. No ads, no watermarks, and no complicated learning curve.\n\nCan Pokecut edit images in batches?\n\nYes. Pokecut's Batch Editing tool can process up to 50 images at once. You can batch-remove backgrounds, batch-resize for Amazon or Shopee, enhance quality, or generate uniform backdrops, ideal for merchants handling large volumes.\n\nPokecut Mobile App\nEdit, create, and enhance photos on the go with Pokecut's fast and intuitive mobile app.\n\nDownload on the\n\nApp Store\n\nGET IT ON\n\nGoogle Play\n\nPOKECUT\nLanguage: English\nAI Tools for Free\nAll Tools\nPhoto Collage Maker\nBatch Photo Edit\nImage to Image AI\nAI Replace\nAI Background\nAI Image Generator\nAI Background Remover\nAI Background Changer\nMagic eraser\nAI Photo Enhancer\nAI ID Photo\nAI Image Extender\nHelp\nFAQ\nContact us\nPrivacy Policy\nTerm of Service\nPayment Terms\nCompany\nAbout us\n\nCopyright © 2026 Pokecut All Rights Reserved.\n\nHome\nAll Tools\nGenerate\nPricing\nDEBUG"
+}

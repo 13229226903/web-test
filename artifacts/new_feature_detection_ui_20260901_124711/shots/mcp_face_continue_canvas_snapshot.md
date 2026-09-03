@@ -1,0 +1,131 @@
+- generic [ref=f10e2]:
+  - generic [ref=f10e823]:
+    - banner [ref=f10e825]:
+      - button [ref=f10e826] [cursor=pointer]:
+        - img "Pokecut" [ref=f10e827]
+      - generic [ref=f10e828]:
+        - button [ref=f10e829] [cursor=pointer]
+        - button [disabled]
+      - generic [ref=f10e832]:
+        - generic [ref=f10e833]: Credits:760
+        - generic [ref=f10e834]: UserFE85363C09
+    - generic [active] [ref=f10e838]:
+      - generic [ref=f10e839]:
+        - generic:
+          - generic [ref=f10e841]:
+            - img "图片 1"
+          - generic [ref=f10e843]:
+            - img "图片 2"
+          - generic [ref=f10e845]:
+            - img "图片 3"
+      - generic: 1024 x 1024
+      - generic [ref=f10e859]:
+        - generic [ref=f10e860]:
+          - button "Chat to edit" [ref=f10e861] [cursor=pointer]
+          - button "Enhance" [ref=f10e865] [cursor=pointer]
+          - button "Background" [ref=f10e869] [cursor=pointer]
+          - button "Portrait Editor" [ref=f10e874] [cursor=pointer]
+          - button "Erase" [ref=f10e878] [cursor=pointer]
+          - button "AI Replace" [ref=f10e881] [cursor=pointer]
+          - button "AI Clothes Changer" [ref=f10e884] [cursor=pointer]
+        - generic [ref=f10e887]:
+          - button "Remove BG" [ref=f10e888] [cursor=pointer]
+          - button "Expand" [ref=f10e890] [cursor=pointer]
+          - button "Adjust" [ref=f10e892] [cursor=pointer]
+          - button "Crop" [ref=f10e894] [cursor=pointer]
+          - button "Toolbox" [ref=f10e897] [cursor=pointer]
+          - button "Delete" [ref=f10e899] [cursor=pointer]
+          - generic [ref=f10e901]:
+            - button [ref=f10e902] [cursor=pointer]
+            - button [ref=f10e904] [cursor=pointer]
+      - generic [ref=f10e906]:
+        - generic [ref=f10e907]:
+          - button "AI Filter" [ref=f10e908] [cursor=pointer]
+          - button "Face" [ref=f10e909] [cursor=pointer]
+          - button "Body" [ref=f10e910] [cursor=pointer]
+          - button "Hair" [ref=f10e911] [cursor=pointer]
+        - generic [ref=f10e912]:
+          - generic [ref=f10e913]:
+            - button "Retouch" [ref=f10e914] [cursor=pointer]
+            - button "Teeth" [ref=f10e915] [cursor=pointer]
+            - button "Nose" [ref=f10e916] [cursor=pointer]
+            - button "Lips" [ref=f10e917] [cursor=pointer]
+            - button "Male" [ref=f10e918] [cursor=pointer]
+            - button "AI Makeup" [ref=f10e919] [cursor=pointer]
+            - button "Shape" [ref=f10e920] [cursor=pointer]
+            - button "Eye" [ref=f10e921] [cursor=pointer]
+            - button "Eyebrow" [ref=f10e922] [cursor=pointer]
+            - button "Expression" [ref=f10e923] [cursor=pointer]
+          - generic [ref=f10e924]:
+            - button [ref=f10e925]
+            - button [ref=f10e928] [cursor=pointer]
+        - generic [ref=f10e933]:
+          - button [ref=f10e934] [cursor=pointer]:
+            - img "Face Flyaways" [ref=f10e935]
+            - generic: Face Flyaways
+          - button [ref=f10e936] [cursor=pointer]:
+            - img "Eye Flyaways" [ref=f10e937]
+            - generic: Eye Flyaways
+          - button [ref=f10e938] [cursor=pointer]:
+            - img "Remove Acne" [ref=f10e939]
+            - generic: Remove Acne
+          - button [ref=f10e940] [cursor=pointer]:
+            - img "No Eye bags" [ref=f10e941]
+            - generic: No Eye bags
+          - button [ref=f10e942] [cursor=pointer]:
+            - img "Remove Blemishes" [ref=f10e943]
+            - generic: Remove Blemishes
+          - button [ref=f10e944] [cursor=pointer]:
+            - generic [ref=f10e945]:
+              - img "Top Light Fix" [ref=f10e947]
+              - img "Top Light Fix" [ref=f10e949]
+            - generic: Top Light Fix
+          - button [ref=f10e950] [cursor=pointer]:
+            - generic [ref=f10e951]:
+              - img "Top Light Fix Max" [ref=f10e953]
+              - img "Top Light Fix Max" [ref=f10e955]
+            - generic: Top Light Fix Max
+          - button [ref=f10e956] [cursor=pointer]:
+            - img "Smile Lines" [ref=f10e957]
+            - generic: Smile Lines
+        - button "Generate" [disabled] [ref=f10e959]
+      - generic [ref=f10e961]:
+        - button "Upload Image" [ref=f10e962] [cursor=pointer]
+        - button "Add Text" [ref=f10e964] [cursor=pointer]
+        - button "Add Sticker" [ref=f10e966] [cursor=pointer]
+        - button "Add Draw" [ref=f10e968] [cursor=pointer]
+        - button "Add Line" [ref=f10e970] [cursor=pointer]
+        - button "Add Shape" [ref=f10e972] [cursor=pointer]
+        - button "Adjust Layer" [ref=f10e974] [cursor=pointer]
+      - generic [ref=f10e976]:
+        - button "Zoom out" [ref=f10e977] [cursor=pointer]
+        - button "32%" [ref=f10e980] [cursor=pointer]
+        - button "Zoom in" [ref=f10e981] [cursor=pointer]
+        - generic [ref=f10e985]: Hold Right-click or Space + Left-click to drag the canvas
+      - generic:
+        - generic:
+          - generic:
+            - generic [ref=f10e991]:
+              - button "Inspiration" [ref=f10e992] [cursor=pointer]
+              - button "Remove BG" [ref=f10e994] [cursor=pointer]
+              - button "Enhance" [ref=f10e996] [cursor=pointer]
+              - button "Erase" [ref=f10e998] [cursor=pointer]
+              - button "AI Replace" [ref=f10e1000] [cursor=pointer]
+              - button "Portrait Editor" [ref=f10e1002] [cursor=pointer]
+              - button "Clothes Changer" [ref=f10e1004] [cursor=pointer]
+              - button "Collapse" [ref=f10e1006] [cursor=pointer]
+            - generic [ref=f10e1007]:
+              - generic [ref=f10e1008]:
+                - textbox "What do you want to design today?" [ref=f10e1009]
+                - generic [ref=f10e1010]: 0/3000
+              - generic [ref=f10e1012]:
+                - generic [ref=f10e1013]:
+                  - generic "Upload reference images" [ref=f10e1014] [cursor=pointer]
+                  - generic [ref=f10e1015]:
+                    - button "Delete" [ref=f10e1023] [cursor=pointer]
+                    - generic: 1/9
+                - generic [ref=f10e1024]:
+                  - generic "Model" [ref=f10e1025] [cursor=pointer]: Nano Banana
+                  - generic "Setting" [ref=f10e1029] [cursor=pointer]
+                  - generic [ref=f10e1030]: "10"
+  - button "DEBUG" [ref=f10e677] [cursor=pointer]

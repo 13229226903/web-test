@@ -1,0 +1,693 @@
+page: AiImageTextEnhancer
+url: http://10.17.1.66:3001/tools/ai-image-text-enhancer
+source_prd: D:/Test/my_project/gzy-feishu-doc-fetch/tmp/20260723_142302/02_文字画质增强实验优化(安国).md
+landmark:
+  selector: 'h1:has-text("Enhance Text in Image to 8K Online Free")'
+  description: 文字画质增强 SEO 工具页唯一主标题
+entry:
+  from: DirectUrlOrPokecutNavigation
+  trigger: 直接打开工具页，或从站内导航/工具页进入
+  selector: 'a[href*="/tools/ai-image-text-enhancer"]'
+exploration:
+  task_id: 2026-08-26_pokecut_text_enhancer_prd_full
+  evidence_json: artifacts/2026-08-26_pokecut_text_enhancer_prd_full/explore_text_enhancer_prd_full.json
+  tested_url: http://10.17.1.66:3001/tools/ai-image-text-enhancer
+  viewport_pc: 1440x1000
+  viewport_mobile: iPhone 13
+  test_image: test_images/gzy_comfytextart_PokeCut_1750754427032_4i88AV_meta_dev_cross_result.jpg
+  generated_result_observed: true
+  download_observed: true
+  environment_strategy: 生成态探索后续按测试服优先；测试服生成失败再切预部署并重新登录复试；预部署也失败则 skipped
+
+elements:
+  seo_h1:
+    selector: 'h1:has-text("Enhance Text in Image to 8K Online Free")'
+    text: Enhance Text in Image to 8K Online Free
+  desktop_upload_input:
+    selector: '#singleUploadInput'
+    input_type: file
+    accept: image/jpeg,image/png,image/webp,image/bmp
+    multiple: false
+    description: PC 首屏/处理区单图上传入口
+  mobile_upload_input:
+    selector: '#file-upload'
+    input_type: file
+    multiple: false
+    description: 移动端上传入口
+  batch_upload_input:
+    selector: '#batchUploadInput'
+    input_type: file
+    accept: image/jpeg,image/png,image/webp,image/bmp
+    multiple: true
+    description: Batch Edit 上传入口
+  upload_drop_zone:
+    selector: 'text=Drop, paste image, or URL'
+  upload_button:
+    selector: 'button:has-text("Upload Image")'
+  batch_entry:
+    selector: 'a[href="/batch-edit/edit"]:has-text("Batch Edit")'
+  effects_title:
+    selector: 'text=Choose the Effect'
+  effects_multiselect_hint:
+    selector: 'text=*Supports multiple selections'
+  scales_title:
+    selector: 'text=Upscale to'
+  total_cost:
+    selector: '[data-text-enhance-total-cost]'
+    cost_state_attribute: data-text-enhance-cost-state
+    observed_states:
+      paid_number: '2/4/10/14'
+      hidden_when_no_effect: true
+  result_before_size:
+    selector: 'text=Before :'
+  result_now_size:
+    selector: 'text=Now: :'
+  processed_effect_notice:
+    selector: 'text=Please note that this image has been processed these effect'
+    status: not_reverified_in_current_run
+
+effect_controls:
+  enhance_text:
+    selector: '[data-effect="enhance_text"]'
+    text: Enhance Text
+    selected_state: 'aria-pressed="true"'
+    unselected_state: 'aria-pressed="false"'
+    tooltip_selector: '[data-effect="enhance_text"] [data-effect-help-icon]'
+    tooltip_text: Enhance blurry text and improve readability.
+  remove_glare:
+    selector: '[data-effect="remove_glare"]'
+    text: Remove Glare
+    selected_state: 'aria-pressed="true"'
+    unselected_state: 'aria-pressed="false"'
+    tooltip_selector: '[data-effect="remove_glare"] [data-effect-help-icon]'
+    tooltip_text: Remove glare from reflective surfaces.
+  remove_moire:
+    selector: '[data-effect="remove_moire"]'
+    text: Remove Moire
+    selected_state: 'aria-pressed="true"'
+    unselected_state: 'aria-pressed="false"'
+    tooltip_selector: '[data-effect="remove_moire"] [data-effect-help-icon]'
+    tooltip_text: Reduce moire patterns in screens or printed images.
+  document_scanner:
+    selector: '[data-effect="document_scanner"]'
+    text: Document Scanner
+    selected_state: 'aria-pressed="true"'
+    unselected_state: 'aria-pressed="false"'
+    tooltip_selector: '[data-effect="document_scanner"] [data-effect-help-icon]'
+    tooltip_text: Turn a photographed document into a clean scanned page.
+
+scale_controls:
+  scale_2k:
+    selector: 'p:text-is("2k")'
+    detail_selector_text: '1536 * 2048 px / 2048 * 2048 px depending source image'
+    selector_risk: 当前无 data-scale / role / aria-selected，必须限定在 Upscale to 区域内使用
+  scale_4k:
+    selector: 'p:text-is("4k")'
+    detail_selector_text: '3072 * 4096 px / 4096 * 4096 px depending source image'
+    selector_risk: 当前无 data-scale / role / aria-selected，必须限定在 Upscale to 区域内使用
+  scale_8k:
+    selector: 'p:text-is("8k")'
+    detail_selector_text: '6144 * 8192 px / 8192 * 8192 px depending source image'
+    selector_risk: 当前无 data-scale / role / aria-selected，必须限定在 Upscale to 区域内使用
+
+states:
+  anonymous_initial_pc:
+    description: PC 匿名 SEO 首屏默认态
+    trigger: 直接打开 URL 并等待 H1 与上传区域可见
+    url_or_state_key: /tools/ai-image-text-enhancer#initial_pc
+    buttons:
+      btn_upload_image:
+        selector: 'button:has-text("Upload Image")'
+        role_or_text: Upload Image
+        visible_condition: 首屏上传区域可见
+        enabled_condition: 匿名可用
+        action_result: 触发 #singleUploadInput 文件选择器，上传后进入 pc_after_upload_default
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint:
+          - expect_file_chooser 或 set_input_files 后处理区出现 Choose the Effect
+          - URL 保持 /tools/ai-image-text-enhancer，页内处理不跳转
+      btn_signup:
+        selector: 'button:has-text("Sign up")'
+        role_or_text: Sign up
+        visible_condition: 未登录导航栏可见
+        enabled_condition: 匿名可用
+        action_result: 打开注册/登录浮层
+        reversible: true
+        explore_status: observed_only
+        dependencies: []
+        assertions_hint:
+          - 登录/注册表单浮层出现
+      btn_login:
+        selector: 'button:has-text("Log in")'
+        role_or_text: Log in
+        visible_condition: 未登录导航栏可见
+        enabled_condition: 匿名可用
+        action_result: 打开登录浮层，填写邮箱和固定验证码后可进入登录态
+        reversible: true
+        explore_status: covered_for_login
+        dependencies: [test_account]
+        assertions_hint:
+          - input[type="email"] 与 Verification Code 输入框可见
+      link_pricing:
+        selector: 'a[href="/pricing"]'
+        role_or_text: Pricing
+        visible_condition: 顶部导航可见
+        enabled_condition: 匿名可用
+        action_result: 跳转 Pricing 页面
+        reversible: true
+        explore_status: observed_only
+        dependencies: []
+        assertions_hint:
+          - href=/pricing
+      link_batch_edit:
+        selector: 'a[href="/batch-edit/edit"]:has-text("Batch Edit")'
+        role_or_text: Batch Edit
+        visible_condition: 上传区旁可见
+        enabled_condition: 匿名可用
+        action_result: 跳转 /batch-edit/edit 或进入批量编辑上传流程
+        reversible: true
+        explore_status: observed_only
+        dependencies: []
+        assertions_hint:
+          - href=/batch-edit/edit
+  pc_after_upload_default:
+    description: PC 上传测试图后的默认处理态
+    trigger: anonymous_initial_pc.btn_upload_image 上传 test_images/gzy_comfytextart_PokeCut_1750754427032_4i88AV_meta_dev_cross_result.jpg
+    url_or_state_key: /tools/ai-image-text-enhancer#pc_after_upload_default
+    observed_effects: {enhance_text: true, remove_glare: false, remove_moire: false, document_scanner: false}
+    observed_scale: 2k
+    observed_total_cost: 2
+    buttons:
+      btn_effect_enhance_text:
+        selector: '[data-effect="enhance_text"]'
+        role_or_text: Enhance Text
+        visible_condition: 上传成功后，Choose the Effect 区域可见
+        enabled_condition: 当前图片未达 8K；本次 1200x1600 素材可点击
+        action_result: 切换 Enhance Text 选中态；选中时显示 Upscale to；取消且无其他效果时主按钮置灰
+        reversible: true
+        explore_status: covered
+        dependencies: [upload_image]
+        assertions_hint:
+          - aria-pressed 在 true/false 间切换
+          - 仅选中 Enhance Text 时显示 2k/4k/8k 与总成本 2 或 6
+      btn_effect_remove_glare:
+        selector: '[data-effect="remove_glare"]'
+        role_or_text: Remove Glare
+        visible_condition: 上传成功后可见
+        enabled_condition: 可点击
+        action_result: 切换 Remove Glare 选中态；若不选 Enhance Text，隐藏分辨率区；成本固定 +2
+        reversible: true
+        explore_status: covered
+        dependencies: [upload_image]
+        assertions_hint:
+          - aria-pressed 切换
+          - 单选成本为 2
+      btn_effect_remove_moire:
+        selector: '[data-effect="remove_moire"]'
+        role_or_text: Remove Moire
+        visible_condition: 上传成功后可见
+        enabled_condition: 可点击
+        action_result: 切换 Remove Moire 选中态；若不选 Enhance Text，隐藏分辨率区；成本固定 +2
+        reversible: true
+        explore_status: covered
+        dependencies: [upload_image]
+        assertions_hint:
+          - aria-pressed 切换
+          - 单选成本为 2
+      btn_effect_document_scanner:
+        selector: '[data-effect="document_scanner"]'
+        role_or_text: Document Scanner
+        visible_condition: 上传成功后可见
+        enabled_condition: 可点击
+        action_result: 切换 Document Scanner 选中态；若不选 Enhance Text，隐藏分辨率区；成本固定 4
+        reversible: true
+        explore_status: covered
+        dependencies: [upload_image]
+        assertions_hint:
+          - aria-pressed 切换
+          - 单选成本为 4
+      btn_scale_2k:
+        selector: 'p:text-is("2k")'
+        role_or_text: 2k
+        visible_condition: Enhance Text 被选中时可见
+        enabled_condition: 当前图片低于 2K 时可选；若原图已达/超过 2K 则应置灰
+        action_result: 选择 2k 档，免费/SE 用户 Enhance Text 成本为 2
+        reversible: true
+        explore_status: covered_for_low_res_source
+        dependencies: [upload_image, enhance_text_selected]
+        assertions_hint:
+          - 2k 选中态高亮
+          - 总成本与组合实时刷新
+      btn_scale_4k:
+        selector: 'p:text-is("4k")'
+        role_or_text: 4k
+        visible_condition: Enhance Text 被选中时可见
+        enabled_condition: 只允许选择高于当前图片已达分辨率的档位
+        action_result: 选择 4k 档，免费/SE 用户 Enhance Text 成本为 2
+        reversible: true
+        explore_status: covered_for_low_res_source
+        dependencies: [upload_image, enhance_text_selected]
+        assertions_hint:
+          - 4k 选中态高亮
+          - 总成本与组合实时刷新
+      btn_scale_8k:
+        selector: 'p:text-is("8k")'
+        role_or_text: 8k
+        visible_condition: Enhance Text 被选中时可见
+        enabled_condition: 只允许选择高于当前图片已达分辨率的档位；8K 原图时整体置灰
+        action_result: 选择 8k 档，免费/SE 用户 Enhance Text 成本为 6，Pro/Ultra 为 4
+        reversible: true
+        explore_status: covered_for_low_res_source
+        dependencies: [upload_image, enhance_text_selected]
+        assertions_hint:
+          - 8k 选中态高亮
+          - 总成本全选四项时为 14
+      btn_primary_enhance:
+        selector: '[data-enhance-action="desktop-primary"]'
+        role_or_text: Enhance
+        visible_condition: 至少一个效果被选中
+        enabled_condition: class 包含 can-enhance-btn-bg；无效果时 class 包含 cursor-not-allowed
+        action_result: 发起真实生成，进入 generation_processing，完成后进入 generation_result
+        reversible: false
+        explore_status: covered
+        dependencies: [upload_image, login, predeploy, credits]
+        assertions_hint:
+          - 点击后出现百分比进度
+          - 结果态出现 Before/Now、Continue Enhancing、Edit More、Download
+  pc_no_effect_selected:
+    description: PC 上传后取消四个效果的禁用态
+    trigger: pc_after_upload_default 中依次取消 Enhance Text / Remove Glare / Remove Moire / Document Scanner
+    observed_effects: {enhance_text: false, remove_glare: false, remove_moire: false, document_scanner: false}
+    buttons:
+      btn_primary_enhance_disabled:
+        selector: '[data-enhance-action="desktop-primary"]'
+        role_or_text: Enhance
+        visible_condition: 处理区主按钮仍可见
+        enabled_condition: disabled；class 包含 cursor-not-allowed；无 cost 节点
+        action_result: 点击无效，不进入生成；分辨率区隐藏，点数隐藏
+        reversible: true
+        explore_status: covered
+        dependencies: [upload_image]
+        assertions_hint:
+          - 四个 [data-effect] aria-pressed=false
+          - body 不显示 Upscale to，主按钮不含 can-enhance-btn-bg
+  pc_non_upscale_only:
+    description: 仅选择非 Enhance Text 效果时的处理态
+    trigger: pc_after_upload_default 取消 Enhance Text，仅选择 Remove Glare / Remove Moire / Document Scanner 中一个或多个
+    observed_costs:
+      remove_glare_only: 2
+      remove_moire_only: 2
+      document_scanner_only: 4
+      remove_glare_plus_remove_moire: 4
+    buttons:
+      btn_primary_enhance_non_upscale:
+        selector: '[data-enhance-action="desktop-primary"]'
+        role_or_text: Enhance
+        visible_condition: 至少选择一个非 Enhance Text 效果
+        enabled_condition: class 包含 can-enhance-btn-bg
+        action_result: 发起所选非 upscale 效果生成；结果图展示区不应显示分辨率信息
+        reversible: false
+        explore_status: covered_for_selection_cost_only
+        dependencies: [upload_image, login, predeploy, credits]
+        assertions_hint:
+          - Upscale to 隐藏
+          - 总成本等于勾选效果固定成本之和
+          - 生成完成后结果区不展示分辨率角标
+  pc_all_effects_8k:
+    description: 四效果全选且选择 8k 的高成本组合态
+    trigger: pc_after_upload_default 勾选四种效果并选择 8k
+    observed_effects: {enhance_text: true, remove_glare: true, remove_moire: true, document_scanner: true}
+    observed_total_cost: 14
+    expected_execution_order: [document_scanner, remove_glare, remove_moire, enhance_text]
+    buttons:
+      btn_primary_enhance_all_effects_8k:
+        selector: '[data-enhance-action="desktop-primary"]'
+        role_or_text: Enhance
+        visible_condition: 四效果全选 + 8k
+        enabled_condition: class 包含 can-enhance-btn-bg
+        action_result: 按 PRD 顺序串行提交：文本扫描 → 去反光 → 去摩尔纹 → 文字增强
+        reversible: false
+        explore_status: selection_cost_covered_execution_order_unverified
+        dependencies: [upload_image, login, predeploy, credits, network_request_or_backend_log]
+        assertions_hint:
+          - UI 总成本显示 14
+          - 需要通过请求/后端日志验证执行顺序
+  generation_processing:
+    description: 点击 Enhance 后生成处理中
+    trigger: pc_after_upload_default.btn_primary_enhance，当前探索使用预部署 + 测试账号 + 默认 Enhance Text 2k
+    buttons:
+      btn_primary_enhance_processing:
+        selector: '[data-enhance-action="desktop-primary"]'
+        role_or_text: Enhance
+        visible_condition: 处理中主按钮区域仍显示
+        enabled_condition: 生成中不可重复提交，需通过进度/禁用或请求状态确认
+        action_result: 页面显示百分比进度，完成后进入 result
+        reversible: false
+        explore_status: covered_default_enhance_text
+        dependencies: [login, predeploy, credits]
+        assertions_hint:
+          - body 出现 80%~99% 等进度文本或生成中状态
+          - 完成前没有 Continue Enhancing / Edit More
+  generation_result:
+    description: 默认 Enhance Text 2k 生成完成后的结果态
+    trigger: generation_processing 完成，当前探索约 15 秒出现结果
+    observed_text:
+      before: 'Before : 1200px * 1600px'
+      now: 'Now: : 1536px * 2048px'
+      thumbnail_badge: 2K
+    buttons:
+      btn_continue_enhancing:
+        selector: '[data-enhance-action="desktop-primary"]:has-text("Continue Enhancing")'
+        role_or_text: Continue Enhancing
+        visible_condition: 结果态出现
+        enabled_condition: class 包含 can-enhance-btn-bg
+        action_result: 以当前结果图和当前勾选项继续发起真实增强
+        reversible: false
+        explore_status: observed_not_clicked_in_current_task
+        dependencies: [result_image, credits]
+        assertions_hint:
+          - 点击后重新进入 generation_processing
+      btn_edit_more:
+        selector: 'text=Edit More'
+        role_or_text: Edit More
+        visible_condition: 结果态底部双按钮之一
+        enabled_condition: 结果态可见后可点击
+        action_result: 跳转或进入更完整编辑器/画布继续编辑
+        reversible: true
+        explore_status: observed_not_clicked_in_current_task
+        dependencies: [result_image]
+        assertions_hint:
+          - 点击后 URL 或编辑器核心面板变化
+      btn_download:
+        selector: 'text=Download'
+        role_or_text: Download
+        visible_condition: 结果态底部双按钮之一
+        enabled_condition: 结果态可见后可点击；若命中会员/credits 拦截则承接现有购买链路
+        action_result: 触发浏览器下载；当前探索得到 blob 下载，文件名 Pokecut_*.jpg
+        reversible: false
+        explore_status: covered
+        dependencies: [result_image]
+        assertions_hint:
+          - expect_download 触发
+          - suggested_filename 匹配 Pokecut_*.jpg
+  mobile_initial:
+    description: 移动端匿名首屏默认态
+    trigger: iPhone 13 设备打开 URL
+    buttons:
+      btn_mobile_upload:
+        selector: '#file-upload'
+        role_or_text: Upload
+        visible_condition: 移动端首屏上传区域可见
+        enabled_condition: 匿名可用
+        action_result: 上传后进入 mobile_after_upload_default
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint:
+          - 上传后出现 Choose the Effect 与四个横向效果项
+  mobile_after_upload_default:
+    description: 移动端上传测试图后的默认处理态
+    trigger: mobile_initial.btn_mobile_upload 上传测试图
+    observed_effects: {enhance_text: true, remove_glare: false, remove_moire: false, document_scanner: false}
+    observed_total_cost: 2
+    layout: 四种模式横向结构，主按钮点数合并显示 Enhance 2
+    buttons:
+      btn_mobile_effect_enhance_text:
+        selector: '[data-effect="enhance_text"]'
+        role_or_text: Enhance Text
+        visible_condition: 移动端上传后横向模式选择区可见
+        enabled_condition: 当前图片未达 8K
+        action_result: 切换 Enhance Text，并控制分辨率滑杆显示
+        reversible: true
+        explore_status: covered
+        dependencies: [mobile_viewport, upload_image]
+        assertions_hint:
+          - aria-pressed 切换
+          - 选中态边框明显
+      btn_mobile_effect_remove_glare:
+        selector: '[data-effect="remove_glare"]'
+        role_or_text: Remove Glare
+        visible_condition: 移动端上传后横向模式选择区可见
+        enabled_condition: 可点击
+        action_result: 切换去反光，点数并入主按钮
+        reversible: true
+        explore_status: covered
+        dependencies: [mobile_viewport, upload_image]
+        assertions_hint:
+          - aria-pressed 切换
+      btn_mobile_effect_remove_moire:
+        selector: '[data-effect="remove_moire"]'
+        role_or_text: Remove Moire
+        visible_condition: 移动端上传后横向模式选择区可见
+        enabled_condition: 可点击
+        action_result: 切换去摩尔纹，点数并入主按钮
+        reversible: true
+        explore_status: covered
+        dependencies: [mobile_viewport, upload_image]
+        assertions_hint:
+          - aria-pressed 切换
+      btn_mobile_effect_document_scanner:
+        selector: '[data-effect="document_scanner"]'
+        role_or_text: Document Scanner
+        visible_condition: 移动端上传后横向模式选择区可见
+        enabled_condition: 可点击
+        action_result: 切换文本扫描，点数并入主按钮
+        reversible: true
+        explore_status: covered
+        dependencies: [mobile_viewport, upload_image]
+        assertions_hint:
+          - aria-pressed 切换
+      btn_mobile_primary_enhance:
+        selector: '[data-enhance-action="mobile-primary"]'
+        role_or_text: Enhance
+        visible_condition: 移动端上传后底部主按钮可见
+        enabled_condition: class 包含 can-enhance-btn-bg
+        action_result: 发起移动端生成流程
+        reversible: false
+        explore_status: observed_not_clicked_in_current_task
+        dependencies: [mobile_viewport, upload_image, login, predeploy, credits]
+        assertions_hint:
+          - 主按钮文本显示 Enhance + 点数
+          - 点击后出现生成中/结果态
+
+  logged_member_entitlement_cost:
+    description: 会员账号登录后上传 1K 图的权益/点数态（复探补充）
+    trigger: 使用 `450832596@qq.com` / `123456` 登录测试服，上传 `test_images/1K.jpg`
+    url_or_state_key: /tools/ai-image-text-enhancer#logged_member_entitlement_cost
+    observed_account: member
+    observed_environment: test_server
+    observed_costs:
+      enhance_text_2k: Free
+      enhance_text_4k: Free
+      enhance_text_8k: 4
+      all_effects_8k: 12
+    evidence:
+      json: artifacts/2026-08-26_pokecut_text_enhancer_prd_full/explore_text_enhancer_skipped_revisit_v2.json
+      screenshots:
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/51_member_revisit_2k.png
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/52_member_revisit_4k.png
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/53_member_revisit_8k.png
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/54_member_revisit_all_8k.png
+    buttons:
+      btn_primary_enhance_member:
+        selector: '[data-enhance-action="desktop-primary"]'
+        role_or_text: Enhance
+        visible_condition: 会员账号登录且上传图片后可见
+        enabled_condition: 至少一个效果选中；当前 1K 图未达 8K
+        action_result: 会员账号下 Enhance Text 2k/4k 主按钮显示 `Free`，8k 显示 `4`；叠加去反光/去摩尔纹/文本扫描后按 4+2+2+4 显示 `12`
+        reversible: false
+        explore_status: covered_for_cost_ui
+        dependencies: [login_member_account, upload_image]
+        assertions_hint:
+          - 2k/4k 时 [data-text-enhance-total-cost] 的 data-text-enhance-cost-state=free 且文本为 Free
+          - 8k 时 cost_state=paid 且文本为 4
+          - all effects + 8k 时文本为 12
+  logged_single_purchase_cost:
+    description: 单项购买账号登录后上传 1K 图的点数态（复探补充）
+    trigger: 使用 `03201449879@qq.com` / `123456` 登录测试服，上传 `test_images/1K.jpg`
+    url_or_state_key: /tools/ai-image-text-enhancer#logged_single_purchase_cost
+    observed_account: single_purchase
+    observed_environment: test_server
+    observed_costs:
+      enhance_text_2k: 2
+      enhance_text_4k: 2
+      enhance_text_8k: 6
+      all_effects_8k: 14
+    evidence:
+      json: artifacts/2026-08-26_pokecut_text_enhancer_prd_full/explore_text_enhancer_skipped_revisit_v2.json
+      screenshots:
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/51_single_purchase_revisit_2k.png
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/52_single_purchase_revisit_4k.png
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/53_single_purchase_revisit_8k.png
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/54_single_purchase_revisit_all_8k.png
+    buttons:
+      btn_primary_enhance_single_purchase:
+        selector: '[data-enhance-action="desktop-primary"]'
+        role_or_text: Enhance
+        visible_condition: 单项购买账号登录且上传图片后可见
+        enabled_condition: 至少一个效果选中；当前 1K 图未达 8K
+        action_result: 单项购买账号下 2k/4k/8k 分别显示 `2`/`2`/`6`，all effects + 8k 显示 `14`，未显示 Free 免扣点
+        reversible: false
+        explore_status: covered_for_cost_ui
+        dependencies: [login_single_purchase_account, upload_image]
+        assertions_hint:
+          - 2k/4k/8k 时 cost_state=paid 且文本分别为 2/2/6
+          - all effects + 8k 时文本为 14
+  high_resolution_over_2k:
+    description: 上传 2730x4096 图片后触发 over 2K 限制态
+    trigger: 匿名测试服上传 `test_images/4K.jpg`
+    url_or_state_key: /tools/ai-image-text-enhancer#high_resolution_over_2k
+    observed_image: test_images/4K.jpg
+    observed_hint: The resolution of the image is over 2K. Only larger options can be selected.
+    observed_scale: 4k
+    observed_total_cost: 2
+    evidence:
+      json: artifacts/2026-08-26_pokecut_text_enhancer_prd_full/explore_text_enhancer_skipped_revisit_v2.json
+      screenshot: artifacts/2026-08-26_pokecut_text_enhancer_prd_full/50_highres_revisit_2_hi_4k.png
+    buttons:
+      btn_scale_2k_disabled:
+        selector: 'p:text-is("2k")'
+        role_or_text: 2k
+        visible_condition: 上传原图已超过 2K 且 Enhance Text 选中
+        enabled_condition: disabled/灰显，点击不应选中 2k
+        action_result: 保持当前更高档位，不发起 2k 降档
+        reversible: true
+        explore_status: covered_disabled_ui
+        dependencies: [upload_2k_plus_image]
+        assertions_hint:
+          - 2k 行灰显且提示 over 2K 文案可见
+      btn_scale_4k_selected:
+        selector: 'p:text-is("4k")'
+        role_or_text: 4k
+        visible_condition: 上传 2730x4096 图后自动选中下一可用档位
+        enabled_condition: selected
+        action_result: 主按钮显示 Enhance 2
+        reversible: true
+        explore_status: covered
+        dependencies: [upload_2k_plus_image]
+        assertions_hint:
+          - 4k 行选中，主按钮 cost_text=2
+  high_resolution_over_4k:
+    description: 上传 4500x3000 / 4500x4500 / 6144x8192 图片后触发 over 4K 限制态
+    trigger: "匿名测试服上传 `test_images/4K.png`、`test_images/无人脸.jpg` 或 `test_images/8K.jpg`"
+    url_or_state_key: /tools/ai-image-text-enhancer#high_resolution_over_4k
+    observed_hint: The resolution of the image is over 4K. Only larger options can be selected.
+    note: "`8K.jpg`（6144x8192）本轮仍只触发 over 4K，未触发 highest clarity。"
+    observed_scale: 8k
+    observed_total_cost: 6
+    evidence:
+      json: artifacts/2026-08-26_pokecut_text_enhancer_prd_full/explore_text_enhancer_skipped_revisit_v2.json
+      screenshots:
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/50_highres_revisit_1_hi_4500_3000.png
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/50_highres_revisit_3_hi_4500_square.png
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/60_8k_fixture_default.png
+    buttons:
+      btn_scale_2k_4k_disabled:
+        selector: 'p:text-is("2k"), p:text-is("4k")'
+        role_or_text: 2k / 4k
+        visible_condition: 上传原图已超过 4K 且 Enhance Text 选中
+        enabled_condition: disabled/灰显，点击不应选中 2k/4k
+        action_result: 保持 8k 档，不发起降档
+        reversible: true
+        explore_status: covered_disabled_ui
+        dependencies: [upload_4k_plus_image]
+        assertions_hint:
+          - 2k 与 4k 行灰显且提示 over 4K 文案可见
+      btn_scale_8k_selected:
+        selector: 'p:text-is("8k")'
+        role_or_text: 8k
+        visible_condition: 上传 4500x3000 / 4500x4500 图后自动选中 8k
+        enabled_condition: selected
+        action_result: 主按钮显示 Enhance 6
+        reversible: true
+        explore_status: covered
+        dependencies: [upload_4k_plus_image]
+        assertions_hint:
+          - 8k 行选中，主按钮 cost_text=6
+  free_account_purchase_intercept:
+    description: 随机免费账号在当前 IP / 额度状态下点击生成触发购买拦截（复探补充）
+    trigger: 使用随机免费邮箱登录测试服，上传 `test_images/1K.jpg`，默认 Enhance Text 2k 后点击主按钮；预部署复试同样触发
+    url_or_state_key: /tools/ai-image-text-enhancer#free_account_purchase_intercept
+    observed_account: random_free_email
+    observed_environment: test_server_and_predeploy
+    observed_modal: purchase-gift-modal
+    evidence:
+      json: artifacts/2026-08-26_pokecut_text_enhancer_prd_full/explore_text_enhancer_skipped_revisit_v2.json
+      screenshots:
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/56_free_revisit_test_after.png
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/56_free_revisit_predeploy_after.png
+    buttons:
+      btn_primary_enhance_free_exhausted:
+        selector: '[data-enhance-action="desktop-primary"]'
+        role_or_text: Enhance 2
+        visible_condition: 免费账号登录、上传图片、默认 Enhance Text 2k
+        enabled_condition: 可点击但当前 IP/额度命中购买拦截
+        action_result: "打开 `purchase-gift-modal`，文案包含 `You get a limited-time offer: Unlock Pokecut VIP for just $1 USD` 与 `Get Started for $1 USD`"
+        reversible: true
+        explore_status: covered_purchase_intercept_current_quota_state
+        dependencies: [login_random_free_account, upload_image, current_ip_quota_state]
+        assertions_hint:
+          - 点击后出现 purchase-gift-modal
+          - 弹窗标题和 CTA 文案可见
+
+tabs:
+  effect_display_tabs_after_upload:
+    selector: 'button[role="tab"]'
+    values: [Enhance Text, Remove Glare, Remove Moire, Document Scanner]
+    note: 页面 SEO 内容区/效果展示区的 tab，不是处理区模式选择；需避免与 [data-effect] 混用
+modals:
+  purchase_gift_modal:
+    selector: '.purchase-gift-modal'
+    trigger: 免费账号当前 IP/额度不足时点击 `[data-enhance-action="desktop-primary"]`
+    observed_environment: test_server_and_predeploy
+    title_or_text: "You get a limited-time offer: Unlock Pokecut VIP for just $1 USD"
+    primary_cta: Get Started for $1 USD
+    close_selector: '.purchase-gift-modal svg, .purchase-gift-modal button'
+    evidence:
+      json: artifacts/2026-08-26_pokecut_text_enhancer_prd_full/explore_text_enhancer_skipped_revisit_v2.json
+      screenshots:
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/56_free_revisit_test_after.png
+        - artifacts/2026-08-26_pokecut_text_enhancer_prd_full/56_free_revisit_predeploy_after.png
+popovers:
+  effect_tooltips:
+    trigger: hover effect help icon
+    items:
+      enhance_text: Enhance blurry text and improve readability.
+      remove_glare: Remove glare from reflective surfaces.
+      remove_moire: Reduce moire patterns in screens or printed images.
+      document_scanner: Turn a photographed document into a clean scanned page.
+
+cost_rules_observed:
+  free_or_single_purchase:
+    enhance_text_2k: 2
+    enhance_text_4k: 2
+    enhance_text_8k: 6
+    all_effects_8k: 14
+  member:
+    enhance_text_2k: Free
+    enhance_text_4k: Free
+    enhance_text_8k: 4
+    all_effects_8k: 12
+  remove_glare: 2
+  remove_moire: 2
+  document_scanner: 4
+
+prd_only_or_unverified_states:
+  - se_subscription_account_state_not_covered_no_se_account
+  - free_quota_exactly_4_times_and_ip_dimension_current_ip_already_hits_purchase_intercept
+  - free_quota_exhausted_calculation_order_requires_resettable_quota_or_backend_counter
+  - b_plan_text_specific_purchase_intercept_and_purchase_popup_analytics_requires_b_bucket_or_event_logs
+  - highest_clarity_notice_for_true_8k_source_requires_frontend_threshold_or_fixture_that_triggers_highest_clarity
+  - already_processed_remove_glare_remove_moire_document_scanner_second_click_notice_current_task_not_reverified
+  - all_effects_backend_execution_order_requires_request_payload_or_backend_log
+  - 8k_source_non_upscale_second_enhance_workflow_requires_highest_clarity_state_and_backend_trace
+
+selector_semantic_gaps:
+  - scale options lack data-scale / aria-pressed / data-selected; tests must scope to Upscale to region or request frontend semantic attributes
+  - desktop/mobile primary controls are div elements with data-enhance-action, not button; tests must not use get_by_role(button) for primary Enhance
+  - disabled primary currently inferred from cursor-not-allowed class; no aria-disabled
+  - result Download/Edit More lack stable data-action attributes; tests need text selector scoped to result action area until frontend adds data-testid
+
+

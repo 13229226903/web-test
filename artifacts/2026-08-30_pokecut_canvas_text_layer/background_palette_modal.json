@@ -1,0 +1,119 @@
+{
+  "steps": [
+    {
+      "name": "click_background_palette_open",
+      "initial": {
+        "hex": "#ffffff",
+        "rgb": [
+          "0",
+          "0",
+          "100"
+        ],
+        "hsl_tab_cls": "cursor-pointer text-pc-long-content text-c-secondary-text",
+        "rgb_tab_cls": "cursor-pointer text-pc-normal-btn font-bold text-c-primary-text"
+      },
+      "diff_open": {
+        "bbox": [
+          1225,
+          35,
+          1910,
+          1080
+        ],
+        "nonzero_pixels": 167336,
+        "mean_abs": 0.008846
+      }
+    },
+    {
+      "name": "click_hsl_tab",
+      "after": {
+        "hex": "#ffffff",
+        "rgb": [
+          "0",
+          "0",
+          "100"
+        ],
+        "hsl_tab_cls": "cursor-pointer text-pc-normal-btn font-bold text-c-primary-text",
+        "rgb_tab_cls": "cursor-pointer text-pc-long-content text-c-secondary-text"
+      },
+      "diff": {
+        "bbox": [
+          1574,
+          35,
+          1884,
+          1025
+        ],
+        "nonzero_pixels": 11756,
+        "mean_abs": 0.001318
+      }
+    },
+    {
+      "name": "click_rgb_tab",
+      "after": {
+        "hex": "#ffffff",
+        "rgb": [
+          "0",
+          "0",
+          "100"
+        ],
+        "hsl_tab_cls": "cursor-pointer text-pc-long-content text-c-secondary-text",
+        "rgb_tab_cls": "cursor-pointer text-pc-normal-btn font-bold text-c-primary-text"
+      },
+      "diff": {
+        "bbox": [
+          1574,
+          35,
+          1884,
+          1025
+        ],
+        "nonzero_pixels": 11749,
+        "mean_abs": 0.001309
+      }
+    },
+    {
+      "name": "set_hex_red",
+      "after": {
+        "hex": "#ff0000",
+        "rgb": [
+          "0",
+          "100",
+          "100"
+        ],
+        "hsl_tab_cls": "cursor-pointer text-pc-long-content text-c-secondary-text",
+        "rgb_tab_cls": "cursor-pointer text-pc-normal-btn font-bold text-c-primary-text"
+      },
+      "diff": {
+        "bbox": [
+          792,
+          35,
+          1884,
+          1056
+        ],
+        "nonzero_pixels": 33259,
+        "mean_abs": 0.005926
+      }
+    },
+    {
+      "name": "close_palette_escape",
+      "after": {
+        "hex": "#ff0000",
+        "rgb": [
+          "0",
+          "100",
+          "100"
+        ],
+        "hsl_tab_cls": "cursor-pointer text-pc-long-content text-c-secondary-text",
+        "rgb_tab_cls": "cursor-pointer text-pc-normal-btn font-bold text-c-primary-text"
+      },
+      "diff": {
+        "bbox": [
+          1597,
+          35,
+          1614,
+          46
+        ],
+        "nonzero_pixels": 124,
+        "mean_abs": 1.1e-05
+      }
+    }
+  ]
+}

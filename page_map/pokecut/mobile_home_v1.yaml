@@ -1,0 +1,234 @@
+# Pokecut 移动端首页 v3.0（移动端优化）页面地图
+# 来源: task-22「移动端首页优化大纲（安国）」 + 2026-08-31 Playwright 移动视口(390x844, iPhone UA) 实测
+# 注意: 本文件为移动端首页首版地图；PC 首页见 home_v3.yaml。文案/交互以本文件实测为准。
+# 交互复测说明: 页面元素在视口外时需先 scroll_into_view_if_needed 再点击；直接点击未滚动到位的元素会假失败。
+page: PokecutMobileHomeV1
+url: /
+viewport:
+  width: 390
+  height: 844
+  is_mobile: true
+  has_touch: true
+landmark:
+  selector: "#home-mobile-agent-title"
+  description: 移动端首屏主标题
+entry:
+  from: Direct
+  trigger: 访问 http://10.17.1.66:3001/
+  selector: "body"
+  note: 未登录态顶部显示 Sign up；底部固定导航 Home/All Tools/Upload/Generate/Pricing。
+
+elements:
+  header_signup:
+    selector: "button:has-text('Sign up')"
+    text: "Sign up"
+    action_result: 打开登录/注册弹层，展示 Email 与 Verification Code 两个输入框。
+  agent_title:
+    selector: "#home-mobile-agent-title"
+    text: "All-in-One AI Photo Editor & Generator"
+  agent_main_cta:
+    selector: "button:has-text('Start Creating for Free')"
+    text: "Start Creating for Free"
+    file_chooser: true
+    landing: "/create/edit?pid=*"
+  agent_prompt:
+    selector: "textarea[aria-label]"
+    placeholder: "Start with Pokecut's free AI image generation, type your idea, like: \"a studio portrait with soft light\", then refine it with photo editing tools."
+  agent_generate:
+    selector: "section.mobile-home-agent-hero button:has-text('Generate')"
+    text: "Generate"
+    default_disabled: true
+  function_board:
+    selector: "button.mobile-popular-feature-card"
+    cards: ["Remove Background", "Clothes Changer", "HD Photo Coverter", "ID Photo Maker", "Body Editor", "AI Replace"]
+    more_tools: "More Pokecut Tools"
+    more_tools_landing: "/tools"
+  effect_board:
+    selector: "h2:has-text('Create Faster with Pokecut''s AI Templates')"
+    heading: "Create Faster with Pokecut's AI Templates"
+    cta: "See More Creations"
+    cta_landing: "/create"
+  test_board:
+    selector: "h2:has-text('Test Your Portrait Before You Edit')"
+    links:
+      Pretty Scale: "/tools/pretty-scale"
+      Ethnicity Guesser: "/tools/ethnicity-guesser-ai"
+      Eye Color Detector: "/tools/eye-color-detector"
+      Body Shape Detector: "/tools/body-shape-detector"
+    note: "站内 /tools/* 为 staging 环境路径；正式环境对应 www.pokecut.com/tools/*（需求所指正式域名）。"
+  portrait_board:
+    selector: "h2:has-text('Upgrade Portrait Details with Pokecut AI')"
+    tabs: ["Face", "Body", "Hair", "Background"]
+    default_selected: "Body"
+  enhance_board:
+    selector: "h2:has-text('Enhance Photo Quality for Every Detail')"
+    actions: ["HD Enhance", "Portrait AI", "Text Enhance", "Ultra Enhance"]
+    note: "主图为 canvas 绘制（720x540），非静态 webp img；HD Enhance→/tools/hd-pic-converter，Text Enhance→/tools/ai-image-text-enhancer，Portrait AI/Ultra Enhance 触发文件选择器。"
+  data_board:
+    selector: "h2:has-text('Pokecut is Trusted by Creators')"
+    stats: ["3M+ creators", "200+ AI tools", "500M+ edits processed", "#2 Product Hunt"]
+  reviews_board:
+    selector: "h2:has-text('What Users Say About Pokecut?')"
+    users: ["Jessica Miller", "Angelina Peng", "Leo Y.", "Zepeng She", "Rachit Magon"]
+  faq_board:
+    selector: "h2:has-text('Frequently Asked Questions')"
+    question_count: 8
+  mobile_app_board:
+    selector: "text=Pokecut Mobile App"
+  bottom_nav:
+    selector: "nav.home-mobile-bottom-nav"
+    items: ["Home", "All Tools", "Upload", "Generate", "Pricing"]
+
+states:
+  mobile_default:
+    description: 移动端首页默认未登录态，首屏 Agent 框 + 各板块顺序展示。
+    trigger: 直接访问 /
+    buttons:
+      header_signup:
+        selector: "button:has-text('Sign up')"
+        role_or_text: "Sign up"
+        visible_condition: 未登录态
+        enabled_condition: true
+        action_result: 打开登录/注册弹层（Email、Verification Code）
+        reversible: true
+        explore_status: covered
+        notes: 弹层无 role=dialog，输入框 placeholder 为 Email / Verification Code。
+      agent_main_cta:
+        selector: "button:has-text('Start Creating for Free')"
+        role_or_text: "Start Creating for Free"
+        action_result: 唤起系统文件选择器；选图后跳转 /create/edit?pid=*
+        explore_status: covered
+      agent_generate:
+        selector: "section.mobile-home-agent-hero button:has-text('Generate')"
+        role_or_text: "Generate"
+        enabled_condition: 输入框为空时 disabled；输入文本后 enabled
+        action_result: 空态点击不跳转/不生成；输入文本后点击进入 /create/edit?pid=* 画布（匿名态随后弹出注册/获取点数弹层）
+        explore_status: covered
+      function_remove_bg:
+        selector: "button:has-text('Remove Background')"
+        role_or_text: "Remove Background"
+        action_result: 唤起文件选择器；上传后进入 /create/edit 并展开 Remove Background 面板
+        explore_status: covered
+      function_clothes_changer:
+        selector: "button:has-text('Clothes Changer')"
+        role_or_text: "Clothes Changer"
+        action_result: 唤起文件选择器；上传后进入 /create/edit 并展开 Clothes Changer 面板
+        explore_status: covered
+      function_hd_converter:
+        selector: "button:has-text('HD Photo Coverter')"
+        role_or_text: "HD Photo Coverter"
+        action_result: 唤起文件选择器；上传后进入 /create/edit 并展开 Photo Enhancer 面板
+        explore_status: covered
+      function_id_photo:
+        selector: "button:has-text('ID Photo Maker')"
+        role_or_text: "ID Photo Maker"
+        action_result: 唤起文件选择器；匿名态上传有效图打开注册/获取点数弹层，不进入抠图；损坏图不进入画布
+        explore_status: covered
+        notes: 抠图成功/抠图失败/点数不足需登录且具备对应 credits 的账号态，留待用例阶段。
+      function_body_editor:
+        selector: "button:has-text('Body Editor')"
+        role_or_text: "Body Editor"
+        action_result: 唤起文件选择器；上传后进入 /create/edit 并展开 AI Body Editor 面板
+        explore_status: covered
+      function_ai_replace:
+        selector: "button:has-text('AI Replace')"
+        role_or_text: "AI Replace"
+        action_result: 唤起文件选择器；上传后进入 /create/edit 并展开 AI Replace 面板
+        explore_status: covered
+      function_more_tools:
+        selector: "button:has-text('More Pokecut Tools')"
+        role_or_text: "More Pokecut Tools"
+        action_result: 跳转 /tools
+        explore_status: covered
+      effect_template:
+        selector: "button:has-text('Butt')"
+        role_or_text: "Butt"
+        action_result: 唤起文件选择器；上传后进入 /create/edit
+        explore_status: covered
+      effect_see_more:
+        selector: "button:has-text('See More Creations')"
+        role_or_text: "See More Creations"
+        action_result: 跳转 /create
+        explore_status: covered
+      bottom_home:
+        selector: "nav.home-mobile-bottom-nav button[aria-label='Home']"
+        role_or_text: "Home"
+        action_result: 跳转 /create
+        explore_status: covered
+      bottom_all_tools:
+        selector: "nav.home-mobile-bottom-nav button[aria-label='All Tools']"
+        role_or_text: "All Tools"
+        action_result: 跳转 /tools
+        explore_status: covered
+      bottom_upload:
+        selector: "nav.home-mobile-bottom-nav button[aria-label='Upload']"
+        role_or_text: "Upload"
+        action_result: 唤起系统文件选择器；上传有效图进入 /create/edit；损坏图不进入画布
+        explore_status: covered
+      bottom_generate:
+        selector: "nav.home-mobile-bottom-nav button[aria-label='Generate']"
+        role_or_text: "Generate"
+        action_result: 不唤起文件选择器，直接进入 /create/edit 生图画布
+        explore_status: covered
+      bottom_pricing:
+        selector: "nav.home-mobile-bottom-nav button[aria-label='Pricing']"
+        role_or_text: "Pricing"
+        action_result: 跳转 /pricing
+        explore_status: covered
+        notes: staging 的 DEBUG 浮层位于右下角，与 Pricing 重叠，自动化建议 JS click 或 force。
+  agent_popovers:
+    description: Agent 框模型/比例/分辨率入口展开后的选项。
+    trigger: 点击 Agent 框内对应入口。
+    buttons:
+      model_entry:
+        selector: "button:has-text('Pokecut Pro')"
+        role_or_text: "Pokecut Pro"
+        action_result: 展开模型列表：ChatGPT Image 2.0 / Nano Banana / Nano Banana 2 / Nano Banana 2 Lite / Nano Banana Pro / Seedream 5.0 Lite / Seedream 5.0 Pro / Seedream4.0
+        explore_status: covered
+      ratio_entry:
+        selector: "section.mobile-home-agent-hero button:not([aria-label])[class*='size-[2.625rem]']"
+        role_or_text: 比例入口（无文本）
+        action_result: 展开比例：16:9 / 1:1 / 2:3 / 3:2 / 3:4 / 4:3 / 9:16 / 9:21
+        explore_status: covered
+      resolution_entry:
+        selector: "button[aria-label='Output Resolution:']"
+        role_or_text: "Output Resolution:"
+        action_result: 展开分辨率；探索时仅捕获到 1k 一项，需人工确认是否完整
+        explore_status: gap
+        notes: v2.9 预期多档分辨率，实际弹层仅见 1k。
+  upload_success:
+    description: 有效图片上传成功后的移动端画布。
+    trigger: 任一上传入口选图成功。
+    url_or_state_key: "/create/edit?pid=*"
+    buttons:
+      canvas_generate:
+        selector: "text=Generate"
+        role_or_text: "Generate"
+        action_result: 发起生成（探索阶段未执行，避免消耗 credits）
+        explore_status: skipped
+        notes: 画布生成留待用例阶段。
+  login_modal:
+    description: 点击 Sign up 后出现的登录/注册弹层。
+    trigger: 点击顶部 Sign up。
+    buttons:
+      email_input:
+        selector: "input[placeholder='Email']"
+        role_or_text: "Email"
+        explore_status: covered
+      code_input:
+        selector: "input[placeholder='Verification Code']"
+        role_or_text: "Verification Code"
+        explore_status: covered
+
+tabs:
+  portrait_tabs:
+    selector: "[role='tab']"
+    items: ["Face", "Body", "Hair", "Background"]
+    default_selected: "Body"
+    note: "各分类点击后选中态正确切换，卡片内容随之切换：Face=face-editor 链接，Body=body/image-to-image 链接，Hair=hair-editor 链接，Background=background 相关链接。点击前先 scroll_into_view。"
+
+modals:
+  login_modal:
+    selector: "input[placeholder='Email']"
+    fields: ["Email", "Verification Code"]
+    note: "无 role=dialog，按 placeholder 定位。"

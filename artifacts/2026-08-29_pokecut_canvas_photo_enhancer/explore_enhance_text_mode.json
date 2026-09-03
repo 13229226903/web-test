@@ -1,0 +1,11 @@
+{
+  "steps": [
+    {
+      "name": "21_after_text_mode",
+      "url": "http://10.17.1.66:3001/agent?pid=a8c9244b-a829-4cb6-bda0-7a048e7b0d70#",
+      "extra": {
+        "body_tail": "Credits:0\noffer ending soon\n23\n:\n59\n:\n28\nSign up\nLog in\n1080 x 1440\nChat to edit\nEnhance\nBackground\nPortrait Editor\nErase\nAI Replace\nAI Clothes Changer\nRemove BG\nExpand\nAdjust\nCrop\nToolbox\nDelete\nAI Enhancer\nStandard Mode\nOld Photo Mode\nPortrait Mode\nText Mode\n1080px*1440px\n→\n3000px*4000px\nUltra HD Mode\nEnhance\n38%\nHold Right-click or Space + Left-click to drag the canvas\nInspiration\nRemove BG\nEnhance\nErase\nAI Replace\nPortrait Editor\nClothes Changer\n0/3000\n1/9\nNano Banana\n10\nDEBUG"
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "tag_click": {
+    "url": "http://10.17.1.66:3001/help",
+    "input_value": "Credits",
+    "results_count_text": "13 results for"
+  },
+  "mobile_search": {
+    "url": "http://10.17.1.66:3001/help",
+    "results_count_text": "13 results for",
+    "results_scrollH": null,
+    "results_clientH": null,
+    "scrollable": false
+  }
+}

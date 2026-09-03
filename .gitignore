@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Playwright / 测试产物
+test-results/
+playwright-report/
+data/debug/
+
+# 运行日志（任务级，只增不改，本地取证用，不入库）
+artifacts/*/journal.jsonl
+.claude/journal_task
+
+# 编辑器
+.idea/
+.vscode/
+.DS_Store
+
+# 密钥，勿提交
+.env
+# 归档后生成的大体积报告与截图，不入库
+reports/
+data/screenshots/
+
+# 本地 MCP 会话与调试输出
+.playwright-mcp/
+debug.log
+
+# 项目现存显式备份，按用户要求不推送
+artifacts/framework_playwright_mcp_explore_20260901_111335/backups/

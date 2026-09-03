@@ -1,0 +1,145 @@
+page: pokecut_ai_face_reader
+url: https://pokecut-dev.guangzhuiyuan.com/tools/ai-face-reader
+version: v3
+source: pure_playwright_mcp_supplemental_generation_interactions
+updated_at: "2026-09-01 19:56:00"
+base_version: page_map/pokecut/ai_face_reader_v2.yaml
+landmark:
+  selector: 'h1:has-text("AI Face Reader")'
+  description: 有优化结果图检测类 SEO 页；预部署生成成功后展示三栏结果态并支持下载、重新上传、Continue in Portrait Editor。
+entry:
+  from: direct_url
+  trigger: open https://pokecut-dev.guangzhuiyuan.com/tools/ai-face-reader
+  selector: 'a[href="/tools/ai-face-reader"]'
+elements:
+  upload:
+    input: '#img2imgFirstScreenUploadInput'
+    primary_button: 'text=Try Image to Image AI Now'
+  result_columns:
+    original_title: 'text=Original Image'
+    analysis_title: 'text=Analysis Result'
+    optimized_title: 'text=Optimized Result'
+    upload_image: 'button:has-text("Upload Image")'
+    analysis_download: 'Analysis Result >> button:has-text("Download")'
+    optimized_download: 'Optimized Result >> button:has-text("Download")'
+    continue_portrait: 'button:has-text("Continue in Portrait Editor")'
+states:
+  predeploy_success_three_columns_desktop:
+    description: 预部署环境成功态；PC 从左到右依次显示 Original Image、Analysis Result、Optimized Result；三个区域均有真实图片，Analysis/Optimized Download 和 Continue 可点击。
+    trigger: DEBUG 后端环境切预部署，重新登录 450832596@qq.com，上传 test_images/有人脸.JPG，等待分析与优化结果成功。
+    url_or_state_key: /tools/ai-face-reader#predeploy_success_three_columns_desktop
+    buttons:
+      upload_image_enabled:
+        selector: 'button:has-text("Upload Image")'
+        role_or_text: Upload Image
+        visible_condition: Original Image 区域成功态
+        enabled_condition: 分析结果图和优化结果图均生成完成
+        action_result: 打开系统文件选择器；选择 test_images/多人脸.jpg 后重新进入 Generating analysis... / Waiting for analysis... 流程
+        reversible: true
+        explore_status: covered
+        dependencies: ['predeploy backend', 'test_images/多人脸.jpg']
+        assertions_hint: 点击后可 file_upload；新流程中 Upload Image disabled，Analysis 显示 Generating analysis...，Optimized 显示 Waiting for analysis...
+        notes: 证据 shots/mcp_face_reupload_generating_snapshot.md。
+      analysis_download:
+        selector: 'button:has-text("Download") >> nth=0'
+        role_or_text: Download
+        visible_condition: Analysis Result 真实图片可见
+        enabled_condition: 分析结果图生成成功
+        action_result: 下载 jpg 文件 pokecut-analysis-result-*.jpg
+        reversible: true
+        explore_status: covered
+        dependencies: ['predeploy backend']
+        assertions_hint: 下载事件文件名匹配 pokecut-analysis-result-*.jpg，扩展名 .jpg
+        notes: 证据 shots/downloads/pokecut-analysis-result-20260901-114118.jpg。
+      optimized_download:
+        selector: 'button:has-text("Download") >> nth=1'
+        role_or_text: Download
+        visible_condition: Optimized Result 真实图片可见
+        enabled_condition: 优化结果图生成成功
+        action_result: 下载 jpg 文件 pokecut-optimized-result-*.jpg
+        reversible: true
+        explore_status: covered
+        dependencies: ['predeploy backend']
+        assertions_hint: 下载事件文件名匹配 pokecut-optimized-result-*.jpg，扩展名 .jpg
+        notes: 证据 shots/downloads/pokecut-optimized-result-20260901-114132.jpg。
+      continue_portrait_pc:
+        selector: 'button:has-text("Continue in Portrait Editor")'
+        role_or_text: Continue in Portrait Editor
+        visible_condition: Optimized Result 成功态按钮可见
+        enabled_condition: 分析和优化结果图均生成成功
+        action_result: 跳转 /agent?pid=<uuid>；画布带入原图、分析结果图、优化结果图三张图；优化结果图被选中；Portrait Editor/Face 面板打开；Generate disabled 表示未选模板
+        reversible: true
+        explore_status: covered
+        dependencies: ['predeploy backend', 'logged-in member account']
+        assertions_hint: canvas snapshot 出现 图片 1/2/3；选中框在优化图；Portrait Editor/Face 面板可见；Generate disabled
+        notes: 证据 shots/mcp_face_continue_canvas_snapshot.md、shots/mcp_face_continue_canvas.png。
+  predeploy_reupload_generating_desktop:
+    description: 成功态点击 Upload Image 并重新选择图片后，恢复生成中队列：原图变更、Upload Image disabled、Analysis Generating、Optimized Waiting，两个结果区按钮 disabled。
+    trigger: success state -> Upload Image -> file_upload test_images/多人脸.jpg
+    url_or_state_key: /tools/ai-face-reader#predeploy_reupload_generating_desktop
+    buttons:
+      upload_image_disabled:
+        selector: 'button:has-text("Upload Image")'
+        role_or_text: Upload Image
+        visible_condition: 原图区新图片显示
+        enabled_condition: disabled while new generation is running
+        action_result: 不可点击
+        reversible: false
+        explore_status: covered
+        dependencies: []
+        assertions_hint: disabled Upload Image + Generating analysis... + Waiting for analysis...
+        notes: 证据 shots/mcp_face_reupload_generating_snapshot.md。
+      analysis_download_disabled:
+        selector: 'button:has-text("Download") >> nth=0'
+        role_or_text: Download
+        visible_condition: Analysis Result generating
+        enabled_condition: disabled until analysis image success
+        action_result: 不可下载
+        reversible: false
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 生成中 Download disabled
+        notes: covered。
+      continue_portrait_disabled:
+        selector: 'button:has-text("Continue in Portrait Editor")'
+        role_or_text: Continue in Portrait Editor
+        visible_condition: Optimized Result waiting
+        enabled_condition: disabled until optimized image success
+        action_result: 不跳转
+        reversible: false
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Waiting for analysis... 时 Continue disabled
+        notes: covered。
+  predeploy_success_mobile:
+    description: 移动端 390x844 成功态；Original / Analysis / Optimized 三块从上到下纵向排列；Upload Image、两个 Download、Continue 均可点击。
+    trigger: viewport 390x844 + predeploy + logged-in + upload test_images/有人脸.JPG
+    url_or_state_key: /tools/ai-face-reader#predeploy_success_mobile
+    buttons:
+      continue_portrait_mobile:
+        selector: 'button:has-text("Continue in Portrait Editor")'
+        role_or_text: Continue in Portrait Editor
+        visible_condition: 移动端 Optimized Result 成功态
+        enabled_condition: 分析和优化结果图均生成成功
+        action_result: 实测跳转 /agent?pid=<uuid> 后画布带入 图片 1/2/3 三张图，并选中优化图；与需求“仅带优化结果图”冲突
+        reversible: true
+        explore_status: covered
+        dependencies: ['viewport 390x844', 'predeploy backend']
+        assertions_hint: 作为 bug 断言：移动端 Continue 后不应出现 图片 1/2/3 三张图，应仅一张优化图
+        notes: 证据 shots/mcp_face_mobile_continue_canvas_snapshot.md、shots/mcp_face_mobile_continue_canvas.png；BUG-FACE-MOBILE-001。
+      upload_image_enabled_mobile:
+        selector: 'button:has-text("Upload Image")'
+        role_or_text: Upload Image
+        visible_condition: 移动端 Original Image 成功态
+        enabled_condition: success state
+        action_result: 可打开文件选择器（PC 已实测重传流程）
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: mobile success snapshot 中 Upload Image cursor pointer
+        notes: 证据 shots/mcp_face_mobile_success_snapshot.md。
+modals:
+  debug_panel:
+    trigger: 'button:has-text("DEBUG")'
+    buttons: ['button:has-text("测试服")', 'button:has-text("预部署")']
+    notes: 测试服 Server busy 时按 PROJECT.md 切预部署并重新登录；预部署成功覆盖生成态后交互。

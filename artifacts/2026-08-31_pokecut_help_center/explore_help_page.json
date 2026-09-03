@@ -1,0 +1,482 @@
+{
+  "url": "http://10.17.1.66:3001/help",
+  "title": "FAQ about Pokecut website | Pokecut",
+  "topnav": {
+    "found": true,
+    "items": []
+  },
+  "hero": {
+    "eyebrow": "Pokecut Help CenterPokecut Help CenterPokecut Help Center",
+    "h1": "How can we help you create faster?",
+    "desc": null,
+    "search_placeholder": "Search by keyword, for example: credits, refund, download"
+  },
+  "popular_tags": [
+    {
+      "tag": "Credits",
+      "found": true,
+      "text": "Credits"
+    },
+    {
+      "tag": "Subscription",
+      "found": true,
+      "text": "Subscription"
+    },
+    {
+      "tag": "Download",
+      "found": true,
+      "text": "Download"
+    },
+    {
+      "tag": "Batch",
+      "found": true,
+      "text": "Batch"
+    },
+    {
+      "tag": "Project",
+      "found": true,
+      "text": "Project"
+    }
+  ],
+  "category_cards": [
+    {
+      "text": "Getting StartedLearn what Pokecut is, what you can use it for, free usage, sign-up, and how to start editing.5 articles >>",
+      "cls": "help-v2-category-card"
+    },
+    {
+      "text": "Account & AccessLanguage switch, credits balance, orders, web/app account relation, and email unsubscribe.5 articles >>",
+      "cls": "help-v2-category-card"
+    },
+    {
+      "text": "Plans, Credits & BillingCredits, Premium Plan, one-time credits purchase, cancellation, refunds, orders, and payment issues.7 articles >>",
+      "cls": "help-v2-category-card"
+    },
+    {
+      "text": "AI Tools & EditingAI tools, upload formats, image upload, Photo Enhancer, Background Changer, Chat to Edit, and failed AI tasks.5 articles >>",
+      "cls": "help-v2-category-card"
+    },
+    {
+      "text": "Batch, Download & ProjectsBatch editing, marketplace sizes, download results, HD export, project history, and recovery issues.7 articles >>",
+      "cls": "help-v2-category-card"
+    },
+    {
+      "text": "Commercial, Safety & SupportCommercial use, content safety, privacy, payment terms, and support tickets.5 articles >>",
+      "cls": "help-v2-category-card"
+    }
+  ],
+  "faq_nav": [
+    {
+      "text": "Popular11",
+      "active": true,
+      "cls": "help-v2-faq-section__nav-item help-v2-faq-section__nav-item--active"
+    },
+    {
+      "text": "Getting Started5",
+      "active": false,
+      "cls": "help-v2-faq-section__nav-item"
+    },
+    {
+      "text": "Account & Access5",
+      "active": false,
+      "cls": "help-v2-faq-section__nav-item"
+    },
+    {
+      "text": "Plans, Credits & Billing7",
+      "active": false,
+      "cls": "help-v2-faq-section__nav-item"
+    },
+    {
+      "text": "AI Tools & Editing5",
+      "active": false,
+      "cls": "help-v2-faq-section__nav-item"
+    },
+    {
+      "text": "Batch, Download & Projects7",
+      "active": false,
+      "cls": "help-v2-faq-section__nav-item"
+    },
+    {
+      "text": "Commercial, Safety & Support5",
+      "active": false,
+      "cls": "help-v2-faq-section__nav-item"
+    }
+  ],
+  "faq_current": [
+    {
+      "question": "What is Pokecut and what can I use it for?",
+      "answer": "Pokecut is an all-in-one AI photo editing platform for portraits, travel photos, product images, and creative content. You can remove backgrounds, erase objects, enhance image, create collages, use templates, and generate AI images.",
+      "open": true,
+      "cls": "help-v2-faq-item help-v2-faq-item--open"
+    },
+    {
+      "question": "Is Pokecut free?",
+      "answer": null,
+      "open": false,
+      "cls": "help-v2-faq-item"
+    },
+    {
+      "question": "Can I use Pokecut without signing up?",
+      "answer": null,
+      "open": false,
+      "cls": "help-v2-faq-item"
+    },
+    {
+      "question": "What are credits?",
+      "answer": null,
+      "open": false,
+      "cls": "help-v2-faq-item"
+    },
+    {
+      "question": "What is the difference between Premium Plan and Credits Purchase?",
+      "answer": null,
+      "open": false,
+      "cls": "help-v2-faq-item"
+    },
+    {
+      "question": "Can I cancel my Premium Plan?",
+      "answer": null,
+      "open": false,
+      "cls": "help-v2-faq-item"
+    },
+    {
+      "question": "Can I use my work commercially?",
+      "answer": null,
+      "open": false,
+      "cls": "help-v2-faq-item"
+    },
+    {
+      "question": "What image formats can I upload?",
+      "answer": null,
+      "open": false,
+      "cls": "help-v2-faq-item"
+    },
+    {
+      "question": "Can Pokecut edit images in batches?",
+      "answer": null,
+      "open": false,
+      "cls": "help-v2-faq-item"
+    },
+    {
+      "question": "Where can I find my previous projects?",
+      "answer": null,
+      "open": false,
+      "cls": "help-v2-faq-item"
+    },
+    {
+      "question": "Can I use my web account to log in to the mobile app?",
+      "answer": null,
+      "open": false,
+      "cls": "help-v2-faq-item"
+    }
+  ],
+  "bottom_cta": {
+    "found": true,
+    "text": "Still have questions?Start with a photo, a prompt, or a quick edit. Pokecut helps you create polished visuals in minutes.Contact us"
+  },
+  "categories": {
+    "Getting Started": {
+      "questions": [
+        {
+          "question": "What is Pokecut?",
+          "open": true
+        },
+        {
+          "question": "What can I use Pokecut for?",
+          "open": false
+        },
+        {
+          "question": "Is Pokecut free?",
+          "open": false
+        },
+        {
+          "question": "Can I use Pokecut without signing up?",
+          "open": false
+        },
+        {
+          "question": "How do I start editing a photo?",
+          "open": false
+        }
+      ],
+      "firstAnswer": "Pokecut is an all-in-one AI photo editing platform for portraits, travel photos, product images, and creative content. You can remove backgrounds, erase objects, enhance image, create collages, use templates, and generate AI images.",
+      "openCount": 1,
+      "firstOpen": true
+    },
+    "Account & Access": {
+      "questions": [
+        {
+          "question": "How do I change the language in Pokecut?",
+          "open": true
+        },
+        {
+          "question": "Where can I see my remaining credits?",
+          "open": false
+        },
+        {
+          "question": "Where can I see my orders?",
+          "open": false
+        },
+        {
+          "question": "Can I use my web account to log in to the mobile app?",
+          "open": false
+        },
+        {
+          "question": "Where can I unsubscribe from Pokecut emails?",
+          "open": false
+        }
+      ],
+      "firstAnswer": "After entering the Pokecut website, you will be prompted at the top whether you need to change the language. Click to quickly change to your language. You also can slide the page to the bottom, then click on the Language button in the lower left corner to switch languages.",
+      "openCount": 1,
+      "firstOpen": true
+    },
+    "Plans, Credits & Billing": {
+      "questions": [
+        {
+          "question": "What are credits?",
+          "open": true
+        },
+        {
+          "question": "What is the difference between a Premium Plan and Credits Purchase?",
+          "open": false
+        },
+        {
+          "question": "Do purchased credits expire?",
+          "open": false
+        },
+        {
+          "question": "Can I cancel my Premium Plan?",
+          "open": false
+        },
+        {
+          "question": "Can I get a refund?",
+          "open": false
+        },
+        {
+          "question": "Why did my payment or renewal fail?",
+          "open": false
+        },
+        {
+          "question": "Can website credits be used in the Pokecut app?",
+          "open": false
+        }
+      ],
+      "firstAnswer": "Credits are virtual points used when using AI features on the Pokecut website. Different AI tools may consume different numbers of credits.",
+      "openCount": 1,
+      "firstOpen": true
+    },
+    "AI Tools & Editing": {
+      "questions": [
+        {
+          "question": "Which AI tools does Pokecut provide?",
+          "open": true
+        },
+        {
+          "question": "What image formats can I upload?",
+          "open": false
+        },
+        {
+          "question": "How can I upload an image?",
+          "open": false
+        },
+        {
+          "question": "Why did my AI task fail?",
+          "open": false
+        },
+        {
+          "question": "What if I am not satisfied with the AI result?",
+          "open": false
+        }
+      ],
+      "firstAnswer": "Pokecut provides AI Background Remover, AI Background, Magic Eraser, AI Photo Enhancer, AI Replace, AI Image Generator, Image to Image AI, AI Image Extender, ID Photo tools, Batch Photo Edit, and more tools shown on the Create page.",
+      "openCount": 1,
+      "firstOpen": true
+    },
+    "Batch, Download & Projects": {
+      "questions": [
+        {
+          "question": "Can Pokecut edit images in batches?",
+          "open": true
+        },
+        {
+          "question": "Which batch tools are available?",
+          "open": false
+        },
+        {
+          "question": "Which marketplace sizes are supported in Batch Edit?",
+          "open": false
+        },
+        {
+          "question": "How do I download my edited image?",
+          "open": false
+        },
+        {
+          "question": "Why can’t I download in HD?",
+          "open": false
+        },
+        {
+          "question": "Where can I find my previous projects?",
+          "open": false
+        },
+        {
+          "question": "What should I do if download or project recovery fails?",
+          "open": false
+        }
+      ],
+      "firstAnswer": "Yes. Pokecut Batch Editing can process up to 50 images at a time.",
+      "openCount": 1,
+      "firstOpen": true
+    },
+    "Commercial, Safety & Support": {
+      "questions": [
+        {
+          "question": "Can I use Pokecut images commercially?",
+          "open": true
+        },
+        {
+          "question": "What content is not allowed?",
+          "open": false
+        },
+        {
+          "question": "How does Pokecut protect privacy?",
+          "open": false
+        },
+        {
+          "question": "How do I contact Pokecut support?",
+          "open": false
+        },
+        {
+          "question": "How long does support take to reply?",
+          "open": false
+        }
+      ],
+      "firstAnswer": "Yes, you can. Pokecut allows you to use the images generated by Pokecut's AI Image Editor and AI Image Generator for commercial purposes. But please note that if the image contains design resources not provided by Pokecut, the relevant commercial copyright is not managed by Pokecut. For more information, please refer to our Terms of Use.",
+      "openCount": 1,
+      "firstOpen": true
+    }
+  },
+  "faq_accordion": {
+    "item_count": 5,
+    "after_click_1st_then_2nd": [
+      {
+        "open": false,
+        "q": "What is Pokecut?"
+      },
+      {
+        "open": true,
+        "q": "What can I use Pokecut for?"
+      },
+      {
+        "open": false,
+        "q": "Is Pokecut free?"
+      },
+      {
+        "open": false,
+        "q": "Can I use Pokecut without signing up?"
+      },
+      {
+        "open": false,
+        "q": "How do I start editing a photo?"
+      }
+    ],
+    "after_collapse": [
+      {
+        "open": false,
+        "q": "What is Pokecut?"
+      },
+      {
+        "open": false,
+        "q": "What can I use Pokecut for?"
+      },
+      {
+        "open": false,
+        "q": "Is Pokecut free?"
+      },
+      {
+        "open": false,
+        "q": "Can I use Pokecut without signing up?"
+      },
+      {
+        "open": false,
+        "q": "How do I start editing a photo?"
+      }
+    ]
+  },
+  "search": {
+    "credits": {
+      "url": "http://10.17.1.66:3001/help",
+      "has_results_for": true,
+      "results_count_text": "13 results for",
+      "has_sorted_by_relevance": false,
+      "has_no_answer_found": false,
+      "has_submit_ticket": false,
+      "result_blocks": [
+        "Where can I see my remaining credits?Click on the username in the upper right corner, and you will see the account information including the remaining credits.Account & AccessWhat is the difference be",
+        "Where can I see my remaining credits?Click on the username in the upper right corner, and you will see the account information including the remaining credits.Account & AccessWhat is the difference be",
+        "Where can I see my remaining credits?Click on the username in the upper right corner, and you will see the account information including the remaining credits.Account & Access",
+        "Where can I see my remaining credits?Click on the username in the upper right corner, and you will see the account information including the remaining credits.",
+        "What is the difference between a Premium Plan and Credits Purchase?The Premium Plan grants access to all photo editing tools and includes a monthly or weekly allocation of AI tool credits. Credits Pu.",
+        "What is the difference between a Premium Plan and Credits Purchase?The Premium Plan grants access to all photo editing tools and includes a monthly or weekly allocation of AI tool credits. Credits Pu.",
+        "What is the difference between Premium Plan and Credits Purchase?The Premium Plan grants access to all photo editing tools and includes a monthly or weekly allocation of AI tool credits. Credits Pu...",
+        "What is the difference between Premium Plan and Credits Purchase?The Premium Plan grants access to all photo editing tools and includes a monthly or weekly allocation of AI tool credits. Credits Pu...",
+        "What are credits?Credits are virtual points used when using AI features on the Pokecut website. Different AI tools may consume different numbers of c...Plans, Credits & Billing",
+        "What are credits?Credits are virtual points used when using AI features on the Pokecut website. Different AI tools may consume different numbers of c...",
+        "Do purchased credits expire?Credits purchased separately are valid for the long term and do not expire. Credits included in a subscription refresh by subscripti...Plans, Credits & Billing",
+        "Do purchased credits expire?Credits purchased separately are valid for the long term and do not expire. Credits included in a subscription refresh by subscripti...",
+        "Can website credits be used in the Pokecut app?No definite cross-platform sharing should be promised. Website paid services are governed by Pokecut Website Payment Terms and do no...Plans, Credits & B",
+        "Can website credits be used in the Pokecut app?No definite cross-platform sharing should be promised. Website paid services are governed by Pokecut Website Payment Terms and do no...",
+        "Is Pokecut free?Pokecut provides free credits so you can try out various AI features. To make more edits or access premium features, you’ll need to...Getting Started",
+        "Is Pokecut free?Pokecut provides free credits so you can try out various AI features. To make more edits or access premium features, you’ll need to...",
+        "Can I use Pokecut without signing up?Most Pokecut AI tools are available without logging in. For orders, saved projects, more credits, or premium features, you may need...Getting Started",
+        "Can I use Pokecut without signing up?Most Pokecut AI tools are available without logging in. For orders, saved projects, more credits, or premium features, you may need...",
+        "Can I cancel my Premium Plan?You can cancel your subscription on the My Order page. Once canceled, you will not be charged for the next billing cycle, and your s...Plans, Credits & Billing",
+        "Can I cancel my Premium Plan?You can cancel your subscription on the My Order page. Once canceled, you will not be charged for the next billing cycle, and your s...",
+        "Why did my AI task fail?Possible reasons include unsupported file format, unstable network, content not allowed by policy, insufficient credits, or service...AI Tools & Editing",
+        "Why did my AI task fail?Possible reasons include unsupported file format, unstable network, content not allowed by policy, insufficient credits, or service...",
+        "What if I am not satisfied with the AI result?Try adjusting the uploaded image, prompt, tool, model, or settings, then generate again. Whether credits are returned depends on the...AI Tools & Editing",
+        "What if I am not satisfied with the AI result?Try adjusting the uploaded image, prompt, tool, model, or settings, then generate again. Whether credits are returned depends on the...",
+        "How do I download my edited image?After processing is complete, click Download. Pokecut website downloads do not add watermarks. HD download or advanced export option...Batch, Download & Projects"
+      ]
+    },
+    "pokecut-unmatched-000": {
+      "url": "http://10.17.1.66:3001/help",
+      "has_results_for": true,
+      "results_count_text": "0 results for",
+      "has_sorted_by_relevance": false,
+      "has_no_answer_found": true,
+      "has_submit_ticket": true,
+      "result_blocks": [
+        "Subscription",
+        "What is Pokecut and what can I use it for?Pokecut is an all-in-one AI photo editing platform for portraits, travel photos, product images, and creative content. You can remove backgrounds, erase objec",
+        "Is Pokecut free?",
+        "Can I use Pokecut without signing up?",
+        "What are credits?",
+        "What is the difference between Premium Plan and Credits Purchase?",
+        "Can I cancel my Premium Plan?",
+        "Can I use my work commercially?",
+        "What image formats can I upload?",
+        "Can Pokecut edit images in batches?",
+        "Where can I find my previous projects?",
+        "Can I use my web account to log in to the mobile app?"
+      ]
+    }
+  },
+  "topnav_contact": {
+    "found": false,
+    "contact": null,
+    "items": [
+      {
+        "text": "Start Creating for Free",
+        "href": null
+      }
+    ]
+  },
+  "mobile": {
+    "initial": {
+      "url": "http://10.17.1.66:3001/help",
+      "cardCount": 6,
+      "gridColumns": "171.516px 171.516px",
+      "hasLeftNavVisible": false,
+      "faqItemCount": 11,
+      "bodyOverflowX": false
+    }
+  }
+}

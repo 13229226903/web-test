@@ -1,0 +1,276 @@
+- generic [ref=f8e2]:
+  - generic [ref=f8e3]:
+    - generic [ref=f8e5]:
+      - link [ref=f8e6] [cursor=pointer]:
+        - /url: /
+        - img "pokecut logo" [ref=f8e7]
+      - generic [ref=f8e8]:
+        - button "AI Free Tools" [ref=f8e10] [cursor=pointer]
+        - button "Portrait Editor" [ref=f8e14] [cursor=pointer]
+        - button "Discover" [ref=f8e18] [cursor=pointer]
+        - link "Pricing 60% OFF" [ref=f8e22] [cursor=pointer]:
+          - /url: /pricing
+          - generic [ref=f8e25]:
+            - text: Pricing
+            - generic [ref=f8e26]: 60% OFF
+      - generic [ref=f8e28]: User8JY
+    - generic [ref=f8e34]:
+      - paragraph [ref=f8e36]:
+        - link "Home" [ref=f8e37] [cursor=pointer]:
+          - /url: /
+        - link "> Tools" [ref=f8e38] [cursor=pointer]:
+          - /url: /tools
+        - text: "> Accurated Nose Shape Detector: Instant AI Nose Test"
+      - navigation "All Free Tools" [ref=f8e40]:
+        - list [ref=f8e41]:
+          - listitem [ref=f8e42]:
+            - button "AI Image" [ref=f8e43] [cursor=pointer]
+          - listitem [ref=f8e46]:
+            - button "Enhance" [ref=f8e47] [cursor=pointer]
+          - listitem [ref=f8e50]:
+            - button "Remove Background" [ref=f8e51] [cursor=pointer]
+          - listitem [ref=f8e54]:
+            - button "Clothes Changer" [ref=f8e55] [cursor=pointer]
+          - listitem [ref=f8e58]:
+            - button "Eraser" [ref=f8e59] [cursor=pointer]
+          - listitem [ref=f8e62]:
+            - button "AI Background" [ref=f8e63] [cursor=pointer]
+          - listitem [ref=f8e66]:
+            - button "AI Replace" [ref=f8e67] [cursor=pointer]
+          - listitem [ref=f8e70]:
+            - button "AI Extend" [ref=f8e71] [cursor=pointer]
+          - listitem [ref=f8e74]:
+            - button "ID Photo" [ref=f8e75] [cursor=pointer]
+          - listitem [ref=f8e78]:
+            - button "Resize" [ref=f8e79] [cursor=pointer]
+          - listitem [ref=f8e82]:
+            - button "Batch Edit" [ref=f8e83] [cursor=pointer]
+          - listitem [ref=f8e86]:
+            - button "Template" [ref=f8e87] [cursor=pointer]
+      - generic [ref=f8e90]:
+        - generic [ref=f8e388]:
+          - generic [ref=f8e389]:
+            - generic [ref=f8e390]:
+              - generic [ref=f8e391]: "1"
+              - heading "Original Image" [level=3] [ref=f8e392]
+            - img "Original Image" [ref=f8e394]
+            - button "Upload Image" [disabled] [ref=f8e396]
+          - generic [ref=f8e397]:
+            - generic [ref=f8e398]:
+              - generic [ref=f8e399]: "2"
+              - heading "Analysis Result" [level=3] [ref=f8e400]
+            - generic [ref=f8e403]:
+              - paragraph [ref=f8e405]: Server busy. We're fixing it now. No credits deducted.
+              - generic [ref=f8e445]:
+                - button "Change Image" [ref=f8e446] [cursor=pointer]
+                - button "Try again" [ref=f8e447] [cursor=pointer]
+            - button "Download" [disabled] [ref=f8e407]
+          - generic [ref=f8e408]:
+            - generic [ref=f8e409]:
+              - generic [ref=f8e410]: "3"
+              - heading "Optimized Result" [level=3] [ref=f8e411]
+            - generic [ref=f8e412]:
+              - img "Optimized Result" [ref=f8e413]
+              - paragraph [ref=f8e415]: Based on your photo and analysis, we've generated a beautifully optimized version just for you.
+            - button "Get It Now" [ref=f8e417] [cursor=pointer]
+        - generic [ref=f8e132]:
+          - heading "When Can You Use Pokecut's Nose Shape Detector?" [level=2] [ref=f8e133]
+          - generic [ref=f8e134]:
+            - generic [ref=f8e135]:
+              - img "Glasses frame guide based on nose bridge height" [ref=f8e421]
+              - generic [ref=f8e139]:
+                - heading "Pick Glasses That Fit Your Nose Bridge" [level=3] [ref=f8e140]
+                - paragraph [ref=f8e141]:
+                  - text: Buying glasses online is hard when you cannot try frames on first. A bridge that sits too low can pinch your skin, slide down your face, or make the frame look wider than expected.Use this nose shape detector to read your bridge height and nose width from a clear selfie. Pokecut then helps you understand which frame styles may suit your facial structure, from aviator shapes to Wellington frames. It also helps you
+                  - link "virtuall try on glasses" [ref=f8e142] [cursor=pointer]:
+                    - /url: /ai-replace/add-glasses-to-photo
+                  - text: ", compare options before you order, so you can avoid repeat returns and choose frames with more confidence."
+            - generic [ref=f8e143]:
+              - img "Nose contour map with highlight and shadow points" [ref=f8e422]
+              - generic [ref=f8e147]:
+                - heading "Map Better Contour Points for Your Nose" [level=3] [ref=f8e148]
+                - paragraph [ref=f8e149]:
+                  - text: Makeup tutorials often assume every nose has the same bridge and tip shape. If you copy a generic contour formula without knowing your own structure, the result can look heavy, muddy, or uneven in photos.Pokecut works like a simple
+                  - link "beauty scanner" [ref=f8e150] [cursor=pointer]:
+                    - /url: /tools/pretty-scale
+                  - text: for beauty planning. It checks your bridge, nostril width, and nose-lip angle, then helps you see where highlight and shadow should start. Use the result as a practical 3D makeup guide before you try a new look, especially if you are still learning contour placement.
+            - generic [ref=f8e155]:
+              - heading "Prepare Better Questions Before a Consultation" [level=3] [ref=f8e156]
+              - paragraph [ref=f8e157]:
+                - text: If you are considering a nose consultation,
+                - link "Pokecut's image to image function" [ref=f8e158] [cursor=pointer]:
+                  - /url: /image-to-image-ai
+                - text: helps to understand your own features before the appointment. Many beginners do not know terms such as nasofrontal angle or nasolabial angle, so it is easy to feel lost during a sales-heavy conversation.This AI nose shape detector gives you a plain report from your photo. Use it to learn the basic measurements and describe what you want by using
+                - link "nose job simulator" [ref=f8e159] [cursor=pointer]:
+                  - /url: /face-editor/nose-job-simulator
+                - text: . It cannot replace a licensed doctor, but it can help you enter the conversation with better questions and less pressure.
+        - generic [ref=f8e160]:
+          - heading "Nose Length Types" [level=2] [ref=f8e161]
+          - generic [ref=f8e162]: Knowing your exact nose length is the secret to perfecting your daily makeup contouring and picking the most flattering sunglasses. Explore this specific feature to upgrade your personal style.
+          - generic [ref=f8e163]:
+            - generic [ref=f8e169]:
+              - heading "Long Nose" [level=3] [ref=f8e170]
+              - paragraph [ref=f8e171]: A long nose has a greater bridge-to-tip distance. Your nose may draw the eye downward and look more elongated in front-facing photos.
+            - generic [ref=f8e177]:
+              - heading "Short Nose" [level=3] [ref=f8e178]
+              - paragraph [ref=f8e179]: A short nose has a smaller bridge-to-tip distance. It can make the middle of the face look more compact and soft.
+            - generic [ref=f8e185]:
+              - heading "Average Nose" [level=3] [ref=f8e186]
+              - paragraph [ref=f8e187]: An average nose length means the bridge-to-tip distance sits in a balanced range for your face, without looking especially long or short.
+        - generic [ref=f8e188]:
+          - heading "Nose Width Types" [level=2] [ref=f8e189]
+          - generic [ref=f8e190]: Discovering your nose width helps you master advanced shading techniques and choose glasses that fit without pinching.
+          - generic [ref=f8e191]:
+            - generic [ref=f8e197]:
+              - heading "Narrow Nose" [level=3] [ref=f8e198]
+              - paragraph [ref=f8e199]: A narrow nose has closer nostril spacing. It often creates a slimmer center line and can look refined in straight-on portraits.
+            - generic [ref=f8e205]:
+              - heading "Broad Nose" [level=3] [ref=f8e206]
+              - paragraph [ref=f8e207]: A broad nose has wider nostril spacing. It gives the nose more presence and can affect how glasses, contour, and camera angles read.
+            - generic [ref=f8e213]:
+              - heading "Average Nose" [level=3] [ref=f8e214]
+              - paragraph [ref=f8e215]: Average nose width means the nostrils are evenly spaced for your face. The result usually reads balanced from the front.
+        - generic [ref=f8e218]:
+          - heading "Explore More Features of Pokecut" [level=2] [ref=f8e221]
+          - generic [ref=f8e223]:
+            - link "AI Smile Detector" [ref=f8e225] [cursor=pointer]:
+              - /url: /tools/ai-smile-detector
+            - link "Face Attractiveness Test" [ref=f8e228] [cursor=pointer]:
+              - /url: /tools/face-attractiveness-test
+            - link "AI Age Guesser" [ref=f8e231] [cursor=pointer]:
+              - /url: /tools/ai-age-guesser
+            - link "Face Comparison Tool" [ref=f8e234] [cursor=pointer]:
+              - /url: /tools/face-comparison
+            - link "Skin Tone Detector" [ref=f8e237] [cursor=pointer]:
+              - /url: /tools/skin-tone-detector
+            - link "AI Palm Reading" [ref=f8e240] [cursor=pointer]:
+              - /url: /tools/ai-palm-reading
+        - generic [ref=f8e242]:
+          - heading "What Do Users Say About Pokecut's Nose Shape Detector?" [level=2] [ref=f8e243]
+          - paragraph [ref=f8e244]: Pokecut's community loves how fast and easy it is to find their nose type. See how Pokecut helps everyone level up their personal style.
+          - paragraph [ref=f8e245]: "Reviews from: Reddit, Product Hunt, G2, TrustRadius, Google Play, App Store, and more."
+        - generic [ref=f8e247]:
+          - heading "Pokecut Trusted by Millions of Leaders and Users" [level=2] [ref=f8e248]
+          - generic [ref=f8e249]:
+            - generic [ref=f8e250]:
+              - article [ref=f8e252]:
+                - img "1M+ Users Worldwide" [ref=f8e254]
+                - heading "1M+ Users Worldwide" [level=3] [ref=f8e255]
+                - paragraph [ref=f8e256]: Pokecut generates over 500,000 images every day
+              - article [ref=f8e258]:
+                - img "#2 on Product Hunt" [ref=f8e260]
+                - heading "#2 on Product Hunt" [level=3] [ref=f8e261]:
+                  - link "#2 on Product Hunt" [ref=f8e262] [cursor=pointer]:
+                    - /url: https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut
+                - paragraph [ref=f8e263]: "Pokecut launched and won #2 product of the day"
+            - generic [ref=f8e264]:
+              - article [ref=f8e265]:
+                - img "Professional Privacy Protection" [ref=f8e267]
+                - heading "Professional Privacy Protection" [level=3] [ref=f8e268]
+                - paragraph [ref=f8e269]: Ensure 100% data privacy for every photo
+              - article [ref=f8e270]:
+                - img "Trusted by Well-known Brands" [ref=f8e272]
+                - heading "Trusted by Well-known Brands" [level=3] [ref=f8e273]
+                - paragraph [ref=f8e274]: Apple, Google, PayPal, Stripe, Product Hunt, G2, TrustRadius
+        - generic [ref=f8e276]:
+          - heading "FAQs About Pokecut's Nose Shape Detector" [level=2] [ref=f8e277]
+          - generic [ref=f8e279]:
+            - heading "What are the main types of noses identified by Pokecut?" [level=3] [ref=f8e282] [cursor=pointer]
+            - paragraph [ref=f8e285]: Pokecut's advanced nose shape detector classifies human noses into several distinct categories based on bridge height, tip angle, and wing width. The most common types identified by our nose shape analyzer include the straight Greek nose, the prominent curved Roman nose, the rounded Bulbous nose, and the soft Celestial upturned nose.
+          - generic [ref=f8e287]:
+            - heading "Do I need to pay to see my nose shape analyzer report?" [level=3] [ref=f8e290] [cursor=pointer]
+            - paragraph [ref=f8e293]:
+              - text: No, the core functionality of Pokecut's nose shape analyzer is completely free. Users can upload pictures and instantly view their primary nose shape identification along with basic styling advice. Advanced premium features, like the interactive 3D virtual nose job simulator, require an
+              - link "affordable upgrade" [ref=f8e294] [cursor=pointer]:
+                - /url: /pricing
+              - text: .
+          - generic [ref=f8e296]:
+            - heading "Does Pokecut require me to download an app or register an account?" [level=3] [ref=f8e299] [cursor=pointer]
+            - paragraph [ref=f8e302]: Not at all. Pokecut is optimized as a lightweight, browser-based solution. You can access the entire nose shape detector suite on both mobile and desktop screens without registering an account, verifying emails, or experiencing forced ad interruptions, allowing for an incredibly frictionless user experience.
+          - generic [ref=f8e304]:
+            - heading "Can this AI nose shape detector replace medical advice?" [level=3] [ref=f8e307] [cursor=pointer]
+            - paragraph [ref=f8e310]: No. The AI nose shape detector is for visual analysis, shopping, makeup planning, and basic consultation prep. It is not a diagnosis and should not replace advice from a licensed medical professional.
+          - generic [ref=f8e312]:
+            - heading "What photo works best for a nose shape analysis?" [level=3] [ref=f8e315] [cursor=pointer]
+            - paragraph [ref=f8e318]: Use a front-facing selfie with good light, a neutral expression, and no heavy filters. Keep the nose clear of hair, hands, glasses, or strong shadows so the analysis has a cleaner view of your facial features.
+    - generic [ref=f8e320]:
+      - generic [ref=f8e321]:
+        - generic [ref=f8e322]:
+          - generic [ref=f8e323]: POKECUT
+          - link "Pokecut - Use AI to create photos with just a few click or a prompt | Product Hunt" [ref=f8e324] [cursor=pointer]:
+            - /url: https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut
+            - img "Pokecut - Use AI to create photos with just a few click or a prompt | Product Hunt"
+        - generic [ref=f8e326]:
+          - generic [ref=f8e327]:
+            - generic [ref=f8e328]: AI Tools for Free
+            - generic [ref=f8e329]:
+              - link "All Tools" [ref=f8e331] [cursor=pointer]:
+                - /url: /tools
+              - link "Photo Collage Maker" [ref=f8e333] [cursor=pointer]:
+                - /url: /collage-maker
+              - link "Batch Photo Edit" [ref=f8e335] [cursor=pointer]:
+                - /url: /batch-edit
+              - link "Image to Image AI" [ref=f8e337] [cursor=pointer]:
+                - /url: /image-to-image-ai
+              - link "AI Replace" [ref=f8e339] [cursor=pointer]:
+                - /url: /ai-replace
+              - link "AI Background" [ref=f8e341] [cursor=pointer]:
+                - /url: /ai-background
+              - link "AI Image Generator" [ref=f8e343] [cursor=pointer]:
+                - /url: /ai-image-generator
+              - link "AI Background Remover" [ref=f8e345] [cursor=pointer]:
+                - /url: /tools/background-remover
+              - link "AI Background Changer" [ref=f8e347] [cursor=pointer]:
+                - /url: /tools/background-changer
+              - link "Magic eraser" [ref=f8e349] [cursor=pointer]:
+                - /url: /tools/magic-eraser-with-ai-detection
+              - link "AI Photo Enhancer" [ref=f8e351] [cursor=pointer]:
+                - /url: /tools/photo-enhancer
+              - link "AI ID Photo" [ref=f8e353] [cursor=pointer]:
+                - /url: /tools/id-photo-maker
+              - link "AI Image Extender" [ref=f8e355] [cursor=pointer]:
+                - /url: /tools/ai-image-extender
+          - generic [ref=f8e356]:
+            - generic [ref=f8e357]: Help
+            - generic [ref=f8e358]:
+              - link "FAQ" [ref=f8e360] [cursor=pointer]:
+                - /url: /help
+              - link "Contact us" [ref=f8e362] [cursor=pointer]:
+                - /url: /help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us
+              - link "Privacy Policy" [ref=f8e364] [cursor=pointer]:
+                - /url: /privacy-policy
+              - link "Term of Service" [ref=f8e366] [cursor=pointer]:
+                - /url: /term-of-use
+              - link "Payment Terms" [ref=f8e368] [cursor=pointer]:
+                - /url: /payment-terms
+          - generic [ref=f8e369]:
+            - generic [ref=f8e370]: Company
+            - link "About us" [ref=f8e373] [cursor=pointer]:
+              - /url: /about
+        - generic [ref=f8e374]:
+          - generic [ref=f8e375]:
+            - link [ref=f8e377] [cursor=pointer]:
+              - /url: https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944
+              - generic [ref=f8e378]:
+                - paragraph [ref=f8e379]: Download on the
+                - paragraph [ref=f8e380]: App Store
+            - link [ref=f8e382] [cursor=pointer]:
+              - /url: https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en
+              - generic [ref=f8e383]:
+                - paragraph [ref=f8e384]: GET IT ON
+                - paragraph [ref=f8e385]: Google Play
+          - generic [ref=f8e424]:
+            - link "Instagram" [ref=f8e426] [cursor=pointer]:
+              - /url: https://www.instagram.com/pokecut_app/
+            - link "Threads" [ref=f8e429] [cursor=pointer]:
+              - /url: https://www.threads.net/@pokecut_app
+            - link "Youtube" [ref=f8e432] [cursor=pointer]:
+              - /url: https://www.youtube.com/@Pokecut_com
+            - link "Tiktok" [ref=f8e435] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@pokecut
+            - link "X" [ref=f8e438] [cursor=pointer]:
+              - /url: https://x.com/Pokecut_
+            - link "Discord" [ref=f8e441] [cursor=pointer]:
+              - /url: https://discord.gg/KaPUfqb65b
+      - paragraph [ref=f8e386]: Copyright © 2026 Pokecut All Rights Reserved.
+  - button "DEBUG" [ref=f8e444] [cursor=pointer]

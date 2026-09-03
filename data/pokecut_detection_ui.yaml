@@ -1,0 +1,43 @@
+# 检测类功能适配 UI（nose-shape-detector / ai-face-reader）L6 冒烟测试数据
+site: Pokecut
+base_url: https://pokecut-dev.guangzhuiyuan.com
+
+pages:
+  nose: /tools/nose-shape-detector
+  face: /tools/ai-face-reader
+
+images:
+  face: test_images/有人脸.JPG
+
+login:
+  email: "450832596@qq.com"
+  verification_code: "123456"
+  debug_float_btn: "button:has-text('DEBUG')"
+  debug_panel: ".debug-panel"
+  predeploy_text: "预部署"
+  auth_dialog: "[data-testid='auth-dialog']"
+  auth_email: "[data-testid='auth-email-input']"
+  auth_code: "[data-testid='auth-code-input']"
+  auth_submit: "[data-testid='auth-submit']"
+
+result:
+  original_title: "h3:has-text('Original Image')"
+  analysis_title: "h3:has-text('Analysis Result')"
+  optimized_title: "h3:has-text('Optimized Result')"
+  upload_image_btn: "button:has-text('Upload Image')"
+  download_btn: "button:has-text('Download')"
+  continue_btn: "button:has-text('Continue in Portrait Editor')"
+  get_it_now_btn: "button:has-text('Get It Now')"
+  blur_text: "Based on your photo and analysis, we've generated a beautifully optimized version just for you."
+  generating_analysis: "Generating analysis..."
+  generating_optimized: "Generating optimized result..."
+  waiting_analysis: "Waiting for analysis..."
+
+canvas:
+  agent_url_mark: "/agent?pid="
+  img1: "img[alt='图片 1']"
+  img2: "img[alt='图片 2']"
+  img3: "img[alt='图片 3']"
+  portrait_editor_btn: "button:has-text('Portrait Editor')"
+  face_panel_marker: "Smile Lines"
+  generate_btn: "button:has-text('Generate')"

@@ -1,0 +1,511 @@
+- generic [ref=f12e2]:
+  - generic [ref=f12e3]:
+    - generic [ref=f12e5]:
+      - link [ref=f12e6] [cursor=pointer]:
+        - /url: /
+        - img "pokecut logo" [ref=f12e7]
+      - generic [ref=f12e8]:
+        - button "AI Free Tools" [ref=f12e10] [cursor=pointer]
+        - button "Portrait Editor" [ref=f12e14] [cursor=pointer]
+        - button "Discover" [ref=f12e18] [cursor=pointer]
+        - link "Pricing 60% OFF" [ref=f12e22] [cursor=pointer]:
+          - /url: /pricing
+          - generic [ref=f12e25]:
+            - text: Pricing
+            - generic [ref=f12e26]: 60% OFF
+      - generic [ref=f12e28]: UserFE85363C09
+    - generic [ref=f12e34]:
+      - paragraph [ref=f12e36]:
+        - link "Home" [ref=f12e37] [cursor=pointer]:
+          - /url: /
+        - link "> Tools" [ref=f12e38] [cursor=pointer]:
+          - /url: /tools
+        - text: "> Accurated Nose Shape Detector: Instant AI Nose Test"
+      - navigation "All Free Tools" [ref=f12e40]:
+        - list [ref=f12e41]:
+          - listitem [ref=f12e42]:
+            - button "AI Image" [ref=f12e43] [cursor=pointer]
+          - listitem [ref=f12e46]:
+            - button "Enhance" [ref=f12e47] [cursor=pointer]
+          - listitem [ref=f12e50]:
+            - button "Remove Background" [ref=f12e51] [cursor=pointer]
+          - listitem [ref=f12e54]:
+            - button "Clothes Changer" [ref=f12e55] [cursor=pointer]
+          - listitem [ref=f12e58]:
+            - button "Eraser" [ref=f12e59] [cursor=pointer]
+          - listitem [ref=f12e62]:
+            - button "AI Background" [ref=f12e63] [cursor=pointer]
+          - listitem [ref=f12e66]:
+            - button "AI Replace" [ref=f12e67] [cursor=pointer]
+          - listitem [ref=f12e70]:
+            - button "AI Extend" [ref=f12e71] [cursor=pointer]
+          - listitem [ref=f12e74]:
+            - button "ID Photo" [ref=f12e75] [cursor=pointer]
+          - listitem [ref=f12e78]:
+            - button "Resize" [ref=f12e79] [cursor=pointer]
+          - listitem [ref=f12e82]:
+            - button "Batch Edit" [ref=f12e83] [cursor=pointer]
+      - generic [ref=f12e86]:
+        - generic [ref=f12e649]:
+          - generic [ref=f12e650]:
+            - generic [ref=f12e651]:
+              - generic [ref=f12e652]: "1"
+              - heading "Original Image" [level=3] [ref=f12e653]
+            - img "Original Image" [ref=f12e655]
+            - button "Upload Image" [ref=f12e657] [cursor=pointer]
+          - generic [ref=f12e658]:
+            - generic [ref=f12e659]:
+              - generic [ref=f12e660]: "2"
+              - heading "Analysis Result" [level=3] [ref=f12e661]
+            - img "Analysis Result" [ref=f12e682]
+            - button "Download" [ref=f12e668] [cursor=pointer]
+          - generic [ref=f12e669]:
+            - generic [ref=f12e670]:
+              - generic [ref=f12e671]: "3"
+              - heading "Optimized Result" [level=3] [ref=f12e672]
+            - generic [ref=f12e673]:
+              - img "Optimized Result" [ref=f12e674]
+              - paragraph [ref=f12e676]: Based on your photo and analysis, we've generated a beautifully optimized version just for you.
+            - button "Get It Now" [ref=f12e678] [cursor=pointer]
+        - generic [ref=f12e124]:
+          - heading "When Can You Use Pokecut's Nose Shape Detector?" [level=2] [ref=f12e125]
+          - generic [ref=f12e126]:
+            - generic [ref=f12e131]:
+              - heading "Pick Glasses That Fit Your Nose Bridge" [level=3] [ref=f12e132]
+              - paragraph [ref=f12e133]:
+                - text: Buying glasses online is hard when you cannot try frames on first. A bridge that sits too low can pinch your skin, slide down your face, or make the frame look wider than expected.Use this nose shape detector to read your bridge height and nose width from a clear selfie. Pokecut then helps you understand which frame styles may suit your facial structure, from aviator shapes to Wellington frames. It also helps you
+                - link "virtuall try on glasses" [ref=f12e134] [cursor=pointer]:
+                  - /url: /ai-replace/add-glasses-to-photo
+                - text: ", compare options before you order, so you can avoid repeat returns and choose frames with more confidence."
+            - generic [ref=f12e139]:
+              - heading "Map Better Contour Points for Your Nose" [level=3] [ref=f12e140]
+              - paragraph [ref=f12e141]:
+                - text: Makeup tutorials often assume every nose has the same bridge and tip shape. If you copy a generic contour formula without knowing your own structure, the result can look heavy, muddy, or uneven in photos.Pokecut works like a simple
+                - link "beauty scanner" [ref=f12e142] [cursor=pointer]:
+                  - /url: /tools/pretty-scale
+                - text: for beauty planning. It checks your bridge, nostril width, and nose-lip angle, then helps you see where highlight and shadow should start. Use the result as a practical 3D makeup guide before you try a new look, especially if you are still learning contour placement.
+            - generic [ref=f12e147]:
+              - heading "Prepare Better Questions Before a Consultation" [level=3] [ref=f12e148]
+              - paragraph [ref=f12e149]:
+                - text: If you are considering a nose consultation,
+                - link "Pokecut's image to image function" [ref=f12e150] [cursor=pointer]:
+                  - /url: /image-to-image-ai
+                - text: helps to understand your own features before the appointment. Many beginners do not know terms such as nasofrontal angle or nasolabial angle, so it is easy to feel lost during a sales-heavy conversation.This AI nose shape detector gives you a plain report from your photo. Use it to learn the basic measurements and describe what you want by using
+                - link "nose job simulator" [ref=f12e151] [cursor=pointer]:
+                  - /url: /face-editor/nose-job-simulator
+                - text: . It cannot replace a licensed doctor, but it can help you enter the conversation with better questions and less pressure.
+        - generic [ref=f12e152]:
+          - heading "Nose Length Types" [level=2] [ref=f12e153]
+          - generic [ref=f12e154]: Knowing your exact nose length is the secret to perfecting your daily makeup contouring and picking the most flattering sunglasses. Explore this specific feature to upgrade your personal style.
+          - generic [ref=f12e155]:
+            - generic [ref=f12e161]:
+              - heading "Long Nose" [level=3] [ref=f12e162]
+              - paragraph [ref=f12e163]: A long nose has a greater bridge-to-tip distance. Your nose may draw the eye downward and look more elongated in front-facing photos.
+            - generic [ref=f12e169]:
+              - heading "Short Nose" [level=3] [ref=f12e170]
+              - paragraph [ref=f12e171]: A short nose has a smaller bridge-to-tip distance. It can make the middle of the face look more compact and soft.
+            - generic [ref=f12e177]:
+              - heading "Average Nose" [level=3] [ref=f12e178]
+              - paragraph [ref=f12e179]: An average nose length means the bridge-to-tip distance sits in a balanced range for your face, without looking especially long or short.
+        - generic [ref=f12e180]:
+          - heading "Nose Width Types" [level=2] [ref=f12e181]
+          - generic [ref=f12e182]: Discovering your nose width helps you master advanced shading techniques and choose glasses that fit without pinching.
+          - generic [ref=f12e183]:
+            - generic [ref=f12e189]:
+              - heading "Narrow Nose" [level=3] [ref=f12e190]
+              - paragraph [ref=f12e191]: A narrow nose has closer nostril spacing. It often creates a slimmer center line and can look refined in straight-on portraits.
+            - generic [ref=f12e197]:
+              - heading "Broad Nose" [level=3] [ref=f12e198]
+              - paragraph [ref=f12e199]: A broad nose has wider nostril spacing. It gives the nose more presence and can affect how glasses, contour, and camera angles read.
+            - generic [ref=f12e205]:
+              - heading "Average Nose" [level=3] [ref=f12e206]
+              - paragraph [ref=f12e207]: Average nose width means the nostrils are evenly spaced for your face. The result usually reads balanced from the front.
+        - generic [ref=f12e210]:
+          - heading "Explore More Features of Pokecut" [level=2] [ref=f12e213]
+          - generic [ref=f12e215]:
+            - link "AI Smile Detector" [ref=f12e217] [cursor=pointer]:
+              - /url: /tools/ai-smile-detector
+            - link "Face Attractiveness Test" [ref=f12e220] [cursor=pointer]:
+              - /url: /tools/face-attractiveness-test
+            - link "AI Age Guesser" [ref=f12e223] [cursor=pointer]:
+              - /url: /tools/ai-age-guesser
+            - link "Face Comparison Tool" [ref=f12e226] [cursor=pointer]:
+              - /url: /tools/face-comparison
+            - link "Skin Tone Detector" [ref=f12e229] [cursor=pointer]:
+              - /url: /tools/skin-tone-detector
+            - link "AI Palm Reading" [ref=f12e232] [cursor=pointer]:
+              - /url: /tools/ai-palm-reading
+        - generic [ref=f12e234]:
+          - heading "What Do Users Say About Pokecut's Nose Shape Detector?" [level=2] [ref=f12e235]
+          - paragraph [ref=f12e236]: Pokecut's community loves how fast and easy it is to find their nose type. See how Pokecut helps everyone level up their personal style.
+          - generic "Trusted by more than 800 thousand users" [ref=f12e237]:
+            - strong [ref=f12e239]: 800k+
+          - generic [ref=f12e241]:
+            - generic [ref=f12e242]:
+              - article [ref=f12e243]:
+                - heading "Jack O." [level=3] [ref=f12e244]
+                - generic "5 stars" [ref=f12e245]
+                - paragraph [ref=f12e246]: "\"I used the nose shape test before ordering new glasses online. It helped me understand why some frames kept sliding down my bridge.\""
+              - article [ref=f12e247]:
+                - heading "Dennis Y." [level=3] [ref=f12e248]
+                - generic "5 stars" [ref=f12e249]
+                - paragraph [ref=f12e250]: "\"The report made contour placement easier to understand. I stopped copying random tutorials and started looking at my own bridge shape first.\""
+              - article [ref=f12e251]:
+                - heading "Jerry I." [level=3] [ref=f12e252]
+                - generic "5 stars" [ref=f12e253]
+                - paragraph [ref=f12e254]: "\"I wanted simple terms before a consultation. The nose shape analysis gave me a better way to explain what bothered me in photos.\""
+              - article [ref=f12e255]:
+                - heading "Tyler U." [level=3] [ref=f12e256]
+                - generic "5 stars" [ref=f12e257]
+                - paragraph [ref=f12e258]: "\"It was easy to use from one selfie. I liked that the result focused on bridge height and width instead of vague beauty scores.\""
+              - article [ref=f12e259]:
+                - heading "Aaron Q." [level=3] [ref=f12e260]
+                - generic "5 stars" [ref=f12e261]
+                - paragraph [ref=f12e262]: "\"I checked my nose type before buying sunglasses. The frame suggestions felt more useful than guessing from product photos.\""
+              - article [ref=f12e263]:
+                - heading "Sharon C." [level=3] [ref=f12e264]
+                - generic "5 stars" [ref=f12e265]
+                - paragraph [ref=f12e266]: "\"The tool gave me a quick starting point for makeup practice. It showed why my usual highlight line looked too harsh.\""
+              - article [ref=f12e267]:
+                - heading "Jack O." [level=3] [ref=f12e268]
+                - generic "5 stars" [ref=f12e269]
+                - paragraph [ref=f12e270]: "\"I used the nose shape test before ordering new glasses online. It helped me understand why some frames kept sliding down my bridge.\""
+              - article [ref=f12e271]:
+                - heading "Dennis Y." [level=3] [ref=f12e272]
+                - generic "5 stars" [ref=f12e273]
+                - paragraph [ref=f12e274]: "\"The report made contour placement easier to understand. I stopped copying random tutorials and started looking at my own bridge shape first.\""
+              - article [ref=f12e275]:
+                - heading "Jerry I." [level=3] [ref=f12e276]
+                - generic "5 stars" [ref=f12e277]
+                - paragraph [ref=f12e278]: "\"I wanted simple terms before a consultation. The nose shape analysis gave me a better way to explain what bothered me in photos.\""
+              - article [ref=f12e279]:
+                - heading "Tyler U." [level=3] [ref=f12e280]
+                - generic "5 stars" [ref=f12e281]
+                - paragraph [ref=f12e282]: "\"It was easy to use from one selfie. I liked that the result focused on bridge height and width instead of vague beauty scores.\""
+              - article [ref=f12e283]:
+                - heading "Aaron Q." [level=3] [ref=f12e284]
+                - generic "5 stars" [ref=f12e285]
+                - paragraph [ref=f12e286]: "\"I checked my nose type before buying sunglasses. The frame suggestions felt more useful than guessing from product photos.\""
+              - article [ref=f12e287]:
+                - heading "Sharon C." [level=3] [ref=f12e288]
+                - generic "5 stars" [ref=f12e289]
+                - paragraph [ref=f12e290]: "\"The tool gave me a quick starting point for makeup practice. It showed why my usual highlight line looked too harsh.\""
+              - article [ref=f12e291]:
+                - heading "Jack O." [level=3] [ref=f12e292]
+                - generic "5 stars" [ref=f12e293]
+                - paragraph [ref=f12e294]: "\"I used the nose shape test before ordering new glasses online. It helped me understand why some frames kept sliding down my bridge.\""
+              - article [ref=f12e295]:
+                - heading "Dennis Y." [level=3] [ref=f12e296]
+                - generic "5 stars" [ref=f12e297]
+                - paragraph [ref=f12e298]: "\"The report made contour placement easier to understand. I stopped copying random tutorials and started looking at my own bridge shape first.\""
+              - article [ref=f12e299]:
+                - heading "Jerry I." [level=3] [ref=f12e300]
+                - generic "5 stars" [ref=f12e301]
+                - paragraph [ref=f12e302]: "\"I wanted simple terms before a consultation. The nose shape analysis gave me a better way to explain what bothered me in photos.\""
+              - article [ref=f12e303]:
+                - heading "Tyler U." [level=3] [ref=f12e304]
+                - generic "5 stars" [ref=f12e305]
+                - paragraph [ref=f12e306]: "\"It was easy to use from one selfie. I liked that the result focused on bridge height and width instead of vague beauty scores.\""
+              - article [ref=f12e307]:
+                - heading "Aaron Q." [level=3] [ref=f12e308]
+                - generic "5 stars" [ref=f12e309]
+                - paragraph [ref=f12e310]: "\"I checked my nose type before buying sunglasses. The frame suggestions felt more useful than guessing from product photos.\""
+              - article [ref=f12e311]:
+                - heading "Sharon C." [level=3] [ref=f12e312]
+                - generic "5 stars" [ref=f12e313]
+                - paragraph [ref=f12e314]: "\"The tool gave me a quick starting point for makeup practice. It showed why my usual highlight line looked too harsh.\""
+              - article [ref=f12e315]:
+                - heading "Jack O." [level=3] [ref=f12e316]
+                - generic "5 stars" [ref=f12e317]
+                - paragraph [ref=f12e318]: "\"I used the nose shape test before ordering new glasses online. It helped me understand why some frames kept sliding down my bridge.\""
+              - article [ref=f12e319]:
+                - heading "Dennis Y." [level=3] [ref=f12e320]
+                - generic "5 stars" [ref=f12e321]
+                - paragraph [ref=f12e322]: "\"The report made contour placement easier to understand. I stopped copying random tutorials and started looking at my own bridge shape first.\""
+              - article [ref=f12e323]:
+                - heading "Jerry I." [level=3] [ref=f12e324]
+                - generic "5 stars" [ref=f12e325]
+                - paragraph [ref=f12e326]: "\"I wanted simple terms before a consultation. The nose shape analysis gave me a better way to explain what bothered me in photos.\""
+              - article [ref=f12e327]:
+                - heading "Tyler U." [level=3] [ref=f12e328]
+                - generic "5 stars" [ref=f12e329]
+                - paragraph [ref=f12e330]: "\"It was easy to use from one selfie. I liked that the result focused on bridge height and width instead of vague beauty scores.\""
+              - article [ref=f12e331]:
+                - heading "Aaron Q." [level=3] [ref=f12e332]
+                - generic "5 stars" [ref=f12e333]
+                - paragraph [ref=f12e334]: "\"I checked my nose type before buying sunglasses. The frame suggestions felt more useful than guessing from product photos.\""
+              - article [ref=f12e335]:
+                - heading "Sharon C." [level=3] [ref=f12e336]
+                - generic "5 stars" [ref=f12e337]
+                - paragraph [ref=f12e338]: "\"The tool gave me a quick starting point for makeup practice. It showed why my usual highlight line looked too harsh.\""
+              - article [ref=f12e339]:
+                - heading "Jack O." [level=3] [ref=f12e340]
+                - generic "5 stars" [ref=f12e341]
+                - paragraph [ref=f12e342]: "\"I used the nose shape test before ordering new glasses online. It helped me understand why some frames kept sliding down my bridge.\""
+              - article [ref=f12e343]:
+                - heading "Dennis Y." [level=3] [ref=f12e344]
+                - generic "5 stars" [ref=f12e345]
+                - paragraph [ref=f12e346]: "\"The report made contour placement easier to understand. I stopped copying random tutorials and started looking at my own bridge shape first.\""
+              - article [ref=f12e347]:
+                - heading "Jerry I." [level=3] [ref=f12e348]
+                - generic "5 stars" [ref=f12e349]
+                - paragraph [ref=f12e350]: "\"I wanted simple terms before a consultation. The nose shape analysis gave me a better way to explain what bothered me in photos.\""
+              - article [ref=f12e351]:
+                - heading "Tyler U." [level=3] [ref=f12e352]
+                - generic "5 stars" [ref=f12e353]
+                - paragraph [ref=f12e354]: "\"It was easy to use from one selfie. I liked that the result focused on bridge height and width instead of vague beauty scores.\""
+              - article [ref=f12e355]:
+                - heading "Aaron Q." [level=3] [ref=f12e356]
+                - generic "5 stars" [ref=f12e357]
+                - paragraph [ref=f12e358]: "\"I checked my nose type before buying sunglasses. The frame suggestions felt more useful than guessing from product photos.\""
+              - article [ref=f12e359]:
+                - heading "Sharon C." [level=3] [ref=f12e360]
+                - generic "5 stars" [ref=f12e361]
+                - paragraph [ref=f12e362]: "\"The tool gave me a quick starting point for makeup practice. It showed why my usual highlight line looked too harsh.\""
+            - generic [ref=f12e363]:
+              - article [ref=f12e364]:
+                - heading "Tyler U." [level=3] [ref=f12e365]
+                - generic "5 stars" [ref=f12e366]
+                - paragraph [ref=f12e367]: "\"It was easy to use from one selfie. I liked that the result focused on bridge height and width instead of vague beauty scores.\""
+              - article [ref=f12e368]:
+                - heading "Aaron Q." [level=3] [ref=f12e369]
+                - generic "5 stars" [ref=f12e370]
+                - paragraph [ref=f12e371]: "\"I checked my nose type before buying sunglasses. The frame suggestions felt more useful than guessing from product photos.\""
+              - article [ref=f12e372]:
+                - heading "Sharon C." [level=3] [ref=f12e373]
+                - generic "5 stars" [ref=f12e374]
+                - paragraph [ref=f12e375]: "\"The tool gave me a quick starting point for makeup practice. It showed why my usual highlight line looked too harsh.\""
+              - article [ref=f12e376]:
+                - heading "Jack O." [level=3] [ref=f12e377]
+                - generic "5 stars" [ref=f12e378]
+                - paragraph [ref=f12e379]: "\"I used the nose shape test before ordering new glasses online. It helped me understand why some frames kept sliding down my bridge.\""
+              - article [ref=f12e380]:
+                - heading "Dennis Y." [level=3] [ref=f12e381]
+                - generic "5 stars" [ref=f12e382]
+                - paragraph [ref=f12e383]: "\"The report made contour placement easier to understand. I stopped copying random tutorials and started looking at my own bridge shape first.\""
+              - article [ref=f12e384]:
+                - heading "Jerry I." [level=3] [ref=f12e385]
+                - generic "5 stars" [ref=f12e386]
+                - paragraph [ref=f12e387]: "\"I wanted simple terms before a consultation. The nose shape analysis gave me a better way to explain what bothered me in photos.\""
+              - article [ref=f12e388]:
+                - heading "Tyler U." [level=3] [ref=f12e389]
+                - generic "5 stars" [ref=f12e390]
+                - paragraph [ref=f12e391]: "\"It was easy to use from one selfie. I liked that the result focused on bridge height and width instead of vague beauty scores.\""
+              - article [ref=f12e392]:
+                - heading "Aaron Q." [level=3] [ref=f12e393]
+                - generic "5 stars" [ref=f12e394]
+                - paragraph [ref=f12e395]: "\"I checked my nose type before buying sunglasses. The frame suggestions felt more useful than guessing from product photos.\""
+              - article [ref=f12e396]:
+                - heading "Sharon C." [level=3] [ref=f12e397]
+                - generic "5 stars" [ref=f12e398]
+                - paragraph [ref=f12e399]: "\"The tool gave me a quick starting point for makeup practice. It showed why my usual highlight line looked too harsh.\""
+              - article [ref=f12e400]:
+                - heading "Jack O." [level=3] [ref=f12e401]
+                - generic "5 stars" [ref=f12e402]
+                - paragraph [ref=f12e403]: "\"I used the nose shape test before ordering new glasses online. It helped me understand why some frames kept sliding down my bridge.\""
+              - article [ref=f12e404]:
+                - heading "Dennis Y." [level=3] [ref=f12e405]
+                - generic "5 stars" [ref=f12e406]
+                - paragraph [ref=f12e407]: "\"The report made contour placement easier to understand. I stopped copying random tutorials and started looking at my own bridge shape first.\""
+              - article [ref=f12e408]:
+                - heading "Jerry I." [level=3] [ref=f12e409]
+                - generic "5 stars" [ref=f12e410]
+                - paragraph [ref=f12e411]: "\"I wanted simple terms before a consultation. The nose shape analysis gave me a better way to explain what bothered me in photos.\""
+              - article [ref=f12e412]:
+                - heading "Tyler U." [level=3] [ref=f12e413]
+                - generic "5 stars" [ref=f12e414]
+                - paragraph [ref=f12e415]: "\"It was easy to use from one selfie. I liked that the result focused on bridge height and width instead of vague beauty scores.\""
+              - article [ref=f12e416]:
+                - heading "Aaron Q." [level=3] [ref=f12e417]
+                - generic "5 stars" [ref=f12e418]
+                - paragraph [ref=f12e419]: "\"I checked my nose type before buying sunglasses. The frame suggestions felt more useful than guessing from product photos.\""
+              - article [ref=f12e420]:
+                - heading "Sharon C." [level=3] [ref=f12e421]
+                - generic "5 stars" [ref=f12e422]
+                - paragraph [ref=f12e423]: "\"The tool gave me a quick starting point for makeup practice. It showed why my usual highlight line looked too harsh.\""
+              - article [ref=f12e424]:
+                - heading "Jack O." [level=3] [ref=f12e425]
+                - generic "5 stars" [ref=f12e426]
+                - paragraph [ref=f12e427]: "\"I used the nose shape test before ordering new glasses online. It helped me understand why some frames kept sliding down my bridge.\""
+              - article [ref=f12e428]:
+                - heading "Dennis Y." [level=3] [ref=f12e429]
+                - generic "5 stars" [ref=f12e430]
+                - paragraph [ref=f12e431]: "\"The report made contour placement easier to understand. I stopped copying random tutorials and started looking at my own bridge shape first.\""
+              - article [ref=f12e432]:
+                - heading "Jerry I." [level=3] [ref=f12e433]
+                - generic "5 stars" [ref=f12e434]
+                - paragraph [ref=f12e435]: "\"I wanted simple terms before a consultation. The nose shape analysis gave me a better way to explain what bothered me in photos.\""
+              - article [ref=f12e436]:
+                - heading "Tyler U." [level=3] [ref=f12e437]
+                - generic "5 stars" [ref=f12e438]
+                - paragraph [ref=f12e439]: "\"It was easy to use from one selfie. I liked that the result focused on bridge height and width instead of vague beauty scores.\""
+              - article [ref=f12e440]:
+                - heading "Aaron Q." [level=3] [ref=f12e441]
+                - generic "5 stars" [ref=f12e442]
+                - paragraph [ref=f12e443]: "\"I checked my nose type before buying sunglasses. The frame suggestions felt more useful than guessing from product photos.\""
+              - article [ref=f12e444]:
+                - heading "Sharon C." [level=3] [ref=f12e445]
+                - generic "5 stars" [ref=f12e446]
+                - paragraph [ref=f12e447]: "\"The tool gave me a quick starting point for makeup practice. It showed why my usual highlight line looked too harsh.\""
+              - article [ref=f12e448]:
+                - heading "Jack O." [level=3] [ref=f12e449]
+                - generic "5 stars" [ref=f12e450]
+                - paragraph [ref=f12e451]: "\"I used the nose shape test before ordering new glasses online. It helped me understand why some frames kept sliding down my bridge.\""
+              - article [ref=f12e452]:
+                - heading "Dennis Y." [level=3] [ref=f12e453]
+                - generic "5 stars" [ref=f12e454]
+                - paragraph [ref=f12e455]: "\"The report made contour placement easier to understand. I stopped copying random tutorials and started looking at my own bridge shape first.\""
+              - article [ref=f12e456]:
+                - heading "Jerry I." [level=3] [ref=f12e457]
+                - generic "5 stars" [ref=f12e458]
+                - paragraph [ref=f12e459]: "\"I wanted simple terms before a consultation. The nose shape analysis gave me a better way to explain what bothered me in photos.\""
+              - article [ref=f12e460]:
+                - heading "Tyler U." [level=3] [ref=f12e461]
+                - generic "5 stars" [ref=f12e462]
+                - paragraph [ref=f12e463]: "\"It was easy to use from one selfie. I liked that the result focused on bridge height and width instead of vague beauty scores.\""
+              - article [ref=f12e464]:
+                - heading "Aaron Q." [level=3] [ref=f12e465]
+                - generic "5 stars" [ref=f12e466]
+                - paragraph [ref=f12e467]: "\"I checked my nose type before buying sunglasses. The frame suggestions felt more useful than guessing from product photos.\""
+              - article [ref=f12e468]:
+                - heading "Sharon C." [level=3] [ref=f12e469]
+                - generic "5 stars" [ref=f12e470]
+                - paragraph [ref=f12e471]: "\"The tool gave me a quick starting point for makeup practice. It showed why my usual highlight line looked too harsh.\""
+              - article [ref=f12e472]:
+                - heading "Jack O." [level=3] [ref=f12e473]
+                - generic "5 stars" [ref=f12e474]
+                - paragraph [ref=f12e475]: "\"I used the nose shape test before ordering new glasses online. It helped me understand why some frames kept sliding down my bridge.\""
+              - article [ref=f12e476]:
+                - heading "Dennis Y." [level=3] [ref=f12e477]
+                - generic "5 stars" [ref=f12e478]
+                - paragraph [ref=f12e479]: "\"The report made contour placement easier to understand. I stopped copying random tutorials and started looking at my own bridge shape first.\""
+              - article [ref=f12e480]:
+                - heading "Jerry I." [level=3] [ref=f12e481]
+                - generic "5 stars" [ref=f12e482]
+                - paragraph [ref=f12e483]: "\"I wanted simple terms before a consultation. The nose shape analysis gave me a better way to explain what bothered me in photos.\""
+          - paragraph [ref=f12e484]: "Reviews from: Reddit, Product Hunt, G2, TrustRadius, Google Play, App Store, and more."
+        - generic [ref=f12e486]:
+          - heading "Pokecut Trusted by Millions of Leaders and Users" [level=2] [ref=f12e487]
+          - generic [ref=f12e488]:
+            - generic [ref=f12e489]:
+              - article [ref=f12e491]:
+                - img "1M+ Users Worldwide" [ref=f12e493]
+                - heading "1M+ Users Worldwide" [level=3] [ref=f12e494]
+                - paragraph [ref=f12e495]: Pokecut generates over 500,000 images every day
+              - article [ref=f12e497]:
+                - img "#2 on Product Hunt" [ref=f12e499]
+                - heading "#2 on Product Hunt" [level=3] [ref=f12e500]:
+                  - link "#2 on Product Hunt" [ref=f12e501] [cursor=pointer]:
+                    - /url: https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut
+                - paragraph [ref=f12e502]: "Pokecut launched and won #2 product of the day"
+            - generic [ref=f12e503]:
+              - article [ref=f12e504]:
+                - img "Professional Privacy Protection" [ref=f12e506]
+                - heading "Professional Privacy Protection" [level=3] [ref=f12e507]
+                - paragraph [ref=f12e508]: Ensure 100% data privacy for every photo
+              - article [ref=f12e509]:
+                - img "Trusted by Well-known Brands" [ref=f12e511]
+                - heading "Trusted by Well-known Brands" [level=3] [ref=f12e512]
+                - paragraph [ref=f12e513]: Apple, Google, PayPal, Stripe, Product Hunt, G2, TrustRadius
+        - generic [ref=f12e515]:
+          - heading "FAQs About Pokecut's Nose Shape Detector" [level=2] [ref=f12e516]
+          - generic [ref=f12e518]:
+            - heading "What are the main types of noses identified by Pokecut?" [level=3] [ref=f12e521] [cursor=pointer]
+            - paragraph [ref=f12e524]: Pokecut's advanced nose shape detector classifies human noses into several distinct categories based on bridge height, tip angle, and wing width. The most common types identified by our nose shape analyzer include the straight Greek nose, the prominent curved Roman nose, the rounded Bulbous nose, and the soft Celestial upturned nose.
+          - generic [ref=f12e526]:
+            - heading "Do I need to pay to see my nose shape analyzer report?" [level=3] [ref=f12e529] [cursor=pointer]
+            - paragraph [ref=f12e532]:
+              - text: No, the core functionality of Pokecut's nose shape analyzer is completely free. Users can upload pictures and instantly view their primary nose shape identification along with basic styling advice. Advanced premium features, like the interactive 3D virtual nose job simulator, require an
+              - link "affordable upgrade" [ref=f12e533] [cursor=pointer]:
+                - /url: /pricing
+              - text: .
+          - generic [ref=f12e535]:
+            - heading "Does Pokecut require me to download an app or register an account?" [level=3] [ref=f12e538] [cursor=pointer]
+            - paragraph [ref=f12e541]: Not at all. Pokecut is optimized as a lightweight, browser-based solution. You can access the entire nose shape detector suite on both mobile and desktop screens without registering an account, verifying emails, or experiencing forced ad interruptions, allowing for an incredibly frictionless user experience.
+          - generic [ref=f12e543]:
+            - heading "Can this AI nose shape detector replace medical advice?" [level=3] [ref=f12e546] [cursor=pointer]
+            - paragraph [ref=f12e549]: No. The AI nose shape detector is for visual analysis, shopping, makeup planning, and basic consultation prep. It is not a diagnosis and should not replace advice from a licensed medical professional.
+          - generic [ref=f12e551]:
+            - heading "What photo works best for a nose shape analysis?" [level=3] [ref=f12e554] [cursor=pointer]
+            - paragraph [ref=f12e557]: Use a front-facing selfie with good light, a neutral expression, and no heavy filters. Keep the nose clear of hair, hands, glasses, or strong shadows so the analysis has a cleaner view of your facial features.
+    - generic [ref=f12e559]:
+      - generic [ref=f12e560]:
+        - generic [ref=f12e561]:
+          - generic [ref=f12e562]: POKECUT
+          - link "Pokecut - Use AI to create photos with just a few click or a prompt | Product Hunt" [ref=f12e563] [cursor=pointer]:
+            - /url: https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut
+            - img "Pokecut - Use AI to create photos with just a few click or a prompt | Product Hunt"
+        - generic [ref=f12e565]:
+          - generic [ref=f12e566]:
+            - generic [ref=f12e567]: AI Tools for Free
+            - generic [ref=f12e568]:
+              - link "All Tools" [ref=f12e570] [cursor=pointer]:
+                - /url: /tools
+              - link "Photo Collage Maker" [ref=f12e572] [cursor=pointer]:
+                - /url: /collage-maker
+              - link "Batch Photo Edit" [ref=f12e574] [cursor=pointer]:
+                - /url: /batch-edit
+              - link "Image to Image AI" [ref=f12e576] [cursor=pointer]:
+                - /url: /image-to-image-ai
+              - link "AI Replace" [ref=f12e578] [cursor=pointer]:
+                - /url: /ai-replace
+              - link "AI Background" [ref=f12e580] [cursor=pointer]:
+                - /url: /ai-background
+              - link "AI Image Generator" [ref=f12e582] [cursor=pointer]:
+                - /url: /ai-image-generator
+              - link "AI Background Remover" [ref=f12e584] [cursor=pointer]:
+                - /url: /tools/background-remover
+              - link "AI Background Changer" [ref=f12e586] [cursor=pointer]:
+                - /url: /tools/background-changer
+              - link "Magic eraser" [ref=f12e588] [cursor=pointer]:
+                - /url: /tools/magic-eraser-with-ai-detection
+              - link "AI Photo Enhancer" [ref=f12e590] [cursor=pointer]:
+                - /url: /tools/photo-enhancer
+              - link "AI ID Photo" [ref=f12e592] [cursor=pointer]:
+                - /url: /tools/id-photo-maker
+              - link "AI Image Extender" [ref=f12e594] [cursor=pointer]:
+                - /url: /tools/ai-image-extender
+          - generic [ref=f12e595]:
+            - generic [ref=f12e596]: Help
+            - generic [ref=f12e597]:
+              - link "FAQ" [ref=f12e599] [cursor=pointer]:
+                - /url: /help
+              - link "Contact us" [ref=f12e601] [cursor=pointer]:
+                - /url: /help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us
+              - link "Privacy Policy" [ref=f12e603] [cursor=pointer]:
+                - /url: /privacy-policy
+              - link "Term of Service" [ref=f12e605] [cursor=pointer]:
+                - /url: /term-of-use
+              - link "Payment Terms" [ref=f12e607] [cursor=pointer]:
+                - /url: /payment-terms
+          - generic [ref=f12e608]:
+            - generic [ref=f12e609]: Company
+            - link "About us" [ref=f12e612] [cursor=pointer]:
+              - /url: /about
+        - generic [ref=f12e613]:
+          - generic [ref=f12e614]:
+            - link [ref=f12e616] [cursor=pointer]:
+              - /url: https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944
+              - generic [ref=f12e617]:
+                - paragraph [ref=f12e618]: Download on the
+                - paragraph [ref=f12e619]: App Store
+            - link [ref=f12e621] [cursor=pointer]:
+              - /url: https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en
+              - generic [ref=f12e622]:
+                - paragraph [ref=f12e623]: GET IT ON
+                - paragraph [ref=f12e624]: Google Play
+          - generic [ref=f12e626]:
+            - link "Instagram" [ref=f12e628] [cursor=pointer]:
+              - /url: https://www.instagram.com/pokecut_app/
+            - link "Threads" [ref=f12e631] [cursor=pointer]:
+              - /url: https://www.threads.net/@pokecut_app
+            - link "Youtube" [ref=f12e634] [cursor=pointer]:
+              - /url: https://www.youtube.com/@Pokecut_com
+            - link "Tiktok" [ref=f12e637] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@pokecut
+            - link "X" [ref=f12e640] [cursor=pointer]:
+              - /url: https://x.com/Pokecut_
+            - link "Discord" [ref=f12e643] [cursor=pointer]:
+              - /url: https://discord.gg/KaPUfqb65b
+      - paragraph [ref=f12e645]: Copyright © 2026 Pokecut All Rights Reserved.
+  - button "DEBUG" [ref=f12e647] [cursor=pointer]

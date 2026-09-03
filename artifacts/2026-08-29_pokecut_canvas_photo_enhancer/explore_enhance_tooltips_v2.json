@@ -1,0 +1,23 @@
+{
+  "tooltips": {
+    "Standard Mode": [
+      "30",
+      "Balanced enhancement for everyday photos."
+    ],
+    "Old Photo Mode": [
+      "28",
+      "AI colorize and restore black & white photos online."
+    ],
+    "Portrait Mode": [
+      "26",
+      "Optimized for faces with natural skin and clear details."
+    ],
+    "Text Mode": [
+      "25",
+      "Sharpen text and UI elements for crisp, readable details."
+    ],
+    "Ultra HD Mode": [
+      "Maximum enhancement for ultra-clear, finely detailed images."
+    ]
+  }
+}

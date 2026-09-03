@@ -1,0 +1,765 @@
+{
+  "start": {
+    "url": "http://10.17.1.66:3001/",
+    "title": "Pokecut: Free Online AI Photo Editor & Image Generator",
+    "ts": "2026-08-31 13:20:33"
+  },
+  "agent_hero": {
+    "title": "All-in-One AI Photo Editor & Generator",
+    "main_button": "Start Creating for Free",
+    "input_placeholder": "Start with Pokecut's free AI image generation, type your idea, like: \"a studio portrait with soft light\", then refine it with photo editing tools.",
+    "generate_disabled": true,
+    "generate_click_no_nav": true,
+    "main_button_file_chooser": true,
+    "main_button_upload_url": "http://10.17.1.66:3001/create/edit?pid=4a2b550d-259e-4433-a314-655e6b0af855"
+  },
+  "agent_entries": {
+    "hero_buttons": [
+      {
+        "idx": 0,
+        "aria": null,
+        "text": "Start Creating for Free",
+        "cls": "relative mx-auto mt-[1.40625rem] flex h-[4.4625rem] w-[26.30625rem] items-center"
+      },
+      {
+        "idx": 1,
+        "aria": "Upload reference image",
+        "text": "",
+        "cls": "flex size-[2.625rem] shrink-0 items-center justify-center rounded-r2 border bord"
+      },
+      {
+        "idx": 2,
+        "aria": null,
+        "text": "Pokecut Pro",
+        "cls": "flex h-[2.625rem] min-w-0 items-center gap-[0.5555625rem] rounded-[0.5625rem] bo"
+      },
+      {
+        "idx": 3,
+        "aria": "Output Resolution:",
+        "text": "",
+        "cls": "flex size-[2.625rem] items-center justify-center rounded-[0.5625rem] border-0 bg"
+      },
+      {
+        "idx": 4,
+        "aria": null,
+        "text": "",
+        "cls": "flex size-[2.625rem] items-center justify-center rounded-[0.5625rem] border-0 bg"
+      },
+      {
+        "idx": 5,
+        "aria": null,
+        "text": "Generate",
+        "cls": "cursor-not-allowed bg-[var(--bc-gray-1)] opacity-40 mt-[0.75rem] flex h-[3rem] w"
+      }
+    ],
+    "model": {
+      "opened": true,
+      "new_buttons": [
+        "ChatGPT Image 2.0",
+        "Nano Banana",
+        "Nano Banana 2",
+        "Nano Banana 2 Lite",
+        "Nano Banana Pro",
+        "Seedream 5.0 Lite",
+        "Seedream 5.0 Pro",
+        "Seedream4.0"
+      ]
+    },
+    "resolution": {
+      "opened": true,
+      "new_buttons": [
+        "1k"
+      ]
+    },
+    "ratio": {
+      "clicked": true,
+      "new_buttons": [
+        "16:9",
+        "1:1",
+        "2:3",
+        "3:2",
+        "3:4",
+        "4:3",
+        "9:16",
+        "9:21"
+      ]
+    }
+  },
+  "function_board": {
+    "cards_visible": [
+      {
+        "name": "Remove Background",
+        "visible": true
+      },
+      {
+        "name": "Clothes Changer",
+        "visible": true
+      },
+      {
+        "name": "HD Photo Coverter",
+        "visible": true
+      },
+      {
+        "name": "ID Photo Maker",
+        "visible": true
+      },
+      {
+        "name": "Body Editor",
+        "visible": true
+      },
+      {
+        "name": "AI Replace",
+        "visible": true
+      }
+    ],
+    "chooser_triggered": {
+      "Remove Background": true,
+      "Clothes Changer": true,
+      "HD Photo Coverter": true,
+      "ID Photo Maker": true,
+      "Body Editor": true,
+      "AI Replace": true
+    },
+    "remove_bg_upload_url": "http://10.17.1.66:3001/create/edit?pid=b2bcd77e-565d-4efe-9757-e4f54cf649da",
+    "remove_bg_body_text": "Upgrade to Premium\nSign up\nPhoto Enhancer\nBackground Remover\nMagic Eraser\nWatermark Remover\nAI Image Extender\nAI Replace\nOld Photo Restore\nAI Face Editor\nAI Body Editor\nAI Clothes Changer\nAI Filter\nHairStyle Try On\nAI Facial Expression\nAI Tools\nInsert\nAI Image\nBackground\nLayer\nAdjust\n\nRemove Background\n\nChoose a model that suits your image\n\nGeneral\nHead&Face\nText\nRemove Background\nDEBUG",
+    "more_tools_url": "http://10.17.1.66:3001/tools"
+  },
+  "effect_board": {
+    "heading": "Create Faster with Pokecut's AI Templates",
+    "first_template_clicked": "Upload reference image",
+    "template_file_chooser": true,
+    "template_upload_url": "http://10.17.1.66:3001/",
+    "see_more_url": "http://10.17.1.66:3001/create"
+  },
+  "test_board": {
+    "heading": "Test Your Portrait Before You Edit",
+    "links": [
+      {
+        "t": "",
+        "href": "http://10.17.1.66:3001/",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Pretty Scale",
+        "href": "http://10.17.1.66:3001/tools/pretty-scale",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Ethnicity Guesser",
+        "href": "http://10.17.1.66:3001/tools/ethnicity-guesser-ai",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Eye Color Detector",
+        "href": "http://10.17.1.66:3001/tools/eye-color-detector",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Body Shape Detector",
+        "href": "http://10.17.1.66:3001/tools/body-shape-detector",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Breast Expansion",
+        "href": "http://10.17.1.66:3001/image-to-image-ai/breast-expansion",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Bigger Butt",
+        "href": "http://10.17.1.66:3001/image-to-image-ai/make-butt-bigger-in-photo",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Look Taller",
+        "href": "http://10.17.1.66:3001/image-to-image-ai/look-taller-in-photos",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Slim Photo Editor",
+        "href": "http://10.17.1.66:3001/body-editor/slim-photo-editor",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Six Pack Editor",
+        "href": "http://10.17.1.66:3001/body-editor/six-pack-photo-editor",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Fat Filter",
+        "href": "http://10.17.1.66:3001/body-editor/fat-filter",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Hourglass Body AI",
+        "href": "http://10.17.1.66:3001/image-to-image-ai/hourglass-body-ai",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Body Editor",
+        "href": "http://10.17.1.66:3001/body-editor",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "#2",
+        "href": "https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut",
+        "target": "_blank",
+        "rel": ""
+      },
+      {
+        "t": "Jessica Miller",
+        "href": "https://www.producthunt.com/@jessica_miller_7",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Angelina Peng",
+        "href": "https://www.producthunt.com/@angelina__s",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Leo Y.",
+        "href": "https://www.producthunt.com/@leo_ye",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Zepeng She",
+        "href": "https://www.producthunt.com/@rocsheh",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Rachit Magon",
+        "href": "https://www.producthunt.com/@rachitmagon",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Jessica Miller",
+        "href": "https://www.producthunt.com/@jessica_miller_7",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Angelina Peng",
+        "href": "https://www.producthunt.com/@angelina__s",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Leo Y.",
+        "href": "https://www.producthunt.com/@leo_ye",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Zepeng She",
+        "href": "https://www.producthunt.com/@rocsheh",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Rachit Magon",
+        "href": "https://www.producthunt.com/@rachitmagon",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Jessica Miller",
+        "href": "https://www.producthunt.com/@jessica_miller_7",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Angelina Peng",
+        "href": "https://www.producthunt.com/@angelina__s",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Leo Y.",
+        "href": "https://www.producthunt.com/@leo_ye",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Zepeng She",
+        "href": "https://www.producthunt.com/@rocsheh",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Rachit Magon",
+        "href": "https://www.producthunt.com/@rachitmagon",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "online store",
+        "href": "http://10.17.1.66:3001/pricing",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "our Terms of Use",
+        "href": "http://10.17.1.66:3001/term-of-use",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "submitting a ticket",
+        "href": "http://10.17.1.66:3001/#",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Download on the  App Store",
+        "href": "https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944",
+        "target": "_blank",
+        "rel": ""
+      },
+      {
+        "t": "GET IT ON  Google Play",
+        "href": "https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en",
+        "target": "_blank",
+        "rel": ""
+      },
+      {
+        "t": "",
+        "href": "https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut",
+        "target": "_blank",
+        "rel": ""
+      },
+      {
+        "t": "All Tools",
+        "href": "http://10.17.1.66:3001/tools",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Photo Collage Maker",
+        "href": "http://10.17.1.66:3001/collage-maker",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Batch Photo Edit",
+        "href": "http://10.17.1.66:3001/batch-edit",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Image to Image AI",
+        "href": "http://10.17.1.66:3001/image-to-image-ai",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "AI Replace",
+        "href": "http://10.17.1.66:3001/ai-replace",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "AI Background",
+        "href": "http://10.17.1.66:3001/ai-background",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "AI Image Generator",
+        "href": "http://10.17.1.66:3001/ai-image-generator",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "AI Background Remover",
+        "href": "http://10.17.1.66:3001/tools/background-remover",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "AI Background Changer",
+        "href": "http://10.17.1.66:3001/tools/background-changer",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Magic eraser",
+        "href": "http://10.17.1.66:3001/tools/magic-eraser-with-ai-detection",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "AI Photo Enhancer",
+        "href": "http://10.17.1.66:3001/tools/photo-enhancer",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "AI ID Photo",
+        "href": "http://10.17.1.66:3001/tools/id-photo-maker",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "AI Image Extender",
+        "href": "http://10.17.1.66:3001/tools/ai-image-extender",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "FAQ",
+        "href": "http://10.17.1.66:3001/help",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Contact us",
+        "href": "http://10.17.1.66:3001/help?category=commercial-safety-support&question=commercial-safety-support-4#contact-us",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Privacy Policy",
+        "href": "http://10.17.1.66:3001/privacy-policy",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Term of Service",
+        "href": "http://10.17.1.66:3001/term-of-use",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "Payment Terms",
+        "href": "http://10.17.1.66:3001/payment-terms",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "About us",
+        "href": "http://10.17.1.66:3001/about",
+        "target": "",
+        "rel": ""
+      },
+      {
+        "t": "",
+        "href": "https://www.instagram.com/pokecut_app/",
+        "target": "_blank",
+        "rel": "nofollow"
+      },
+      {
+        "t": "",
+        "href": "https://www.threads.net/@pokecut_app",
+        "target": "_blank",
+        "rel": "nofollow"
+      },
+      {
+        "t": "",
+        "href": "https://www.youtube.com/@Pokecut_com",
+        "target": "_blank",
+        "rel": "nofollow"
+      },
+      {
+        "t": "",
+        "href": "https://www.tiktok.com/@pokecut",
+        "target": "_blank",
+        "rel": "nofollow"
+      },
+      {
+        "t": "",
+        "href": "https://x.com/Pokecut_",
+        "target": "_blank",
+        "rel": "nofollow"
+      },
+      {
+        "t": "",
+        "href": "https://discord.gg/KaPUfqb65b",
+        "target": "_blank",
+        "rel": "nofollow"
+      }
+    ],
+    "navigations": {
+      "Pretty Scale": {
+        "href": "/tools/pretty-scale",
+        "opened_new_tab": false,
+        "same_tab_url": "http://10.17.1.66:3001/tools/pretty-scale",
+        "note": "Timeout 5000ms exceeded while waiting for event \"page\""
+      },
+      "Ethnicity Guesser": {
+        "href": "/tools/ethnicity-guesser-ai",
+        "opened_new_tab": false,
+        "same_tab_url": "http://10.17.1.66:3001/tools/ethnicity-guesser-ai",
+        "note": "Timeout 5000ms exceeded while waiting for event \"page\""
+      },
+      "Eye Color Detector": {
+        "href": "/tools/eye-color-detector",
+        "opened_new_tab": false,
+        "same_tab_url": "http://10.17.1.66:3001/tools/eye-color-detector",
+        "note": "Timeout 5000ms exceeded while waiting for event \"page\""
+      },
+      "Body Shape Detector": {
+        "href": "/tools/body-shape-detector",
+        "opened_new_tab": false,
+        "same_tab_url": "http://10.17.1.66:3001/tools/body-shape-detector",
+        "note": "Timeout 5000ms exceeded while waiting for event \"page\""
+      }
+    }
+  },
+  "portrait_board": {
+    "heading": "Upgrade Portrait Details with Pokecut AI",
+    "tabs": [
+      {
+        "tab": "Face",
+        "error": "Locator.click: Timeout 15000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Face\", exact=True)\n"
+      },
+      {
+        "tab": "Body",
+        "error": "Locator.click: Timeout 15000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Body\", exact=True)\n"
+      },
+      {
+        "tab": "Hair",
+        "error": "Locator.click: Timeout 15000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Hair\", exact=True)\n"
+      },
+      {
+        "tab": "Background",
+        "error": "Locator.click: Timeout 15000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Background\", exact=True)\n"
+      }
+    ],
+    "face_cards_error": "Locator.click: Timeout 15000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Face\", exact=True)\n"
+  },
+  "enhance_board": {
+    "heading": "Enhance Photo Quality for Every Detail",
+    "buttons": [
+      "HD Enhance",
+      "Portrait AI",
+      "Text Enhance",
+      "Ultra Enhance"
+    ],
+    "links": [],
+    "chooser_triggered": {
+      "Portrait AI": {
+        "triggered": false,
+        "error": "Timeout 5000ms exceeded while waiting for event \"filechooser\"\n=========================== logs ===========================\nwaiting for event \"filechooser\"\n============================================="
+      },
+      "Ultra Enhance": {
+        "triggered": false,
+        "error": "Timeout 5000ms exceeded while waiting for event \"filechooser\"\n=========================== logs ===========================\nwaiting for event \"filechooser\"\n============================================="
+      }
+    },
+    "portrait_ai_upload_error": "Timeout 5000ms exceeded while waiting for event \"filechooser\"\n=========================== logs ===========================\nwaiting for event \"filechooser\"\n============================================="
+  },
+  "data_board": {
+    "heading": "Pokecut is Trusted by Creators",
+    "cards": [
+      "3M+ creators",
+      "200+ AI tools",
+      "500M+ edits processed"
+    ],
+    "product_hunt_href": "https://www.producthunt.com/products/pokecut-ai?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_source=badge-pokecut",
+    "product_hunt_target": "_blank",
+    "selected_card_class": "flex size-full flex-col items-center justify-center gap-[0.58434375rem] rounded-[0.77915625rem] px-[0.5rem] py-[1.36340625rem] text-center transition duration-200 ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c-theme active:scale-[0.98] m"
+  },
+  "reviews": {
+    "heading": "What Users Say About Pokecut?",
+    "username_links": [
+      {
+        "t": "Jessica Miller",
+        "href": "https://www.producthunt.com/@jessica_miller_7",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Angelina Peng",
+        "href": "https://www.producthunt.com/@angelina__s",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Leo Y.",
+        "href": "https://www.producthunt.com/@leo_ye",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Zepeng She",
+        "href": "https://www.producthunt.com/@rocsheh",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Rachit Magon",
+        "href": "https://www.producthunt.com/@rachitmagon",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Jessica Miller",
+        "href": "https://www.producthunt.com/@jessica_miller_7",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Angelina Peng",
+        "href": "https://www.producthunt.com/@angelina__s",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Leo Y.",
+        "href": "https://www.producthunt.com/@leo_ye",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Zepeng She",
+        "href": "https://www.producthunt.com/@rocsheh",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Rachit Magon",
+        "href": "https://www.producthunt.com/@rachitmagon",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Jessica Miller",
+        "href": "https://www.producthunt.com/@jessica_miller_7",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Angelina Peng",
+        "href": "https://www.producthunt.com/@angelina__s",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Leo Y.",
+        "href": "https://www.producthunt.com/@leo_ye",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Zepeng She",
+        "href": "https://www.producthunt.com/@rocsheh",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      },
+      {
+        "t": "Rachit Magon",
+        "href": "https://www.producthunt.com/@rachitmagon",
+        "target": "_blank",
+        "rel": "nofollow noopener noreferrer"
+      }
+    ],
+    "images": [
+      "homepagerefresh_app1_26071315000144.webp",
+      "homepagerefresh_mobileapp1_26071315000145.webp"
+    ]
+  },
+  "faq": {
+    "heading": "Frequently Asked Questions",
+    "questions": [
+      "What is Pokecut and what can I use it for?",
+      "How do I use Pokecut?",
+      "Is Pokecut free?",
+      "Can I use Pokecut without signing up?",
+      "Can I use Pokecut's AI photo editor for commercial use?",
+      "How can I contact Pokecut's support?",
+      "What makes Pokecut better than other AI photo editing tools?",
+      "Can Pokecut edit images in batches?"
+    ],
+    "first_answer_after_click": null,
+    "first_answer_collapsed_visible": null,
+    "answer_links": [
+      {
+        "t": "online store",
+        "href": "http://10.17.1.66:3001/pricing",
+        "submit": null
+      },
+      {
+        "t": "our Terms of Use",
+        "href": "http://10.17.1.66:3001/term-of-use",
+        "submit": null
+      },
+      {
+        "t": "submitting a ticket",
+        "href": "http://10.17.1.66:3001/#",
+        "submit": "refund"
+      },
+      {
+        "t": "Term of Service",
+        "href": "http://10.17.1.66:3001/term-of-use",
+        "submit": null
+      }
+    ]
+  },
+  "mobile_app": {
+    "segment": "Pokecut Mobile App\nEdit, create, and enhance photos on the go with Pokecut's fast and intuitive mobile app.\n\nDownload on the\n\nApp Store\n\nGET IT ON\n\nGoogle Play\n\nPOKECUT\nLanguage: English\nAI Tools for Free\nAll Tools\nPhoto Collage Maker\nBatch Photo Edit\nImage to Image AI\nAI Replace\nAI Background\nAI Image Generator\nAI Background Remover\nAI Background Changer\nMagic eraser\nAI Photo Enhancer\nAI ID Photo\nAI Image Extender\nHelp\nFAQ\nContact us\nPrivacy Pol",
+    "store_links": [
+      {
+        "t": "Download on the\n\nApp Store",
+        "href": "https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944",
+        "target": "_blank"
+      },
+      {
+        "t": "GET IT ON\n\nGoogle Play",
+        "href": "https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en",
+        "target": "_blank"
+      }
+    ],
+    "language_button": "Language: English"
+  },
+  "bottom_nav": {
+    "items": [
+      {
+        "aria": "Home",
+        "label": "Home"
+      },
+      {
+        "aria": "All Tools",
+        "label": "All Tools"
+      },
+      {
+        "aria": "Upload",
+        "label": ""
+      },
+      {
+        "aria": "Generate",
+        "label": "Generate"
+      },
+      {
+        "aria": "Pricing",
+        "label": "Pricing"
+      }
+    ],
+    "home_url": "http://10.17.1.66:3001/create",
+    "all_tools_url": "http://10.17.1.66:3001/tools",
+    "upload_chooser": {
+      "triggered": false,
+      "error": "Locator.click: Error: strict mode violation: get_by_role(\"button\", name=\"Upload\") resolved to 2 elements:\n    1) <button type=\"button\" data-v-8eb708e2=\"\" aria-label=\"Upload reference image\" class=\"fle"
+    },
+    "generate_chooser": false,
+    "generate_url": "http://10.17.1.66:3001/create/edit?pid=e2450d1a-5047-45bb-85fc-abece940a8da",
+    "pricing_error": "Locator.click: Timeout 15000ms exceeded.\nCall log:\n  - waiting for locator(\"nav.home-mobile-bottom-nav button[aria-label='Pricing']\")\n    - locator re",
+    "damaged_upload_error": "Locator.click: Error: strict mode violation: get_by_role(\"button\", name=\"Upload\") resolved to 2 elements:\n    1) <button type=\"button\" data-v-8eb708e2=\"\" aria-label=\"Upload reference image\" class=\"fle"
+  }
+}

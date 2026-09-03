@@ -1,0 +1,71 @@
+{
+  "support_cta": [
+    {
+      "tag": "section",
+      "cls": "help-v2-support-cta-section",
+      "text": "Still have questions?Start with a photo, a prompt, or a quick edit. Pokecut helps you create polished visuals in minutes"
+    },
+    {
+      "tag": "div",
+      "cls": "help-v2-support-cta-section__content",
+      "text": "Still have questions?Start with a photo, a prompt, or a quick edit. Pokecut helps you create polished visuals in minutes"
+    },
+    {
+      "tag": "button",
+      "cls": "help-v2-support-cta-section__button",
+      "text": "Contact us"
+    },
+    {
+      "tag": "img",
+      "cls": "help-v2-support-cta-section__star help-v2-support-cta-section__star--large-left",
+      "text": ""
+    },
+    {
+      "tag": "img",
+      "cls": "help-v2-support-cta-section__star help-v2-support-cta-section__star--large-right",
+      "text": ""
+    },
+    {
+      "tag": "img",
+      "cls": "help-v2-support-cta-section__star help-v2-support-cta-section__star--small-left",
+      "text": ""
+    },
+    {
+      "tag": "img",
+      "cls": "help-v2-support-cta-section__star help-v2-support-cta-section__star--small-right",
+      "text": ""
+    }
+  ],
+  "mobile_cards": [
+    {
+      "tag": "button",
+      "cls": "help-v2-mobile-category-card",
+      "text": "Getting StartedLearn what Pokecut is, what you can use it for, free usage, sign-"
+    },
+    {
+      "tag": "button",
+      "cls": "help-v2-mobile-category-card",
+      "text": "Account & AccessLanguage switch, credits balance, orders, web/app account relati"
+    },
+    {
+      "tag": "button",
+      "cls": "help-v2-mobile-category-card",
+      "text": "Plans, Credits & BillingCredits, Premium Plan, one-time credits purchase, cancel"
+    },
+    {
+      "tag": "button",
+      "cls": "help-v2-mobile-faq-section__tab",
+      "text": "Getting Started"
+    },
+    {
+      "tag": "button",
+      "cls": "help-v2-mobile-faq-section__tab",
+      "text": "Account & Access"
+    },
+    {
+      "tag": "button",
+      "cls": "help-v2-mobile-faq-section__tab",
+      "text": "Plans, Credits & Billing"
+    }
+  ]
+}

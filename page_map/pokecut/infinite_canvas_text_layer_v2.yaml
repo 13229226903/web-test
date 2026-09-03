@@ -1,0 +1,337 @@
+# Pokecut 无限画布 - 文字图层功能页面地图 v2
+# 进入方式: /create → Trending Tools → 第一个按钮 "Start from a Photo" → 文件弹窗选图 → /agent?pid=<uuid>
+# 本版本基于 2026-08-30 实际探索更新，覆盖文字图层工具栏与右侧属性面板（Basic / Adjust）。
+
+page: Infinite Canvas Text Layer
+url: /agent?pid=<uuid>
+landmark:
+  selector: "button[data-tool-id='text']"
+  description: 左侧工具栏中的文字图层按钮（第 2 个，data-tool-id="text"）
+entry:
+  from: /create
+  trigger: 点击 Trending Tools 分类下第一个按钮 Start from a Photo，文件弹窗选择 test_images/ 图片
+  selector: "div.cursor-pointer:has-text('Start from a Photo')"
+  file_selector: "input[type=file]"
+  after_upload: /agent?pid=<uuid>#
+
+# ── 左侧工具栏（7 个工具）────────────────────────────
+elements:
+  sidebar_container:
+    selector: "div.absolute.left-[24px].top-1/2.z-[60]"
+    description: 左侧浮动工具栏容器，垂直排列 7 个工具按钮
+  tool_image:
+    selector: "button[data-tool-id='image']"
+    description: 图片工具（第 1 个）
+  tool_text:
+    selector: "button[data-tool-id='text']"
+    description: 文字图层工具（第 2 个）— 点击在画布上添加文字图层并自动选中
+  tool_sticker:
+    selector: "button[data-tool-id='sticker']"
+    description: 贴纸工具（第 3 个）
+  tool_brush:
+    selector: "button[data-tool-id='brush']"
+    description: 画笔工具（第 4 个）
+  tool_line:
+    selector: "button[data-tool-id='line']"
+    description: 线条工具（第 5 个）
+  tool_shape:
+    selector: "button[data-tool-id='shape']"
+    description: 形状工具（第 6 个）
+  tool_layer:
+    selector: "button[data-tool-id='layer']"
+    description: 图层管理（第 7 个）
+
+  # ── 文字图层编辑工具栏（选中文字图层时出现）────────
+  text_edit_bar:
+    selector: "div:has(button:text('Adjust')):has(button:text('Move Up'))"
+    description: 文字编辑工具栏，位于画布上方 y≈422，x 560~1360
+  text_edit_adjust:
+    selector: "button:has-text('Adjust')"
+    description: 调整按钮（工具栏第 1 个）。选中图层且面板关闭时点击可打开右侧属性面板；面板已打开时点击无可见变化
+  text_edit_move_up:
+    selector: "button:has-text('Move Up')"
+    description: 上移图层（第 2 个）
+  text_edit_move_down:
+    selector: "button:has-text('Move Down')"
+    description: 下移图层（第 3 个）
+  text_edit_to_top:
+    selector: "button:has-text('To Top')"
+    description: 置顶图层（第 4 个）
+  text_edit_to_bottom:
+    selector: "button:has-text('To Bottom')"
+    description: 置底层（第 5 个）
+  text_edit_flip_h:
+    selector: "button:has-text('Flip h')"
+    description: 水平翻转（第 6 个）
+  text_edit_flip_v:
+    selector: "button:has-text('Flip v')"
+    description: 垂直翻转（第 7 个）
+  text_edit_delete:
+    selector: "button:has-text('Delete')"
+    description: 删除文字图层（第 8 个）
+  text_edit_rotation:
+    selector: "button:has-text('Rotation')"
+    description: 旋转文字（第 9 个）
+
+  # ── 右侧属性面板 ──────────────────────────────────
+  text_property_panel:
+    selector: "div[class*='w-[25rem]'][class*='bg-white']"
+    description: 右侧文字属性面板容器；默认 y≈416，宽 400px，最大高度约 652px
+  panel_scroll_area:
+    selector: ".panel-scroll-y"
+    description: 属性面板滚动区域，面板内容超出时需 scrollTop 滚动
+
+  # ── 顶层 Tab ──────────────────────────────────────
+  text_prop_tab_basic:
+    selector: "div[class*='w-[25rem]'] button:has-text('Basic')"
+    description: 基础属性 Tab。激活态 class 含 bg-gradient-to-b from-[#515AE6] to-[#372ADF] text-white
+  text_prop_tab_adjust:
+    selector: "div[class*='w-[25rem]'] button:has-text('Adjust')"
+    description: 调整属性 Tab。添加文字图层后默认激活 Adjust
+
+  # ── Basic Tab 子控件 ─────────────────────────────
+  text_prop_basic_alignment:
+    selector: "p:has-text('Alignment')"
+    description: 对齐方式标签。实际为 3 个自定义 SVG 图标按钮（左/中/右），非标准 HTML
+  text_prop_basic_font:
+    selector: "div[class*='w-[25rem]'] button:has-text('Font')"
+    description: 字体选择按钮。本轮 headless 点击/hover 未展开字体列表，需坐标点击/JS 注入进一步确认
+  text_prop_basic_fill:
+    selector: "div[class*='w-[25rem]'] button:has-text('Fill')"
+    description: 文字颜色按钮。点击可展开颜色网格；DOM 中含 25 个色块 + 透明/无填充选项
+
+  # ── Adjust Tab 子控件（4 个可折叠 section）─────────
+  text_prop_adjust_space:
+    selector: "div[class*='w-[25rem]'] button:has-text('Space')"
+    description: 间距折叠项（button 可点击展开）
+  text_prop_adjust_space_width:
+    selector: "input.space-slider[value]"
+    description: Width 宽度滑块，0~100，默认 0
+  text_prop_adjust_space_height:
+    selector: "input.space-slider[disabled]"
+    description: Height 高度滑块，-100~100，默认 0，初始禁用
+  text_prop_adjust_reflection:
+    selector: "div[class*='border-b']:has(span:text('Reflection'))"
+    description: 镜像反射折叠项（header 为 div，含 Toggle + 12x12 下拉箭头）
+  text_prop_adjust_reflection_dropdown:
+    selector: "div[class*='border-b']:has(span:text('Reflection')) button[class*='size-[0.75rem]']"
+    description: 展开 Reflection 的 12x12 下拉箭头
+  text_prop_adjust_reflection_toggle:
+    selector: "div[class*='border-b']:has(span:text('Reflection')) button[class*='rounded-full']"
+    description: Reflection 开关（42x24）
+  text_prop_adjust_background:
+    selector: "div[class*='w-[25rem]'] button:has-text('Background')"
+    description: 背景色折叠项（button 可点击展开）
+  text_prop_adjust_outline:
+    selector: "div[class*='border-b']:has(span:text('Outline'))"
+    description: 文字描边折叠项（header 为 div，含 Toggle + 12x12 下拉箭头）
+  text_prop_adjust_outline_dropdown:
+    selector: "div[class*='border-b']:has(span:text('Outline')) button[class*='size-[0.75rem]']"
+    description: 展开 Outline 的 12x12 下拉箭头
+  text_prop_adjust_outline_toggle:
+    selector: "div[class*='border-b']:has(span:text('Outline')) button[class*='rounded-full']"
+    description: Outline 开关（42x24）
+
+
+  # ── 补充：两行编辑与色盘/取色控件（sync.md 第 8 节）────────
+  text_edit_hidden_textarea:
+    selector: "textarea.fixed.h-px.w-px"
+    description: 双击文字图层后出现的隐藏文本编辑框，用于输入多行文字
+  background_color_palette_btn:
+    selector: "button:has(img[alt='picker'][src*='edit_icon_color_picker.png'])"
+    description: Background 展开区第一个特殊按钮（色盘），点击弹出调色弹窗
+  background_picker_btn:
+    selector: "div[class*='border-b']:has(span:text('Background')) button:has(svg.size-[1.25rem])"
+    description: Background 展开区取色按钮（位于色盘按钮之后）
+  color_modal_hex:
+    selector: "input.hexInput"
+    description: 调色弹窗内的十六进制色值输入框
+  outline_color_palette_btn:
+    selector: "button:has(img[alt='picker'][src*='edit_icon_color_picker.png'])"
+    description: Outline Color 区第一个特殊按钮（色盘）
+  outline_picker_btn:
+    selector: "div[class*='border-b']:has(span:text('Outline')) button:has(svg.size-[1.25rem])"
+    description: Outline Color 区取色按钮
+
+tabs:
+  property_panel_top:
+    - Basic       # 基础属性（Alignment / Font / Fill）
+    - Adjust      # 调整属性（Space / Reflection / Background / Outline）
+  property_panel_adjust_sections:
+    - Space       # 间距：Width / Height
+    - Reflection  # 镜像反射：Scope / Opacity / Distance / Angle
+    - Background  # 文字背景：无填充 + 25 色块
+    - Outline     # 文字描边：Types / Color + Size / Distance / Blur / Smooth
+
+modals: {}
+
+states:
+  text_layer_selected:
+    description: 点击左侧 Add Text 添加文字图层后，图层自动选中，顶部编辑工具栏出现，右侧属性面板自动打开（默认 Adjust Tab）
+    trigger: 点击 button[data-tool-id='text']
+    url_or_state_key: /agent?pid=<uuid>#
+    buttons:
+      adjust:
+        selector: "button:has-text('Adjust')"
+        role_or_text: Adjust
+        visible_condition: 选中文字图层时工具栏可见
+        enabled_condition: 选中文字图层即可点击
+        action_result: 面板已打开时点击无可见变化；面板关闭但图层仍选中时点击可重新打开属性面板
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后右侧属性面板可见（Basic/Adjust Tab 出现）
+        notes: 实测：添加文字图层后面板自动打开；先点 Move Up 关闭面板但工具栏保留，再点 Adjust 可重新打开
+      move_up:
+        selector: "button:has-text('Move Up')"
+        role_or_text: Move Up
+        visible_condition: 选中文字图层时工具栏可见
+        enabled_condition: 选中文字图层即可点击
+        action_result: 改变图层顺序；实测点击后右侧属性面板关闭，工具栏仍保留
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后图层顺序变化（需多层验证）；面板状态从打开变为关闭
+        notes: 单文字图层场景下面板关闭，建议多图层场景再验证顺序
+      move_down:
+        selector: "button:has-text('Move Down')"
+        role_or_text: Move Down
+        visible_condition: 选中文字图层时工具栏可见
+        enabled_condition: 选中文字图层即可点击
+        action_result: 改变图层顺序；实测点击后属性面板关闭
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 同上
+        notes: 同上
+      to_top:
+        selector: "button:has-text('To Top')"
+        role_or_text: To Top
+        visible_condition: 选中文字图层时工具栏可见
+        enabled_condition: 选中文字图层即可点击
+        action_result: 置顶图层；实测点击后属性面板关闭
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 置顶后图层顺序变化
+        notes: 多图层场景验证顺序更可靠
+      to_bottom:
+        selector: "button:has-text('To Bottom')"
+        role_or_text: To Bottom
+        visible_condition: 选中文字图层时工具栏可见
+        enabled_condition: 选中文字图层即可点击
+        action_result: 置底图层；实测点击后属性面板关闭
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 置底后图层顺序变化
+        notes: 同上
+      flip_h:
+        selector: "button:has-text('Flip h')"
+        role_or_text: Flip h
+        visible_condition: 选中文字图层时工具栏可见
+        enabled_condition: 选中文字图层即可点击
+        action_result: 水平翻转文字；实测点击后属性面板关闭
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 文字水平翻转
+        notes: 翻转结果建议视觉审查确认
+      flip_v:
+        selector: "button:has-text('Flip v')"
+        role_or_text: Flip v
+        visible_condition: 选中文字图层时工具栏可见
+        enabled_condition: 选中文字图层即可点击
+        action_result: 垂直翻转文字；实测点击后面板保持打开
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 文字垂直翻转
+        notes: 翻转结果建议视觉审查确认
+      delete:
+        selector: "button:has-text('Delete')"
+        role_or_text: Delete
+        visible_condition: 选中文字图层时工具栏可见
+        enabled_condition: 选中文字图层即可点击
+        action_result: 删除当前文字图层
+        reversible: false
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 删除后文字图层消失；可重新点击 Add Text 添加
+        notes: 破坏性操作，仅在画布内文字图层上验证
+      rotation:
+        selector: "button:has-text('Rotation')"
+        role_or_text: Rotation
+        visible_condition: 选中文字图层时工具栏可见
+        enabled_condition: 选中文字图层即可点击
+        action_result: 进入/切换旋转交互；实测点击后面板保持打开
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 旋转手柄或旋转态出现
+        notes: 旋转具体交互未深入，建议视觉审查确认
+  adjust_panel_open:
+    description: 右侧属性面板打开，默认 Adjust Tab；含 Basic/Adjust 顶层 Tab，Adjust 下有 4 个折叠 section
+    trigger: 选中文字图层自动打开，或工具栏 Adjust 重开
+    url_or_state_key: /agent?pid=<uuid>#
+    buttons:
+      basic_tab:
+        selector: "div[class*='w-[25rem]'] button:has-text('Basic')"
+        role_or_text: Basic
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选
+        action_result: 切换到 Basic Tab，显示 Alignment / Font / Fill
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Basic 按钮激活态含 bg-gradient-to-b 与 text-white
+      adjust_tab:
+        selector: "div[class*='w-[25rem]'] button:has-text('Adjust')"
+        role_or_text: Adjust
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选
+        action_result: 切换到 Adjust Tab，显示 Space / Reflection / Background / Outline
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 添加文字图层后默认激活 Adjust
+      space_section:
+        selector: "div[class*='w-[25rem]'] button:has-text('Space')"
+        role_or_text: Space
+        visible_condition: Adjust Tab 下可见
+        enabled_condition: 始终可点击展开
+        action_result: 展开显示 Width 0~100（默认 0，可调）与 Height -100~100（默认 0，初始禁用）
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 展开后 Width/Height 滑块可见；调整 Width 后数值实时更新（实测 0→40）
+      reflection_section:
+        selector: "div[class*='border-b']:has(span:text('Reflection')) button[class*='size-[0.75rem]']"
+        role_or_text: Reflection
+        visible_condition: Adjust Tab 下可见，可能需滚动
+        enabled_condition: 先点 12x12 下拉箭头展开
+        action_result: 展开显示 Scope 0~100（100）、Opacity 0~100（50）、Distance 0~100（0）、Angle 0~360（180）；另有 Toggle 开关默认关闭
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 展开后 4 个 slider 可见；Toggle 为 rounded-full（42x24）
+      background_section:
+        selector: "div[class*='w-[25rem]'] button:has-text('Background')"
+        role_or_text: Background
+        visible_condition: Adjust Tab 下可见
+        enabled_condition: 始终可点击展开
+        action_result: 展开显示 25 个背景色块 + 无填充按钮
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 色块为带 inline background-color 的 button，grid-cols-5 网格
+      outline_section:
+        selector: "div[class*='border-b']:has(span:text('Outline')) button[class*='size-[0.75rem]']"
+        role_or_text: Outline
+        visible_condition: Adjust Tab 下可见，可能需滚动
+        enabled_condition: 先点 12x12 下拉箭头展开
+        action_result: 展开显示 Types、Color（25 色块）、Size 0~100（20）、Distance 0~100（0）、Blur 0~100（0）、Smooth 0~100（0）；另有 Toggle 默认关闭
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 展开后 4 个 slider 可见；Toggle 为 rounded-full（42x24）

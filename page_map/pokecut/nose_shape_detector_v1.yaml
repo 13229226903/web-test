@@ -1,0 +1,84 @@
+page: NoseShapeDetector
+url: https://pokecut-dev.guangzhuiyuan.com/tools/nose-shape-detector
+source_prd: D:/downloads/用例/task-39-飞书文档_ 检测类功能适配UI需求文档 (1)/检测类功能适配UI需求文档.md
+landmark:
+  selector: 'h1:text-is("Free AI Nose Shape Detector: Find Your Nose Type Online")'
+  description: 上传前 SEO Hero 主标题，页面唯一标识
+entry:
+  from: DirectUrl
+  trigger: 直接打开 /tools/nose-shape-detector
+  selector: 'a[href*="/tools/nose-shape-detector"]'
+exploration:
+  task_id: new_feature_detection_ui_20260901_124711
+  tested_url: https://pokecut-dev.guangzhuiyuan.com/tools/nose-shape-detector
+  viewport_pc: 1920x1080
+  driver: playwright_mcp_only
+  environment_strategy: 测试服 guangzhuiyuan；需登录（会员账号）才能上传生成；上传素材 test_images/有人脸.JPG
+
+elements:
+  upload_input:
+    selector: '#img2imgFirstScreenUploadInput'
+    type: file
+    note: 上传前可见 "Choose File" 文案；label 拦截指针事件，需 force/坐标点击触发文件选择器
+  seo_h1:
+    selector: 'h1'
+    text: Free AI Nose Shape Detector: Find Your Nose Type Online
+  seo_desc:
+    selector: 'p:has-text("smart nose shape analyzer")'
+  upload_button:
+    selector: 'button:has-text("Choose File")'
+    note: 点击由 label 触发，Playwright 用 #img2imgFirstScreenUploadInput force click 更稳
+  result_col_original:
+    selector: 'text=Original Image'
+  result_col_analysis:
+    selector: 'text=Analysis Result'
+  result_col_optimized:
+    selector: 'text=Optimized Result'
+
+states:
+  seo_initial:
+    description: 上传前 SEO 首屏，无三栏结果态
+    trigger: 打开页面等待 H1 可见
+    url_or_state_key: /tools/nose-shape-detector
+    buttons:
+      btn_choose_file:
+        selector: '#img2imgFirstScreenUploadInput'
+        role_or_text: 'Choose File'
+        action_result: 触发系统文件选择器
+        reversible: true
+  result_analysis_loading:
+    description: 上传后分析生成中，三栏出现，分析区 Generating analysis...
+    trigger: 上传有人脸图后立即
+    url_or_state_key: /tools/nose-shape-detector（页内状态切换，不跳转）
+    buttons:
+      btn_upload_image:
+        selector: 'text=Upload Image'
+        visible_condition: 结果态可见
+        enabled_condition: 分析生成中置灰不可点
+      btn_analysis_download:
+        selector: 'text=Download >> nth=0'
+        enabled_condition: 分析生成中置灰
+  result_complete_placeholder:
+    description: 分析完成，优化结果区为模糊承接态（无真实优化图）
+    trigger: 分析生成完成后
+    url_or_state_key: /tools/nose-shape-detector（页内）
+    buttons:
+      btn_analysis_download_done:
+        selector: 'text=Download'
+        action_result: 下载分析结果图 jpg
+      btn_get_it_now:
+        selector: 'text=Get It Now'
+        action_result: 进入 Portrait Editor 承接（选中原图，不选模板）
+        reversible: false
+
+selector_semantic_gaps:
+  - 优化结果区无 Download 按钮，仅 Get It Now（符合无优化结果图需求）
+  - 上传按钮底层为 input#img2imgFirstScreenUploadInput，label 拦截点击
+
+prd_only_or_unverified_states:
+  - 点击 Get It Now 后的 Portrait Editor 承接未点击验证
+  - 点击 Download 未真实验证下载文件格式
+
+notes:
+  - 优化结果区文案为 "Based on your photo and analysis, we've generated a beautifully optimized version just for you."
+  - 三栏从上到下/从左到右：Original Image / Analysis Result / Optimized Result

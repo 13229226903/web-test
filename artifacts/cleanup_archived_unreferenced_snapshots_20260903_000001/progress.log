@@ -1,0 +1,5 @@
+[2026-09-03 16:57:09] orchestrator start cleanup_archived_unreferenced_snapshots_20260903_000001
+[2026-09-03 16:58:29] orchestrator route cleanup_manifest target_count=12
+[2026-09-03 16:58:29] orchestrator wrote cleanup_manifest deleted_snapshots=12
+[2026-09-03 16:58:56] orchestrator gate cleanup_verified deleted_snapshots=12 preserved_referenced_snapshots=14
+[2026-09-03 16:58:56] orchestrator done cleanup_archived_unreferenced_snapshots_20260903_000001

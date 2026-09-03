@@ -1,0 +1,455 @@
+{
+  "portrait_tabs": [
+    {
+      "tab": "Face",
+      "count": 1,
+      "active": {
+        "cls": "flex min-w-max flex-1 items-center justify-center whitespace-nowrap rounded-[0.5625rem] px-[0.5625rem] text-[1.5rem] leading-normal transition-colors duration-200 motion-reduce:transition-none h-[3rem] font-normal text-c-btnicon",
+        "aria_selected": "false"
+      },
+      "card_links": [
+        {
+          "t": "Breast Expansion",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/breast-expansion",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Bigger Butt",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/make-butt-bigger-in-photo",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Look Taller",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/look-taller-in-photos",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Slim Photo Editor",
+          "href": "http://10.17.1.66:3001/body-editor/slim-photo-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Six Pack Editor",
+          "href": "http://10.17.1.66:3001/body-editor/six-pack-photo-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Fat Filter",
+          "href": "http://10.17.1.66:3001/body-editor/fat-filter",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Hourglass Body AI",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/hourglass-body-ai",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Body Editor",
+          "href": "http://10.17.1.66:3001/body-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Download on the  App Store",
+          "href": "https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944",
+          "target": "_blank",
+          "rel": ""
+        },
+        {
+          "t": "GET IT ON  Google Play",
+          "href": "https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en",
+          "target": "_blank",
+          "rel": ""
+        },
+        {
+          "t": "Image to Image AI",
+          "href": "http://10.17.1.66:3001/image-to-image-ai",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background",
+          "href": "http://10.17.1.66:3001/ai-background",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background Remover",
+          "href": "http://10.17.1.66:3001/tools/background-remover",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background Changer",
+          "href": "http://10.17.1.66:3001/tools/background-changer",
+          "target": "",
+          "rel": ""
+        }
+      ]
+    },
+    {
+      "tab": "Body",
+      "count": 1,
+      "active": {
+        "cls": "flex min-w-max flex-1 items-center justify-center whitespace-nowrap rounded-[0.5625rem] px-[0.5625rem] text-[1.5rem] leading-normal transition-colors duration-200 motion-reduce:transition-none h-[2.625rem] bg-white font-bold text-[#4525d0]",
+        "aria_selected": "true"
+      },
+      "card_links": [
+        {
+          "t": "Breast Expansion",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/breast-expansion",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Bigger Butt",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/make-butt-bigger-in-photo",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Look Taller",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/look-taller-in-photos",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Slim Photo Editor",
+          "href": "http://10.17.1.66:3001/body-editor/slim-photo-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Six Pack Editor",
+          "href": "http://10.17.1.66:3001/body-editor/six-pack-photo-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Fat Filter",
+          "href": "http://10.17.1.66:3001/body-editor/fat-filter",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Hourglass Body AI",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/hourglass-body-ai",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Body Editor",
+          "href": "http://10.17.1.66:3001/body-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Download on the  App Store",
+          "href": "https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944",
+          "target": "_blank",
+          "rel": ""
+        },
+        {
+          "t": "GET IT ON  Google Play",
+          "href": "https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en",
+          "target": "_blank",
+          "rel": ""
+        },
+        {
+          "t": "Image to Image AI",
+          "href": "http://10.17.1.66:3001/image-to-image-ai",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background",
+          "href": "http://10.17.1.66:3001/ai-background",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background Remover",
+          "href": "http://10.17.1.66:3001/tools/background-remover",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background Changer",
+          "href": "http://10.17.1.66:3001/tools/background-changer",
+          "target": "",
+          "rel": ""
+        }
+      ]
+    },
+    {
+      "tab": "Hair",
+      "count": 1,
+      "active": {
+        "cls": "flex min-w-max flex-1 items-center justify-center whitespace-nowrap rounded-[0.5625rem] px-[0.5625rem] text-[1.5rem] leading-normal transition-colors duration-200 motion-reduce:transition-none h-[3rem] font-normal text-c-btnicon",
+        "aria_selected": "false"
+      },
+      "card_links": [
+        {
+          "t": "Breast Expansion",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/breast-expansion",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Bigger Butt",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/make-butt-bigger-in-photo",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Look Taller",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/look-taller-in-photos",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Slim Photo Editor",
+          "href": "http://10.17.1.66:3001/body-editor/slim-photo-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Six Pack Editor",
+          "href": "http://10.17.1.66:3001/body-editor/six-pack-photo-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Fat Filter",
+          "href": "http://10.17.1.66:3001/body-editor/fat-filter",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Hourglass Body AI",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/hourglass-body-ai",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Body Editor",
+          "href": "http://10.17.1.66:3001/body-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Download on the  App Store",
+          "href": "https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944",
+          "target": "_blank",
+          "rel": ""
+        },
+        {
+          "t": "GET IT ON  Google Play",
+          "href": "https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en",
+          "target": "_blank",
+          "rel": ""
+        },
+        {
+          "t": "Image to Image AI",
+          "href": "http://10.17.1.66:3001/image-to-image-ai",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background",
+          "href": "http://10.17.1.66:3001/ai-background",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background Remover",
+          "href": "http://10.17.1.66:3001/tools/background-remover",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background Changer",
+          "href": "http://10.17.1.66:3001/tools/background-changer",
+          "target": "",
+          "rel": ""
+        }
+      ]
+    },
+    {
+      "tab": "Background",
+      "count": 1,
+      "active": {
+        "cls": "flex min-w-max flex-1 items-center justify-center whitespace-nowrap rounded-[0.5625rem] px-[0.5625rem] text-[1.5rem] leading-normal transition-colors duration-200 motion-reduce:transition-none h-[3rem] font-normal text-c-btnicon",
+        "aria_selected": "false"
+      },
+      "card_links": [
+        {
+          "t": "Breast Expansion",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/breast-expansion",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Bigger Butt",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/make-butt-bigger-in-photo",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Look Taller",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/look-taller-in-photos",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Slim Photo Editor",
+          "href": "http://10.17.1.66:3001/body-editor/slim-photo-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Six Pack Editor",
+          "href": "http://10.17.1.66:3001/body-editor/six-pack-photo-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Fat Filter",
+          "href": "http://10.17.1.66:3001/body-editor/fat-filter",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Hourglass Body AI",
+          "href": "http://10.17.1.66:3001/image-to-image-ai/hourglass-body-ai",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Body Editor",
+          "href": "http://10.17.1.66:3001/body-editor",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "Download on the  App Store",
+          "href": "https://apps.apple.com/us/app/ai-background-pokecut-studio/id1581369944",
+          "target": "_blank",
+          "rel": ""
+        },
+        {
+          "t": "GET IT ON  Google Play",
+          "href": "https://play.google.com/store/apps/details?id=com.backgrounderaser.pokecut&hl=en",
+          "target": "_blank",
+          "rel": ""
+        },
+        {
+          "t": "Image to Image AI",
+          "href": "http://10.17.1.66:3001/image-to-image-ai",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background",
+          "href": "http://10.17.1.66:3001/ai-background",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background Remover",
+          "href": "http://10.17.1.66:3001/tools/background-remover",
+          "target": "",
+          "rel": ""
+        },
+        {
+          "t": "AI Background Changer",
+          "href": "http://10.17.1.66:3001/tools/background-changer",
+          "target": "",
+          "rel": ""
+        }
+      ]
+    }
+  ],
+  "effect_template": {
+    "chooser": true,
+    "upload_url": "http://10.17.1.66:3001/create/edit?pid=5a7c2bc8-71b9-49a8-92f7-f7361867dd14"
+  },
+  "enhance": {
+    "HD Enhance": {
+      "url": "http://10.17.1.66:3001/"
+    },
+    "Text Enhance": {
+      "url": "http://10.17.1.66:3001/"
+    },
+    "Portrait AI": {
+      "filechooser_event": false,
+      "url_after_click": "http://10.17.1.66:3001/"
+    },
+    "Ultra Enhance": {
+      "filechooser_event": false,
+      "url_after_click": "http://10.17.1.66:3001/"
+    }
+  },
+  "faq": {
+    "section_html": "<div class=\"flex w-full flex-col items-center\" data-v-00432764=\"\" data-v-dbcec2dd=\"\"><h2 data-seo-reveal-stage=\"title\" class=\"text-[2.25rem] leading-[2.625rem] home-faq-title mb-[1.875rem] text-center font-bold text-c-primary-text md:mb-[2.5rem]\" data-v-dbcec2dd=\"\"><span data-v-dbcec2dd=\"\">Frequently Asked </span><span class=\"home-faq-title-emphasis\" data-v-dbcec2dd=\"\">Questions</span></h2><p class=\"home-body-regular mt-[1.5rem] max-w-[57.5rem] text-center text-pmd-normal-content text-c-secondary-text md:text-[1.5rem] md:leading-[1.875rem] md:text-c-normal-content\" data-v-dbcec2dd=\"\">Explore the most common questions about Pokecut's free features, usage, account access, and AI editing tools.</p><!----><div class=\"mt-[1.875rem] flex w-full flex-col gap-[0.75rem]\" data-v-dbcec2dd=\"\"><!--[--><div class=\"w-full\" data-v-dbcec2dd=\"\"><div class=\"w-full home-faq-mobile-collapse overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray w-full\" data-v-dbcec2dd=\"\"><div id=\"0\" class=\"px-[1.875rem] pk-collapse-header flex items-center justify-between\" style=\"--icon-size:1.875rem;--accordion-icon:url(/icons/svg/faq_icon_open.svg);--active-icon:url(/icons/svg/faq_icon_close.svg);\"><!--[--><div class=\"flex min-h-[5.625rem] min-w-0 flex-1 items-center py-[1.875rem] pr-[2.25rem] text-c-black\" data-v-dbcec2dd=\"\"><h3 class=\"text-left text-[1.5rem] font-bold leading-[1.875rem]\" data-v-dbcec2dd=\"\">What is Pokecut and what can I use it for?</h3></div><!--]--></div><div class=\"pk-collapse-panel\"><!--[--><div class=\"px-[1.875rem] pb-[1.875rem] text-[1.125rem] leading-[1.5rem] text-c-black\" data-v-dbcec2dd=\"\"><p data-v-dbcec2dd=\"\">Pokecut is an all-in-one AI photo editing platform designed for portraits, travel photos, product images, and creative content. You can remove backgrounds, erase objects, enhance quality, create collages, and customise images with stickers, text, and templates, all in one place. With Pokecut's AI image generation, you can also turn prompts into studio-grade portraits, artistic visuals, Christmas scenes, fantasy maps, marketing banners, and more in seconds.</p></div><!--]--></div></div></div><div class=\"w-full\" data-v-dbcec2dd=\"\"><div class=\"w-full home-faq-mobile-collapse overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray w-full\" data-v-dbcec2dd=\"\"><div id=\"1\" class=\"px-[1.875rem] pk-collapse-header flex items-center justify-between\" style=\"--icon-size:1.875rem;--accordion-icon:url(/icons/svg/faq_icon_open.svg);--active-icon:url(/icons/svg/faq_icon_close.svg);\"><!--[--><div class=\"flex min-h-[5.625rem] min-w-0 flex-1 items-center py-[1.875rem] pr-[2.25rem] text-c-black\" data-v-dbcec2dd=\"\"><h3 class=\"text-left text-[1.5rem] font-bold leading-[1.875rem]\" data-v-dbcec2dd=\"\">How do I use Pokecut?</h3></div><!--]--></div><div class=\"pk-collapse-panel\"><!--[--><div class=\"px-[1.875rem] pb-[1.875rem] text-[1.125rem] leading-[1.5rem] text-c-black\" data-v-dbcec2dd=\"\"><p data-v-dbcec2dd=\"\">You can start by uploading a photo, choosing an AI tool, or typing a prompt in the AI generator. Pokecut will guide you into the editor, where you can preview the result, adjust the edit, and export your final image.</p></div><!--]--></div></div></div><div class=\"w-full\" data-v-dbcec2dd=\"\"><div class=\"w-full home-faq-mobile-collapse overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray w-full\" data-v-dbcec2dd=\"\"><div id=\"2\" class=\"px-[1.875rem] pk-collapse-header flex items-center justify-between\" style=\"--icon-size:1.875rem;--accordion-icon:url(/icons/svg/faq_icon_open.svg);--active-icon:url(/icons/svg/faq_icon_close.svg);\"><!--[--><div class=\"flex min-h-[5.625rem] min-w-0 flex-1 items-center py-[1.875rem] pr-[2.25rem] text-c-black\" data-v-dbcec2dd=\"\"><h3 class=\"text-left text-[1.5rem] font-bold leading-[1.875rem]\" data-v-dbcec2dd=\"\">Is Pokecut free?</h3></div><!--]--></div><div class=\"pk-collapse-panel\"><!--[--><div class=\"px-[1.875rem] pb-[1.875rem] text-[1.125rem] leading-[1.5rem] text-c-black\" data-v-dbcec2dd=\"\"><p data-v-dbcec2dd=\"\">Yes, Pokecut is free to use. You can receive free credits to try out basic features, such as photo enhancement and background removal. However, usage is limited. To unlock more edits, higher resolution, and full feature access, you can go to the <a class=\"custom-a-d\" href=\"/pricing\">online store</a> to subscribe to the Pro plan.</p></div><!--]--></div></div></div><div class=\"w-full\" data-v-dbcec2dd=\"\"><div class=\"w-full home-faq-mobile-collapse overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray w-full\" data-v-dbcec2dd=\"\"><div id=\"3\" class=\"px-[1.875rem] pk-collapse-header flex items-center justify-between\" style=\"--icon-size:1.875rem;--accordion-icon:url(/icons/svg/faq_icon_open.svg);--active-icon:url(/icons/svg/faq_icon_close.svg);\"><!--[--><div class=\"flex min-h-[5.625rem] min-w-0 flex-1 items-center py-[1.875rem] pr-[2.25rem] text-c-black\" data-v-dbcec2dd=\"\"><h3 class=\"text-left text-[1.5rem] font-bold leading-[1.875rem]\" data-v-dbcec2dd=\"\">Can I use Pokecut without signing up?</h3></div><!--]--></div><div class=\"pk-collapse-panel\"><!--[--><div class=\"px-[1.875rem] pb-[1.875rem] text-[1.125rem] leading-[1.5rem] text-c-black\" data-v-dbcec2dd=\"\"><p data-v-dbcec2dd=\"\">Yes you can. Pokecut can be used directly without signing up or login.</p></div><!--]--></div></div></div><div class=\"w-full\" data-v-dbcec2dd=\"\"><div class=\"w-full home-faq-mobile-collapse overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray w-full\" data-v-dbcec2dd=\"\"><div id=\"4\" class=\"px-[1.875rem] pk-collapse-header flex items-center justify-between\" style=\"--icon-size:1.875rem;--accordion-icon:url(/icons/svg/faq_icon_open.svg);--active-icon:url(/icons/svg/faq_icon_close.svg);\"><!--[--><div class=\"flex min-h-[5.625rem] min-w-0 flex-1 items-center py-[1.875rem] pr-[2.25rem] text-c-black\" data-v-dbcec2dd=\"\"><h3 class=\"text-left text-[1.5rem] font-bold leading-[1.875rem]\" data-v-dbcec2dd=\"\">Can I use Pokecut's AI photo editor for commercial use?</h3></div><!--]--></div><div class=\"pk-collapse-panel\"><!--[",
+    "first_click": {
+      "ok": true,
+      "tag": "H3"
+    },
+    "answer_visible_after_click": {
+      "next": null,
+      "expanded": null
+    },
+    "after_second_click": {
+      "expanded": null
+    }
+  },
+  "mobile_app": {
+    "sec": "<div class=\"w-full flex flex-col items-center\" data-v-00432764=\"\"><div class=\"global-content-container mb-[4.125rem] md:mb-[5rem] mt-[5rem] md:mt-[4.5625rem]\" data-v-00432764=\"\"><div class=\"flex w-full flex-col items-center\" data-v-00432764=\"\" data-v-dbcec2dd=\"\"><h2 data-seo-reveal-stage=\"title\" class=\"text-[2.25rem] leading-[2.625rem] home-faq-title mb-[1.875rem] text-center font-bold text-c-primary-text md:mb-[2.5rem]\" data-v-dbcec2dd=\"\"><span data-v-dbcec2dd=\"\">Frequently Asked </span><span class=\"home-faq-title-emphasis\" data-v-dbcec2dd=\"\">Questions</span></h2><p class=\"home-body-regular mt-[1.5rem] max-w-[57.5rem] text-center text-pmd-normal-content text-c-secondary-text md:text-[1.5rem] md:leading-[1.875rem] md:text-c-normal-content\" data-v-dbcec2dd=\"\">Explore the most common questions about Pokecut's free features, usage, account access, and AI editing tools.</p><!----><div class=\"mt-[1.875rem] flex w-full flex-col gap-[0.75rem]\" data-v-dbcec2dd=\"\"><!--[--><div class=\"w-full\" data-v-dbcec2dd=\"\"><div class=\"w-full home-faq-mobile-collapse overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray w-full\" data-v-dbcec2dd=\"\"><div id=\"0\" class=\"px-[1.875rem] pk-collapse-header flex items-center justify-between\" style=\"--icon-size:1.875rem;--accordion-icon:url(/icons/svg/faq_icon_open.svg);--active-icon:url(/icons/svg/faq_icon_close.svg);\"><!--[--><div class=\"flex min-h-[5.625rem] min-w-0 flex-1 items-center py-[1.875rem] pr-[2.25rem] text-c-black\" data-v-dbcec2dd=\"\"><h3 class=\"text-left text-[1.5rem] font-bold leading-[1.875rem]\" data-v-dbcec2dd=\"\">What is Pokecut and what can I use it for?</h3></div><!--]--></div><div class=\"pk-collapse-panel\"><!--[--><div class=\"px-[1.875rem] pb-[1.875rem] text-[1.125rem] leading-[1.5rem] text-c-black\" data-v-dbcec2dd=\"\"><p data-v-dbcec2dd=\"\">Pokecut is an all-in-one AI photo editing platform designed for portraits, travel photos, product images, and creative content. You can remove backgrounds, erase objects, enhance quality, create collages, and customise images with stickers, text, and templates, all in one place. With Pokecut's AI image generation, you can also turn prompts into studio-grade portraits, artistic visuals, Christmas scenes, fantasy maps, marketing banners, and more in seconds.</p></div><!--]--></div></div></div><div class=\"w-full\" data-v-dbcec2dd=\"\"><div class=\"w-full home-faq-mobile-collapse overflow-hidden rounded-[0.9375rem] bg-c-bg-light-gray w-full\" data-v-dbcec2dd=\"\"><div id=\"1\" class=\"px-[1.875rem",
+    "nodes": [
+      {
+        "tag": "DIV",
+        "text": "Pokecut Mobile App\nEdit, create, and enhance photos on the go with Pokecut's fast and intuitive mobile app.\n\nDownload on",
+        "textAlign": "start",
+        "direction": "ltr",
+        "display": "block"
+      },
+      {
+        "tag": "DIV",
+        "text": "Pokecut Mobile App\nEdit, create, and enhance photos on the go with Pokecut's fast and intuitive mobile app.\n\nDownload on",
+        "textAlign": "start",
+        "direction": "ltr",
+        "display": "flex"
+      },
+      {
+        "tag": "DIV",
+        "text": "Pokecut Mobile App\nEdit, create, and enhance photos on the go with Pokecut's fast and intuitive mobile app.\n\nDownload on",
+        "textAlign": "start",
+        "direction": "ltr",
+        "display": "flex"
+      }
+    ]
+  },
+  "bottom_nav": {
+    "upload_chooser": true,
+    "upload_url": "http://10.17.1.66:3001/create/edit?pid=ff71e775-e07c-431d-972f-298a6398d488",
+    "pricing_error": "Locator.click: Timeout 15000ms exceeded.\nCall log:\n  - waiting for locator(\"nav.home-mobile-bottom-nav\").get_by_role(\"button\", name=\"Pricing\")\n    - locator resolved to <button type=\"button\" data-v-c7b0a7cc=\"\" aria-label=\"Pricing\" class=\"home-mobile-",
+    "damaged_upload_url": "http://10.17.1.66:3001/",
+    "damaged_upload_body": "Sign up\n\nUnlock Pokecut VIP for just\n\n23\n\n:\n\n57\n\n:\n\n26\n\nAll-in-One AI Photo Editor & Generator\nStart Creating for Free\nPokecut Pro\nGenerate\nRemove Background\nClothes Changer\nHD Photo Coverter\nID Photo Maker\nBody Editor\nAI Replace\nMore Pokecut Tools\nCreate Faster with Pokecut's AI Templates\n\nBrowse ready-made looks for portraits, products, seasonal posts, and social content.\n\nButt\nAI Bikini\nMuscle\n"
+  },
+  "signup": {
+    "url": "http://10.17.1.66:3001/",
+    "modal_text": "Sign up\n\nUnlock Pokecut VIP for just\n\n23\n\n:\n\n57\n\n:\n\n17\n\nAll-in-One AI Photo Editor & Generator\nStart Creating for Free\nPokecut Pro\nGenerate\nRemove Background\nClothes Changer\nHD Photo Coverter\nID Photo Maker\nBody Editor\nAI Replace\nMore Pokecut Tools\nCreate Faster with Pokecut's AI Templates\n\nBrowse r"
+  },
+  "language": {
+    "clicked": true,
+    "body_text": "Choose your language：\nEnglish\n简体中文\n繁體中文\nFrançais\nIndonesia\nDeutsch\nTiếng Việt\nTürkçe\nItaliano\nPortuguês\nEspañol\nРусский\n日本語\nแบบไทย\nSign up\n\nUnlock Pokecut VIP for just\n\n23\n\n:\n\n57\n\n:\n\n08\n\nAll-in-One AI Photo Editor & Generator\nStart Creating for Free\nPokecut Pro\nGenerate\nRemove Background\nClothes Changer\nHD Photo Coverter\nID Photo Maker\nBody Editor\nAI Replace\nMore Pokecut Tools\nCreate Faster with Pokecut's AI Templates\n\nBrowse ready-made looks for portraits, products, seasonal posts, and social c"
+  }
+}

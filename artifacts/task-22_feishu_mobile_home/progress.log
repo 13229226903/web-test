@@ -1,0 +1,34 @@
+[2026-08-31 13:13:06] orchestrator start
+[2026-08-31 13:13:06] orchestrator route: existing_feature_first_exploration -> page-map-sync -> sync gate
+[2026-08-31 13:46:09] page-map-sync step:exploring http://10.17.1.66:3001/ (mobile 390x844)
+[2026-08-31 13:46:09] page-map-sync step:wrote page_map/pokecut/mobile_home_v1.yaml
+[2026-08-31 13:46:09] page-map-sync step:wrote artifacts/task-22_feishu_mobile_home/sync.md
+[2026-08-31 13:46:09] page-map-sync gate:sync_review (pending_review)
+[2026-08-31 14:13:15] page-map-sync re-explore portrait/enhance: corrected false positives (scroll_into_view before click)
+[2026-08-31 14:13:15] page-map-sync updated page_map/pokecut/mobile_home_v1.yaml + sync.md
+[2026-08-31 14:13:15] page-map-sync gate:sync_review (pending_review, 复测后)
+[2026-08-31 14:26:20] page-map-sync explore ID Photo Maker anonymous flow: valid image opens sign-up/get-credits modal; damaged image blocked on home
+[2026-08-31 14:26:20] page-map-sync corrected skip rationale: ID success/failure/credits need logged-in account state, not merely credits risk
+[2026-08-31 14:29:25] page-map-sync attempt member-account login for ID full flow: auth dialog did not close; stopped before running matting
+[2026-08-31 14:35:04] test-case-design step:loaded sync.md + page_map/mobile_home_v1.yaml
+[2026-08-31 14:35:04] test-case-design step:designed 28 cases (L1~L6)
+[2026-08-31 14:35:04] test-case-design gate:cases_review (pending_review)
+[2026-08-31 14:47:07] page-map-sync explore agent Generate: disabled when empty, enabled after text, click -> /create/edit?pid=*
+[2026-08-31 14:47:07] test-case-design added TC-MH-L2-022 (agent Generate text flow); case_count=21
+[2026-08-31 15:06:44] test-writing step:wrote tests/test_mobile_home.py
+[2026-08-31 15:06:44] test-writing step:collect_only 38 collected
+[2026-08-31 15:06:44] test-writing step:round 1 (1 fail structure -> fixed)
+[2026-08-31 15:06:44] test-writing done:impl.md completed (37 passed, 1 skipped)
+[2026-08-31 15:18:01] test-writing report-output: allure generate reports/allure-report-matrix (clean)
+[2026-08-31 15:18:01] test-writing report-output: http server 8123 started
+[2026-08-31 15:18:01] gate: report_output_review (等待用户查看报告后确认进入归档)
+[2026-08-31 15:29:53] test-writing fix allure layering: added @allure.title with case_id+Layer, @allure.label(layer), dynamic titles for params; re-ran matrix and regenerated report
+[2026-08-31 15:39:24] test-case-design reformat cases.md to Layer-section format (like reference); updated skills/ui-test-test-case-design/SKILL.md cases.md structure rule
+[2026-08-31 15:43:48] test-writing impl.md updated with allure layering fix; matrix report ready
+[2026-08-31 16:02:32] test-writing added allure steps + screenshots (helpers + end-state autouse); matrix re-run 37 passed/1 skipped; regenerated allure-report-matrix
+[2026-08-31 16:18:20] test-writing adjust allure: removed 首页加载 per-case screenshot; added 用例结束态 end screenshot per test; matrix re-run 37 passed/1 skipped; regenerated report
+[2026-08-31 16:51:01] test-writing align Allure hierarchy to reference: epic=移动端首页, feature=L1/L2/L3, title=case_id [P] short, direct 用例截图 attach; matrix re-run 37 passed/1 skipped
+[2026-08-31 16:59:56] supplemented test-writing SKILL Allure Behaviors hierarchy + screenshot rules to prevent deviation
+[2026-08-31 17:31:21] test-writing restructured to template hierarchy (feature/story/class/title/severity/markers + allure.step), registered markers, matrix re-run 37 passed/1 skipped
+[2026-08-31 17:34:24] wrote template hierarchy rules into skills/ui-test-test-writing/SKILL.md
+[2026-08-31 18:23:59] orchestrator gate:regression_archive_candidate -> archived (user confirmed)

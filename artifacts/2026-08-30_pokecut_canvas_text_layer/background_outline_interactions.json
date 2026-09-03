@@ -1,0 +1,194 @@
+{
+  "steps": [
+    {
+      "name": "click_background_header",
+      "before": {
+        "row": {
+          "x": 1132,
+          "y": 613,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "BUTTON",
+        "content_display": "none",
+        "small": null,
+        "toggle": null
+      },
+      "after": {
+        "row": {
+          "x": 1132,
+          "y": 613,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "BUTTON",
+        "content_display": "block",
+        "small": null,
+        "toggle": null
+      }
+    },
+    {
+      "name": "click_background_no_fill",
+      "before": [
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors border-[#3338EE]",
+          "bg": null,
+          "alt": null
+        },
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors border-transparent",
+          "bg": null,
+          "alt": "picker"
+        },
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border border-transparent bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors",
+          "bg": null,
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(255, 255, 255)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(0, 0, 0)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(255, 239, 170)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(253, 231, 119)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(238, 183, 54)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(222, 123, 92)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(174, 41, 42)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(228, 88, 87)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(189, 205, 221)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(99, 164, 232)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(47, 81, 129)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(220, 232, 218)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(114, 172, 157)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(152, 193, 137)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(220, 210, 208)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(174, 158, 195)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(133, 54, 164)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(88, 61, 170)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(242, 211, 206)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(208, 170, 155)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(222, 172, 136)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(240, 240, 240)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(217, 217, 217)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(151, 151, 151)",
+          "alt": null
+        },
+        {
+          "cls": "aspect-square rounded-[0.625rem] border shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.15)] transition-colors border-transparent",
+          "bg": "rgb(100, 99, 94)",
+          "alt": null
+        }
+      ]
+    },
+    {
+      "name": "click_background_red"
+    },
+    {
+      "name": "click_outline_dropdown"
+    },
+    {
+      "name": "click_outline_toggle"
+    },
+    {
+      "name": "click_outline_type1"
+    },
+    {
+      "name": "click_outline_color_red"
+    },
+    {
+      "name": "set_outline_sliders"
+    }
+  ]
+}

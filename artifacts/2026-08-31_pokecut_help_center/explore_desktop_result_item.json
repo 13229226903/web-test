@@ -1,0 +1,27 @@
+{
+  "results_container_cls": "help-v2-search-panel__results",
+  "kid_count": 13,
+  "kids": [
+    {
+      "tag": "button",
+      "cls": "help-v2-search-panel__result",
+      "text": "Where can I see my remaining credits?Click on the username in the upper right corner, and you will see the account information including the remaining credits.A"
+    },
+    {
+      "tag": "button",
+      "cls": "help-v2-search-panel__result",
+      "text": "What is the difference between a Premium Plan and Credits Purchase?The Premium Plan grants access to all photo editing tools and includes a monthly or weekly al"
+    },
+    {
+      "tag": "button",
+      "cls": "help-v2-search-panel__result",
+      "text": "What is the difference between Premium Plan and Credits Purchase?The Premium Plan grants access to all photo editing tools and includes a monthly or weekly allo"
+    },
+    {
+      "tag": "button",
+      "cls": "help-v2-search-panel__result",
+      "text": "What are credits?Credits are virtual points used when using AI features on the Pokecut website. Different AI tools may consume different numbers of c...Plans, C"
+    }
+  ],
+  "headers": []
+}

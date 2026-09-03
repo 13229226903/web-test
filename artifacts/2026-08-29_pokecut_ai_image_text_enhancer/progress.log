@@ -1,0 +1,17 @@
+[2026-08-29 15:38:00] orchestrator start
+[2026-08-29 15:38:00] orchestrator wrote state.md
+[2026-08-29 15:38:00] orchestrator route existing_feature_first_exploration -> page-map-sync
+[2026-08-29 16:20:00] page-map-sync wrote page_map v3 and sync.md (auto-continued per end-to-end request)
+[2026-08-29 16:22:00] test-case-design wrote cases.md (auto-continued)
+[2026-08-29 16:24:00] test-writing fixed ROOT/cost-tolerance/predeploy and added free-trial test
+[2026-08-29 16:40:00] test-writing full run: 23 passed, 3 skipped, 0 failed
+[2026-08-29 16:44:00] test-writing report-output: allure generate reports/allure-results -> reports/allure-report
+[2026-08-29 16:46:00] review pass; wrote review.md
+[2026-08-29 16:47:00] orchestrator done: final_report reached; regression-archive pending user confirmation
+[2026-08-29 17:04:00] test-writing consolidate cases 26->17, default image -> 文字测例.jpg, removed L3-005/L3-002(test server)
+[2026-08-29 17:05:00] test-case-design rewrote cases.md (17 cases)
+[2026-08-29 17:06:00] test-writing rerun: 16 passed, 1 skipped in 532.95s; allure report regenerated
+[2026-08-29 18:08:00] fix L2-002 -> result-state (non-enhance no resolution); investigate: remove_glare generation >180s timeout
+[2026-08-29 18:09:00] fix L4-003 -> predeploy real login; investigate: member shows free-tier 2/2/6 not Free/Free/4
+[2026-08-29 18:12:00] rerun full: 15 passed, 3 skipped in 777.28s; allure regenerated
+[2026-08-29 19:10:00] regression-archive gate: user confirmed; copied tests->archive/tool_pages; allure-results/report-archive snapshots; registry updated stable_regression

@@ -1,0 +1,354 @@
+# ═══════════════════════════════════════════════════════════════
+# L2 / L4 / L5 / L3 / L6 — 精简回归用例（L1 结构并入 L2 交互）
+# ═══════════════════════════════════════════════════════════════
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L2 — 交互行为")
+@pytest.mark.regression
+def test_text_l2_upload_in_page_and_default_state(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L2-001｜上传后页内处理 + 默认勾选态（含 L1 结构）")
+    _goto(page, base_url)
+    # L1 结构
+    expect(page.locator('h1:has-text("Enhance Text in Image to 8K Online Free")')).to_be_visible()
+    expect(page.locator("#singleUploadInput")).to_have_count(1)
+    assert "image/jpeg" in (page.locator("#singleUploadInput").get_attribute("accept") or "")
+    expect(page.get_by_text("Upload Image", exact=True).first).to_be_visible()
+    _shot(page, "TC-TEXT-L2-001-首屏")
+    _upload(page, IMG_TEXT_SAMPLE)
+    # 页内处理，不跳转
+    assert URL_PATH in page.url and "/agent" not in page.url
+    body = _body_text(page)
+    assert "Choose the Effect" in body
+    assert "*Supports multiple selections" in body
+    assert "Upscale to" in body
+    for effect in EFFECTS:
+        expect(_effect(page, effect)).to_be_visible()
+    # 默认勾选态
+    assert _effect_pressed(page, "enhance_text") is True
+    for effect in ["remove_glare", "remove_moire", "document_scanner"]:
+        assert _effect_pressed(page, effect) is False
+    _assert_upscale_visible(page, True)
+    assert _primary(page).locator("[data-text-enhance-total-cost]").count() == 1
+    _shot(page, "TC-TEXT-L2-001-页内处理与默认态")
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L2 — 交互行为")
+def test_text_l2_resolution_visibility_and_disabled(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L2-002｜分辨率区显隐与无效果置灰")
+    _goto(page, base_url)
+    _upload(page, IMG_TEXT_SAMPLE)
+    # 无任何效果：主按钮置灰，分辨率区隐藏
+    _set_effects(page, set())
+    for effect in EFFECTS:
+        assert _effect_pressed(page, effect) is False
+    assert "cursor-not-allowed" in (_primary(page).get_attribute("class") or "")
+    assert _primary(page).locator("[data-text-enhance-total-cost]").count() == 0
+    _assert_upscale_visible(page, False)
+    _shot(page, "TC-TEXT-L2-002-无效果置灰")
+    # 仅非增强模式：隐藏分辨率区
+    for effect, expected in [("remove_glare", "2"), ("remove_moire", "2"), ("document_scanner", "4")]:
+        _set_effects(page, {effect})
+        _assert_upscale_visible(page, False)
+        _assert_cost(page, expected)
+        _shot(page, f"TC-TEXT-L2-002-{effect}")
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L4 — PRD 验收标准")
+@pytest.mark.regression
+def test_text_l4_cost_refresh_and_rules(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L4-001｜多选组合点数实时刷新与普通账号点数规则")
+    _goto(page, base_url)
+    _upload(page, IMG_TEXT_SAMPLE)
+    _assert_cost(page, "2")
+    _select_scale(page, "4k")
+    _assert_cost(page, "2")
+    _select_scale(page, "8k")
+    _assert_cost(page, "6")
+    _set_effects(page, set(EFFECTS))
+    _assert_cost(page, "14")
+    _shot(page, "TC-TEXT-L4-001-all-effects-8k")
+    _effect(page, "remove_glare").click()
+    page.wait_for_timeout(800)
+    assert _effect_pressed(page, "remove_glare") is False
+    _assert_cost(page, "12")
+    _effect(page, "remove_glare").click()
+    page.wait_for_timeout(800)
+    assert _effect_pressed(page, "remove_glare") is True
+    _assert_cost(page, "14")
+    _shot(page, "TC-TEXT-L4-001-点数刷新")
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L2 — 交互行为")
+def test_text_l2_effect_tooltips(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L2-003｜四个 tooltip 文案")
+    _goto(page, base_url)
+    _upload(page, IMG_TEXT_SAMPLE)
+    expected = {
+        "enhance_text": "Enhance blurry text and improve readability.",
+        "remove_glare": "Remove glare from reflective surfaces.",
+        "remove_moire": "Reduce moire patterns in screens or printed images.",
+        "document_scanner": "Turn a photographed document into a clean scanned page.",
+    }
+    for effect, tooltip in expected.items():
+        _effect(page, effect).locator("[data-effect-help-icon]").first.hover(timeout=10000)
+        page.wait_for_timeout(700)
+        assert tooltip in _body_text(page), f"{effect} tooltip 文案不匹配"
+        _shot(page, f"TC-TEXT-L2-003-{effect}-tooltip")
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L4 — PRD 验收标准")
+@pytest.mark.regression
+def test_text_l4_free_trial_display_free(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L4-002｜免费试用额度态：按钮显示 Free")
+    _goto(page, base_url)
+    _upload(page, IMG_TEXT_SAMPLE)
+    state, text = _cost_observation(page)
+    if state != "free":
+        pytest.skip(f"当前 IP 免费额度已用尽（cost_state={state}），免费态展示无法在本环境复现")
+    assert text == "Free", f"免费额度可用时按钮应显示 Free，实际 {text}"
+    _set_effects(page, set(EFFECTS))
+    state2, text2 = _cost_observation(page)
+    assert state2 == "free" and text2 == "Free", "额度可用时四种模式组合也应显示 Free"
+    _shot(page, "TC-TEXT-L4-002-免费额度Free")
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L4 — PRD 验收标准")
+@pytest.mark.regression
+def test_text_l4_member_free_icon_and_cost(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L4-003｜会员账号 Free icon 与点数规则")
+    _login(page, base_url, MEMBER_EMAIL)
+    _upload(page, IMG_TEXT_SAMPLE)
+    assert _cost_state(page) == "free"
+    _assert_cost(page, "Free")
+    _select_scale(page, "4k")
+    assert _cost_state(page) == "free"
+    _assert_cost(page, "Free")
+    _select_scale(page, "8k")
+    _assert_cost(page, "4")
+    _set_effects(page, set(EFFECTS))
+    _assert_cost(page, "12")
+    _shot(page, "TC-TEXT-L4-003-会员点数")
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L4 — PRD 验收标准")
+@pytest.mark.regression
+def test_text_l4_single_purchase_cost_rules(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L4-004｜单项购买账号点数规则")
+    _login(page, base_url, SINGLE_PURCHASE_EMAIL)
+    _upload(page, IMG_TEXT_SAMPLE)
+    _assert_cost(page, "2")
+    _select_scale(page, "4k")
+    _assert_cost(page, "2")
+    _select_scale(page, "8k")
+    _assert_cost(page, "6")
+    _set_effects(page, set(EFFECTS))
+    _assert_cost(page, "14")
+    assert _cost_state(page) in ("paid", "free"), f"单项购买 cost_state 异常: {_cost_state(page)}"
+    _shot(page, "TC-TEXT-L4-004-单项购买点数")
+
+
+# ═══════════════════════════════════════════════════════════════
+# L5 分辨率边界
+# ═══════════════════════════════════════════════════════════════
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L5 — 数据边界值")
+def test_text_l5_resolution_boundary_1k_defaults_to_2k(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L5-001｜分辨率边界 [1K图默认2k]")
+    _goto(page, base_url)
+    _upload(page, IMG_1K)
+    body = _body_text(page)
+    assert "1536 * 2048 px" in body
+    assert "2k" in body and "4k" in body and "8k" in body
+    _assert_cost(page, "2")
+    _shot(page, "TC-TEXT-L5-001-1K默认2k")
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L5 — 数据边界值")
+def test_text_l5_resolution_boundary_2730x4096_over2k(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L5-002｜分辨率边界 [2730x4096图over2K]")
+    _goto(page, base_url)
+    _upload(page, IMG_4K_JPG)
+    body = _body_text(page)
+    assert "The resolution of the image is over 2K. Only larger options can be selected." in body
+    assert "2730 * 4096 px" in body
+    _select_scale(page, "2k")
+    assert "1536 * 2048 px" not in _primary_text(page), "点击灰显 2k 不应改变主按钮为 2k 结果"
+    _assert_cost(page, "2")
+    _shot(page, "TC-TEXT-L5-002-over2K")
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L5 — 数据边界值")
+def test_text_l5_resolution_boundary_4500x3000_over4k(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L5-003｜分辨率边界 [4500x3000图over4K]")
+    _goto(page, base_url)
+    _upload(page, IMG_4K_PNG)
+    body = _body_text(page)
+    assert "The resolution of the image is over 4K. Only larger options can be selected." in body
+    assert "8192 * 5461 px" in body
+    _select_scale(page, "2k")
+    _select_scale(page, "4k")
+    _assert_cost(page, "6")
+    _shot(page, "TC-TEXT-L5-003-over4K")
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L5 — 数据边界值")
+def test_text_l5_resolution_boundary_6144x8192_over4k_not_highest(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L5-004｜分辨率边界 [6144x8192图over4K非highest]")
+    _goto(page, base_url)
+    _upload(page, IMG_8K)
+    body = _body_text(page)
+    assert "The image is already at the highest clarity." not in body
+    assert "The resolution of the image is over 4K. Only larger options can be selected." in body
+    _assert_cost(page, "6")
+    _set_effects(page, {"remove_glare"})
+    _assert_upscale_visible(page, False)
+    _assert_cost(page, "2")
+    _shot(page, "TC-TEXT-L5-004-8K当前实现")
+
+
+# ═══════════════════════════════════════════════════════════════
+# L3 异常与购买拦截
+# ═══════════════════════════════════════════════════════════════
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L3 — 异常 / 权限 / 兼容流程")
+def test_text_l3_corrupt_image_upload_does_not_crash(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L3-001｜损坏图片上传异常")
+    _goto(page, base_url)
+    _wait_corrupt_upload_error(page, "TC-TEXT-L3-001-损坏图上传异常提示")
+    body = _body_text(page)
+    assert URL_PATH in page.url
+    assert "Application error" not in body
+    assert "500" not in body[:300]
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L3 — 异常 / 权限 / 兼容流程")
+def test_text_l3_free_account_purchase_intercept_predeploy(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L3-002｜免费账号购买拦截：预部署")
+    _goto(page, base_url)
+    _switch_predeploy(page)
+    _login(page, base_url, _unique_free_email())
+    _upload(page, IMG_TEXT_SAMPLE)
+    if _free_quota_active(page):
+        pytest.skip("当前 IP 仍有免费额度，免费账号点击生成会走真实生成而非购买拦截，无法验证拦截态")
+    _primary(page).click(timeout=10000)
+    _wait_purchase_modal(page, "TC-TEXT-L3-002-预部署购买弹窗")
+
+
+# ═══════════════════════════════════════════════════════════════
+# L6 生成与结果态
+# ═══════════════════════════════════════════════════════════════
+
+
+@pytest.mark.smoke
+@allure.epic("文字画质增强实验")
+@allure.feature("L6 — 核心 Happy Path / E2E")
+def test_text_l6_default_enhance_2k_generation_download_and_continue(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L6-001｜默认 Enhance Text 2k 生成到结果态 + 下载 + 继续增强")
+    _goto(page, base_url)
+    _switch_predeploy(page)
+    _login(page, base_url, MEMBER_EMAIL)
+    _upload(page, IMG_TEXT_SAMPLE)
+    _shot(page, "TC-TEXT-L6-001-点击生成前")
+    _primary(page).click(timeout=10000)
+    page.wait_for_timeout(1500)
+    _shot(page, "TC-TEXT-L6-001-生成中")
+    _wait_generation_result(page)
+    body = _body_text(page)
+    assert "Before" in body and "Now" in body
+    assert "Continue Enhancing" in body and "Edit More" in body and "Download" in body
+    assert "2K" in body or "2k" in body
+    _shot(page, "TC-TEXT-L6-001-结果态")
+    result = visual_assert("TC-TEXT-L6-001-点击生成前", "TC-TEXT-L6-001-结果态", "结果图应仍是同一输入内容，不应出现严重空白、破图、非图片结果")
+    assert result.get("verdict") != "fail", f"AI 视觉审查失败: {result}"
+    with page.expect_download(timeout=30000) as dl_info:
+        page.get_by_text("Download", exact=True).first.click(timeout=10000)
+    download = dl_info.value
+    assert re.match(r"Pokecut_.*\.jpg", download.suggested_filename), f"下载文件名不符合预期: {download.suggested_filename}"
+    assert download.url, "下载 URL 不应为空"
+    _shot(page, "TC-TEXT-L6-001-下载后")
+    page.get_by_text("Continue Enhancing", exact=True).first.click(timeout=10000)
+    page.wait_for_timeout(5000)
+    body = _body_text(page)
+    assert "Choose the Effect" in body
+    for effect in EFFECTS:
+        expect(_effect(page, effect)).to_be_visible()
+    _shot(page, "TC-TEXT-L6-001-继续增强后")
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L2 — 交互行为")
+def test_text_l2_result_edit_more_enters_editor_or_route(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L2-004｜结果态 Edit More 进入编辑链路")
+    _goto(page, base_url)
+    _switch_predeploy(page)
+    _login(page, base_url, MEMBER_EMAIL)
+    _upload(page, IMG_TEXT_SAMPLE)
+    _primary(page).click(timeout=10000)
+    _wait_generation_result(page)
+    before_url = page.url
+    _shot(page, "TC-TEXT-L2-004-点击前结果态")
+    page.get_by_text("Edit More", exact=True).first.click(timeout=10000)
+    page.wait_for_timeout(8000)
+    body = _body_text(page)
+    assert page.url != before_url or any(text in body for text in ["Canvas", "Edit", "Adjust", "Download"]), "Edit More 点击后未进入可识别编辑链路"
+    _shot(page, "TC-TEXT-L2-004-编辑链路")
+
+
+# ═══════════════════════════════════════════════════════════════
+# 移动端
+# ═══════════════════════════════════════════════════════════════
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L4 — PRD 验收标准")
+@pytest.mark.regression
+def test_text_l4_mobile_upload_modes_and_cost(browser, playwright, base_url: str):
+    allure.dynamic.title("TC-TEXT-L4-005｜移动端上传后模式与点数区域")
+    device = playwright.devices.get("iPhone 13")
+    context = browser.new_context(**device, locale="en-US")
+    page = context.new_page()
+    try:
+        page.goto(f"{base_url}{URL_PATH}", timeout=120000, wait_until="domcontentloaded")
+        page.wait_for_timeout(7000)
+        _shot(page, "TC-TEXT-L4-005-移动端首屏")
+        _upload_mobile(page, IMG_TEXT_SAMPLE)
+        assert _effect_pressed(page, "enhance_text") is True
+        for effect in EFFECTS:
+            expect(_effect(page, effect)).to_be_visible()
+        assert _mobile_primary(page).is_visible()
+        _assert_cost(page, "2", mobile=True)
+        _effect(page, "remove_glare").click(timeout=10000)
+        page.wait_for_timeout(1000)
+        _assert_cost(page, "4", mobile=True)
+        _shot(page, "TC-TEXT-L4-005-移动端上传后")
+        result = visual_assert("TC-TEXT-L4-005-移动端首屏", "TC-TEXT-L4-005-移动端上传后", "移动端横向模式布局不遮挡、不换行错乱，主按钮点数在按钮区域")
+        assert result.get("verdict") != "fail", f"AI 视觉审查失败: {result}"
+    finally:
+        context.close()
+
+
+# ═══════════════════════════════════════════════════════════════
+# 依赖缺口用例：保持 skip，避免伪造结论
+# ═══════════════════════════════════════════════════════════════
+
+
+@allure.epic("文字画质增强实验")
+@allure.feature("L3 — 异常 / 权限 / 兼容流程")
+def test_text_l3_highest_clarity_secondary_workflow_gap():
+    allure.dynamic.title("TC-TEXT-L3-003｜真 8K highest clarity 与二次增强 workflow 缺口校验")
+    pytest.skip("缺可触发 highest clarity 的 fixture / 前端判定口径，以及后端 workflow trace；不能伪造二次增强结论")

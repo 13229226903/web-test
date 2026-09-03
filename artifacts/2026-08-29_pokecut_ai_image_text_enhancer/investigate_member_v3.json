@@ -1,0 +1,36 @@
+[
+  {
+    "step": "after_login",
+    "has_login_btn": false,
+    "has_email": false,
+    "has_hi": false
+  },
+  {
+    "step": "localStorage",
+    "interesting_keys": {}
+  },
+  {
+    "label": "default_2k",
+    "primary_text": "Enhance  2",
+    "cost": "2",
+    "cost_state": "paid"
+  },
+  {
+    "label": "4k",
+    "primary_text": "Enhance  2",
+    "cost": "2",
+    "cost_state": "paid"
+  },
+  {
+    "label": "8k",
+    "primary_text": "Enhance  6",
+    "cost": "6",
+    "cost_state": "paid"
+  },
+  {
+    "label": "all_8k",
+    "primary_text": "Enhance  14",
+    "cost": "14",
+    "cost_state": "paid"
+  }
+]

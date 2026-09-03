@@ -1,0 +1,67 @@
+{
+  "steps": [
+    {
+      "name": "default_enhance_2k",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "primary_text": "Enhance  Free",
+        "cost": "Free",
+        "cost_state": "free"
+      }
+    },
+    {
+      "name": "remove_glare_only",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "primary_text": "Enhance  Free",
+        "cost": "Free",
+        "cost_state": "free"
+      }
+    },
+    {
+      "name": "glare_moire",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "primary_text": "Enhance  Free",
+        "cost": "Free",
+        "cost_state": "free"
+      }
+    },
+    {
+      "name": "three_non_enhance",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "primary_text": "Enhance  Free",
+        "cost": "Free",
+        "cost_state": "free"
+      }
+    },
+    {
+      "name": "enhance_4k",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "primary_text": "Enhance  Free",
+        "cost": "Free",
+        "cost_state": "free"
+      }
+    },
+    {
+      "name": "enhance_8k",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "primary_text": "Enhance  Free",
+        "cost": "Free",
+        "cost_state": "free"
+      }
+    },
+    {
+      "name": "all_8k",
+      "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+      "extra": {
+        "primary_text": "Enhance  Free",
+        "cost": "Free",
+        "cost_state": "free"
+      }
+    }
+  ]
+}

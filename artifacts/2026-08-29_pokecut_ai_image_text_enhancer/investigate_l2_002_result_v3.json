@@ -1,0 +1,10 @@
+[
+  {
+    "step": "after_login",
+    "has_login_btn": false
+  },
+  {
+    "step": "before_generate",
+    "primary": "Enhance  2"
+  }
+]

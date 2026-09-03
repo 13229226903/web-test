@@ -1,0 +1,120 @@
+page: AiImageTextEnhancer
+url: http://10.17.1.66:3001/tools/ai-image-text-enhancer
+source_prd: D:/Test/web-test/飞书文档_ 文字画质增强实验优化(安国)-AI分析后的CheckBox.md
+landmark:
+  selector: 'h1:has-text("Enhance Text in Image to 8K Online Free")'
+  description: 文字画质增强 SEO 工具页唯一主标题
+entry:
+  from: DirectUrlOrPokecutNavigation
+  trigger: 直接打开工具页，或从站内导航进入
+  selector: 'a[href*="/tools/ai-image-text-enhancer"]'
+exploration:
+  task_id: 2026-08-29_pokecut_ai_image_text_enhancer
+  evidence_json:
+    - artifacts/2026-08-29_pokecut_ai_image_text_enhancer/explore_page_v3.json
+    - artifacts/2026-08-29_pokecut_ai_image_text_enhancer/explore_cost_v3.json
+    - artifacts/2026-08-29_pokecut_ai_image_text_enhancer/explore_generation_predeploy_v3.json
+  tested_url: http://10.17.1.66:3001/tools/ai-image-text-enhancer
+  viewport_pc: 1440x1000
+  environment_strategy: 测试服登录 authToken 为空且 gateway 404，生成/账号态切预部署（DEBUG 面板）后复测通过
+
+elements:
+  seo_h1:
+    selector: 'h1:has-text("Enhance Text in Image to 8K Online Free")'
+  desktop_upload_input:
+    selector: '#singleUploadInput'
+    input_type: file
+    multiple: false
+  mobile_upload_input:
+    selector: '#file-upload'
+    input_type: file
+    multiple: false
+  effects_title:
+    selector: 'text=Choose the Effect'
+  effects_multiselect_hint:
+    selector: 'text=*Supports multiple selections'
+  scales_title:
+    selector: 'text=Upscale to'
+  total_cost:
+    selector: '[data-text-enhance-total-cost]'
+    cost_state_attribute: data-text-enhance-cost-state
+    observed_states:
+      free: 免费额度可用，按钮显示 Free（当前测试服 IP 命中 4 次免费刷新）
+      paid: 免费额度用尽/预部署，按钮显示数字点数（如 2/4/6/14）
+
+effect_controls:
+  enhance_text:
+    selector: '[data-effect="enhance_text"]'
+    text: Enhance Text
+    tooltip_selector: '[data-effect="enhance_text"] [data-effect-help-icon]'
+    tooltip_text: Enhance blurry text and improve readability.
+  remove_glare:
+    selector: '[data-effect="remove_glare"]'
+    text: Remove Glare
+    tooltip_selector: '[data-effect="remove_glare"] [data-effect-help-icon]'
+    tooltip_text: Remove glare from reflective surfaces.
+  remove_moire:
+    selector: '[data-effect="remove_moire"]'
+    text: Remove Moire
+    tooltip_selector: '[data-effect="remove_moire"] [data-effect-help-icon]'
+    tooltip_text: Reduce moire patterns in screens or printed images.
+  document_scanner:
+    selector: '[data-effect="document_scanner"]'
+    text: Document Scanner
+    tooltip_selector: '[data-effect="document_scanner"] [data-effect-help-icon]'
+    tooltip_text: Turn a photographed document into a clean scanned page.
+
+scale_controls:
+  scale_2k:
+    selector: 'p:text-is("2k")'
+    selector_risk: 无 data-scale，需限定 Upscale to 区域
+  scale_4k:
+    selector: 'p:text-is("4k")'
+    selector_risk: 无 data-scale，需限定 Upscale to 区域
+  scale_8k:
+    selector: 'p:text-is("8k")'
+    selector_risk: 无 data-scale，需限定 Upscale to 区域
+
+states:
+  anonymous_initial_pc:
+    description: PC 匿名 SEO 首屏
+    trigger: 直接打开 URL 并等待 H1 与上传区可见
+    buttons:
+      btn_upload_image:
+        selector: '#singleUploadInput'
+        action_result: 页内进入处理区，不跳转
+  after_upload_default_free_quota:
+    description: 上传 1K 后默认态（测试服 IP 仍有免费额度）
+    trigger: set_input_files #singleUploadInput = 1K.jpg
+    selected_effects: [enhance_text]
+    cost_state: free
+    cost_text: Free
+    primary_text: Enhance Free
+  after_upload_default_paid:
+    description: 预部署上传 1K 后默认态（付费态）
+    trigger: DEBUG 切预部署并登录后上传 1K.jpg
+    selected_effects: [enhance_text]
+    cost_state: paid
+    cost_text: '2'
+    primary_text: Enhance 2
+  no_effect_selected:
+    description: 取消全部效果后主按钮置灰，分辨率区隐藏
+    primary_disabled: true
+  non_upscale_only:
+    description: 仅选非增强模式时隐藏分辨率区
+  generation_result_predeploy:
+    description: 预部署登录后生成结果态
+    result_signals: [Continue Enhancing, Edit More, Download, Before, Now]
+    wait_seconds: 约 10s
+
+selector_semantic_gaps:
+  - scale 选项无 data-scale / aria-selected
+  - 主按钮为 div 无 role=button/aria-disabled，禁用态靠 cursor-not-allowed 推断
+  - 结果态 Download/Edit More 无稳定 data-action
+
+prd_only_or_unverified_states:
+  - tooltip 美术视频资源名（enhanceremoveglace / enhanceremovemoire / enhancedocumentscanner）未做资源级断言
+  - 多效果后端执行顺序（文本扫描->去反光->去摩尔纹->文字增强）需 request payload/后端日志
+  - 免费 4 次按 IP 刷新与剩余次数抵扣顺序需可重置配额/后端计数器
+  - 真 8K highest clarity 与二次增强 workflow 需前端判定口径/后端 trace
+  - B 方案 text 专属购买拦截需 B 分桶账号/埋点事件

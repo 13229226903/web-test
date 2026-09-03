@@ -1,0 +1,41 @@
+# Pokecut 人像检测三入口页测试数据
+site: Pokecut
+base_url: http://10.17.1.66:3001
+
+pages:
+  ethnicity: /tools/ethnicity-guesser-ai
+  body_shape: /tools/body-shape-detector
+  face_comparison: /tools/face-comparison
+
+images:
+  face: test_images/有人脸.JPG
+  multi_face: test_images/多人脸.jpg
+  no_face: test_images/无人脸.jpg
+
+login:
+  email: "450832596@qq.com"
+  verification_code: "123456"
+  debug_float_btn: ".debug-float-btn"
+  predeploy_text: "预部署"
+  auth_dialog: "[data-testid='auth-dialog']"
+  auth_email: "[data-testid='auth-email-input']"
+  auth_code: "[data-testid='auth-code-input']"
+  auth_submit: "[data-testid='auth-submit']"
+
+dimensions:
+  - Ethnicity Guesser
+  - Pretty Scale
+  - Face Attractiveness Test
+  - Eye Color Detector
+  - Rate My Photo
+  - Face Comparison
+  - Animal Face Test
+  - Golden Ratio Face Calculator
+  - Palm Reading
+  - Body Shape Detector
+
+result:
+  report_img_alt: "Your AI detection report"
+  download_report_btn: "button:has-text('Download report')"
+  upload_another_btn: "button:has-text('Upload another photo')"
+  try_my_photo_btn: "button:has-text('Try My Photo')"

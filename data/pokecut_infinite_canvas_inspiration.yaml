@@ -1,0 +1,45 @@
+base_url: http://10.17.1.66:3001
+agent_pid: bb26ac41-558a-43d8-97fe-5ed0ee2b4f55
+login:
+  member_email: 450832596@qq.com
+  single_purchase_email: 03201449879@qq.com
+  code: '123456'
+images:
+  img_1k: test_images/1K.jpg
+  img_4k_jpg: test_images/4K.jpg
+  img_4k_png: test_images/4K.png
+  img_face: test_images/有人脸.JPG
+  img_multi_face: test_images/多人脸.jpg
+  img_no_face: test_images/无人脸.jpg
+  img_low_res: test_images/低分辨率.JPG
+  img_small_head_1: test_images/小头功能_1.JPG
+  img_small_head_3: test_images/小头功能_3.JPG
+  img_small_head_4: test_images/小头功能_4.JPG
+debug_taskflow:
+  submit_fail: 模拟任务提交失败
+  query_fail: 模拟查询结果失败
+  policy_fail: 模拟查询结果失败返回 -123
+  server_busy: 模拟查询结果失败返回 -124
+models:
+  pro: Pokecut Pro
+  basic: Pokecut Basic
+  nano: Nano Banana
+  chatgpt: ChatGPT Image 2.0
+  seedream: Seedream 5.0 Pro
+selectors:
+  inspiration_button: "button:has-text('Inspiration')"
+  debug_button: "button:has-text('DEBUG')"
+  prompt_textarea: "textarea[placeholder='What do you want to design today?']"
+  upload_ref_input: "input[type='file'][accept='image/png,image/jpeg,image/webp,image/bmp']"
+  upload_ref_button: "text=Upload reference images"
+  delete_button: "button[aria-label='Delete']"
+  agent_url: "/agent?pid=bb26ac41-558a-43d8-97fe-5ed0ee2b4f55"
+limits:
+  basic: 1
+  pro: 3
+  other: 9
+expected_messages:
+  network_error: Network error, please try again
+  policy_error: Policy violation. Please adjust your prompt or image and retry. No credits deducted.
+  server_busy: Server busy. We're fixing it now. No credits deducted.
+  ref_tip: Upload or click 'Chat to Edit' on the canvas image.

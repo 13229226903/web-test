@@ -1,0 +1,5 @@
+[2026-09-03 00:00:00] orchestrator start cleanup_archived_unreferenced_shots_20260903_000000
+[2026-09-03 16:52:08] orchestrator route cleanup_manifest_v3 image_only
+[2026-09-03 16:52:09] orchestrator wrote cleanup_manifest_v3 deleted_images=113
+[2026-09-03 16:52:56] orchestrator gate cleanup_verified deleted_images=113 preserved_referenced=111
+[2026-09-03 16:52:56] orchestrator done cleanup_archived_unreferenced_shots_20260903_000000

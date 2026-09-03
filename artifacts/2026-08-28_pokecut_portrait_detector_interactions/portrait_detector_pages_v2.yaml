@@ -1,0 +1,246 @@
+# Pokecut portrait detector representative SEO pages map v2
+
+page: Pokecut Portrait Detector Representative SEO Pages
+version: v2
+status: completed
+updated_at: 2026-08-28 22:15:00 +08:00
+task_id: 2026-08-28_pokecut_portrait_detector_interactions
+task_type: existing_feature_first_exploration
+supersedes: portrait_detector_pages_v1.yaml
+scope_delta: |
+  在 v1 匿名态基础上补齐「登录 + 服务器切换规则」与「结果态」。
+  结果态已在预部署登录态下真实生成（长等待 30-75s），并补齐结果态控件交互。
+
+entry:
+  base_url: http://10.17.1.66:3001
+  paths: [/tools/ethnicity-guesser-ai, /tools/body-shape-detector, /tools/face-comparison]
+  environment:
+    viewport: 1920x1080
+    locale: en-US
+    auth_state: logged_in_predeploy
+    notes: 测试服优先，失败后切预部署并登录；账号 450832596@qq.com，验证码 123456（rule.md 授权）。
+
+selectors_policy:
+  preferred: [data-testid, accessible role/name, stable visible text, stable aria-label]
+  avoid: [hash class, nth-child, positional xpath]
+  vue_note: Vue 控件优先 coordinate click（page.mouse.click）。
+
+environment_and_login:
+  rule_ref: rule.md
+  order:
+    - 测试服优先登录并生成
+    - 测试服失败后切预部署并重新登录
+    - 预部署也失败才记 skipped 并保留证据
+  test_server_outcome:
+    status: failed
+    reason: 登录提交后 authToken is empty / 网关 404
+    evidence:
+      - artifacts/2026-08-28_pokecut_portrait_detector_interactions/auth_login_debug_result.json
+  predeploy_outcome:
+    status: success
+    evidence:
+      - artifacts/2026-08-28_pokecut_portrait_detector_interactions/auth_predeploy_result.json
+      - artifacts/2026-08-28_pokecut_portrait_detector_interactions/result_states_v5_summary.json
+  login_flow:
+    - click .debug-float-btn（coordinate click）
+    - click .debug-panel 文本「预部署」
+    - 上传 test_images/ 文件触发 auth modal
+    - 切换 auth modal 到 Log in
+    - 填 auth-email-input = 450832596@qq.com
+    - 填 auth-code-input = 123456
+    - coordinate click auth-submit
+    - 等 auth-dialog 归 0
+  auth_modal_selectors:
+    dialog: "[data-testid='auth-dialog']"
+    email: "[data-testid='auth-email-input']"
+    code: "[data-testid='auth-code-input']"
+    submit: "[data-testid='auth-submit']"
+
+result_state_common:
+  result_controls:
+    download_report: "button:has-text('Download report')"
+    upload_another_photo: "button:has-text('Upload another photo')"
+    try_my_photo: "button:has-text('Try My Photo')"
+    detector_dimension: "button[aria-label='Detector Dimension']"
+  report_image:
+    selector: "img[alt='Your AI detection report']"
+    note: 结果态渲染完成，src 为 blob URL。
+  download_report_action: 点击 Download report 下载 JPG 报告（pokecut-<page>-report-<timestamp>.jpg），随后弹反馈问卷。
+  upload_another_action: 点击 Upload another photo（未保存时）弹出 Unsaved Report 弹层（Download / Upload Without Saving）。
+
+shared_states:
+  unsaved_report_modal:
+    description: 结果态点击 Upload another photo（未下载）弹出的保存确认弹层。
+    evidence: {inventory: result_states_v5_inventory.json, screenshot: shots/46_after_upload_another.png}
+    visible_conditions: ["text='Unsaved Report'", "button:has-text('Download')", "button:has-text('Upload Without Saving')"]
+    buttons:
+      download: {selector: "button:has-text('Download')", action_result: 下载 JPG 报告并关闭弹层，留在结果态；之后再点 Upload another photo 直接回上传 UI（不再弹层）}
+      upload_without_saving: {selector: "button:has-text('Upload Without Saving')", action_result: "关闭弹层并返回上传输入 UI（URL 加 ?detectSeoV3EntryInputPicker=body_shape），不下载报告"}
+  download_questionnaire:
+    description: 点击 Download report 下载后弹出的反馈问卷弹层。
+    evidence: {inventory: result_states_v5_inventory.json#pages.body_shape.after_download, screenshot: shots/45_body_shape_after_download.png}
+    buttons:
+      close: {selector: "button[aria-label='Close']"}
+      q1: {selector: "button:has-text('Exactly what I needed')", note: 单选 Exactly what I needed / Mostly useful / Somewhat useful / Not useful / Other}
+      q2: {selector: "button:has-text('Improve this photo')", note: 多选 Improve this photo / Try another detector / Edit my face or body / Share it / Other}
+      q3: {selector: "button:has-text('Result design')", note: 单选 Result design / Detection accuracy / More detector types / Editing suggestions / Other}
+      maybe_later: {selector: "button:has-text('Maybe later')", action_result: 关闭问卷，出现常驻 feedback 按钮；之后 Download report 不再弹问卷}
+      submit: {selector: "button:has-text('Submit')", action_result: 空选项提交无可见效果，问卷保持打开（疑需先作答 Q1/Q2/Q3）}
+  noface_dialog:
+    description: 上传无人脸.jpg 后弹出 No Face Found 弹层（实测为 role=dialog，非 toast）。
+    evidence: {inventory: noface_multiface_inventory.json, screenshot: shots/51_noface_6s.png}
+    visible_conditions:
+      - "text='No Face Found'"
+      - "text='Please choose another photo with a clear single face.'"
+      - "button:has-text('Change Photo')"
+      - "button:has-text('Cancel')"
+    buttons:
+      change_photo: {selector: "button:has-text('Change Photo')", action_result: 打开 file chooser}
+      cancel: {selector: "button:has-text('Cancel')", action_result: 关闭弹层返回上传态}
+  multiface_popup:
+    description: 上传多人脸.jpg 后弹出 Choose a Face to Analyze 弹层。
+    evidence: {inventory: noface_multiface2_inventory.json, screenshot: shots/52_multi_default.png}
+    visible_conditions:
+      - "text='Choose a Face to Analyze'"
+      - "button[aria-label='Select face N']"
+      - "button:has-text('Continue')"
+      - "button:has-text('Cancel')"
+    face_selection:
+      selector: "button[aria-label='Select face N']"
+      selected_marker: aria-pressed=true + border-solid #14cc76
+      unselected_marker: aria-pressed=false + border-dashed #1aa7ff
+      single_select: true
+    buttons:
+      select_face: {selector: "button[aria-label='Select face N']", action_result: 点击虚线框切换选中（aria-pressed false->true，虚线->实线）}
+      continue: {selector: "button:has-text('Continue')", action_result: 提交任务进入 processing（generating），不等待结果}
+      cancel: {selector: "button:has-text('Cancel')", action_result: 关闭弹层}
+
+pages:
+  ethnicity_guesser:
+    direct_url: http://10.17.1.66:3001/tools/ethnicity-guesser-ai
+    title: Ethnicity Guesser AI Online for Free | Pokecut
+    h1: Free Online AI Ethnicity Guesser From Photo
+    default_dimension: Ethnicity Guesser
+    result_trigger: upload_auto
+    result_ready_after: ~47s
+    states:
+      initial_anonymous: {reference: portrait_detector_pages_v1.yaml#pages.ethnicity_guesser.states.initial_anonymous}
+      logged_in_initial:
+        description: 登录后默认态；Upload Image、Use sample image 1..4、Detector Dimension 可见。
+        evidence: {inventory: result_states_v5_inventory.json#pages.ethnicity.logged_in_initial, screenshot: shots/45_ethnicity_loggedin_initial.png}
+        buttons:
+          upload_image: {selector: "button:has-text('Upload Image')", action_result: 上传后自动触发检测（无独立 CTA）, reversible: true, explore_status: completed}
+          sample_image: {selector: "button[aria-label^='Use sample image']", action_result: 填充示例图并触发检测（未逐一点击）, reversible: true, explore_status: observed}
+      result:
+        description: 上传自动触发的真实结果态（约 47s）。
+        evidence: {inventory: result_states_v5_inventory.json#pages.ethnicity.result, screenshot: shots/45_ethnicity_result.png, full_page: shots/45_ethnicity_result_full.png}
+        visible_conditions: ["button:has-text('Download report')", "button:has-text('Upload another photo')", "img[alt='Your AI detection report']"]
+        buttons:
+          download_report: {selector: "button:has-text('Download report')", action_result: 下载 JPG 报告 + 弹反馈问卷, reversible: true, explore_status: observed}
+          upload_another_photo: {selector: "button:has-text('Upload another photo')", action_result: 弹 Unsaved Report 弹层, reversible: true, explore_status: observed}
+          try_my_photo: {selector: "button:has-text('Try My Photo')", action_result: "点击新开标签页进入 /agent?pid=... 画布页（预选对应增强工具，如 Clothes Changer / Hairstyle / Body 等），主页面保持不变", reversible: true, explore_status: completed}
+
+  body_shape_detector:
+    direct_url: http://10.17.1.66:3001/tools/body-shape-detector
+    title: AI Body Shape Detector by Photo Free Online | Pokecut
+    h1: AI Body Shape Detector by Photo Free Online
+    default_dimension: Body Shape Detector
+    result_trigger: continue_click
+    result_ready_after: ~30s
+    states:
+      initial_anonymous: {reference: portrait_detector_pages_v1.yaml#pages.body_shape_detector.states.initial_anonymous}
+      logged_in_initial:
+        description: 登录后默认态；三围输入、Upload Photo、Continue 可见。
+        evidence: {inventory: result_states_v5_inventory.json#pages.body_shape.logged_in_initial, screenshot: shots/45_body_loggedin_initial.png}
+        inputs:
+          bust: {selector: "input[aria-label='Bust in cm']", unit: cm}
+          waist: {selector: "input[aria-label='Waist in cm']", unit: cm}
+          hips: {selector: "input[aria-label='Hips in cm']", unit: cm}
+        buttons:
+          upload_photo: {selector: "button:has-text('Upload Photo')", action_result: 上传后显示缩略图 + Re-upload/Delete, reversible: true, explore_status: completed}
+          continue: {selector: "button:has-text('Continue')", action_result: 上传照片后点击进入 processing，约 30s 出结果, reversible: true, explore_status: completed}
+      result:
+        description: 上传 + Continue 后约 30s 到达。
+        evidence: {inventory: result_states_v5_inventory.json#pages.body_shape.result, screenshot: shots/45_body_result.png, full_page: shots/45_body_result_full.png}
+        visible_conditions: ["button:has-text('Download report')", "button:has-text('Upload another photo')", "img[alt='Your AI detection report']"]
+        buttons:
+          download_report: {selector: "button:has-text('Download report')", action_result: 下载 JPG（pokecut-body-shape-report-*.jpg）+ 问卷, reversible: true, explore_status: completed}
+          upload_another_photo: {selector: "button:has-text('Upload another photo')", action_result: 弹 Unsaved Report 弹层, reversible: true, explore_status: completed}
+          try_my_photo: {selector: "button:has-text('Try My Photo')", action_result: "点击新开标签页进入 /agent?pid=... 画布页（预选对应增强工具，如 Clothes Changer / Hairstyle / Body 等），主页面保持不变", reversible: true, explore_status: completed}
+
+  face_comparison:
+    direct_url: http://10.17.1.66:3001/tools/face-comparison
+    title: Face Comparison Online Free Tool | Pokecut
+    h1: Face Comparison Tool to Check Face Similarity Online for Free
+    default_dimension: Face Comparison
+    result_trigger: start_comparison_click
+    result_ready_after: ~75s
+    states:
+      initial_anonymous: {reference: portrait_detector_pages_v1.yaml#pages.face_comparison.states.initial_anonymous}
+      logged_in_initial:
+        description: 登录后默认态；Photo A/Photo B 上传位、Start Comparison 可见。
+        evidence: {inventory: result_states_v5_inventory.json#pages.face_comparison.logged_in_initial, screenshot: shots/45_face_loggedin_initial.png}
+        buttons:
+          upload_photo_a: {selector: "button:has-text('Upload Photo A')", action_result: 上传后显示缩略图, reversible: true, explore_status: completed}
+          upload_photo_b: {selector: "button:has-text('Upload Photo B')", action_result: 上传后显示缩略图, reversible: true, explore_status: completed}
+          start_comparison: {selector: "button:has-text('Start Comparison')", action_result: 双图上传后点击进入 processing，约 75s 出结果, reversible: true, explore_status: completed}
+      result:
+        description: 双图上传 + Start Comparison 后约 75s 到达。
+        evidence: {inventory: result_states_v5_inventory.json#pages.face_comparison.result, screenshot: shots/45_face_result.png, full_page: shots/45_face_result_full.png}
+        visible_conditions: ["button:has-text('Download report')", "button:has-text('Upload another photo')", "img[alt='Your AI detection report']"]
+        buttons:
+          download_report: {selector: "button:has-text('Download report')", action_result: 下载 JPG（pokecut-face-comparison-report-*.jpg）+ 问卷, reversible: true, explore_status: completed}
+          upload_another_photo: {selector: "button:has-text('Upload another photo')", action_result: 弹 Unsaved Report 弹层, reversible: true, explore_status: observed}
+          try_my_photo: {selector: "button:has-text('Try My Photo')", action_result: "点击新开标签页进入 /agent?pid=... 画布页（预选对应增强工具），主页面保持不变", reversible: true, explore_status: observed}
+          tips_toggle: {selector: "button:has-text('Tips For Becoming Better')", action_result: 展开/收起个人建议, reversible: true, explore_status: observed}
+
+findings:
+  bug_candidates:
+    - id: portrait-dim-dropdown-no-descriptions
+      source: v1
+      requirement: 维度列表每项展示名称和一句话描述。
+      actual: PC 端 10 个维度名称均存在，但未发现一句话描述。
+      evidence: dimension_switch_inventory.json / 04_dimension_dropdown_open.png
+      severity: needs_product_confirmation
+    - id: portrait-dim-switch-mutates-hero-and-body
+      source: v1
+      requirement: 维度切换不应改变 SEO 原图与页面主体。
+      actual: Ethnicity URL 切 Body Shape / Face Comparison 后原图变化，body hash 变化，URL 与 H1 不变。
+      evidence: dimension_switch_inventory.json / 05_dimension_after_body_shape.png / 06_dimension_after_face_comparison.png
+      severity: needs_product_confirmation
+  corrected_false_positives:
+    - 早期 v2/v3 因等待过短（5-9s）把 processing 误判为 result，误报「结果态控件缺失」和「结果态残留处理态文案」。延长等待 30-75s 后三页均真实出结果且控件齐全，两条已撤销。
+  environment_notes:
+    - 测试服登录提交后 authToken is empty 且网关 404；已切预部署登录成功。
+    - 预部署结果生成网关 http://10.17.1.64:8088/gateway/pokecut/api/...（POST 200）。
+    - 结果报告以 JPG 下载（Download report），结果图 blob 渲染。
+  interaction_notes:
+    - Unsaved Report 弹层 Download：下载 JPG 并关闭弹层留在结果态；之后 Upload another photo 直接回上传 UI。
+    - Unsaved Report 弹层 Upload Without Saving：返回上传输入 UI（URL 加 ?detectSeoV3EntryInputPicker=body_shape），不下载。
+    - 问卷 Maybe later：关闭问卷并出现常驻 feedback 按钮；之后 Download report 不再弹问卷。
+    - 问卷 Submit（空选项）：无可见效果，问卷保持打开（疑需先作答 Q1/Q2/Q3）。
+    - Try My Photo（body_shape 抽查 3 个）：点击新开标签页进入 /agent?pid=... 画布页（Free Infinite Canvas），预选对应增强工具（Clothes Changer / Hairstyle / Body 等），主页面 URL 与结果态不变。
+
+coverage_boundary:
+  covered:
+    - 登录 + 服务器切换（测试服失败 -> 预部署登录成功）
+    - 三页登录态初始态、上传缩略图态、processing 态、结果态
+    - 结果态控件 Download report / Upload another photo / Try My Photo（新开 /agent 画布页）/ Tips
+    - Ethnicity 上传自动出结果（~47s）
+    - Body Shape 上传 + Continue 出结果（~30s）
+    - Face Comparison A/B + Start Comparison 出结果（~75s）
+    - Unsaved Report 弹层 Download（下载并关闭，留结果态）
+    - Unsaved Report 弹层 Upload Without Saving（返回上传输入 UI）
+    - 反馈问卷 Maybe later（关闭并出现常驻 feedback）
+    - 反馈问卷 Submit（空提交无可见效果，问卷保持打开）
+    - Try My Photo 抽查 3 个（body_shape，点击新开 /agent 画布页）
+    - 无人脸 No Face Found 弹层（Change Photo 打开文件选择器 / Cancel 关闭）
+    - 多人脸 Choose a Face to Analyze 弹层（虚线切换选中 + Continue 提交任务）
+  not_in_this_round:
+    - 反馈问卷 Q1/Q2/Q3 作答后 Submit 的完整提交
+    - 未保存结果切换维度、移动端、异常素材
+    - 其余两个页面（ethnicity / face_comparison）的 Unsaved Report / 问卷 / Try My Photo 交互
+
+outputs:
+  sync: artifacts/2026-08-28_pokecut_portrait_detector_interactions/sync_v2.md
+  screenshots_dir: artifacts/2026-08-28_pokecut_portrait_detector_interactions/shots/

@@ -1,0 +1,21 @@
+{
+  "switch_login_error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Log in\", exact=True)\n",
+  "filled": true,
+  "submit_error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Log in\", exact=True)\n",
+  "after_login_url": "http://10.17.1.66:3001/",
+  "after_login_header": [
+    "Sign up",
+    "Start Creating for Free",
+    "Pokecut Pro",
+    "Generate",
+    "Remove Background",
+    "Clothes Changer",
+    "HD Photo Coverter",
+    "ID Photo Maker",
+    "Body Editor",
+    "AI Replace",
+    "More Pokecut Tools",
+    "See More Creations"
+  ],
+  "id_success_error": "Locator.click: Timeout 20000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"ID Photo Maker\").first\n    - locator resolved to <button type=\"button\" data-v-3dd17f9f=\"\" aria-label=\"ID Photo Maker\" class=\"mobile-popular-feature-card relative h-[5.71875rem] overflow-hidden rounded-[1.1"
+}

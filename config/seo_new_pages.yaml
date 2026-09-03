@@ -1,0 +1,54 @@
+# SEO new pages list — add a path to get full rule + direct LLM coverage
+# Requested batch: 2026-08-26
+
+seo_domain: "http://10.17.2.54:3000"
+
+seo_pages:
+  - path: /es/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /id/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /pt/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /th/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /zh-tw/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /de/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /ja/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /it/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /tr/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /vi/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /fr/body-editor/pregnant-ai
+    semantic_review: true
+  - path: /de/batch-edit
+    semantic_review: true
+  - path: /es/edicion-por-lotes
+    semantic_review: true
+  - path: /fr/batch-edit
+    semantic_review: true
+  - path: /id/edit-massal
+    semantic_review: true
+  - path: /it/batch-edit
+    semantic_review: true
+  - path: /ja/batch-edit
+    semantic_review: true
+  - path: /pt/edicao-em-lote
+    semantic_review: true
+  - path: /ru/paketnaya-obrabotka
+    semantic_review: true
+  - path: /th/batch-edit
+    semantic_review: true
+  - path: /tr/batch-edit
+    semantic_review: true
+  - path: /vi/batch-edit
+    semantic_review: true
+  - path: /zh-tw/batch-edit
+    semantic_review: true
+  - path: /zh/batch-edit
+    semantic_review: true

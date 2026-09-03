@@ -1,0 +1,22 @@
+{
+  "language": {
+    "count_text": "1 results for",
+    "result_item_count": 4
+  },
+  "refund": {
+    "count_text": "2 results for",
+    "result_item_count": 6
+  },
+  "download": {
+    "count_text": "4 results for",
+    "result_item_count": 10
+  },
+  "subscription": {
+    "count_text": "3 results for",
+    "result_item_count": 8
+  },
+  "unsubscribe": {
+    "count_text": "1 results for",
+    "result_item_count": 4
+  }
+}

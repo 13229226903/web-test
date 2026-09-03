@@ -1,0 +1,153 @@
+page: pokecut_nose_shape_detector
+url: https://pokecut-dev.guangzhuiyuan.com/tools/nose-shape-detector
+version: v2
+source: pure_playwright_mcp_exploration
+updated_at: "2026-09-01 14:26:00"
+landmark:
+  selector: 'h1:has-text("Free AI Nose Shape Detector")'
+  description: SEO 首屏鼻型检测工具页；上传前保持 SEO 文案和内容结构，不展示结果编辑三栏。
+entry:
+  from: direct_url
+  trigger: open https://pokecut-dev.guangzhuiyuan.com/tools/nose-shape-detector
+  selector: 'a[href="/tools/nose-shape-detector"]'
+elements:
+  header:
+    logo: 'img[alt="pokecut logo"]'
+    nav_buttons:
+      - 'button:has-text("AI Free Tools")'
+      - 'button:has-text("Portrait Editor")'
+      - 'button:has-text("Discover")'
+      - 'a[href="/pricing"]'
+  upload:
+    input: '#img2imgFirstScreenUploadInput'
+    primary_button: 'text=Try Image to Image AI Now'
+    dropzone_hint: 'text=/or drop a file here/'
+    terms_links:
+      - 'a[href="/term-of-use"]'
+      - 'a[href="/privacy-policy"]'
+  login:
+    email: '[data-testid="auth-email-input"]'
+    code: '[data-testid="auth-code-input"]'
+    submit: '[data-testid="auth-submit"]'
+states:
+  seo_default_desktop:
+    description: PC 未上传默认态；首屏左侧示例图，右侧上传框，下方继续 SEO 内容。
+    trigger: page.goto + wait csr
+    url_or_state_key: /tools/nose-shape-detector#seo_default_desktop
+    buttons:
+      upload_primary:
+        selector: 'text=Try Image to Image AI Now'
+        role_or_text: Try Image to Image AI Now
+        visible_condition: 未进入结果态；上传框可见
+        enabled_condition: 始终可点；匿名点击/上传会触发登录，登录后可打开文件选择器
+        action_result: 打开系统文件选择器；选择 test_images/有人脸.JPG 后进入结果编辑三栏
+        reversible: true
+        explore_status: covered
+        dependencies: ['test_images/有人脸.JPG', 'Playwright MCP file chooser']
+        assertions_hint: 断言 SEO h1/文案存在且不存在 Original Image/Analysis Result/Optimized Result 三栏
+        notes: 纯 MCP 证据 mcp_nose_default_snapshot_deep.md、mcp_nose_default.png。
+  analysis_server_busy_desktop:
+    description: PC 上传后分析生成失败态；实测测试服返回 Server busy。
+    trigger: login 会员账号 450832596@qq.com + 上传 test_images/有人脸.JPG
+    url_or_state_key: /tools/nose-shape-detector#analysis_server_busy_desktop
+    buttons:
+      upload_image_disabled:
+        selector: 'button:has-text("Upload Image")'
+        role_or_text: Upload Image
+        visible_condition: 原图区可见
+        enabled_condition: disabled while result flow not recovered
+        action_result: 不可点击样式
+        reversible: false
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 原图区 Original Image 和 disabled Upload Image 同时存在
+        notes: 符合生成中/异常态原图上传按钮不可点击。
+      change_image:
+        selector: 'button:has-text("Change Image")'
+        role_or_text: Change Image
+        visible_condition: Analysis Result 显示 Server busy 后出现
+        enabled_condition: server busy failure state
+        action_result: 预期打开文件选择器并重新生成；本轮未重复上传以避免污染状态
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Server busy 文案下方存在 Change Image
+        notes: 失败文案为 Server busy. We're fixing it now. No credits deducted.
+      try_again:
+        selector: 'button:has-text("Try again")'
+        role_or_text: Try again
+        visible_condition: Analysis Result 显示 Server busy 后出现
+        enabled_condition: server busy failure state
+        action_result: 触发重试；实测重试后仍 Server busy
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后仍可观察结果状态刷新/维持失败态
+        notes: 纯 MCP 在 ai-face-reader 复测重试仍 Server busy，nose 同类按钮已记录可见。
+      analysis_download_disabled:
+        selector: 'section:has-text("Analysis Result") button:has-text("Download")'
+        role_or_text: Download
+        visible_condition: Analysis Result 区域
+        enabled_condition: disabled until analysis image success
+        action_result: 不可下载
+        reversible: false
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Server busy 时 Download disabled
+        notes: 与失败逻辑一致。
+      get_it_now:
+        selector: 'button:has-text("Get It Now")'
+        role_or_text: Get It Now
+        visible_condition: Optimized Result 模糊承接位可见
+        enabled_condition: 可点击
+        action_result: 跳转 /agent?pid=... 无限画布，选中原图图层并打开 Portrait Editor/Face 面板
+        reversible: true
+        explore_status: covered
+        dependencies: ['登录态', '上传图']
+        assertions_hint: 点击后 URL 包含 /agent?pid=，画布单图层被选中，Portrait Editor 浮层可见
+        notes: 需求期望无优化结果页点击 Get It Now 后进入 Portrait Editor；但本次是在分析 Server busy 后仍出现该按钮，属于 bug_candidate。
+  nose_blur_placeholder_desktop:
+    description: Optimized Result 保留承接位，展示原图缩略图/模糊蒙层、固定文案和 Get It Now；无 Download。
+    trigger: 上传后结果态
+    url_or_state_key: /tools/nose-shape-detector#nose_blur_placeholder_desktop
+    buttons:
+      get_it_now:
+        selector: 'button:has-text("Get It Now")'
+        role_or_text: Get It Now
+        visible_condition: Optimized Result placeholder visible
+        enabled_condition: 可点击
+        action_result: 进入无限画布页 Portrait Editor 承接
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 断言 Optimized Result 文案包含 Based on your photo...；不存在该区域 Download 按钮
+        notes: PC 证据 mcp_nose_result_server_busy_blur.png。
+  mobile_result_error_blur:
+    description: 移动端上传后纵向展示 Original/Analysis/Optimized，Analysis 为 Server busy，Optimized 为模糊承接 + Get It Now。
+    trigger: viewport 390x844 + 上传 test_images/有人脸.JPG
+    url_or_state_key: /tools/nose-shape-detector#mobile_result_error_blur
+    buttons:
+      get_it_now_mobile:
+        selector: 'button:has-text("Get It Now")'
+        role_or_text: Get It Now
+        visible_condition: mobile Optimized Result 区域可见
+        enabled_condition: 可点击
+        action_result: 未再次点击；PC 已验证进入画布承接
+        reversible: true
+        explore_status: covered
+        dependencies: ['viewport 390x844']
+        assertions_hint: 移动端三块区域从上到下依次出现
+        notes: 证据 mcp_nose_mobile_result_snapshot.md、mcp_nose_mobile_result.png。
+modals:
+  auth_modal:
+    trigger: 匿名上传
+    fields: ['[data-testid="auth-email-input"]', '[data-testid="auth-code-input"]']
+    buttons: ['[data-testid="auth-submit"]', 'text=Log in', 'text=Sign up']
+  post_signup_credit_modal:
+    trigger: 新免费账号注册后自动弹出
+    buttons: ['text=I don\'t need', 'text=I\'ve Bookmarked']
+    notes: 会遮挡上传区；关闭/拒绝后才能继续。
+  purchase_modal:
+    trigger: credits 不足或促销弹窗
+    buttons: ['.purchase-dialog__close', 'text=Get Started', 'text=Credits Purchase']
+    notes: 免费账号上传触发 $1 购买链路，未执行购买。

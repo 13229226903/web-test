@@ -1,0 +1,159 @@
+{
+  "home_header": [
+    {
+      "tag": "header",
+      "cls": "cinematic-hero",
+      "links": [
+        {
+          "tag": "button",
+          "text": "Start Creating for Free",
+          "href": null,
+          "cls": "cinematic-cta"
+        }
+      ]
+    }
+  ],
+  "help_header": [],
+  "search_credits_ui": {
+    "has_sorted_text": false,
+    "sorted_hits": [],
+    "results_containers": [
+      {
+        "tag": "div",
+        "cls": "",
+        "text": "AI Free ToolsAI Free ToolsPopular ToolsBatch Photo EditReplace ObjectAI BackgroundAI Background RemoverAI Photo EnhancerID Photo MakerBikini Try OnAll ToolsPhoto EditorPhoto Collage MakerMagic eraserA"
+      },
+      {
+        "tag": "div",
+        "cls": "flex w-full h-screen flex-col items-center touch-manipulation",
+        "text": "AI Free ToolsAI Free ToolsPopular ToolsBatch Photo EditReplace ObjectAI BackgroundAI Background RemoverAI Photo EnhancerID Photo MakerBikini Try OnAll ToolsPhoto EditorPhoto Collage MakerMagic eraserA"
+      },
+      {
+        "tag": "div",
+        "cls": "md:mt-[4.0625rem] flex w-full flex-col items-center",
+        "text": "Unlock Pokecut VIP for just 23:59:42Pokecut Help CenterPokecut Help CenterPokecut Help CenterHow can we help you create faster?Search guides for account, credits, subscriptions, AI tools, downloads, r"
+      },
+      {
+        "tag": "section",
+        "cls": "help-v2-hero-section",
+        "text": "Pokecut Help CenterPokecut Help CenterPokecut Help CenterHow can we help you create faster?Search guides for account, credits, subscriptions, AI tools, downloads, refunds, and commercial use.Search13 "
+      },
+      {
+        "tag": "div",
+        "cls": "help-v2-hero-section__content",
+        "text": "Pokecut Help CenterPokecut Help CenterPokecut Help CenterHow can we help you create faster?Search guides for account, credits, subscriptions, AI tools, downloads, refunds, and commercial use.Search13 "
+      },
+      {
+        "tag": "div",
+        "cls": "help-v2-hero-section__actions",
+        "text": "Search13 results for “credits”Where can I see my remaining credits?Click on the username in the upper right corner, and you will see the account information including the remaining credits.Account & A"
+      },
+      {
+        "tag": "div",
+        "cls": "help-v2-search-panel",
+        "text": "13 results for “credits”Where can I see my remaining credits?Click on the username in the upper right corner, and you will see the account information including the remaining credits.Account & AccessW"
+      },
+      {
+        "tag": "div",
+        "cls": "help-v2-search-panel__header-inner",
+        "text": "13 results for “credits”"
+      },
+      {
+        "tag": "p",
+        "cls": "",
+        "text": "13 results for “credits”"
+      }
+    ]
+  },
+  "search_scroll": [
+    {
+      "tag": "html",
+      "cls": "",
+      "scrollH": 3298,
+      "clientH": 1080
+    },
+    {
+      "tag": "body",
+      "cls": "",
+      "scrollH": 3298,
+      "clientH": 1080
+    },
+    {
+      "tag": "div",
+      "cls": "",
+      "scrollH": 3298,
+      "clientH": 1080
+    },
+    {
+      "tag": "div",
+      "cls": "flex w-full h-screen flex-col items-center touch-manipulation",
+      "scrollH": 3298,
+      "clientH": 1080
+    },
+    {
+      "tag": "section",
+      "cls": "help-v2-hero-section",
+      "scrollH": 940,
+      "clientH": 557
+    },
+    {
+      "tag": "div",
+      "cls": "help-v2-hero-section__visual",
+      "scrollH": 731,
+      "clientH": 557
+    },
+    {
+      "tag": "div",
+      "cls": "help-v2-hero-section__content",
+      "scrollH": 940,
+      "clientH": 484
+    },
+    {
+      "tag": "div",
+      "cls": "help-v2-hero-section__actions",
+      "scrollH": 596,
+      "clientH": 140
+    },
+    {
+      "tag": "div",
+      "cls": "help-v2-search-panel__results",
+      "scrollH": 1170,
+      "clientH": 450
+    }
+  ],
+  "search_empty_ui": {
+    "no_answer_found": true,
+    "candidates": [
+      {
+        "tag": "div",
+        "cls": "",
+        "text": "AI Free ToolsAI Free ToolsPopular ToolsBatch Photo EditReplace ObjectAI BackgroundAI Background RemoverAI Photo EnhancerID Photo MakerBikini Try OnAll ToolsPhoto EditorPhoto Collage MakerMagic eraserAI Image ExtenderBlur BackgroundAI Background ChangerHD Photo ConverterText EnhanceAI FilterAI Image "
+      },
+      {
+        "tag": "div",
+        "cls": "flex w-full h-screen flex-col items-center touch-manipulation",
+        "text": "AI Free ToolsAI Free ToolsPopular ToolsBatch Photo EditReplace ObjectAI BackgroundAI Background RemoverAI Photo EnhancerID Photo MakerBikini Try OnAll ToolsPhoto EditorPhoto Collage MakerMagic eraserAI Image ExtenderBlur BackgroundAI Background ChangerHD Photo ConverterText EnhanceAI FilterAI Image "
+      },
+      {
+        "tag": "div",
+        "cls": "md:mt-[4.0625rem] flex w-full flex-col items-center",
+        "text": "Unlock Pokecut VIP for just 23:59:32Pokecut Help CenterPokecut Help CenterPokecut Help CenterHow can we help you create faster?Search guides for account, credits, subscriptions, AI tools, downloads, refunds, and commercial use.Search0 results for “pokecut-unmatched-000”No answer found?If the FAQ doe"
+      },
+      {
+        "tag": "section",
+        "cls": "help-v2-hero-section",
+        "text": "Pokecut Help CenterPokecut Help CenterPokecut Help CenterHow can we help you create faster?Search guides for account, credits, subscriptions, AI tools, downloads, refunds, and commercial use.Search0 results for “pokecut-unmatched-000”No answer found?If the FAQ does not resolve your issue, please con"
+      },
+      {
+        "tag": "div",
+        "cls": "help-v2-hero-section__content",
+        "text": "Pokecut Help CenterPokecut Help CenterPokecut Help CenterHow can we help you create faster?Search guides for account, credits, subscriptions, AI tools, downloads, refunds, and commercial use.Search0 results for “pokecut-unmatched-000”No answer found?If the FAQ does not resolve your issue, please con"
+      }
+    ],
+    "ticket_btn": {
+      "tag": "button",
+      "text": "Submit a ticket",
+      "cls": ""
+    }
+  }
+}

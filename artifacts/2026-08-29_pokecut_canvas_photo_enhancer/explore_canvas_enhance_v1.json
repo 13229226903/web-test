@@ -1,0 +1,145 @@
+{
+  "task_id": "2026-08-29_pokecut_canvas_photo_enhancer",
+  "steps": [
+    {
+      "name": "01_canvas_loaded",
+      "url": "http://10.17.1.66:3001/agent?pid=8e232fae-cbd4-4ad5-8cc4-53e1727462ca#",
+      "extra": {
+        "title": "Free Infinite Canvas: The Ultimate AI Image Workspace | Pokecut",
+        "toolbar_enhance_count": 1,
+        "bottom_enhance_count": 2
+      }
+    },
+    {
+      "name": "02_enhance_panel_open",
+      "url": "http://10.17.1.66:3001/agent?pid=8e232fae-cbd4-4ad5-8cc4-53e1727462ca#",
+      "extra": {
+        "panel_visible": true
+      }
+    },
+    {
+      "name": "03_modes",
+      "url": "http://10.17.1.66:3001/agent?pid=8e232fae-cbd4-4ad5-8cc4-53e1727462ca#",
+      "extra": {
+        "modes": [
+          {
+            "index": 0,
+            "text": "Standard Mode | 1080px*1440px | → | 2160px*2880px",
+            "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[4.6875rem] ring-inset ring-[0.1875rem] ring-c-theme",
+            "img_alts": [
+              "Standard Mode",
+              "Standard Mode"
+            ],
+            "box": {
+              "x": 1197.75,
+              "y": 367,
+              "width": 349,
+              "height": 75
+            },
+            "selected": true
+          },
+          {
+            "index": 1,
+            "text": "Old Photo Mode",
+            "class": "old-photo-card relative flex w-full shrink-0 flex-col items-start justify-center gap-[0.5rem] overflow-hidden rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left h-[3.75rem] cursor-pointer hover:opacity-80",
+            "img_alts": [
+              "Old Photo Mode",
+              "Old Photo Mode"
+            ],
+            "box": {
+              "x": 1197.75,
+              "y": 452,
+              "width": 349,
+              "height": 60
+            },
+            "selected": false
+          },
+          {
+            "index": 2,
+            "text": "Portrait Mode",
+            "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80",
+            "img_alts": [
+              "Portrait Mode",
+              "Portrait Mode"
+            ],
+            "box": {
+              "x": 1197.75,
+              "y": 522,
+              "width": 349,
+              "height": 60
+            },
+            "selected": false
+          },
+          {
+            "index": 3,
+            "text": "Text Mode",
+            "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80",
+            "img_alts": [
+              "Text Mode",
+              "Text Mode"
+            ],
+            "box": {
+              "x": 1197.75,
+              "y": 592,
+              "width": 349,
+              "height": 60
+            },
+            "selected": false
+          },
+          {
+            "index": 4,
+            "text": "Ultra HD Mode",
+            "class": "relative flex w-full shrink-0 items-center gap-[0.625rem] rounded-r3 bg-gradient-to-r from-[rgba(226,227,255,0.2)] to-[var(--bc-gray-6)] px-[1.875rem] py-[0.625rem] text-left transition-opacity h-[3.75rem] hover:opacity-80",
+            "img_alts": [
+              "Ultra HD Mode",
+              "Ultra HD Mode",
+              "pro"
+            ],
+            "box": {
+              "x": 1197.75,
+              "y": 662,
+              "width": 349,
+              "height": 60
+            },
+            "selected": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "04_mode_click_results",
+      "url": "http://10.17.1.66:3001/agent?pid=8e232fae-cbd4-4ad5-8cc4-53e1727462ca#",
+      "extra": {
+        "mode_clicks": {
+          "Standard Mode": {
+            "row_text": "Standard Mode | 1080px*1440px | → | 2160px*2880px",
+            "selected": true
+          },
+          "Old Photo Mode": {
+            "row_text": "Old Photo Mode | Fix blur | Restore old photo color | Remove scratches",
+            "selected": true
+          },
+          "Portrait Mode": {
+            "row_text": "Portrait Mode | 1080px*1440px | → | 2160px*2880px",
+            "selected": true
+          },
+          "Text Mode": {
+            "row_text": "Text Mode | 1080px*1440px | → | 3000px*4000px",
+            "selected": true
+          },
+          "Ultra HD Mode": {
+            "row_text": "Ultra HD Mode | 1080px*1440px | → | 3072px*4096px",
+            "selected": true
+          }
+        }
+      }
+    },
+    {
+      "name": "05_panel_body",
+      "url": "http://10.17.1.66:3001/agent?pid=8e232fae-cbd4-4ad5-8cc4-53e1727462ca#",
+      "extra": {
+        "body": "AI Enhancer\nStandard Mode\nOld Photo Mode\nPortrait Mode\nText Mode\nUltra HD Mode\n1080px*1440px\n→\n3072px*4096px\nEnhance"
+      }
+    }
+  ]
+}

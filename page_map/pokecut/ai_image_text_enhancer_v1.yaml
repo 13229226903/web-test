@@ -1,0 +1,171 @@
+page: AiImageTextEnhancer
+url: http://10.17.1.66:3001/tools/ai-image-text-enhancer
+landmark:
+  selector: 'h1:has-text("Enhance Text in Image to 8K Online Free")'
+  description: 文字画质增强 SEO 工具页唯一主标题
+entry:
+  from: DirectUrlOrPokecutNavigation
+  trigger: 直接打开工具页或从导航/首页进入
+  selector: 'a[href*="/tools/ai-image-text-enhancer"]'
+elements:
+  seo_h1:
+    selector: 'h1:has-text("Enhance Text in Image to 8K Online Free")'
+    text: Enhance Text in Image to 8K Online Free
+
+  desktop_upload_input:
+    selector: '#singleUploadInput'
+    input_type: file
+    accept: image/jpeg,image/png,image/webp,image/bmp
+    multiple: false
+    description: PC 首屏单图上传入口
+  batch_upload_input:
+    selector: '#batchUploadInput'
+    input_type: file
+    accept: image/jpeg,image/png,image/webp,image/bmp
+    multiple: true
+    description: Batch Edit 上传入口
+  mobile_upload_input:
+    selector: '#file-upload'
+    input_type: file
+    multiple: false
+    description: 移动端上传入口
+
+  upload_drop_zone:
+    selector: 'text=Drop, paste image, or URL'
+  upload_button:
+    selector: 'button:has-text("Upload Image")'
+  batch_entry:
+    selector: 'text=Batch Edit'
+  batch_capacity:
+    selector: 'text=Up to 50 images'
+
+  effects_title:
+    selector: 'text=Choose the Effect'
+  effects_multiselect_hint:
+    selector: 'text=*Supports multiple selections'
+
+  effect_enhance_text:
+    selector: '[data-effect="enhance_text"]'
+    text: Enhance Text
+    selected_state: aria-pressed="true"
+    unselected_state: aria-pressed="false"
+  effect_remove_glare:
+    selector: '[data-effect="remove_glare"]'
+    text: Remove Glare
+    selected_state: aria-pressed="true"
+    unselected_state: aria-pressed="false"
+  effect_remove_moire:
+    selector: '[data-effect="remove_moire"]'
+    text: Remove Moire
+    selected_state: aria-pressed="true"
+    unselected_state: aria-pressed="false"
+  effect_document_scanner:
+    selector: '[data-effect="document_scanner"]'
+    text: Document Scanner
+    selected_state: aria-pressed="true"
+    unselected_state: aria-pressed="false"
+
+  help_enhance_text:
+    selector: '[data-effect="enhance_text"] [data-effect-help-icon]'
+    hover_text: Enhance blurry text and improve readability.
+  help_remove_glare:
+    selector: '[data-effect="remove_glare"] [data-effect-help-icon]'
+    hover_text: Remove glare from reflective surfaces.
+  help_remove_moire:
+    selector: '[data-effect="remove_moire"] [data-effect-help-icon]'
+    hover_text: Reduce moire patterns in screens or printed images.
+  help_document_scanner:
+    selector: '[data-effect="document_scanner"] [data-effect-help-icon]'
+    hover_text: Turn a photographed document into a clean scanned page.
+
+  scales_title:
+    selector: 'text=Upscale to :'
+  scale_2k:
+    selector: 'p:has-text("2k")'
+    strategy: exact_text_within_scale_container
+    detail: 2048 * 2048 px
+    selector_risk: 当前无 data-scale / role / aria 语义，必须限定分辨率区域并精确匹配
+  scale_4k:
+    selector: 'p:has-text("4k")'
+    strategy: exact_text_within_scale_container
+    detail: 4096 * 4096 px
+    selector_risk: 当前无 data-scale / role / aria 语义，必须限定分辨率区域并精确匹配
+  scale_8k:
+    selector: 'p:has-text("8k")'
+    strategy: exact_text_within_scale_container
+    detail: 8192 * 8192 px
+    selector_risk: 当前无 data-scale / role / aria 语义，必须限定分辨率区域并精确匹配
+
+  desktop_primary:
+    selector: '[data-enhance-action="desktop-primary"]'
+    text: Enhance
+    enabled_marker: class contains can-enhance-btn-bg
+    disabled_marker: class contains cursor-not-allowed
+    note: 可点击元素是 div 而非 button，无 role/aria-disabled 语义
+  mobile_primary:
+    selector: '[data-enhance-action="mobile-primary"]'
+    text: Enhance
+    enabled_marker: class contains can-enhance-btn-bg
+    disabled_marker: class contains cursor-not-allowed
+    note: 可点击元素是 div 而非 button，无 role/aria-disabled 语义
+  total_cost:
+    selector: '[data-text-enhance-total-cost]'
+    cost_state_attribute: data-text-enhance-cost-state
+    observed_anonymous_state: paid
+    note: 匿名处理区观察到 paid 态与数字点数，本次未执行生成，未验证免费次数扣除
+
+states:
+  desktop_after_upload_default:
+    url: http://10.17.1.66:3001/tools/ai-image-text-enhancer
+    selected_effects: [enhance_text]
+    scale_visible: true
+    selected_scale: 2k
+    primary_enabled: true
+    observed_total_cost: 2
+  no_effect_selected:
+    selected_effects: []
+    scale_visible: false
+    primary_enabled: false
+    cost_visible: false
+  non_upscale_only:
+    selected_effects: [remove_glare, remove_moire, document_scanner]
+    scale_visible: false
+    cost_mapping:
+      remove_glare: 2
+      remove_moire: 2
+      document_scanner: 4
+  all_effects_2k:
+    observed_total_cost: 10
+  all_effects_4k:
+    observed_total_cost: 10
+  all_effects_8k:
+    observed_total_cost: 14
+  mobile_after_upload_default:
+    viewport: 390x664
+    layout: horizontal_effects
+    selected_effects: [enhance_text]
+    scale_visible: true
+    primary_text: Enhance 2
+
+selector_semantic_gaps:
+  - scale options lack data-scale or role/aria selected state
+  - desktop and mobile primary controls are div elements and lack role=button/aria-disabled
+  - selected scale is inferred from visual border/icon/color rather than aria-pressed/data-selected
+  - recommendation: add data-scale, data-selected/aria-pressed, role=button, and aria-disabled in a future frontend change; page_map keeps current stable text/attribute fallbacks
+
+unverified_states:
+  - generation_processing
+  - before_after_result
+  - continue_enhancing
+  - edit_more
+  - download
+  - processed_effect_warning
+  - result_thumbnail_badges
+  - free_quota_exhausted
+  - logged_in_subscription_states
+  - purchase_or_insufficient_credits
+  - source_image_already_2k_or_8k
+  - disabled_lower_scale_options
+
+tabs: {}
+modals: {}

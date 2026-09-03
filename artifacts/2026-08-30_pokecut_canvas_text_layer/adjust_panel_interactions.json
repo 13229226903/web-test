@@ -1,0 +1,419 @@
+{
+  "steps": [
+    {
+      "name": "initial",
+      "active_tab": {
+        "Basic": "flex h-[3.125rem] w-[11.375rem] items-center justify-center rounded-[0.625rem] p-[0.625rem] text-[1.25rem] font-bold leading-none transition-colors bg-[#F3F5F8] text-[#686868]",
+        "Adjust": "flex h-[3.125rem] w-[11.375rem] items-center justify-center rounded-[0.625rem] p-[0.625rem] text-[1.25rem] font-bold leading-none transition-colors bg-gradient-to-b from-[#515AE6] to-[#372ADF] text-white"
+      },
+      "sections": {
+        "Space": {
+          "row": {
+            "x": 1132,
+            "y": 491,
+            "w": 400,
+            "h": 60
+          },
+          "row_tag": "BUTTON",
+          "content_display": "none",
+          "small": null,
+          "toggle": null
+        },
+        "Reflection": {
+          "row": {
+            "x": 1132,
+            "y": 552,
+            "w": 400,
+            "h": 60
+          },
+          "row_tag": "DIV",
+          "content_display": "none",
+          "small": {
+            "x": 1500,
+            "y": 576,
+            "w": 12,
+            "h": 12
+          },
+          "toggle": {
+            "x": 1448,
+            "y": 570,
+            "w": 42,
+            "h": 24,
+            "cls": "relative h-[1.5rem] w-[2.625rem] rounded-full transition-colors bg-[#DCDDE3]"
+          }
+        },
+        "Background": {
+          "row": {
+            "x": 1132,
+            "y": 613,
+            "w": 400,
+            "h": 60
+          },
+          "row_tag": "BUTTON",
+          "content_display": "none",
+          "small": null,
+          "toggle": null
+        },
+        "Outline": {
+          "row": {
+            "x": 1132,
+            "y": 674,
+            "w": 400,
+            "h": 60
+          },
+          "row_tag": "DIV",
+          "content_display": "none",
+          "small": {
+            "x": 1500,
+            "y": 698,
+            "w": 12,
+            "h": 12
+          },
+          "toggle": {
+            "x": 1448,
+            "y": 692,
+            "w": 42,
+            "h": 24,
+            "cls": "relative h-[1.5rem] w-[2.625rem] rounded-full transition-colors bg-[#DCDDE3]"
+          }
+        }
+      }
+    },
+    {
+      "name": "click_basic_tab",
+      "before": {
+        "Basic": "flex h-[3.125rem] w-[11.375rem] items-center justify-center rounded-[0.625rem] p-[0.625rem] text-[1.25rem] font-bold leading-none transition-colors bg-[#F3F5F8] text-[#686868]",
+        "Adjust": "flex h-[3.125rem] w-[11.375rem] items-center justify-center rounded-[0.625rem] p-[0.625rem] text-[1.25rem] font-bold leading-none transition-colors bg-gradient-to-b from-[#515AE6] to-[#372ADF] text-white"
+      },
+      "after": {
+        "Basic": "flex h-[3.125rem] w-[11.375rem] items-center justify-center rounded-[0.625rem] p-[0.625rem] text-[1.25rem] font-bold leading-none transition-colors bg-gradient-to-b from-[#515AE6] to-[#372ADF] text-white",
+        "Adjust": "flex h-[3.125rem] w-[11.375rem] items-center justify-center rounded-[0.625rem] p-[0.625rem] text-[1.25rem] font-bold leading-none transition-colors bg-[#F3F5F8] text-[#686868]"
+      }
+    },
+    {
+      "name": "click_adjust_tab",
+      "before": {
+        "Basic": "flex h-[3.125rem] w-[11.375rem] items-center justify-center rounded-[0.625rem] p-[0.625rem] text-[1.25rem] font-bold leading-none transition-colors bg-[#F3F5F8] text-[#686868]",
+        "Adjust": "flex h-[3.125rem] w-[11.375rem] items-center justify-center rounded-[0.625rem] p-[0.625rem] text-[1.25rem] font-bold leading-none transition-colors bg-gradient-to-b from-[#515AE6] to-[#372ADF] text-white"
+      },
+      "after": {
+        "Basic": "flex h-[3.125rem] w-[11.375rem] items-center justify-center rounded-[0.625rem] p-[0.625rem] text-[1.25rem] font-bold leading-none transition-colors bg-[#F3F5F8] text-[#686868]",
+        "Adjust": "flex h-[3.125rem] w-[11.375rem] items-center justify-center rounded-[0.625rem] p-[0.625rem] text-[1.25rem] font-bold leading-none transition-colors bg-gradient-to-b from-[#515AE6] to-[#372ADF] text-white"
+      }
+    },
+    {
+      "name": "click_space_header",
+      "before": {
+        "row": {
+          "x": 1132,
+          "y": 491,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "BUTTON",
+        "content_display": "none",
+        "small": null,
+        "toggle": null
+      },
+      "after": {
+        "row": {
+          "x": 1132,
+          "y": 491,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "BUTTON",
+        "content_display": "block",
+        "small": null,
+        "toggle": null
+      }
+    },
+    {
+      "name": "set_space_width_40",
+      "before": [
+        {
+          "value": "0",
+          "min": "0",
+          "max": "100",
+          "disabled": false
+        },
+        {
+          "value": "0",
+          "min": "-100",
+          "max": "100",
+          "disabled": true
+        }
+      ],
+      "after": [
+        "40",
+        "0"
+      ]
+    },
+    {
+      "name": "click_reflection_dropdown",
+      "before": {
+        "row": {
+          "x": 1085,
+          "y": 688,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "DIV",
+        "content_display": "none",
+        "small": {
+          "x": 1453,
+          "y": 712,
+          "w": 12,
+          "h": 12
+        },
+        "toggle": {
+          "x": 1401,
+          "y": 706,
+          "w": 42,
+          "h": 24,
+          "cls": "relative h-[1.5rem] w-[2.625rem] rounded-full transition-colors bg-[#DCDDE3]"
+        }
+      },
+      "after": {
+        "row": {
+          "x": 1085,
+          "y": 688,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "DIV",
+        "content_display": "block",
+        "small": {
+          "x": 1453,
+          "y": 712,
+          "w": 12,
+          "h": 12
+        },
+        "toggle": {
+          "x": 1401,
+          "y": 706,
+          "w": 42,
+          "h": 24,
+          "cls": "relative h-[1.5rem] w-[2.625rem] rounded-full transition-colors bg-[#DCDDE3]"
+        }
+      }
+    },
+    {
+      "name": "click_reflection_toggle",
+      "before": {
+        "row": {
+          "x": 1085,
+          "y": 688,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "DIV",
+        "content_display": "block",
+        "small": {
+          "x": 1453,
+          "y": 712,
+          "w": 12,
+          "h": 12
+        },
+        "toggle": {
+          "x": 1401,
+          "y": 706,
+          "w": 42,
+          "h": 24,
+          "cls": "relative h-[1.5rem] w-[2.625rem] rounded-full transition-colors bg-[#DCDDE3]"
+        }
+      },
+      "after": {
+        "row": {
+          "x": 1085,
+          "y": 688,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "DIV",
+        "content_display": "block",
+        "small": {
+          "x": 1453,
+          "y": 712,
+          "w": 12,
+          "h": 12
+        },
+        "toggle": {
+          "x": 1401,
+          "y": 706,
+          "w": 42,
+          "h": 24,
+          "cls": "relative h-[1.5rem] w-[2.625rem] rounded-full transition-colors bg-[#232323]"
+        }
+      }
+    },
+    {
+      "name": "set_reflection_sliders",
+      "before": [
+        {
+          "value": "100",
+          "min": "0",
+          "max": "100",
+          "disabled": false
+        },
+        {
+          "value": "50",
+          "min": "0",
+          "max": "100",
+          "disabled": false
+        },
+        {
+          "value": "0",
+          "min": "0",
+          "max": "100",
+          "disabled": false
+        },
+        {
+          "value": "180",
+          "min": "0",
+          "max": "360",
+          "disabled": false
+        }
+      ],
+      "after": [
+        "60",
+        "30",
+        "20",
+        "90"
+      ]
+    },
+    {
+      "name": "click_background_header",
+      "before": {
+        "row": {
+          "x": 1085,
+          "y": 993,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "BUTTON",
+        "content_display": "none",
+        "small": null,
+        "toggle": null
+      },
+      "after": {
+        "row": {
+          "x": 1085,
+          "y": 993,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "BUTTON",
+        "content_display": "block",
+        "small": null,
+        "toggle": null
+      }
+    },
+    {
+      "name": "click_background_no_fill",
+      "before": [
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors border-[#3338EE]",
+          "bg": null,
+          "alt": null
+        },
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors border-transparent",
+          "bg": null,
+          "alt": "picker"
+        },
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border border-transparent bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors",
+          "bg": null,
+          "alt": null
+        }
+      ],
+      "after": [
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors border-[#3338EE]",
+          "bg": null,
+          "alt": null
+        },
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors border-transparent",
+          "bg": null,
+          "alt": "picker"
+        },
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border border-transparent bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors",
+          "bg": null,
+          "alt": null
+        }
+      ],
+      "clicked": {
+        "x": 1105,
+        "y": 1053
+      }
+    },
+    {
+      "name": "click_background_red",
+      "after": [
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors border-transparent",
+          "bg": null,
+          "alt": null
+        },
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors border-transparent",
+          "bg": null,
+          "alt": "picker"
+        },
+        {
+          "cls": "flex aspect-square items-center justify-center rounded-[0.625rem] border border-transparent bg-white shadow-[0_0.0625rem_0.25rem_rgba(0,0,0,0.12)] transition-colors",
+          "bg": null,
+          "alt": null
+        }
+      ],
+      "clicked": {
+        "x": 1398,
+        "y": 1126,
+        "bg": "rgb(174, 41, 42)"
+      }
+    },
+    {
+      "name": "click_outline_dropdown",
+      "before": {
+        "row": {
+          "x": 1085,
+          "y": 1507.21875,
+          "w": 400,
+          "h": 60
+        },
+        "row_tag": "DIV",
+        "content_display": "none",
+        "small": {
+          "x": 1453,
+          "y": 1531.21875,
+          "w": 12,
+          "h": 12
+        },
+        "toggle": {
+          "x": 1401,
+          "y": 1525.21875,
+          "w": 42,
+          "h": 24,
+          "cls": "relative h-[1.5rem] w-[2.625rem] rounded-full transition-colors bg-[#DCDDE3]"
+        }
+      }
+    },
+    {
+      "name": "click_outline_toggle"
+    },
+    {
+      "name": "click_outline_type1",
+      "clicked": null
+    },
+    {
+      "name": "click_outline_color_red",
+      "clicked": null
+    },
+    {
+      "name": "set_outline_sliders"
+    }
+  ]
+}

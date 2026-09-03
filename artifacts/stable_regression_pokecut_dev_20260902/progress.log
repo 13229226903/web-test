@@ -1,0 +1,4 @@
+[2026-09-02 15:03:08] orchestrator start stable_regression run on https://pokecut-dev.guangzhuiyuan.com (6 registry assets)
+[2026-09-02 15:11:48] start full regression run (6 files) base_url=https://pokecut-dev.guangzhuiyuan.com
+[2026-09-02 15:53:41] regression run done: 85 passed, 1 failed, 3 skipped in 2191.25s; allure-report-regression generated; http.server 8123 serving regression report
+[2026-09-02 15:53:41] FAILED: mobile_home L2-010 effect 模板卡上传进入画布 - Locator.click 15s 超时等待 button name=Butt
