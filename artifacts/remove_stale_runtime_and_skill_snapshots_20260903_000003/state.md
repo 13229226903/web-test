@@ -2,7 +2,7 @@
 
 task_id: remove_stale_runtime_and_skill_snapshots_20260903_000003
 task_type: single_agent
-status: in_progress
+status: completed
 execution_mode: codex_single_context
 agent_call_count: {}
 requirement_doc: null
@@ -16,8 +16,8 @@ assumptions:
   - "仅删除明确点名的 before_* 历史快照，不删除当前生效文件。"
 artifacts:
   sync: null
-  cleanup_result: null
-next_step: inspect_targets
+  cleanup_result: "artifacts/remove_stale_runtime_and_skill_snapshots_20260903_000003/cleanup_result.md"
+next_step: null
 blockers: []
-created_at: "2026-09-03 17:20:16"
-updated_at: "2026-09-03 17:20:16"
+created_at: "2026-09-03 17:21:57"
+updated_at: "2026-09-03 17:21:57"
