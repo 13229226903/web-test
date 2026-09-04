@@ -21,6 +21,82 @@ skills/
 tests/  data/  page_map/  test_images/  scripts/  config/  archive/
 ```
 
+## 环境准备（新机器 / 同事）
+
+在 Codex 里跑本项目前，先按下面准备好环境（版本为本机验证过的组合）。
+
+### 1. 基础软件
+
+| 软件 | 要求 | 用途 |
+|---|---|---|
+| Python | 3.12+（3.12.10 验证） | 跑 pytest / Playwright 脚本与 Allure 报告生成 |
+| Node.js + npm | 18+（v24 验证） | 启动 Playwright MCP、安装全局命令行工具 |
+| Git | 较新版本即可 | 拉取 / 推送仓库 |
+
+### 2. Python 依赖（跑回归脚本必需）
+
+```bash
+pip install -r requirements.txt
+python -m playwright install chromium
+```
+
+- `requirements.txt` 核心：`pytest`、`pytest-playwright`、`playwright`、`pyyaml`、`allure-pytest`、`pytest-html`。
+- `python -m playwright install chromium` 会装 chromium 与 headless shell；回归默认 headless，调试可加 `--headed`。
+- `conftest.py` 会自动读取根目录 `.env`（无需额外依赖），并自动创建 `reports/`、`data/screenshots/` 等目录。
+
+### 3. 全局命令行工具（npm）
+
+```bash
+npm install -g @playwright/mcp allure-commandline
+```
+
+- `allure-commandline`：执行 `allure generate` 生成 Allure 报告（本机验证 2.43.0）。
+- `@playwright/mcp`：探索阶段的 Playwright MCP server，Codex CLI / 非桌面端接入时需要（见下节）。
+
+### 4. 需要的 MCP（只需要一个）
+
+本项目页面探索固定走 **Playwright MCP**（`exploration_driver: playwright_mcp_only`），不需要 Chrome DevTools MCP 或其它业务 MCP。
+
+- **Codex 桌面端**：已内置 Playwright MCP（`browser_navigate` / `browser_snapshot` / `browser_click` / `browser_type` / `browser_upload` / `browser_take_screenshot` 等），无需额外配置。
+- **Codex CLI / 其它 agent**：给 agent 注册一个 MCP server，例如：
+
+  ```toml
+  [mcp_servers.playwright]
+  command = "npx"
+  args = ["@playwright/mcp@latest", "--browser", "chromium"]
+  ```
+
+  需要跨会话保留登录态时，可追加 `--storage-state <路径>`（可选）。
+- 探索过程的本地 MCP 会话证据落在 `.playwright-mcp/`，已 gitignore、不入库。
+
+### 5. 访问与密钥
+
+- 被测站点为内网测试服，默认 `http://10.17.1.66:3001`（见 `pytest.ini` 的 `base_url`），需要能访问该内网；验证码固定 `123456`，测试账号见 `PROJECT.md`。
+- 根目录 `.env`（已 gitignore、不入库）按需配置 AI 视觉 / AI 审查用密钥，模板见 `.env.example`：
+
+  ```
+  VISUAL_REVIEW_API_KEY=
+  DEEPSEEK_API_KEY=
+  OPENAI_API_KEY=
+  OPENAI_BASE_URL=
+  OPENAI_MODEL=
+  ```
+
+  纯 pytest 回归不依赖这些 key，缺省不影响 collect / 执行；只有 visual-review / AI 审查步骤才需要配置。
+
+### 6. 常用命令速查
+
+```bash
+python -m pytest tests/<file>.py -q            # 跑单个归档脚本（headless）
+python -m pytest --headed tests/<file>.py      # 有头模式调试
+python -m pytest --collect-only -q             # 只收集用例，检查无 error / warning
+allure generate reports/allure-results -o reports/allure-report-regression --clean
+python -m http.server 8123 --directory reports/allure-report-regression
+# 浏览器打开 http://localhost:8123/index.html
+```
+
+更完整的执行流程与报告规范见 `artifacts/runtime/orchestrator.md` 与 `skills/ui-test-test-writing/SKILL.md`。
+
 ## 流程总览
 
 ```
