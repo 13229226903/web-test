@@ -21,7 +21,7 @@ skills/
 tests/  data/  page_map/  test_images/  scripts/  config/  archive/
 ```
 
-## 环境准备（新机器 / 同事）
+## 环境准备（新机器 ）
 
 在 Codex 里跑本项目前，先按下面准备好环境（版本为本机验证过的组合）。
 
