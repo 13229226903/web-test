@@ -1,0 +1,196 @@
+# Pokecut 无限画布 Enhance 面板（2K/4K/8K 分辨率选择版） - 页面地图 v3
+# 进入方式 A: /create → Trending Tools → Start from a Photo → 上传 test_images/*.jpg → /agent?pid=<uuid> → 选中图片 → 顶部工具栏 Enhance
+# 进入方式 B: /create → Trending Tools → HD Photo Converter → 文件选择器上传 → /agent?pid=<uuid> → 自动选中并自动打开 Enhance 面板
+# 采集环境: 测试服 http://10.17.1.66:3001，PC 1920x1080，en-US，会员(Pro)与匿名
+# 采集时间: 2026-09-09 (v3)
+page: Infinite Canvas Enhance (Resolution Selector)
+url: /agent?pid=<uuid>
+landmark:
+  selector: "div[data-no-capture='true']:has-text('AI Enhancer')"
+  description: 顶部工具栏 Enhance 打开后出现的右侧 AI Enhancer 浮动面板（absolute z-70），标题 AI Enhancer
+entry:
+  from: /create
+  trigger: Trending Tools → Start from a Photo / HD Photo Converter（两者都触发文件选择器）
+  selector: "div.cursor-pointer:has(p:text-is('Start from a Photo'))"
+  selector_alt: "text=HD Photo Converter"
+  file_chooser: true
+  note: 进入 /create 可能弹出 VIP 定价弹窗遮罩；需先移除全屏半透明遮罩再点工具卡。HD Photo Converter 上传后进入画布并自动打开 Enhance 面板；Start from a Photo 上传后需点顶部工具栏 Enhance。
+elements:
+  canvas_toolbar_enhance:
+    selector: "button.toolbar-hover-button:has-text('Enhance')"
+    description: 画布顶部工具栏 Enhance 按钮（class 含 group/row1 toolbar-hover-button），点击打开 AI Enhancer 面板
+    visible_condition: 上传图片进入 /agent 且选中图层后可见
+  enhance_panel:
+    selector: "div[data-no-capture='true']:has-text('AI Enhancer')"
+    description: AI Enhancer 右侧浮动面板，包含标题、5 个模式行、分辨率分段、主按钮
+  mode_rows:
+    selector: "[data-enhance-row]"
+    description: 5 个模式行容器（Standard Mode / Old Photo Mode / Portrait Mode / Text Mode / Ultra HD Mode）；选中行 class 含 ring-c-theme 并展开
+  resolution_bar:
+    selector: "div[data-enhance-row][class*='ring-c-theme'] button"
+    description: 仅当前选中模式行内出现 2K/4K/8K 分段按钮（flex 1.75rem）；选中态 class 含 bg-gradient-to-r from-[#3338EE]；禁用态 aria-disabled=true + cursor-not-allowed + text-[#DCDDE3]
+  enhance_primary_button:
+    selector: "div[data-no-capture='true'] button:has-text('Enhance')"
+    description: 面板底部主按钮 Enhance，触发生成
+  mode_help_icon:
+    selector: "img[src*='enhance_help']"
+    description: 各模式行问号帮助图标
+states:
+  enhance_panel_open_default:
+    description: 上传后打开 Enhance 面板；实测默认选中 Ultra HD Mode（2K 默认选中，输入长边<2048 时），而非 Standard；需与产品确认默认模式预期
+    trigger: 点击 canvas_toolbar_enhance 或 HD Photo Converter 上传自动打开
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      mode_standard:
+        selector: "[data-enhance-row]:has-text('Standard Mode')"
+        role_or_text: Standard Mode（对应需求 Normal 通用模式）
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选
+        action_result: 选中 Standard Mode，行展开展示 输入尺寸→目标尺寸 与 2K/4K/8K 分段
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后行 class 出现 ring-c-theme，内联出现分辨率分段
+        notes: 需求称 Normal；UI 文案 Standard Mode（别名差异）
+      mode_old_photo:
+        selector: "[data-enhance-row].old-photo-card:has-text('Old Photo Mode')"
+        role_or_text: Old Photo Mode
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选
+        action_result: 展开显示 Fix blur / Restore old photo color / Remove scratches；无分辨率分段
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 选中后无 2K/4K/8K 分段
+        notes: 旧照片模式不参与本次分辨率改造
+      mode_portrait:
+        selector: "[data-enhance-row]:has-text('Portrait Mode')"
+        role_or_text: Portrait Mode
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选
+        action_result: 选中 Portrait Mode，行展开展示尺寸与分辨率分段
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 同 Standard
+      mode_text:
+        selector: "[data-enhance-row]:has-text('Text Mode')"
+        role_or_text: Text Mode
+        visible_condition: 面板打开即可见
+        enabled_condition: 始终可选
+        action_result: 选中 Text Mode，行展开展示尺寸与分辨率分段
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 同 Standard
+      mode_ultra_hd:
+        selector: "[data-enhance-row]:has-text('Ultra HD Mode')"
+        role_or_text: Ultra HD Mode（需求称 Ultra）
+        visible_condition: 面板打开即可见；带 pro 皇冠图标
+        enabled_condition: 始终可选
+        action_result: 默认选中态：展开展示尺寸与分辨率分段；2K 默认选中（长边<2048 输入）
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 打开面板默认该行 ring-c-theme 且展开
+        notes: 打开面板默认选中 Ultra HD Mode 为实测观察，旧版(v2 2026-08-29)默认 Standard；疑似需求外差异，待产品确认
+      primary_enhance:
+        selector: "div[data-no-capture='true'] button:has-text('Enhance')"
+        role_or_text: Enhance
+        visible_condition: 面板打开即可见
+        enabled_condition: 选中非 Old Photo 模式且有可用档位
+        action_result: 提交所选模式/分辨率 Enhance 任务；控制台出现 [AIGC 提交][开始提交] styleId 与 [PicEnhanceTask][SubmitParams] resourceCode，轮询 [aigc-task-poll] flowJobId / jobId= <uuid>
+        reversible: false
+        explore_status: covered
+        dependencies: [登录/credits]
+        assertions_hint: 提交后控制台可见 styleId / resourceCode / flowJobId(jobId) 作为任务 id；扣点后顶部 Credits 减少
+        notes: |
+          Pro 账号 Ultra 2K/4K 每次扣 4 credits；非 Ultra 2K/4K 不扣；
+          提交后 Console 任务 id 三处可见：handleSubmitTask result 对象 data.taskId（如 gzy_picenhance_PokeCutWeb_<ts>_<rand>_dev_cross，同对象带 efMode）；
+          [aigc-task-poll] 对象 taskIds[0] 与 flowJobId(uuid)；纯文本日志「轮询结果 <taskId> Ng」
+  resolution_by_input_size:
+    description: 分辨率默认推荐与禁用规则（实测，输入长边口径）
+    trigger: 打开 Enhance 面板
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      res_2k:
+        selector: "div[data-enhance-row][class*='ring-c-theme'] button:text-is('2K')"
+        role_or_text: 2K
+        visible_condition: 选中非 Old Photo 模式行内
+        enabled_condition: 输入长边<=4096 时可用；长边>4096 禁用（aria-disabled=true）
+        action_result: 选中 2K；目标长边 2048；若禁用点击显示 toast "The resolution of the image is over 2K. Only larger options can be selected."
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 选中态 class 含 bg-gradient-to-r from-[#3338EE]
+        notes: 实测 4K.jpg(4096) 长边下 2K 禁用；4K.png(4500)/8K.jpg(8192) 同样禁用
+      res_4k:
+        selector: "div[data-enhance-row][class*='ring-c-theme'] button:text-is('4K')"
+        role_or_text: 4K
+        visible_condition: 选中非 Old Photo 模式行内
+        enabled_condition: 输入长边<=8192 可用；长边>8192 无更高档；实测 4500 输入 4K 禁用
+        action_result: 选中 4K；目标长边 4096；若禁用点击 toast "The resolution of the image is over 4K. Only larger options can be selected."
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 同 2K
+        notes: 实测长边=4096 输入默认选中 4K（需求 AC-024 期望默认 8K，见 bug_candidate）
+      res_8k:
+        selector: "div[data-enhance-row][class*='ring-c-theme'] button:text-is('8K')"
+        role_or_text: 8K
+        visible_condition: 选中非 Old Photo 模式行内
+        enabled_condition: 输入长边<=8192 可用；实测 8K.jpg(8192) 输入 8K 也禁用
+        action_result: 选中 8K；目标长边 8192
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 同 2K
+        notes: 长边=8192 时四档全禁用并 toast "The image is already at the highest clarity."
+  result_after_enhance:
+    description: 提交后 loading 占位 → 成功新增结果图；结果图 alt 含 "(Enhanced)"，blob 尺寸为目标分辨率
+    trigger: 提交 Enhance 成功后自动出现
+    url_or_state_key: /agent?pid=<uuid>
+    buttons: {}
+    notes: |
+      实测 Ultra 2K(1K.jpg 1200x1600) 成功结果图 blob naturalWidth=3072 naturalHeight=4096（长边 4096，非 2048）；
+      loading 阶段先出现同源尺寸占位 (Enhanced) 层再替换为最终图；
+      点击结果图中心进入对比态：body 出现 "Before : <宽>px * <高>px"、模式+分辨率标签(如 "Ultra HD Mode 2K")；
+      DOM 出现 infinite_canvas_enhance_compare_handle.svg 与 infinite_canvas_enhance_result_badge.svg；
+      en-US 下 "Now" 文案疑似漏翻：文本显示原始 i18n key "text.canvasEnhanceUINow : <宽>px * <高>px"
+  compare_view:
+    description: 结果图 Before/After 对比态
+    trigger: 首次点击有源图关联的成功结果图（自动进入）
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      compare_handle:
+        selector: "img[src*='infinite_canvas_enhance_compare_handle.svg']"
+        role_or_text: 对比滑杆 handle
+        visible_condition: 对比态中
+        enabled_condition: 始终
+        action_result: 拖动切换 Before/After
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 对比态内不触发画布拖拽/变形（需手工再验）
+      result_badge:
+        selector: "img[src*='infinite_canvas_enhance_result_badge.svg']"
+        role_or_text: 结果徽标
+        visible_condition: 对比态中
+        enabled_condition: 始终
+        action_result: 结果图徽标
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+  mode_defaults_observed:
+    description: 各输入长边下的默认档位（选中模式内，实测）
+    trigger: 打开 Enhance 面板
+    url_or_state_key: /agent?pid=<uuid>
+    buttons: {}
+    notes: |
+      长边 768/1600(<2048) → 默认 2K，2K/4K/8K 均可选；
+      长边 4096(=4K) → 默认 4K，2K 禁用(over 2K toast)，8K 可选（AC-024 期望默认 8K → bug_candidate）；
+      长边 4500(4096~8192) → 默认 8K，2K/4K 禁用（over 2K/over 4K toast）；
+      长边 8192(=8K) → 各模式 2K/4K/8K 全禁用，点击 toast "The image is already at the highest clarity."（AC-026）
+tabs: {}
+modals: {}

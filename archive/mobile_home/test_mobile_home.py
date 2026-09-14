@@ -12,7 +12,18 @@ import allure
 from pathlib import Path
 from playwright.sync_api import Page, expect
 
-TEST_IMAGES = Path(__file__).resolve().parent.parent / "test_images"
+
+
+def _repo_root():
+    """归档副本位于 archive/<dir>/，需按 test_images/ 上溯仓库根（原 parents[1] 解析到 archive/ 会找不到素材）。"""
+    here = Path(__file__).resolve()
+    for c in [here.parent, *here.parents]:
+        if (c / "test_images").is_dir():
+            return c
+    return Path(__file__).resolve().parent.parent
+
+
+TEST_IMAGES = _repo_root() / "test_images"
 IMG_VALID = str(TEST_IMAGES / "有人脸.JPG")
 IMG_DAMAGED = str(TEST_IMAGES / "损坏的图.png")
 BASE_PATH = "/"
@@ -117,7 +128,8 @@ class TestL1PageStructure:
             expect(page.get_by_role("button", name="Start Creating for Free")).to_be_visible()
             ph = page.locator("textarea[aria-label]").first.get_attribute("placeholder")
             assert ph and ph.startswith("Start with Pokecut's free AI image generation")
-            expect(page.locator("section.mobile-home-agent-hero button", has_text="Pokecut Pro")).to_be_visible()
+            # 2026-09-14 漂移修正：默认模型由 Pokecut Pro 变为 Auto（page_map mobile_home_v2）
+            expect(page.locator("section.mobile-home-agent-hero button").filter(has_text="Auto")).to_be_visible()
             gen = page.locator("section.mobile-home-agent-hero button", has_text="Generate").first
             expect(gen).to_be_disabled()
         shot(page, "L1-002_首屏文案控件")
@@ -163,12 +175,13 @@ class TestL2Interactions:
     @allure.title("L2-003: 模型入口展开模型列表")
     @allure.severity(allure.severity_level.NORMAL)
     def test_l2_003_model_popover(self, mobile_page: Page, base_url: str):
-        """覆盖层级: Layer 2 — 交互行为；步骤: 打开首页 -> 点击 Pokecut Pro；预期: 8 个模型选项"""
+        """覆盖层级: Layer 2 — 交互行为；步骤: 打开首页 -> 点击模型入口（当前默认 Auto）；预期: 模型选项齐全"""
         page = mobile_page
         with allure.step("导航到目标页面"):
             goto_home(page, base_url)
         with allure.step("执行操作"):
-            page.locator("section.mobile-home-agent-hero button", has_text="Pokecut Pro").click()
+            # 2026-09-14 漂移修正：点击模型入口（当前默认文案 Auto），弹层选项断言保持不变
+            page.locator("section.mobile-home-agent-hero button").filter(has_text="Auto").first.click()
             page.wait_for_timeout(1200)
             body = page.inner_text("body")
             for opt in ["ChatGPT Image 2.0", "Nano Banana", "Nano Banana 2", "Seedream4.0"]:
@@ -290,12 +303,20 @@ class TestL2Interactions:
     @allure.title("L2-010: effect 模板卡上传进入画布")
     @allure.severity(allure.severity_level.NORMAL)
     def test_l2_010_effect_template(self, mobile_page: Page, base_url: str):
-        """覆盖层级: Layer 2 — 交互行为；步骤: 点击 effect 模板 Butt 上传；预期: 进入 /create/edit"""
+        """覆盖层级: Layer 2 — 交互行为；步骤: 点击 effect 模板卡（Slim）上传；预期: 进入 /create/edit"""
         page = mobile_page
         with allure.step("导航到目标页面"):
             goto_home(page, base_url)
         with allure.step("执行操作"):
-            upload_via(page, page.get_by_role("button", name="Butt").first, IMG_VALID)
+            # 2026-09-14 漂移修正：原 "Butt" 模板入口不存在，改用实测可上传进画布的 Slim 模板卡。
+            # 卡片缩略图 img 为叠加层（class 含 invisible），需 force 点击才触发文件选择器（MCP 实测路径）。
+            trigger = page.locator("img[alt='Slim']").first
+            trigger.scroll_into_view_if_needed()
+            page.wait_for_timeout(300)
+            with page.expect_file_chooser(timeout=10000) as chooser_info:
+                trigger.click(force=True)
+            chooser_info.value.set_files(IMG_VALID)
+            page.wait_for_timeout(300)
             page.wait_for_timeout(6000)
             assert "/create/edit?pid=" in page.url
         shot(page, "L2-010_画布")

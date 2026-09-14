@@ -15,7 +15,18 @@ import allure
 import pytest
 from playwright.sync_api import Page
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
+
+
+def _repo_root():
+    """归档副本位于 archive/<dir>/，需按 test_images/ 上溯仓库根（原 parents[1] 解析到 archive/ 会找不到素材）。"""
+    here = pathlib.Path(__file__).resolve()
+    for c in [here.parent, *here.parents]:
+        if (c / "test_images").is_dir():
+            return c
+    return pathlib.Path(__file__).resolve().parents[1]
+
+
+ROOT = _repo_root()
 IMG_FACE = str(ROOT / "test_images" / "有人脸.JPG")
 IMG_MULTI = str(ROOT / "test_images" / "多人脸.jpg")
 IMG_NOFACE = str(ROOT / "test_images" / "无人脸.jpg")

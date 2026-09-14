@@ -1,0 +1,331 @@
+# Pokecut Infinite Canvas - Sticker Panel (Legacy / zh-CN)
+# Version: v1
+# Explored: 2026-09-11, http://10.17.1.66:3001/zh/template, VIP 450832596@qq.com
+page: Infinite Canvas Sticker Panel
+url: /zh/create/edit?pid=<uuid>#
+landmark:
+  selector: 'div.h-\[calc\(100vh-5rem\)\].w-\[25rem\]:has(img[src*="/source/sticker/thumb/"])'
+  description: 旧画布左侧 Sticker 素材面板；当前显示贴纸分类与缩略图。
+entry:
+  from: /zh/template
+  trigger: >-
+    在中文模板页进入“纯色”分组，点击第一张模板卡；先监听 file chooser，再选择
+    test_images/1K.jpg。任务完成后进入旧画布。
+  selector: 'h3:text-is("纯色")'
+  template_card:
+    selector: 'div.mb-\[0\.5rem\]:has(h3:text-is("纯色")) div.relative.flex.w-\[9\.625rem\].cursor-pointer'
+    click_target: 'div.absolute.left-0.top-0.flex.size-full.items-center > div'
+    template_id: 12_7_20240909
+  file_selector: 'input[type=file]'
+  after_upload: /zh/create/edit?pid=<uuid>#
+
+elements:
+  left_nav:
+    selector: 'div.flex.w-\[5rem\].flex-shrink-0.flex-col'
+    description: 旧画布左侧垂直功能栏；Sticker 为第 7 项，图标 src 为 edit_left_tab_btn_sticker.svg。
+  sticker_tab:
+    selector: 'div.cursor-pointer:has(> img[src$="edit_left_tab_btn_sticker.svg"])'
+    role_or_text: Sticker / 贴纸
+    description: 点击后展开左侧贴纸素材面板；当前页显示中文文案“贴纸”。
+  sticker_panel:
+    selector: 'div.h-\[calc\(100vh-5rem\)\].w-\[25rem\]:has(img[src*="/source/sticker/thumb/"])'
+    description: 宽 400px 的贴纸目录；顶部为分类轨道，下方为当前分类缩略图。
+  sticker_category_rail:
+    selector: 'div.h-\[calc\(100vh-5rem\)\].w-\[25rem\]:has(img[src*="/source/sticker/thumb/"]) .mel-scrollbar__view > div > div:first-child'
+    description: 分类文本轨道，可见项包括 情人节1、情人节2、新年、简单、数字、卡通、室内、海滨、报纸拼贴、复古等。
+  first_sticker_thumbnail:
+    selector: 'img[src$="thumb_sticker_valentine1.webp"]'
+    role_or_text: 情人节1 首张 Love sticker
+    description: 本次范围固定的第一个贴纸素材；点击后新增并自动选中该贴纸图层。
+  main_canvas:
+    selector: canvas
+    description: 旧画布编辑区；探索时可见面积最大的 canvas 为 1039x1000（1920x1080 viewport）。
+  right_property_panel:
+    selector: 'div.h-\[calc\(100vh-5rem\)\].w-\[25rem\].bg-white:has(p:text-is("不透明度"))'
+    description: 选中贴纸后的右侧属性容器；包含 7 个分区：不透明度、调整、阴影、轮廓、反射、滤镜、混合。
+  selected_layer_toolbar:
+    selector: 'img[src$="picture_edit_icon_delete.svg"]'
+    description: 贴纸选中时右侧浮动工具栏可见；本次不执行删除、层级、翻转、旋转或裁剪。
+
+modals: {}
+
+states:
+  sticker_panel_open:
+    description: 左侧 Sticker 面板打开态；本节只覆盖“第一个贴纸 -> 新增并选中”。
+    trigger: 点击左侧 Sticker 入口
+    url_or_state_key: /zh/create/edit?pid=<uuid># 且左侧面板可见贴纸分类和 thumb_sticker_*.webp 缩略图
+    buttons:
+      sticker_first_thumbnail:
+        selector: 'img[src$="thumb_sticker_valentine1.webp"]'
+        role_or_text: 情人节1 / Love sticker
+        visible_condition: Sticker 面板打开且情人节1 分类已加载
+        enabled_condition: 已登录并进入可编辑画布
+        action_result: 点击后新增一个贴纸图层并自动选中；画布出现选择框和四角缩放锚点，左侧面板保持贴纸目录。
+        reversible: true
+        explore_status: covered
+        dependencies: [VIP 账号, test_images/1K.jpg, 模板入口任务已完成]
+        assertions_hint: 画布新增贴纸可见；右侧出现 7 个属性分区；Layer 列表中贴纸图层数量为 1。
+        notes: 证据 shots/sticker_panel_opacity_100_zh.png、shots/sticker_panel_opacity_expanded_zh.png。
+
+  sticker_selected:
+    description: >-
+      贴纸选中后的右侧通用属性面板；7 行依次为“不透明度 / 调整 / 阴影 / 轮廓 / 反射 / 滤镜 / 混合”。
+      不透明度与调整为无开关的可展开行；阴影、轮廓、反射、滤镜、混合各带独立 checkbox switch。
+    trigger: 点击画布上的贴纸图层
+    url_or_state_key: 右侧面板可见“不透明度”且 Sticker 图层处于选中状态
+    buttons:
+      sticker_opacity_row:
+        selector: 'div.cursor-pointer:has(> p:text-is("不透明度"))'
+        role_or_text: 不透明度
+        visible_condition: 贴纸已选中
+        enabled_condition: 始终可展开
+        action_result: 展开后显示唯一 range；默认 100，实测 100→35 贴纸透明度下降。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 'range min=0 max=100；100→35 和 100→0 的画布差异均 > 2%。'
+        notes: >-
+          实测 100→35 阈值差异 2.172%，100→0 差异 2.202%；
+          证据 shots/sticker_panel_opacity_100_zh.png、sticker_panel_opacity_35_zh.png、sticker_panel_opacity_0_zh.png。
+      sticker_adjust_row:
+        selector: 'div.cursor-pointer:has(> p:text-is("调整"))'
+        role_or_text: 调整
+        visible_condition: 贴纸已选中
+        enabled_condition: 可展开
+        action_result: 展开 13 个调色 range，按顺序为 亮度/对比度/鲜艳度/饱和度/曝光/高光/阴影/清晰度/锐化/色温/色调/颗粒/暗角。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: >-
+          13 个 range 的值域依次为 -100~100、-100~100、-100~100、-100~100、-100~100、-100~100、-100~100、
+          0~100、0~100、-100~100、-100~100、0~100、-100~100；每项从 0 改到正值后画布像素均值均非零变化。
+        notes: >-
+          实测 13 项均改变画布像素数据；强差异低于 0.1 个百分点阈值的项为鲜艳度(0.020%)、曝光/高光/阴影/锐化/色温/色调/颗粒(约 0%)、清晰度(0.007%)、暗角(0.139%)，但原始像素均值均 >0。
+          证据 shots/sticker_panel_adjust_expanded_zh.png；裁切证据 evidence/mcp-output/sticker_panel_adjust_00.png 至 sticker_panel_adjust_12.png。
+
+  shadow_effect_active:
+    description: 阴影开启后的“效果”子页；上方为 10 个阴影样式卡，下方为 3 个滑杆。
+    trigger: 贴纸选中 → 阴影 switch ON → 点击“效果”
+    url_or_state_key: 右侧阴影区展开且可见“效果/位置/颜色”与 3 个 range
+    buttons:
+      sticker_shadow_switch:
+        selector: 'div.cursor-pointer:has(> p:text-is("阴影")) input[type="checkbox"]'
+        role_or_text: Shadow switch
+        visible_condition: 贴纸已选中
+        enabled_condition: 始终可切换
+        action_result: 开启后显示阴影样式卡与“效果 / 位置 / 颜色”子页；关闭后移除阴影效果。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: checkbox.checked 与服务端渲染状态同步；开关切换后画布差异应非零。
+        notes: 证据 shots/sticker_panel_shadow_expanded_zh.png。
+      sticker_shadow_effect_sliders:
+        selector: 'div.cursor-pointer:has(> p:text-is("阴影")) + div input[type=range]'
+        role_or_text: 阴影效果参数
+        visible_condition: 阴影开启且处于“效果”
+        enabled_condition: 阴影 checkbox 已选中
+        action_result: 3 个 range 分别控制不透明度、模糊、渐变；实测 0/0/0→55/32/22 画布差异 0.976%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 3 个 range 的 min=0 max=100；面板数值同步更新。
+        notes: 证据 evidence/mcp-output/sticker_panel_shadow_zeroed.png、sticker_panel_shadow_changed_clean.png。
+      sticker_shadow_position_tab:
+        selector: 'div.cursor-pointer:has(> p:text-is("阴影")) + div p:text-is("位置")'
+        role_or_text: 位置
+        visible_condition: 阴影开启
+        enabled_condition: 阴影 checkbox 已选中
+        action_result: 切到位置子页后显示 X/Y 两个 range；实测 30/-20 使阴影偏移，画布差异 1.130%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 'X/Y min=-100 max=100；切 tab 本身不改变画布，改值后才变化。'
+        notes: 证据 evidence/mcp-output/sticker_panel_shadow_position_changed.png。
+      sticker_shadow_color_tab:
+        selector: 'div.cursor-pointer:has(> p:text-is("阴影")) + div p:text-is("颜色")'
+        role_or_text: 颜色
+        visible_condition: 阴影开启
+        enabled_condition: 阴影 checkbox 已选中
+        action_result: 切到颜色子页后显示色板；选择 rgb(99,164,232) 后画布差异 0.724%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 色块用 computed backgroundColor 定位；颜色变化应改变阴影像素。
+        notes: 证据 evidence/mcp-output/sticker_panel_shadow_color_blue_clean.png。
+
+  outline_active:
+    description: 轮廓开启态；显示 5 个类型卡、色板、大小/距离/模糊/平滑 4 个参数。
+    trigger: 贴纸选中 → 轮廓 switch ON
+    url_or_state_key: 右侧轮廓区展开且出现“类型/颜色/大小/距离/模糊/平滑”
+    buttons:
+      sticker_outline_switch:
+        selector: 'div.cursor-pointer:has(> p:text-is("轮廓")) input[type="checkbox"]'
+        role_or_text: Outline switch
+        visible_condition: 贴纸已选中
+        enabled_condition: 始终可切换
+        action_result: 开启后显示 5 个类型、色板和 4 个 range；默认大小 20，其余为 0。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: checkbox.checked 与渲染同步；开启后画布差异 1.472%。
+        notes: 证据 shots/sticker_panel_outline_expanded_zh.png。
+      sticker_outline_types:
+        selector: 'div.cursor-pointer:has(> p:text-is("轮廓")) + div div.rounded-full'
+        role_or_text: 轮廓类型
+        visible_condition: 轮廓开启
+        enabled_condition: 类型资源已加载
+        action_result: 共 5 个圆形类型项；实测切换到第 4 项画布差异 1.511%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 类型卡宽度约 66px；选中态有蓝色边框。
+        notes: 证据 evidence/mcp-output/sticker_panel_outline_type_4.png。
+      sticker_outline_color:
+        selector: 'div.cursor-pointer:has(> p:text-is("轮廓")) + div div.h-full.w-full'
+        role_or_text: 轮廓颜色
+        visible_condition: 轮廓开启
+        enabled_condition: 色板已加载
+        action_result: 选择 rgb(174,41,42) 后轮廓变红，画布差异 1.160%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 以 computed backgroundColor 选择目标色块。
+        notes: 证据 evidence/mcp-output/sticker_panel_outline_color_red.png。
+      sticker_outline_sliders:
+        selector: 'div.cursor-pointer:has(> p:text-is("轮廓")) + div input[type=range]'
+        role_or_text: Outline sliders
+        visible_condition: 轮廓开启
+        enabled_condition: 轮廓 checkbox 已选中
+        action_result: 依次控制大小/距离/模糊/平滑；默认 20/0/0/0，实测改为 30/20/15/10 后画布差异 2.580%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 4 个 range min=0 max=100；值面板同步。
+        notes: 证据 evidence/mcp-output/sticker_panel_outline_sliders.png。
+
+  reflection_active:
+    description: 反射开启态；提供范围/不透明度/距离/角度 4 个 range。
+    trigger: 贴纸选中 → 反射 switch ON
+    url_or_state_key: 右侧反射区展开且出现“范围/不透明度/距离/角度”
+    buttons:
+      sticker_reflection_switch:
+        selector: 'div.cursor-pointer:has(> p:text-is("反射")) input[type="checkbox"]'
+        role_or_text: Reflection switch
+        visible_condition: 贴纸已选中
+        enabled_condition: 始终可切换
+        action_result: 开启后按当前参数显示贴纸倒影；实测关闭→50/50/0/180 时画布差异 3.129%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 开启后倒影位于贴纸下方；贴纸需要保留可视空间。
+        notes: 证据 shots/sticker_panel_reflection_expanded_zh.png。
+      sticker_reflection_sliders:
+        selector: 'div.cursor-pointer:has(> p:text-is("反射")) + div input[type=range]'
+        role_or_text: Reflection sliders
+        visible_condition: 反射开启
+        enabled_condition: 反射 checkbox 已选中
+        action_result: 4 个 range 分别控制范围/不透明度/距离/角度；实测 50/50/0/180→80/80/60/120 后画布差异 2.345%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 前 3 个 range min=0 max=100；角度 min=0 max=360。
+        notes: 证据 evidence/mcp-output/sticker_panel_reflection_default_clean.png、sticker_panel_reflection_changed_clean.png。
+
+  filter_active:
+    description: 滤镜开启态；包含分类轮播、滤镜缩略图和强度 range。
+    trigger: 贴纸选中 → 滤镜 switch ON
+    url_or_state_key: 右侧滤镜区展开且显示 17 个分类与滤镜缩略图
+    buttons:
+      sticker_filter_switch:
+        selector: 'div.cursor-pointer:has(> p:text-is("滤镜")) input[type="checkbox"]'
+        role_or_text: Filter switch
+        visible_condition: 贴纸已选中
+        enabled_condition: 始终可切换
+        action_result: 开启后自动应用当前滤镜；实测关闭→开启画布差异 2.107%，浏览器真实鼠标点击 PR02 后相对默认滤镜再次变化 2.051%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 至少 17 个分类按钮和 20 个可见滤镜缩略图；缩略图点击必须使用 Playwright mouse/locator 真实点击。
+        notes: 证据 shots/sticker_panel_filter_expanded_zh.png、sticker_panel_filter_PR02_zh.png。
+      sticker_filter_categories:
+        selector: 'div.cursor-pointer:has(> p:text-is("滤镜")) + div button'
+        role_or_text: 滤镜分类
+        visible_condition: 滤镜开启
+        enabled_condition: 分类数据已加载
+        action_result: 文本分类按钮，可见复古/提亮/人像/壁纸/闪闪/星光等；点击切换当前分类缩略图。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 当前分类有选中背景；分类轮播左右箭头均为 button。
+        notes: 分类包含 17 项，Item 1 of 17。
+      sticker_filter_thumbnails:
+        selector: 'div.cursor-pointer:has(> p:text-is("滤镜")) + div img[src*="/source/filter/thumb/"]'
+        role_or_text: 滤镜缩略图
+        visible_condition: 滤镜开启
+        enabled_condition: 缩略图已加载
+        action_result: 点击缩略图直接应用滤镜；实测 PR02 相对默认滤镜画布差异 2.051%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 选中缩略图有蓝色 2px 边框；不要只按 img src 猜测 PR 编号，PR02 对应 thumb_practical_02.webp。
+        notes: 证据 evidence/mcp-output/filter_PR02_mouse.png。
+      sticker_filter_strength:
+        selector: 'div.cursor-pointer:has(> p:text-is("滤镜")) + div input.adjustSlider'
+        role_or_text: 滤镜强度
+        visible_condition: 滤镜开启且已选中缩略图
+        enabled_condition: 滤镜缩略图已应用
+        action_result: range 0~100、默认 100；实测 0→50 画布差异 1.866%，50→100 差异 1.895%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 该 range 的 offsetParent 可能为 null；判定可见性需用 bounding box，不要只用 offsetParent。
+        notes: 证据 shots/sticker_panel_filter_strength50_zh.png；裁切证据 evidence/mcp-output/sticker_panel_filter_strength_0_clean.png、50_clean.png、100_clean.png。
+
+  blend_active:
+    description: 混合开启态；显示 27 个混合模式瓦片和 1 个强度 range。
+    trigger: 贴纸选中 → 混合 switch ON
+    url_or_state_key: 右侧混合区展开且显示“清除/正片叠底/变暗/变亮/滤色/叠加...”与强度 100
+    buttons:
+      sticker_blend_switch:
+        selector: 'div.cursor-pointer:has(> p:text-is("混合")) input[type="checkbox"]'
+        role_or_text: Blend switch
+        visible_condition: 贴纸已选中
+        enabled_condition: 始终可切换
+        action_result: 开启后显示模式瓦片与强度滑杆；默认清除（None）时画布无变化。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 默认模式为清除；关闭→开启默认态画布差异 0，符合 None 语义。
+        notes: 证据 shots/sticker_panel_blend_expanded_zh.png。
+      sticker_blend_modes:
+        selector: 'div.cursor-pointer:has(> p:text-is("混合")) + div :text-is("正片叠底")'
+        role_or_text: 正片叠底 / Multiply
+        visible_condition: 混合开启
+        enabled_condition: 模式缩略图已加载
+        action_result: 点击“正片叠底”后贴纸与下层混合，画布差异 1.193%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 模式共 26 项，中文可见；模式项以缩略图卡片显示，文本节点可点。
+        notes: 证据 evidence/mcp-output/sticker_panel_blend_mode.png。
+      sticker_blend_strength:
+        selector: 'div.cursor-pointer:has(> p:text-is("混合")) + div input[type=range]'
+        role_or_text: 混合强度
+        visible_condition: 混合开启且已选非“清除”模式
+        enabled_condition: 已选择有效混合模式
+        action_result: range 0~100、默认 100；实测正片叠底 100→80 后画布再次变化 1.923%。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 强度值面板同步更新；与模式固定后再比较。
+        notes: 证据 evidence/mcp-output/sticker_panel_blend_strength_80.png。
+
+notes:
+  - 本次任务只验证一个贴纸（情人节1 首张 thumb_sticker_valentine1.webp）及其右侧调参面板，不扩展到其它贴纸素材、Layer 管理、保存或下载。
+  - 旧的图片属性面板与本贴纸面板结构大体同构，但贴纸面板实际只有 7 行，无 Background；阴影为 3 个效果 range，另有位置/颜色子页。
+  - 右侧属性行必须限定在 x>1500 且宽约 400px 的可见属性面板内；页面挂载多套隐藏复用节点。
+  - 属性行定位：`div.cursor-pointer:has(> p:text-is("<分区名>"))`；内容区为行的直接相邻兄弟 div。
+  - 阴影、轮廓、反射、滤镜、混合 switch 使用 `input[type=checkbox]` + `span.slider`；开关 ON 可能自动展开当前分区。
+  - 滤镜缩略图真实选择需用 Playwright 鼠标点击，直接 DOM `click()` 可出现选中样式但不触发画布重渲染。
+  - Filter strength range 在部分渲染阶段 `offsetParent` 为 null，但 bounding box 可见；可见性过滤需用 box 判断。
+  - 证据截图按两类保存：用户可复核的全页面图在 `shots/`；像素比对用 canvas 裁切图在 `evidence/mcp-output/`，不将后者作为页面结构证据。

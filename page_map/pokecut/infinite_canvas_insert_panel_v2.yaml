@@ -1,0 +1,569 @@
+# Pokecut Infinite Canvas - Insert Panel (Legacy / en-US)
+# Version: v2 (legacy first version per page-map version rule)
+# Explored: 2026-09-10, http://10.17.1.66:3001/template, VIP 450832596@qq.com
+page: Infinite Canvas Insert Panel
+url: /create/edit?pid=<uuid>#
+landmark:
+  selector: 'div.cursor-pointer:has(> img[src$="edit_left_tab_btn_insert.svg"])'
+  description: 旧画布左侧功能栏第一个 Insert 入口
+entry:
+  from: /template
+  trigger: >-
+    在 en-US 页面进入 Colorful Background（中文“纯色”）分组，点击第一张模板卡，
+    先监听 file chooser，再点击卡片覆盖层选择 test_images/1K.jpg；任务完成后进入旧画布。
+  selector: 'h3:has-text("Colorful Background")'
+  template_card:
+    selector: 'div.mb-\[0\.5rem\]:has(h3:has-text("Colorful Background")) div.relative.flex.w-\[9\.625rem\].cursor-pointer'
+    click_target: 'div.absolute.left-0.top-0.flex.size-full.items-center > div'
+    template_id: 12_7_20240909
+  file_selector: 'input[type=file]'
+  after_upload: /create/edit?pid=<uuid>#
+
+elements:
+  left_nav:
+    selector: 'div.flex.w-\[5rem\].flex-shrink-0.flex-col'
+    description: 旧画布左侧垂直功能栏；当前包含 Insert、AI Tools、AI BG、Change BG、Template、Text、Sticker、Adjust、Resize、Layer。
+  insert_tab:
+    selector: 'div.cursor-pointer:has(> img[src$="edit_left_tab_btn_insert.svg"])'
+    role_or_text: Insert
+    description: 左侧第一个按钮，点击展开 Insert 面板。
+  insert_panel:
+    selector: 'div.h-\[calc\(100vh-5rem\)\].w-\[25rem\]:has-text("Upload")'
+    description: 宽 400px 的左插面板；包含 Upload、Draw、Shape、Line 四个区块。
+  main_canvas:
+    selector: canvas
+    description: 旧画布编辑区；页面存在多个 canvas，自动化和探索时选择可见面积最大的 canvas。
+  selected_layer_toolbar:
+    selector: 'img[src$="picture_edit_icon_delete.svg"]'
+    description: 选中图层后，画布右侧显示删除、层级、翻转、旋转、裁剪等浮动按钮。
+  right_property_panel:
+    selector: 'div.h-\[calc\(100vh-5rem\)\].w-\[25rem\].bg-white'
+    description: 右侧属性面板容器；内容随文字、形状、线条绘制态和图层类型变化。
+
+tabs: {}
+
+modals:
+  my_cuts:
+    selector: 'div.fixed:has-text("My Cuts")'
+    description: My Cuts 抠图库弹窗，展示账号最近抠图结果缩略图。
+  custom_line_style:
+    selector: 'div.fixed:has-text("Custom Line Style")'
+    description: Line 区第一项“+”打开的 Custom Line Style 弹窗，可选择 Start / Line / End 组合后 Apply。
+
+states:
+  insert_panel_open:
+    description: Insert 面板默认态；Upload 下提供 Image 与 My Cuts，Draw 下提供 9 个画笔入口，Shape 显示 10 个形状，Line 显示 1 个自定义入口 + 9 个预设线条。
+    trigger: 点击左侧第一个 `insert_tab`
+    url_or_state_key: /create/edit?pid=<uuid># 且左侧面板标题包含 Upload / Draw / Shape / Line
+    buttons:
+      upload_image:
+        selector: 'button:text-is("Image")'
+        role_or_text: Image
+        visible_condition: Insert 面板打开
+        enabled_condition: 已进入画布且面板可交互
+        action_result: 打开浏览器 file chooser；选择 test_images/有人脸.JPG 后新增并自动选中图片图层，画布显示新图层控制框。
+        reversible: true
+        explore_status: covered
+        dependencies: [test_images/有人脸.JPG]
+        assertions_hint: file chooser 可被同步接管；插入后主画布出现新选择框和图层控制图标。
+        notes: 证据 shots/16_upload_local_added.png。
+      upload_my_cuts:
+        selector: 'button:text-is("My Cuts")'
+        role_or_text: My Cuts
+        visible_condition: Insert 面板打开
+        enabled_condition: 登录后即可
+        action_result: 打开 My Cuts 弹窗；点击第一张透明缩略图后弹窗关闭并把抠图插入画布。
+        reversible: true
+        explore_status: covered
+        dependencies: [VIP 账号, 已有抠图记录]
+        assertions_hint: 弹窗出现至少 1 张可见缩略图；选择后 modal 消失且出现新图层选择框。
+        notes: 证据 shots/18_my_cuts_dialog.png、shots/19_my_cuts_first_inserted.png。
+      draw_text:
+        selector: 'img[src$="home_pop_add_bursh_text.webp"]'
+        role_or_text: Text
+        visible_condition: Insert 面板打开
+        enabled_condition: 画布已初始化
+        action_result: 进入文字绘制态；左侧出现 Apply/Cancel，右侧出现 Font、Contents、Size、Opacity、Color。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 右侧 `textarea[rows="1"][maxlength="1000"]` 默认值为 context；Size 默认 69、Opacity 默认 100。
+        notes: 证据 shots/38_draw_text_panel.png。
+      draw_general:
+        selector: 'img[src$="home_pop_add_bursh_general.webp"]'
+        role_or_text: General
+        visible_condition: Insert 面板打开
+        enabled_condition: 画布已初始化
+        action_result: 进入常规绘制态；右侧出现 Size、Opacity、Color，无 Font/Contents。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 右侧可见 2 个 `input.adjustSlider`，默认 Size=30、Opacity=100。
+        notes: 证据 shots/50_general_panel.png。
+      shape_square:
+        selector: 'img[src$="thumb_shape_style_square.webp"]'
+        role_or_text: Shape square
+        visible_condition: Insert 面板 Shape 区可见
+        enabled_condition: 画布可编辑
+        action_result: 新增灰色方形图层并自动选中；右侧出现 Fill、Corner、Border、Opacity、Shadow、Reflection。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 画布出现方形选择框，属性面板包含 `Fill` 与 `Corner` 行。
+        notes: 证据 shots/20_shape_square_added.png、21_shape_baseline.png。
+      line_custom_entry:
+        selector: 'img[src$="edit_line_add.svg"]'
+        role_or_text: Custom line
+        visible_condition: Insert 面板 Line 区可见
+        enabled_condition: 画布可编辑
+        action_result: 打开 Custom Line Style 弹窗，不会直接新增图层；Apply 后才按 Start/Line/End 组合创建自定义线型。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: modal 标题为 Custom Line Style，包含 Start、Line、End 三组选项和 Apply。
+        notes: 证据 shots/31_line_plus_clicked.png。
+      line_preset_straight:
+        selector: 'img[src$="edit_bottom_icon_line1.webp"]'
+        role_or_text: Straight preset line
+        visible_condition: Insert 面板 Line 区可见
+        enabled_condition: 画布可编辑
+        action_result: 直接新增横线图层并自动选中；右侧出现 Fill、Weight、Style、Start、End、Opacity、Shadow、Outline、Reflection。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 新增的是可选中的线图层，右侧面板首行为 Fill，第二行为 Weight。
+        notes: 证据 shots/33_line_preset_slash.png。
+
+  my_cuts_dialog_open:
+    description: My Cuts 抠图库弹窗打开态。
+    trigger: 点击 Insert → My Cuts
+    url_or_state_key: Insert 面板 + 居中 My Cuts 弹窗
+    buttons:
+      my_cuts_first_thumbnail:
+        selector: 'div.fixed:has-text("My Cuts") img[src*="/uploader/"]'
+        role_or_text: first cutout thumbnail
+        visible_condition: My Cuts 弹窗有记录
+        enabled_condition: 缩略图加载完成
+        action_result: 选择第一张抠图并关闭弹窗，画布新增抠图图层。
+        reversible: true
+        explore_status: covered
+        dependencies: [已有抠图记录]
+        assertions_hint: 第一张 200x200 左右的可见缩略图；点击后 modal 消失。
+        notes: 只使用当前账号已有记录，不生成新抠图。
+
+  draw_text_active:
+    description: 文本绘制态；画笔在画布上涂抹时按当前文字内容/样式擦出文字遮罩。
+    trigger: Insert → Draw → Text
+    url_or_state_key: 左侧 Apply/Cancel 可见 + 右侧 Font/Contents/Size/Opacity/Color
+    buttons:
+      draw_text_contents:
+        selector: 'textarea[rows="1"][maxlength="1000"]'
+        role_or_text: Contents
+        visible_condition: 文本绘制态
+        enabled_condition: 面板可编辑
+        action_result: 内容写入 textarea；已实测 context→POKECUT，涂抹结果从 context 变为 POKECUT。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: textarea.value 与涂抹结果文本一致。
+        notes: 证据 evidence/explore_53_text_params_apply2.json、shots/48_text_params_after_stroke.png。
+      draw_text_font:
+        selector: 'div.cursor-pointer:has-text("Font")'
+        role_or_text: Font
+        visible_condition: 文本绘制态
+        enabled_condition: 字体资源可加载
+        action_result: 打开字体列表；点击 ReadexPro-Bold 后选择态生效，返回绘制面板继续涂抹。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 字体列表可见 `img[src*="/source/font/thumb_v2/"]`；目标字体会显示选中边框。
+        notes: 证据 shots/42_text_font_expanded.png、48_text_params_after_stroke.png。
+      draw_text_size:
+        selector: 'div:has(p:text("Size")) input[type=range]'
+        role_or_text: Size
+        visible_condition: 文本绘制态
+        enabled_condition: 始终可调
+        action_result: 0~100 滑块；实测 69→85 后涂抹文字字号增大。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 滑杆 value 和右侧数值同步更新。
+        notes: evidence/explore_53_text_params_apply2.json。
+      draw_text_opacity:
+        selector: 'div:has(p:text("Opacity")) input[type=range]'
+        role_or_text: Opacity
+        visible_condition: 文本绘制态
+        enabled_condition: 始终可调
+        action_result: 0~100 滑块；实测 100→60 后涂抹文字透明度降低。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 滑杆 value 和右侧数值同步更新。
+        notes: evidence/explore_53_text_params_apply2.json。
+      draw_text_color:
+        selector: 'div:has(p:text("Color")) div.cursor-pointer'
+        role_or_text: Color
+        visible_condition: 文本绘制态
+        enabled_condition: 色板已加载
+        action_result: 点击红色色块后涂抹文字变为红色。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 色板内按 computed backgroundColor 选择目标色；本次选择 rgb(174,41,42)。
+        notes: evidence/explore_53_text_params_apply2.json。
+      draw_text_canvas_brush:
+        selector: canvas
+        role_or_text: Canvas brush surface
+        visible_condition: 文本绘制态
+        enabled_condition: 主画布可见
+        action_result: 鼠标左键拖动画笔；实测横向涂抹擦出重复的当前文字内容。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 使用最大可见 canvas 的 bounding box；从 20% 宽拖到 85% 宽。
+        notes: 证据 shots/39_draw_text_before_stroke.png、40_draw_text_after_stroke.png。
+      draw_text_apply:
+        selector: 'div.cursor-pointer:has-text("Apply")'
+        role_or_text: Apply
+        visible_condition: 文本绘制态
+        enabled_condition: 至少产生一处笔触后
+        action_result: 退出绘制态并将文字绘制形成可选图层；右侧变为图层通用属性面板。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Apply 后左侧恢复 Insert 子面板，画布保留文字图层。
+        notes: 证据 shots/54_text_apply_committed.png。
+      draw_text_cancel:
+        selector: 'div.cursor-pointer:has-text("Cancel")'
+        role_or_text: Cancel
+        visible_condition: 文本绘制态
+        enabled_condition: 始终可用
+        action_result: 放弃当前未 Apply 的绘制笔触并返回 Insert 面板。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 未提交笔触不应保留。
+        notes: 与 Apply 同区分支；未做破坏性覆盖。
+
+  draw_general_active:
+    description: 常规绘制态；使用当前笔刷颜色/大小/透明度在画布上绘制。
+    trigger: Insert → Draw → General
+    url_or_state_key: 左侧 Apply/Cancel + 右侧 Size/Opacity/Color
+    buttons:
+      draw_general_size:
+        selector: 'div:has(p:text("Size")) input[type=range]'
+        role_or_text: Size
+        visible_condition: 常规绘制态
+        enabled_condition: 始终可调
+        action_result: 0~100 滑块；实测 30→80 后笔触变粗。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 滑杆 value 同步显示 80。
+        notes: evidence/explore_54_general_apply.json。
+      draw_general_opacity:
+        selector: 'div:has(p:text("Opacity")) input[type=range]'
+        role_or_text: Opacity
+        visible_condition: 常规绘制态
+        enabled_condition: 始终可调
+        action_result: 0~100 滑块；实测 100→55 后笔触透明度降低。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 滑杆 value 同步显示 55。
+        notes: evidence/explore_54_general_apply.json。
+      draw_general_color:
+        selector: 'div:has(p:text("Color")) div.cursor-pointer'
+        role_or_text: Color
+        visible_condition: 常规绘制态
+        enabled_condition: 色板已加载
+        action_result: 点击蓝色 rgb(99,164,232) 后笔触颜色同步变化。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 选择红/蓝色后绘制结果像素颜色应与色板一致。
+        notes: 证据 shots/50_general_panel.png、52_general_after.png。
+      draw_general_canvas_brush:
+        selector: canvas
+        role_or_text: Canvas brush surface
+        visible_condition: 常规绘制态
+        enabled_condition: 主画布可见
+        action_result: 鼠标左键拖动产生连续蓝色笔触。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 绘制前后 canvas 截图 hash 不同。
+        notes: 证据 evidence/explore_54_general_apply.json。
+      draw_general_apply:
+        selector: 'div.cursor-pointer:has-text("Apply")'
+        role_or_text: Apply
+        visible_condition: 常规绘制态
+        enabled_condition: 至少产生一处笔触后
+        action_result: 提交笔触并退出绘制态；保留新的绘制图层。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Apply 后仍可见 Insert 面板和图层控制框。
+        notes: 证据 shots/55_general_apply_committed.png。
+      draw_general_cancel:
+        selector: 'div.cursor-pointer:has-text("Cancel")'
+        role_or_text: Cancel
+        visible_condition: 常规绘制态
+        enabled_condition: 始终可用
+        action_result: 放弃未提交的笔触。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Cancel 后未提交笔迹不应保留。
+        notes: 与 Apply 同区分支。
+
+  shape_selected:
+    description: 第一个方形图层新增并自动选中；右侧显示形状参数。
+    trigger: Insert → Shape → square
+    url_or_state_key: 画布出现方形选择框且右侧首行为 Fill
+    buttons:
+      shape_fill_row:
+        selector: 'div.cursor-pointer:has(p:text("Fill"))'
+        role_or_text: Fill
+        visible_condition: 形状图层已选中
+        enabled_condition: 始终可点击
+        action_result: 展开颜色与图片填充区；点击黑色后形状填充变黑。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Fill 色板 28 个可点击项；颜色块可通过 computed backgroundColor 精确匹配。
+        notes: 证据 shots/22_shape_fill_expanded.png、30_shape_fill_black.png。
+      shape_fill_image:
+        selector: 'button:text-is("Image")'
+        role_or_text: Image fill
+        visible_condition: Fill 展开
+        enabled_condition: 画布可编辑
+        action_result: 打开 Image/Cutouts 素材库；Image 页首个 Upload 打开 file chooser，选择 test_images/有人脸.JPG 后按原图铺入形状并保持形状选中。
+        reversible: true
+        explore_status: covered
+        dependencies: [test_images/]
+        assertions_hint: Fill 展开后出现蓝色 Image 按钮。
+        notes: 实测 fc_ok=true，图片填充后右侧新增 Adjust 行；证据 shots/56_shape_fill_image.png、57_shape_fill_image_applied.png。
+      shape_corner_row:
+        selector: 'div.cursor-pointer:has(p:text("Corner"))'
+        role_or_text: Corner
+        visible_condition: 形状图层已选中
+        enabled_condition: 可展开
+        action_result: 展开 Corner 0~100 滑块；实测 0→60 后方形四角圆角增大。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: input[type=range] value=60；截图圆角变化。
+        notes: 证据 shots/23_shape_corner_expanded.png、30_shape_corner_60.png。
+      shape_border_switch:
+        selector: 'div:has(p:text("Border")) span.slider'
+        role_or_text: Border
+        visible_condition: 形状图层已选中
+        enabled_condition: 可切换
+        action_result: 开启边框；配合 Border 0~100 滑块和颜色色板生效。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 开关开启后边框宽度和颜色可调。
+        notes: 实测 Border=20、红 rgb(174,41,42)，见 shots/30_shape_border_on_20_red.png。
+      shape_border_width:
+        selector: 'div:has(p:text("Border")) input[type=range]'
+        role_or_text: Border width
+        visible_condition: Border 展开
+        enabled_condition: Border 开启
+        action_result: 0~100；实测 20 后边框明显变粗。
+        reversible: true
+        explore_status: covered
+        dependencies: [shape_border_switch]
+        assertions_hint: value=20。
+        notes: evidence/explore_40_shape_apply.json。
+      shape_border_color:
+        selector: 'div:has(p:text("Border")) div.cursor-pointer'
+        role_or_text: Border color
+        visible_condition: Border 展开
+        enabled_condition: 色板已加载
+        action_result: 点击红色后边框变红。
+        reversible: true
+        explore_status: covered
+        dependencies: [shape_border_switch]
+        assertions_hint: computed backgroundColor=rgb(174,41,42)。
+        notes: 证据 shots/30_shape_border_on_20_red.png。
+      shape_opacity_row:
+        selector: 'div.cursor-pointer:has(p:text("Opacity"))'
+        role_or_text: Opacity
+        visible_condition: 形状图层已选中
+        enabled_condition: 可展开
+        action_result: 展开 0~100 滑块；实测 100→30 后形状明显透明。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 滑杆 value=30。
+        notes: 证据 shots/25_shape_opacity_expanded.png、30_shape_opacity_30.png。
+      shape_shadow_switch:
+        selector: 'div:has(p:text("Shadow")) span.slider'
+        role_or_text: Shadow
+        visible_condition: 形状图层已选中
+        enabled_condition: 可切换
+        action_result: 开启后可选择 3D Shadow/Soft L/Soft R/Hard L/Hard R/Natural L/Natural R/Bottom L/Bottom R/Bottom/Custom；Custom 展开 3 个 0~100 参数。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 开启后选项列表由无变为包含 Custom 的 11 项。
+        notes: 实测 Custom 参数 80/20/15，截图 hash 相对 Opacity 状态变化 5.985%。
+      shape_reflection_switch:
+        selector: 'div:has(p:text("Reflection")) span.slider'
+        role_or_text: Reflection
+        visible_condition: 形状图层已选中
+        enabled_condition: 可切换
+        action_result: 开启后显示 Scope/Opacity/Distance/Angle 四个滑块；实测 80/40/25/90。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 四个滑块 range 分别为 0~100/0~100/0~100/0~360；值同步显示。
+        notes: 截图 hash 相对 Shadow 状态变化 0.356%，参数值均更新。
+
+  line_selected:
+    description: 第二种预设线条新增并自动选中；右侧显示线条参数。
+    trigger: Insert → Line → second preset (`edit_bottom_icon_line1.webp`)
+    url_or_state_key: 画布出现线图层选择框且右侧首行为 Fill/Weight
+    buttons:
+      line_fill_row:
+        selector: 'div.cursor-pointer:has(p:text("Fill"))'
+        role_or_text: Fill
+        visible_condition: 线图层已选中
+        enabled_condition: 可展开
+        action_result: 展开 28 色色板；实测改红后线条变红。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 选择 computed backgroundColor=rgb(174,41,42)。
+        notes: 证据 shots/35_line_fill_red.png。
+      line_weight_row:
+        selector: 'div.cursor-pointer:has(p:text("Weight"))'
+        role_or_text: Weight
+        visible_condition: 线图层已选中
+        enabled_condition: 可展开
+        action_result: 展开 Weight 0~100 滑块；实测 30→70，线条变粗。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 滑杆 value=70。
+        notes: 证据 shots/35_line_weight_70.png。
+      line_style_row:
+        selector: 'div.cursor-pointer:has(p:text("Style"))'
+        role_or_text: Style
+        visible_condition: 线图层已选中
+        enabled_condition: 可展开
+        action_result: 展开 5 个样式缩略图；选择第二个 `edit_bottom_icon_style2.webp` 后线型变化。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 第二个选项选中边框为蓝色，截图 hash 变化。
+        notes: 证据 shots/36_line_style_option_probe.png、37_line_style2.png。
+      line_start_row:
+        selector: 'div.cursor-pointer:has(p:text("Start"))'
+        role_or_text: Start
+        visible_condition: 线图层已选中
+        enabled_condition: 可展开
+        action_result: 展开 11 个起点样式；选择 `edit_bottom_icon_start2.webp` 后起点箭头变化。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 第二个选项为左箭头；点击后截图 hash 变化。
+        notes: 证据 shots/36_line_start_option_probe.png、37_line_start2.png。
+      line_end_row:
+        selector: 'div.cursor-pointer:has(p:text("End"))'
+        role_or_text: End
+        visible_condition: 线图层已选中
+        enabled_condition: 可展开
+        action_result: 展开 11 个终点样式；选择 `edit_bottom_icon_end2.webp` 后终点箭头变化。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 第二个选项为右箭头；点击后截图 hash 变化。
+        notes: 证据 shots/36_line_end_option_probe.png、37_line_end2.png。
+      line_opacity_row:
+        selector: 'div.cursor-pointer:has(p:text("Opacity"))'
+        role_or_text: Opacity
+        visible_condition: 线图层已选中
+        enabled_condition: 可展开
+        action_result: 展开 0~100 滑块；实测 100→40，线条透明度降低。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 滑杆 value=40。
+        notes: 证据 shots/35_line_opacity_40.png。
+      line_shadow_switch:
+        selector: 'div:has(p:text("Shadow")) span.slider'
+        role_or_text: Shadow
+        visible_condition: 线图层已选中
+        enabled_condition: 可切换
+        action_result: 开启后出现相同阴影预设；Custom 后 3 个滑块可调，实测 70/35/25。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 开启后文本包含 Custom；滑杠值同步。
+        notes: 证据 shots/35_line_shadow_custom.png。
+      line_outline_switch:
+        selector: 'div:has(p:text("Outline")) span.slider'
+        role_or_text: Outline
+        visible_condition: 线图层已选中
+        enabled_condition: 可切换
+        action_result: 开启 Outline 后线条描边效果变化；本轮面板未出现额外数值滑块。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 开启前后截图 hash 变化 1.078%。
+        notes: 证据 shots/35_line_outline_on.png。
+      line_reflection_switch:
+        selector: 'div:has(p:text("Reflection")) span.slider'
+        role_or_text: Reflection
+        visible_condition: 线图层已选中
+        enabled_condition: 可切换
+        action_result: 开启后显示 Scope/Opacity/Distance/Angle；实测 80/45/30/120。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 四个 range 值同步更新，截图 hash 变化。
+        notes: 证据 shots/35_line_reflection_changed.png。
+
+  line_custom_style_dialog_open:
+    description: 自定义线型弹窗，用于组合 Start、Line、End。
+    trigger: Insert → Line → 第一项 `edit_line_add.svg`
+    url_or_state_key: 居中模态标题 Custom Line Style
+    buttons:
+      custom_line_apply:
+        selector: 'button:text-is("Apply")'
+        role_or_text: Apply
+        visible_condition: 自定义线型弹窗打开
+        enabled_condition: 已选择合法 Start/Line/End
+        action_result: 按当前组合创建自定义线条图层并关闭弹窗。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Apply 后弹窗关闭，画布新增线图层。
+        notes: 默认组合可直接 Apply；本轮验证了弹窗和选项存在。
+      custom_line_close:
+        selector: 'img[src$="colos_pop_btn_close.svg"]'
+        role_or_text: Close
+        visible_condition: 弹窗打开
+        enabled_condition: 始终可用
+        action_result: 关闭弹窗且不新增图层。
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 弹窗消失，画布图层数不变。
+        notes: 未进行破坏性覆盖。
+
+notes:
+  - en-US 下“纯色”显示为 Colorful Background；首卡 templateId=12_7_20240909。
+  - 模板卡点击存在竞态：必须在点击前建立 file chooser 监听并选择文件，否则页面停留但已完成隐藏 input click；自动化需用 expect_file_chooser 包裹点击。
+  - Insert 面板的可见子功能为 Upload(Image/My Cuts)、Draw(Text/General/Blur/Neno/Maker/Arrow/Dashed/Dotted)、Shape、Line；本次按需求覆盖前两项及相关参数。
+  - 形状与线条的参数面板存在大量隐藏复用节点；自动化必须限定当前展开 section 后再取 `input[type=range]` / 色板 / 选项，不能用全页第一个 index。
+  - 色板没有 aria/文本，按 palette 内元素 computed backgroundColor 精确选色。
+  - 绘制必须使用最大可见 canvas 的 bounding box 进行鼠标拖动；canvas 不在 DOM 文本层。
+  - Text 绘制默认 Contents=context、Size=69、Opacity=100；General 默认 Size=30、Opacity=100。
+  - My Cuts 只能使用账号已有抠图列表，不用生成新业务数据。
+  - 截图证据：shots/15_insert_panel_open.png、16_upload_local_added.png、18_my_cuts_dialog.png、19_my_cuts_first_inserted.png、38_draw_text_panel.png、42_text_font_expanded.png、48_text_params_after_stroke.png、50_general_panel.png、52_general_after.png、20_shape_square_added.png、30_shape_*.png、33_line_preset_slash.png、35_line_*.png、37_line_*.png。
+
+

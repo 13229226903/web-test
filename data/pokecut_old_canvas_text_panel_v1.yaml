@@ -1,0 +1,67 @@
+# 旧画布文字功能（Text 面板 + 文字图层参数）测试数据
+# 来源: page_map/pokecut/infinite_canvas_text_panel_v1.yaml + cases.md(confirmed)
+base_url: http://10.17.1.66:3001
+entry_path: /template
+canvas_path_pattern: /create/edit?pid=
+env: 测试服
+viewport: 1920x1080
+locale: en-US
+
+accounts:
+  vip:
+    email: 450832596@qq.com
+    code: "123456"
+    note: 会员态；模板入口 → 任务处理 → 旧画布 均使用该账号
+
+assets:
+  image: test_images/1K.jpg
+  template_group: Colorful Background
+  template_id: 12_7_20240909
+
+# 左侧文字面板
+text_panel:
+  sections: [Alignment, Style, Font, Fill]
+  add_button_text: Add a text
+  default_text: Text
+  align_icons:
+    left: alignmanet_left
+    center: alignmanet_canter
+    right: alignmanet_right
+    selected_suffix: _select
+  fonts:
+    - MarckScript-Regular.ttf
+  fill_color: "rgb(174, 41, 42)"
+  style_preset_index: 1
+
+# 右侧文字图层属性面板（8 分区）
+right_panel:
+  sections: [Opacity, Space, Arch, Shadow, Outline, Reflection, Background, Blend]
+  style_preset_sections: [Opacity, Space, Reflection, Blend]
+  targets:
+    opacity: 30
+    space_width: 20
+    space_height: 20
+    arch: 69
+    shadow_blur: 70
+    outline_size: 35
+    reflection_distance: 40
+  arch_range: [-100, 100]
+  background_swatch_index: 7
+  blend_mode: Screen
+
+# 文案编辑
+content_edit:
+  new_text: POKECUT2026
+
+# 画布像素差异阈值（裁切画布区域，差异像素占比）
+diff_thresholds:
+  strong: 0.002          # 字体/样式/弧形/Outline/Reflection/Background/文案等明显变化
+  medium: 0.001          # 对齐/填充色/Space/Shadow 等中小幅变化
+  weak: 0.0001           # Shadow/Blend 等弱差异效果
+  any: 0.0               # 同 pid 多层同文案叠加时，个别参数（Opacity）按 cases.md「差异>0」口径
+  unchanged_tolerance: 0.01   # 复位对比容差
+
+waits:
+  canvas_ready_timeout_s: 90
+  canvas_settle_ms: 9000
+  action_settle_ms: 2000

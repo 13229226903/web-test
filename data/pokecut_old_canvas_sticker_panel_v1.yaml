@@ -1,0 +1,74 @@
+# 旧画布贴纸调参面板测试数据
+# 来源: page_map/pokecut/infinite_canvas_sticker_panel_v1.yaml + cases.md(confirmed)
+base_url: http://10.17.1.66:3001
+entry_path: /zh/template
+canvas_path_pattern: /zh/create/edit?pid=
+env: 测试服
+viewport: 1920x1080
+locale: zh-CN
+
+accounts:
+  vip:
+    email: 450832596@qq.com
+    code: "123456"
+    vip_type: 4
+    note: 会员态；模板入口、任务处理、旧画布和贴纸面板均使用该账号
+
+assets:
+  image: test_images/1K.jpg
+  template_group: 纯色
+  template_id: 12_7_20240909
+
+sticker_panel:
+  entry_icon: edit_left_tab_btn_sticker.svg
+  first_sticker_src: thumb_sticker_valentine1.webp
+  first_sticker_name: 情人节1
+  selected_mode: single_sticker_only
+  sections: [不透明度, 调整, 阴影, 轮廓, 反射, 滤镜, 混合]
+
+right_panel:
+  opacity:
+    values: [100, 35, 0]
+    range: [0, 100]
+  adjust:
+    labels: [亮度, 对比度, 鲜艳度, 饱和度, 曝光, 高光, 阴影, 清晰度, 锐化, 色温, 色调, 颗粒, 暗角]
+    values: [35, 25, 20, 18, 15, 22, 20, 28, 26, 15, 12, 20, 30]
+    ranges:
+      signed: [-100, 100]
+      positive: [0, 100]
+  shadow:
+    zero: [0, 0, 0, 0, 0]
+    effect: [55, 32, 22]
+    position: [30, -20]
+    color: "rgb(99, 164, 232)"
+    range: [0, 100]
+    position_range: [-100, 100]
+  outline:
+    defaults: [20, 0, 0, 0]
+    sliders: [30, 20, 15, 10]
+    type_index: 3
+    color: "rgb(174, 41, 42)"
+    range: [0, 100]
+  reflection:
+    defaults: [50, 50, 0, 180]
+    changed: [80, 80, 60, 120]
+    linear_range: [0, 100]
+    angle_range: [0, 360]
+  filter:
+    thumbnail_name: PR02
+    strengths: [0, 50, 100]
+    range: [0, 100]
+  blend:
+    default_mode: 清除
+    mode: 正片叠底
+    strength: 80
+    range: [0, 100]
+
+diff_thresholds:
+  mean_any: 0.0
+  unchanged_tolerance: 0.05
+
+waits:
+  canvas_ready_timeout_s: 90
+  canvas_settle_ms: 9000
+  action_settle_ms: 1500

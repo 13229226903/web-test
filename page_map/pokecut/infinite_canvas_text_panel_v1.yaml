@@ -1,0 +1,149 @@
+# Pokecut Infinite Canvas - Text Panel (Legacy / en-US)
+# Version: v1 (first exploration of the legacy canvas Text feature)
+# Explored: 2026-09-11, http://10.17.1.66:3001/template, VIP 450832596@qq.com, zh? -> en-US UI
+# Driver: Playwright MCP (browser_* tools) + Playwright python cross-check for pixel diff
+page: Infinite Canvas Text Panel
+url: /create/edit?pid=<uuid>#
+landmark:
+  selector: 'div.cursor-pointer:has(> img[src$="edit_left_tab_btn_text.svg"])'
+  description: 旧画布左侧功能栏第 6 项 Text（图标 edit_left_tab_btn_text.svg）
+entry:
+  from: /template
+  trigger: >-
+    在 en-US 页面进入 Colorful Background（纯色）分组，先监听 file chooser，再点击第一张模板卡
+    Template 12_7_20240909 的悬停覆盖层，选择 test_images/1K.jpg；任务完成后进入旧画布。
+  selector: 'h3:has-text("Colorful Background")'
+  template_card:
+    selector: 'img[alt="Template 12_7_20240909"]'
+    click_target: 'div.absolute.left-0.top-0.flex.size-full.items-center > div'
+    template_id: 12_7_20240909
+  file_selector: 'input[type=file]'
+  after_upload: /create/edit?pid=<uuid>#
+
+elements:
+  left_nav:
+    selector: 'div.flex.w-\[5rem\].flex-shrink-0.flex-col'
+    description: >-
+      旧画布左侧垂直功能栏，共 10 项：Insert / AI Tools / AI BG / Change BG / Template /
+      Text / Sticker / Adjust / Resize / Layer。
+  text_tab:
+    selector: 'div.cursor-pointer:has(> img[src$="edit_left_tab_btn_text.svg"])'
+    role_or_text: Text
+    description: 左侧第 6 项 Text；点击后左侧展开文字面板，右侧显示“Select a layer to adjust”。
+  text_panel:
+    selector: 'div:has(> div > button:text-is("Add a text"))'
+    box: 400x1000 @ x=81
+    description: 左插面板（宽 25rem）；四个区块自上而下为 Alignment / Style / Font / Fill。
+  add_text_button:
+    selector: 'button:text-is("Add a text")'
+    role_or_text: Add a text
+    action_result: 在画布中央新增一个文字图层（默认内容 “Text”，12 号字体 Roboto-Bold，白色填充+黑色描边样式）并自动选中。
+    assertions_hint: 点击后画布出现 “Text” 文本；右侧属性面板出现文字图层分区（不是 “Select a layer to adjust”）。
+    notes: 可重复点击；每次点击新增一层文字。证据 shots/m01_text_layer_added_mcp.png。
+  alignment_row:
+    selector: 'div.h-\[2\.75rem\].flex.items-center'
+    description: Alignment 行（3 个按钮，图标文件名有拼写错误）。
+    buttons:
+      left:
+        selector: 'div.cursor-pointer:has(> img[src$="alignmanet_left.svg"])'
+        selected_selector: 'div.cursor-pointer:has(> img[src$="alignmanet_left_select.svg"])'
+      center:
+        selector: 'div.cursor-pointer:has(> img[src$="alignmanet_canter.svg"])'
+        selected_selector: 'div.cursor-pointer:has(> img[src$="alignmanet_canter_select.svg"])'
+        notes: 默认选中态即 center（icon 为 alignmanet_canter_select.svg）。
+      right:
+        selector: 'div.cursor-pointer:has(> img[src$="alignmanet_right.svg"])'
+        selected_selector: 'div.cursor-pointer:has(> img[src$="alignmanet_right_select.svg"])'
+    notes: 选中态通过换成 *_select.svg 图标表达，未选中态回退到基础文件名。
+  style_section:
+    selector: 'div:has(> div > h2:text-is("Style"))'
+    expand_arrow: 'img[src$="top_icon_jump_b.svg"]'
+    tile:
+      selector: 'div.cursor-pointer.flex-shrink-0:has(> img[src*="/font/style_thumb"])'
+      box: 68x68
+      count_visible: 10
+      sample_text: [Life Style, Journey, Chill, Justice, ...]
+    action_result: 应用样式预设后文字渲染立即变化（字体+描边+阴影+底色等组合），画布出现可见差异。
+    notes: >-
+      应用任一 Style 预设后，右侧文字属性面板由 8 个分区收敛为 4 个
+      （Opacity / Space / Reflection / Blend），Arch / Shadow / Outline / Background 消失；
+      新增文字图层后仍恢复 8 个分区 —— 属于“样式预设接管这些属性”的按图层行为。
+      证据 shots/m02_style_preset_applied_4sections_mcp.png、shots/m03_second_text_layer_8sections_mcp.png。
+  font_section:
+    selector: 'div:has(> div > h2:text-is("Font"))'
+    tile:
+      selector: 'div.cursor-pointer:has(> img[alt$=".ttf"])'
+      box: 110x44
+      count_visible: 9
+      sample_alts: [Roboto-Bold.ttf, MarckScript-Regular.ttf, ...]
+    action_result: 切换字体后画布文字字形立即变化（像素差异 > 0）。
+  fill_section:
+    selector: 'div:has(> div > h2:text-is("Fill"))'
+    swatch:
+      selector: 'div.cursor-pointer:has(> div[style*="background-color"])'
+      box: 68x68
+      notes: 色板约 5 列多行；推荐按子 div 的 computed backgroundColor 精确匹配色值再点父 div。
+    action_result: 点击色块后文字填充色变化（画布像素差异 > 0）。
+    expand_arrow: 'img[src$="top_icon_jump_b.svg"]'
+
+  right_property_panel:
+    selector: 'div.h-\[calc\(100vh-5rem\)\].w-\[25rem\].bg-white'
+    box: 400x1000 @ x=1520
+    description: 右侧属性面板；未选中图层时显示 “Select a layer to adjust”。
+
+states:
+  text_panel_open:
+    trigger: 点击左侧 Text
+    ui: 左侧面板只有 “Add a text” 一个按钮；右侧面板显示 “Select a layer to adjust”。
+    notes: 证据 shots/t02_text_panel_open.png。
+  text_layer_selected:
+    trigger: 点击 Add a text（或选中已有文字图层）
+    right_panel_sections:
+      - {id: opacity,    label: Opacity,    default: 100, control: 'input[type=range] 0-100', notes: 展开后面板高度 141px}
+      - {id: space,      label: Space,      controls: [Width(range, default 0), Height(range, default 0)]}
+      - {id: arch,       label: Arch,       control: 'range -100~100, default 0', notes: 单滑杆（弧形/弯曲程度）；实测 0→69 画布差异 0.0141}
+      - {id: shadow,     label: Shadow,     control: 'switch(ON 自动展开) + tabs Effect/Color/3D Shadow', details: [Opacity 100, Blur 0, Gradient 0, Distance 0, Rotation 0°], verified: 'Blur 12→72 画布差异 0.0011'}
+      - {id: outline,    label: Outline,    control: 'switch(ON 自动展开) + Types(Item 1 of 5) + Color(Item 1 of 3) + Size 20 + Distance 0 + Blur 0 + Smooth 0', notes: 展开后出现 68x68 色块网格；实测 Size 20→35 + 选色画布差异 0.0026}
+      - {id: reflection, label: Reflection, control: 'switch(ON 自动展开) + Scope 100 + Opacity 50 + Distance 0 + Angle 180°', verified: 'Distance 0→40 画布差异 0.0027'}
+      - {id: background, label: Background, control: '展开箭头 + 28 个 68x68 色块网格（无开关）', verified: '点第 8 个色块画布差异 0.0080；第 2 个为近白色 rgb(243,245,248) 差异不明显'}
+      - {id: blend,      label: Blend,      control: 'switch + 26 个混合模式瓦片 + 强度滑杆 100', modes: [None, Multiply, Darken, Lighten, Color Burn, Linear Burn, Color Dodge, Linear Dodge, Screen, Overlay, Hard Light, Difference, Exclusion, Soft Light, Vivid Light, Linear Light, Pin Light, Hard Mix, Subtract, Divide, Hue, Saturation, Color, Luminosity, DarkerColor, LighterColor]}
+    canvas_layer:
+      description: 文字图层选中后画布上出现虚线选框 + 四角圆形缩放锚点（span.scale-point）+ 右侧竖排浮动工具条。
+      toolbar_icons: 删除 / 图层上移 / 图层下移 / 水平翻转 / 垂直翻转 / 旋转 / 裁剪 等
+    notes: 证据 shots/m01_text_layer_added_mcp.png、shots/t10_baseline_text_layer.png。
+  section_expanded:
+    trigger: 点击右侧分区标题行（左半部分是展开/收起热区）
+    behavior: >-
+      同一时刻只保留一个分区展开：展开新分区会把上一个已展开分区收起（面板总高保持 1000px）。
+      因此展开后各分区行的 y 坐标会整体下移，按固定坐标连点会点错控件。
+    notes: 证据 evidence/stage5_right_*_open.json。
+  style_preset_applied:
+    trigger: 点击 Style 区块任一预设
+    behavior: 右侧分区由 8 个收敛为 4 个（Opacity / Space / Reflection / Blend）。
+    reversibility: 按图层生效；新增文字图层仍为 8 个分区。
+    confidence: 观察一致（python 与 MCP 两次复现），倾向产品预期（预设接管阴影/描边/背景/弧形）
+    notes: 证据 shots/m02_style_preset_applied_4sections_mcp.png、evidence/stage11_after_left.json。
+  content_editing:
+    trigger: 双击画布上的文字图层
+    ui: 出现 textarea（value=当前文字内容，默认 “Text”），可直接改文案。
+    commit: 输入文案后点击图层外的画布空白处即应用（用户口径 + 实测一致）。
+    assertions_hint: >-
+      点击空白处后画布文字变化（实测像素差异 0.0229）；再次双击复开 textarea，value 等于新文案（实测 POKECUT2026）。
+      编辑用 textarea 提交后仍留在 DOM（页面有 2 个 textarea 实例），不要用 “textarea 消失” 判定编辑结束。
+    notes: 证据 shots/r07_content_edit_applied.png、evidence/mcp_final_checks7_raw.txt。
+
+notes:
+  - 图层计数与隔离（2026-09-11 实测）：重复点 Add a text 会新增**完全重叠**的文字图层（Layer 面板可见 Text/Text/Picture/Background），
+    画布截图无法分辨层数；需要层数的用例用 Left Layer 面板计数（行类名含 layer-choosed / layer-unchoosed），
+    参数类用例执行前用「Layer 面板选行 + 浮动工具条 picture_edit_icon_delete.svg」删除历史文字图层（保留 Picture/Background）。
+  - 左侧入口选中态换名：Text/Insert 等功能栏入口在选中态图标变为 `*_select.svg`，selector 必须用 `img[src*="edit_left_tab_btn_text"]` 而非 `src$=`。
+  - 右面板滑杆定位：分区内滑杆按行排列（Scope/Opacity/Distance/Angle 等），必须取「label 下方**最近**的滑杆」，
+    取「分区内第一个滑杆」会把 Distance 打到 Scope（实测）。
+  - 参数生效验证（2026-09-11 15:05，Playwright MCP 真实交互）：Opacity 0.0017 / Arch 0.0141 / Shadow 0.0011 / Outline 0.0026 / Reflection 0.0027 / Background 0.0080 / Blend 0.0002。
+  - selector 规则：Alignment 图标文件名带产品侧拼写错误（alignmanet_*），按文件名匹配时需保持一致。
+  - 面板定位建议用几何+类名（class 含 w-[25rem]，x<700 为左面板、x>1200 为右面板）+ 可见性过滤，
+    页面同屏存在多个同宽面板（左/右各 2 个候选），只取面积最大的可见节点。
+  - 滑杆改值：对 input[type=range] 用原生 value setter + 派发 input/change 事件；不要只 mouse 拖动（易飘）。
+  - 分区展开热区是标题行左半部分；Shadow/Outline/Reflection/Blend 行右侧有开关（Background 无开关，只有展开箭头）。\n  - 开关 ON 会自动展开该分区：脚本不要再点一次标题（会把分区收起，导致找不到滑杆/色块）。\n  - 滑杆用真实鼠标 down/move/up 拖动，目标值取区间 10%~90%；落到最右端(如 100)会点在元素外而无效。
+  - 文字图层属性与样式会持久化到当前 pid；复用同一画布时先复位或重建图层，避免用例间污染。
+  - 证据粒度：默认整页 1920x1080（含左右面板）；仅做像素比对时才裁画布区域。

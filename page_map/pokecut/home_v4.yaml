@@ -1,0 +1,554 @@
+# Pokecut PC 首页 v4.0 页面地图
+# 来源: 2026-09-07 对 https://pokecut-dev.guangzhuiyuan.com/ 的匿名态 Playwright 探索
+page: PokecutHomeV4
+url: /
+landmark:
+  selector: "h1:has-text('All-in-One AI Photo Editor & Generator')"
+  description: 首页英文首屏标题；中文态对应 AI 照片编辑与生图工具
+entry:
+  from: Direct
+  trigger: 直接访问站点根路径；中文 locale 会先落在 /zh，可通过页脚语言切换到 /
+  selector: "body"
+  note: 匿名态应显示 Sign up / Log in；本次探索保持未登录
+
+elements:
+  nav_logo:
+    selector: "header a[href='/'], a[href='/']:has(img[alt*='pokecut' i])"
+    text: "Pokecut logo"
+    description: 顶部 Logo，点击回首页
+  nav_ai_free_tools:
+    selector: "button:has-text('AI Free Tools')"
+    text: "AI Free Tools"
+    description: 工具下拉入口
+  nav_portrait_editor:
+    selector: "button:has-text('Portrait Editor')"
+    text: "Portrait Editor"
+    description: 人像编辑下拉入口
+  nav_discover:
+    selector: "button:has-text('Discover')"
+    text: "Discover"
+    description: 发现下拉入口
+  nav_pricing:
+    selector: "a[href='/pricing'], a[href$='/pricing']"
+    text: "Pricing"
+    description: 定价页入口，中文态显示倒计时促销
+  auth_signup:
+    selector: "button:has-text('Sign up')"
+    text: "Sign up"
+  auth_login:
+    selector: "button:has-text('Log in')"
+    text: "Log in"
+
+  hero_title:
+    selector: "h1:has-text('All-in-One AI Photo Editor & Generator')"
+    text: "All-in-One AI Photo Editor & Generator"
+  hero_desc:
+    selector: "p:has-text('Use Pokecut to create, edit, and enhance images in one place')"
+  hero_cta:
+    selector: "button:has-text('Start Creating for Free')"
+    text: "Start Creating for Free"
+  hero_prompt_upload:
+    selector: "button[aria-label='Upload image']"
+    text: "Upload image"
+  hero_prompt_model:
+    selector: "button:has-text('Pokecut Pro')"
+    text: "Pokecut Pro"
+  hero_prompt_settings:
+    selector: "button[aria-label='Prompt settings']"
+    text: "Prompt settings"
+  hero_prompt_generate:
+    selector: "button[aria-label='Generate']"
+    text: "Generate"
+
+  popular_tools_region:
+    selector: "region:has-text('Popular Pokecut AI tools')"
+  feature_clothes_changer:
+    selector: "button:has-text('AI Clothes Changer')"
+    text: "AI Clothes Changer"
+  feature_text_enhance:
+    selector: "button:has-text('Enhance Text in Images')"
+    text: "Enhance Text in Images"
+  feature_portrait_editor:
+    selector: "button:has-text('AI Portrait Editor')"
+    text: "AI Portrait Editor"
+  feature_more_tools:
+    selector: "button:has-text('More Pokecut AI Tools')"
+    text: "More Pokecut AI Tools"
+
+  models_region:
+    selector: "region:has-text('Choose the Right AI Model for Any Image')"
+  model_buttons:
+    selector: "button:has-text('Nano Banana 2'), button:has-text('Seedream 5.0 Lite'), button:has-text('Nano Banana Pro'), button:has-text('Seedream 5.0 Pro'), button:has-text('Pokecut Pro'), button:has-text('ChatGPT Image 2.0'), button:has-text('Seedream 4.0'), button:has-text('Pokecut Basic'), button:has-text('Nano Banana 2 Lite')"
+    expected_order:
+      - "Nano Banana 2"
+      - "Seedream 5.0 Lite"
+      - "Nano Banana Pro"
+      - "Seedream 5.0 Pro"
+      - "Pokecut Pro"
+      - "ChatGPT Image 2.0"
+      - "Seedream 4.0"
+      - "Pokecut Basic"
+      - "Nano Banana 2 Lite"
+
+  templates_region:
+    selector: "text=Start Faster with Pokecut's AI Templates"
+  templates_cta:
+    selector: "button:has-text('See More Creations')"
+    text: "See More Creations"
+  templates_cards:
+    selector: null
+    note: "a11y snapshot 中模板卡片为 unnamed button，缺少可访问名称；见 sync.md bug candidate"
+
+  test_panel:
+    selector: "region:has-text('Test Your Photo Before You Edit')"
+    links:
+      Pretty Scale: "/tools/pretty-scale"
+      Ethnicity Guesser: "/tools/ethnicity-guesser-ai"
+      Eye Color Detector: "/tools/eye-color-detector"
+      Body Shape Detector: "/tools/body-shape-detector"
+
+  portrait_section:
+    selector: "region:has-text('Upgrade Every Portrait Details with Pokecut')"
+    tabs: ["Retouch Face", "Change Hair", "Retouch Body", "Change Background"]
+
+  batch_section:
+    selector: "region:has-text('Edit up to 50 Photos in One Batch')"
+    actions: ["Remove BG", "Resize", "Enhance", "Change BG"]
+
+  enhance_section:
+    selector: "region:has-text('Enhance Photo Quality for Every Detail')"
+    actions: ["HD Enhance", "Text Enhance", "Portrait Enhance", "Ultra Enhance"]
+
+  trust_section:
+    selector: "text=Pokecut is Trusted by Creators for Every Photo Creation"
+    stats: ["3M+ creators", "200+ AI tools", "500M+ edits processed", "#2 Product Hunt"]
+
+  reviews_section:
+    selector: "region:has-text('What Users Say About Pokecut?')"
+    users:
+      Jessica Miller: "https://www.producthunt.com/@jessica_miller_7"
+      Angelina Peng: "https://www.producthunt.com/@angelina__s"
+      Leo Y.: "https://www.producthunt.com/@leo_ye"
+      Zepeng She: "https://www.producthunt.com/@rocsheh"
+      Rachit Magon: "https://www.producthunt.com/@rachitmagon"
+
+  faq_section:
+    selector: "text=Frequently Asked Questions"
+    expected_question_count: 8
+    links:
+      pricing: "/pricing"
+      term_of_use: "/term-of-use"
+      refund_ticket: "[data-submit-ticket='refund']"
+
+  mobile_app:
+    selector: "text=Pokecut Mobile App"
+  footer:
+    selector: "footer, text=Copyright © 2026 Pokecut All Rights Reserved."
+  footer_language:
+    selector: "button:has-text('Language: English'), button:has-text('语言： English')"
+  debug_feedback:
+    selector: "button:has-text('DEBUG')"
+    expected_visible: true
+
+tabs:
+  portrait_detail:
+    Retouch Face: "button:has-text('Retouch Face')"
+    Change Hair: "button:has-text('Change Hair')"
+    Retouch Body: "button:has-text('Retouch Body')"
+    Change Background: "button:has-text('Change Background')"
+
+modals: {}
+
+states:
+  default:
+    description: 匿名英文首页默认态；包含首屏、主要板块与页脚
+    trigger: 直接访问 / 并确保语言为 English
+    url_or_state_key: /
+    buttons:
+      nav_logo:
+        selector: "header a[href='/'], a[href='/']:has(img[alt*='pokecut' i])"
+        role_or_text: "link / Pokecut logo"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "停留或回到首页 /"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "URL 为 /，logo 可见"
+        notes: "snapshot 证据: shots/home_english_snapshot.yml"
+      nav_ai_free_tools:
+        selector: "button:has-text('AI Free Tools')"
+        role_or_text: "button / AI Free Tools"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "打开 Popular Tools / Photo Editor / AI Filter 三栏下拉"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "button[aria-expanded='true']，下拉包含 All Tools 等链接"
+        notes: "实际点击已验证；证据: shots/nav_ai_free_tools_dropdown.png"
+      nav_portrait_editor:
+        selector: "button:has-text('Portrait Editor')"
+        role_or_text: "button / Portrait Editor"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "打开 Face Editor / Body Editor / Hair Editor 三栏下拉"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "button[aria-expanded='true']，下拉包含 AI Makeup Photo Editor 等链接"
+        notes: "实际点击已验证；证据: .playwright-mcp/page-2026-09-07T02-28-19-042Z.yml"
+      nav_discover:
+        selector: "button:has-text('Discover')"
+        role_or_text: "button / Discover"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "打开 All Blogs / FAQ / Contact us / About us 下拉"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "button[aria-expanded='true']，下拉包含 /blog、/help、/about"
+        notes: "实际点击已验证；证据: .playwright-mcp/page-2026-09-07T02-29-02-459Z.yml"
+      nav_pricing:
+        selector: "a[href='/pricing'], a[href$='/pricing']"
+        role_or_text: "link / Pricing"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "跳转 /pricing"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "href 解析为 /pricing"
+        notes: "snapshot 证据"
+      auth_signup:
+        selector: "button:has-text('Sign up')"
+        role_or_text: "button / Sign up"
+        visible_condition: "anonymous"
+        enabled_condition: "always"
+        action_result: "预期打开注册/登录弹层；本次未提交"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "匿名态可见"
+        notes: "用户要求不登录，仅记录入口"
+      auth_login:
+        selector: "button:has-text('Log in')"
+        role_or_text: "button / Log in"
+        visible_condition: "anonymous"
+        enabled_condition: "always"
+        action_result: "预期打开登录弹层；本次未提交"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "匿名态可见"
+        notes: "用户要求不登录，仅记录入口"
+      hero_cta:
+        selector: "button:has-text('Start Creating for Free')"
+        role_or_text: "button / Start Creating for Free"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "预期进入创作页 /create 或 /agent；未在本轮点击确认"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "按钮可见且可点击"
+        notes: "snapshot 证据"
+      hero_prompt_upload:
+        selector: "button[aria-label='Upload image']"
+        role_or_text: "button / Upload image"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "预期触发系统文件选择器"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "aria-label 为 Upload image"
+        notes: "snapshot 证据"
+      hero_prompt_model:
+        selector: "button:has-text('Pokecut Pro')"
+        role_or_text: "button / Pokecut Pro"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "预期打开模型选择菜单"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "默认显示 Pokecut Pro"
+        notes: "snapshot 证据"
+      hero_prompt_settings:
+        selector: "button[aria-label='Prompt settings']"
+        role_or_text: "button / Prompt settings"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "预期打开 Prompt settings 弹层"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "aria-label 为 Prompt settings"
+        notes: "snapshot 证据"
+      hero_prompt_generate:
+        selector: "button[aria-label='Generate']"
+        role_or_text: "button / Generate"
+        visible_condition: "always"
+        enabled_condition: "false until prompt/image provided"
+        action_result: "满足条件后触发生成；默认 disabled"
+        reversible: false
+        explore_status: covered
+        dependencies: ["prompt or uploaded image"]
+        assertions_hint: "默认 disabled"
+        notes: "snapshot 证据"
+      feature_clothes_changer:
+        selector: "button:has-text('AI Clothes Changer')"
+        role_or_text: "button / AI Clothes Changer"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "预期进入 AI 换装/相关工具页"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "卡片标题与 Try Now 可见"
+        notes: "snapshot 证据"
+      feature_text_enhance:
+        selector: "button:has-text('Enhance Text in Images')"
+        role_or_text: "button / Enhance Text in Images"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "预期进入文字增强工具页"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "卡片标题与 Try Now 可见"
+        notes: "snapshot 证据"
+      feature_portrait_editor:
+        selector: "button:has-text('AI Portrait Editor')"
+        role_or_text: "button / AI Portrait Editor"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "预期进入人像编辑工具页"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "卡片标题与 Try Now 可见"
+        notes: "snapshot 证据"
+      feature_more_tools:
+        selector: "button:has-text('More Pokecut AI Tools')"
+        role_or_text: "button / More Pokecut AI Tools"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "预期跳转 /tools"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "按钮可见"
+        notes: "snapshot 证据"
+      templates_cta:
+        selector: "button:has-text('See More Creations')"
+        role_or_text: "button / See More Creations"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "预期跳转 /create 或模板列表页"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "按钮可见"
+        notes: "snapshot 证据"
+      faq_pricing_link:
+        selector: "a[href='/pricing']"
+        role_or_text: "link / online store"
+        visible_condition: "FAQ 展开"
+        enabled_condition: "always"
+        action_result: "跳转 /pricing"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "FAQ 内存在 pricing 链接"
+        notes: "snapshot 证据"
+      faq_term_link:
+        selector: "a[href='/term-of-use']"
+        role_or_text: "link / our Terms of Use"
+        visible_condition: "FAQ 展开"
+        enabled_condition: "always"
+        action_result: "跳转 /term-of-use"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "FAQ 内存在 term-of-use 链接"
+        notes: "snapshot 证据"
+      footer_language:
+        selector: "button:has-text('Language: English')"
+        role_or_text: "button / Language: English"
+        visible_condition: "always"
+        enabled_condition: "always"
+        action_result: "打开语言菜单，可切换 English / 简体中文 / 繁體中文 等"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "点击后出现语言选项列表"
+        notes: "实际点击已验证；切换 English 后 URL 回到 /"
+      debug_feedback:
+        selector: "button:has-text('DEBUG')"
+        role_or_text: "button / DEBUG"
+        visible_condition: "dev environment"
+        enabled_condition: "always"
+        action_result: "预期打开 DEBUG 面板"
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "按钮可见"
+        notes: "snapshot 证据"
+
+  nav_ai_free_tools_dropdown:
+    description: AI Free Tools 下拉展开态
+    trigger: "click nav_ai_free_tools"
+    url_or_state_key: /
+    buttons:
+      all_tools:
+        selector: "a[href='/tools']"
+        role_or_text: "link / All Tools"
+        visible_condition: "dropdown open"
+        enabled_condition: "always"
+        action_result: "跳转 /tools"
+        reversible: true
+        explore_status: covered
+        dependencies: ["nav_ai_free_tools"]
+        assertions_hint: "下拉内可见"
+        notes: "下拉还包含 Popular Tools / Photo Editor / AI Filter 分组链接"
+      batch_photo_edit:
+        selector: "a[href='/batch-edit']"
+        role_or_text: "link / Batch Photo Edit"
+        visible_condition: "dropdown open"
+        enabled_condition: "always"
+        action_result: "跳转 /batch-edit"
+        reversible: true
+        explore_status: covered
+        dependencies: ["nav_ai_free_tools"]
+        assertions_hint: "下拉内可见"
+        notes: "Popular Tools 分组"
+      ai_background_remover:
+        selector: "a[href='/tools/background-remover']"
+        role_or_text: "link / AI Background Remover"
+        visible_condition: "dropdown open"
+        enabled_condition: "always"
+        action_result: "跳转 /tools/background-remover"
+        reversible: true
+        explore_status: covered
+        dependencies: ["nav_ai_free_tools"]
+        assertions_hint: "带 HOT 徽标"
+        notes: "Popular Tools 分组"
+
+  nav_portrait_editor_dropdown:
+    description: Portrait Editor 下拉展开态
+    trigger: "click nav_portrait_editor"
+    url_or_state_key: /
+    buttons:
+      all_tools:
+        selector: "a[href='/tools']"
+        role_or_text: "link / All Tools"
+        visible_condition: "dropdown open"
+        enabled_condition: "always"
+        action_result: "跳转 /tools"
+        reversible: true
+        explore_status: covered
+        dependencies: ["nav_portrait_editor"]
+        assertions_hint: "下拉内可见"
+        notes: "Face / Body / Hair 三栏"
+      ai_makeup_photo_editor:
+        selector: "a[href='/face-editor/makeup-photo-editor']"
+        role_or_text: "link / AI Makeup Photo Editor"
+        visible_condition: "dropdown open"
+        enabled_condition: "always"
+        action_result: "跳转 /face-editor/makeup-photo-editor"
+        reversible: true
+        explore_status: covered
+        dependencies: ["nav_portrait_editor"]
+        assertions_hint: "带 NEW 徽标"
+        notes: "Face Editor 分组"
+      body_sculpt:
+        selector: "a[href='/image-to-image-ai/breast-expansion']"
+        role_or_text: "link / Body Sculpt"
+        visible_condition: "dropdown open"
+        enabled_condition: "always"
+        action_result: "跳转 /image-to-image-ai/breast-expansion"
+        reversible: true
+        explore_status: covered
+        dependencies: ["nav_portrait_editor"]
+        assertions_hint: "带 HOT 徽标"
+        notes: "Body Editor 分组"
+
+  nav_discover_dropdown:
+    description: Discover 下拉展开态
+    trigger: "click nav_discover"
+    url_or_state_key: /
+    buttons:
+      all_blogs:
+        selector: "a[href='/blog']"
+        role_or_text: "link / All Blogs"
+        visible_condition: "dropdown open"
+        enabled_condition: "always"
+        action_result: "跳转 /blog"
+        reversible: true
+        explore_status: covered
+        dependencies: ["nav_discover"]
+        assertions_hint: "下拉内可见"
+        notes: ""
+      faq:
+        selector: "a[href='/help']"
+        role_or_text: "link / FAQ"
+        visible_condition: "dropdown open"
+        enabled_condition: "always"
+        action_result: "跳转 /help"
+        reversible: true
+        explore_status: covered
+        dependencies: ["nav_discover"]
+        assertions_hint: "下拉内可见"
+        notes: ""
+      contact_us:
+        selector: "a[href*='/help?'][href*='contact-us']"
+        role_or_text: "link / Contact us"
+        visible_condition: "dropdown open"
+        enabled_condition: "always"
+        action_result: "跳转帮助页联系表单锚点"
+        reversible: true
+        explore_status: covered
+        dependencies: ["nav_discover"]
+        assertions_hint: "下拉内可见"
+        notes: ""
+      about_us:
+        selector: "a[href='/about']"
+        role_or_text: "link / About us"
+        visible_condition: "dropdown open"
+        enabled_condition: "always"
+        action_result: "跳转 /about"
+        reversible: true
+        explore_status: covered
+        dependencies: ["nav_discover"]
+        assertions_hint: "下拉内可见"
+        notes: ""
+
+  language_menu:
+    description: 页脚语言菜单展开态
+    trigger: "click footer_language"
+    url_or_state_key: /
+    buttons:
+      english:
+        selector: "text=English"
+        role_or_text: "option / English"
+        visible_condition: "language menu open"
+        enabled_condition: "always"
+        action_result: "切换到英文，URL 回到 /"
+        reversible: true
+        explore_status: covered
+        dependencies: ["footer_language"]
+        assertions_hint: "页面标题与主要文案为英文"
+        notes: "实际点击已验证"
+      simplified_chinese:
+        selector: "text=简体中文"
+        role_or_text: "option / 简体中文"
+        visible_condition: "language menu open"
+        enabled_condition: "always"
+        action_result: "切换到中文，URL 变为 /zh"
+        reversible: true
+        explore_status: covered
+        dependencies: ["footer_language"]
+        assertions_hint: "页面标题与主要文案为中文"
+        notes: "默认中文 locale 已观察"

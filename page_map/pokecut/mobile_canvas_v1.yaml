@@ -1,0 +1,684 @@
+# Pokecut 移动端画布 v1 页面地图
+# 来源: task-41「移动端优化（安国）」 + 2026-09-08 Playwright 移动视口(390x844, iPhone UA) 实测
+# 入口: 首页 Start Creating for Free -> 文件选择器 -> 上传图片 -> /create/edit?pid=*
+page: PokecutMobileCanvasV1
+url: /create/edit?pid=*
+viewport:
+  width: 390
+  height: 844
+  is_mobile: true
+  has_touch: true
+landmark:
+  selector: "li.mobile-primary-panel__tab:has-text('Trending Tools')"
+  description: 移动端画布底部一级功能栏默认选中项
+entry:
+  from: "/"
+  trigger: "点击 Start Creating for Free 并选择图片"
+  selector: "button:has-text('Start Creating for Free')"
+  file_chooser: true
+  landing: "/create/edit?pid=*"
+elements:
+  header_signup:
+    selector: "button:has-text('Sign up')"
+    text: "Sign up"
+  upgrade:
+    selector: "button.mobile-primary-panel__upgrade"
+    text: "Upgrade"
+  primary_tabs:
+    selector: "li.mobile-primary-panel__tab"
+    items: ["Trending Tools", "AI Image", "Background", "Adjust", "Insert"]
+  layer_button:
+    selector: "button[aria-label='Layer']"
+  view_full_image:
+    selector: "button[aria-label='View full image']"
+  close_icon_button:
+    selector: "button[aria-label='Close']"
+  close_icon_image:
+    selector: "img[src*='nav_btn_pop_close.svg']"
+  background_resize_width:
+    selector: "label:has-text('Width') input[type='number']"
+  background_resize_height:
+    selector: "label:has-text('Height') input[type='number']"
+  background_resize_lock:
+    selector: "label:has-text('Lock Aspect Ratio') input[type='checkbox']"
+states:
+  mobile_canvas_default:
+    description: 上传图片后默认画布，底部先显示一级栏，再显示 Trending Tools 二级缩略图。
+    trigger: 上传成功进入 /create/edit?pid=*
+    url_or_state_key: "/create/edit?pid=*"
+    buttons:
+      upgrade:
+        selector: "button.mobile-primary-panel__upgrade"
+        role_or_text: "Upgrade"
+        visible_condition: 非会员或未登录
+        enabled_condition: true
+        action_result: 打开注册/登录弹窗，未进入独立购买页
+        reversible: true
+        explore_status: covered
+      tab_trending_tools:
+        selector: "li.mobile-primary-panel__tab:has-text('Trending Tools')"
+        role_or_text: "Trending Tools"
+        action_result: 保持/切换到 Trending Tools 二级面板
+        reversible: true
+        explore_status: covered
+      tab_ai_image:
+        selector: "li.mobile-primary-panel__tab:has-text('AI Image')"
+        role_or_text: "AI Image"
+        action_result: 打开 AI Image / Chat to edit 面板
+        reversible: true
+        explore_status: covered
+      tab_background:
+        selector: "li.mobile-primary-panel__tab:has-text('Background')"
+        role_or_text: "Background"
+        action_result: 打开 Background 二级面板
+        reversible: true
+        explore_status: covered
+      tab_adjust:
+        selector: "li.mobile-primary-panel__tab:has-text('Adjust')"
+        role_or_text: "Adjust"
+        action_result: 打开 Adjust 二级面板
+        reversible: true
+        explore_status: covered
+        notes: 实测仅显示 Crop，未见 Filter。
+      tab_insert:
+        selector: "li.mobile-primary-panel__tab:has-text('Insert')"
+        role_or_text: "Insert"
+        action_result: 打开 Insert 面板，当前展示 Trending Tools 相同工具列表
+        reversible: true
+        explore_status: covered
+      layer:
+        selector: "button[aria-label='Layer']"
+        role_or_text: "Layer"
+        action_result: 打开图层面板，背景层显示 Bg
+        reversible: true
+        explore_status: covered
+  trending_tools_panel:
+    description: Trending Tools 二级面板，展示 11 个工具缩略图。
+    trigger: 默认进入画布或点击 Trending Tools
+    buttons:
+      photo_enhancer:
+        selector: "button.tool-card:has-text('Photo Enhancer')"
+        role_or_text: "Photo Enhancer"
+        action_result: 打开 Photo Enhancer 面板
+        reversible: true
+        explore_status: covered
+      ai_clothes_changer:
+        selector: "button.tool-card:has-text('AI Clothes Changer')"
+        role_or_text: "AI Clothes Changer"
+        action_result: 打开 Clothes Changer 面板
+        reversible: true
+        explore_status: covered
+      magic_eraser:
+        selector: "button.tool-card:has-text('Magic Eraser')"
+        role_or_text: "Magic Eraser"
+        action_result: 打开 Magic Eraser 面板
+        reversible: true
+        explore_status: covered
+      ai_body_editor:
+        selector: "button.tool-card:has-text('AI Body Editor')"
+        role_or_text: "AI Body Editor"
+        action_result: 打开 AI Body Editor 面板
+        reversible: true
+        explore_status: covered
+      ai_image_extender:
+        selector: "button.tool-card:has-text('AI Image Extender')"
+        role_or_text: "AI Image Extender"
+        action_result: 打开 AI Image Extender 面板
+        reversible: true
+        explore_status: covered
+      ai_replace:
+        selector: "button.tool-card:has-text('AI Replace')"
+        role_or_text: "AI Replace"
+        action_result: 打开 AI Replace 面板
+        reversible: true
+        explore_status: covered
+      ai_face_editor:
+        selector: "button.tool-card:has-text('AI Face Editor')"
+        role_or_text: "AI Face Editor"
+        action_result: 打开 AI Face Editor 面板
+        reversible: true
+        explore_status: covered
+      watermark_remover:
+        selector: "button.tool-card:has-text('Watermark Remover')"
+        role_or_text: "Watermark Remover"
+        action_result: 打开 Watermark Remover / Magic Eraser Auto Remove 布局；未登录时触发注册弹窗
+        reversible: true
+        explore_status: covered
+      ai_filter:
+        selector: "button.tool-card:has-text('AI Filter')"
+        role_or_text: "AI Filter"
+        action_result: 打开 AI Filter 面板
+        reversible: true
+        explore_status: covered
+      hairstyle_try_on:
+        selector: "button.tool-card:has-text('HairStyle Try On')"
+        role_or_text: "HairStyle Try On"
+        action_result: 打开 HairStyle Try On 面板
+        reversible: true
+        explore_status: covered
+      old_photo_restore:
+        selector: "button.tool-card:has-text('Old Photo Restore')"
+        role_or_text: "Old Photo Restore"
+        action_result: 打开 Old Photo Restore / Photo Enhancer 面板
+        reversible: true
+        explore_status: covered
+  background_panel:
+    description: Background 二级面板。
+    trigger: 点击一级栏 Background
+    buttons:
+      background_remover:
+        selector: "button:has-text('Background Remover')"
+        role_or_text: "Background Remover"
+        action_result: 打开背景移除面板
+        reversible: true
+        explore_status: covered
+      change_bg:
+        selector: "button:has-text('Change BG')"
+        role_or_text: "Change BG"
+        action_result: 打开更换背景面板
+        reversible: true
+        explore_status: covered
+      blur_background:
+        selector: "button:has-text('Blur Background')"
+        role_or_text: "Blur Background"
+        action_result: 未登录时打开注册弹窗，未展示完整字段
+        reversible: true
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+      background_resize:
+        selector: "button:has-text('Background Resize')"
+        role_or_text: "Background Resize"
+        action_result: 打开背景尺寸调整面板
+        reversible: true
+        explore_status: covered
+  background_remover_panel:
+    description: 背景移除面板，含模式选择与帮助说明。
+    trigger: 点击 Background Remover
+    buttons:
+      help:
+        selector: "button[aria-label='Help']"
+        role_or_text: "Help"
+        action_result: 打开底部说明面板，展示模式名称/介绍/Try Now，可左右切换
+        reversible: true
+        explore_status: covered
+      remove_background:
+        selector: "button:has-text('Remove Background')"
+        role_or_text: "Remove Background"
+        action_result: 发起背景移除任务
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+      mode_general:
+        selector: "button:has-text('General')"
+        role_or_text: "General"
+        action_result: 选择 General 模式
+        reversible: true
+        explore_status: covered
+      mode_head_face:
+        selector: "button:has-text('Head&Face')"
+        role_or_text: "Head&Face"
+        action_result: 选择 Head&Face 模式
+        reversible: true
+        explore_status: covered
+      mode_text:
+        selector: "button:has-text('Text')"
+        role_or_text: "Text"
+        action_result: 选择 Text 模式
+        reversible: true
+        explore_status: covered
+  change_bg_panel:
+    description: 更换背景面板，支持 Colors / Images。
+    trigger: 点击 Change BG
+    buttons:
+      colors:
+        selector: "button:has-text('Colors')"
+        role_or_text: "Colors"
+        action_result: 切换到颜色背景
+        reversible: true
+        explore_status: covered
+      images:
+        selector: "button:has-text('Images')"
+        role_or_text: "Images"
+        action_result: 切换到图片背景，展示分类与 VIP 素材
+        reversible: true
+        explore_status: covered
+      confirm:
+        selector: "button:has-text('Confirm')"
+        role_or_text: "Confirm"
+        action_result: 应用所选背景
+        reversible: true
+        explore_status: covered
+  background_resize_panel:
+    description: 背景尺寸调整面板，含宽高输入、Lock Aspect Ratio 与社媒尺寸预设。
+    trigger: 点击 Background Resize
+    buttons:
+      width_input:
+        selector: "label:has-text('Width') input[type='number']"
+        role_or_text: "Width"
+        enabled_condition: true
+        action_result: 输入大于 4096 时自动回填 4096
+        reversible: true
+        explore_status: covered
+        assertions_hint: "初始值 1200；5000 -> 4096"
+      height_input:
+        selector: "label:has-text('Height') input[type='number']"
+        role_or_text: "Height"
+        enabled_condition: true
+        action_result: 输入大于 4096 时自动回填 4096
+        reversible: true
+        explore_status: covered
+        assertions_hint: "初始值 1600；6000 -> 4096"
+      lock_aspect_ratio:
+        selector: "label:has-text('Lock Aspect Ratio') input[type='checkbox']"
+        role_or_text: "Lock Aspect Ratio"
+        action_result: 勾选后宽高按 3:4 比例联动，取消后可独立修改
+        reversible: true
+        explore_status: covered
+        assertions_hint: "1200x1600，锁定后 800 -> 1067；1000 -> 750"
+      confirm:
+        selector: "button:has-text('Confirm')"
+        role_or_text: "Confirm"
+        action_result: 应用背景尺寸
+        reversible: false
+        explore_status: covered
+  adjust_panel:
+    description: Adjust 二级面板。
+    trigger: 点击一级栏 Adjust
+    buttons:
+      crop:
+        selector: "button:has-text('Crop')"
+        role_or_text: "Crop"
+        action_result: 打开 Crop 面板
+        reversible: true
+        explore_status: covered
+        notes: 实测未见 Filter 入口，与需求 gap。
+  crop_panel:
+    description: Crop 面板，含比例/尺寸预设与确认。
+    trigger: 点击 Adjust -> Crop
+    buttons:
+      customize:
+        selector: "button:has-text('Customize')"
+        role_or_text: "Customize"
+        action_result: 展示自定义输入区域
+        reversible: true
+        explore_status: covered
+      ratio_preset:
+        selector: "button:has-text('1:1')"
+        role_or_text: "1:1"
+        action_result: 选择比例预设
+        reversible: true
+        explore_status: covered
+      size_preset:
+        selector: "button:has-text('Amazon')"
+        role_or_text: "Amazon"
+        action_result: 选择尺寸预设
+        reversible: true
+        explore_status: covered
+      confirm:
+        selector: "button:has-text('Confirm')"
+        role_or_text: "Confirm"
+        action_result: 写回裁剪范围
+        reversible: false
+        explore_status: covered
+        notes: 实测未见宽高输入框，无法验证宽高实时联动与超限回填。
+  ai_image_panel:
+    description: AI Image / Chat to edit 面板。
+    trigger: 点击一级栏 AI Image
+    buttons:
+      chat_to_edit:
+        selector: "button:has-text('Chat to edit')"
+        role_or_text: "Chat to edit"
+        action_result: 打开 Chat to edit 输入区
+        reversible: true
+        explore_status: covered
+      no_image_selected:
+        selector: "button:has-text('No image selected. Enter a prompt to generate a new image.')"
+        role_or_text: "No image selected. Enter a prompt to generate a new image."
+        action_result: 显示无参考图提示
+        reversible: true
+        explore_status: covered
+      inspiration:
+        selector: "button:has-text('Inspiration')"
+        role_or_text: "Inspiration"
+        action_result: 打开 Inspiration 模板列表
+        reversible: true
+        explore_status: covered
+      prompt:
+        selector: "textarea[placeholder='What do you want to design today?']"
+        role_or_text: "Prompt"
+        action_result: 输入/展示 prompt，显示 0/3000 字数
+        reversible: true
+        explore_status: covered
+      model_auto:
+        selector: "button[aria-label='Auto']"
+        role_or_text: "Auto"
+        action_result: 展示/选择模型
+        reversible: true
+        explore_status: covered
+      resolution_1k:
+        selector: "button[aria-label='1k']"
+        role_or_text: "1k"
+        action_result: 展示/选择分辨率
+        reversible: true
+        explore_status: covered
+      ratio_1_1:
+        selector: "button[aria-label='1:1']"
+        role_or_text: "1:1"
+        action_result: 展示/选择比例
+        reversible: true
+        explore_status: covered
+      generate:
+        selector: "button:has-text('Generate')"
+        role_or_text: "Generate"
+        action_result: 发起生成
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+      back:
+        selector: "button[aria-label='Back']"
+        role_or_text: "Back"
+        action_result: 返回进入 AI Image 前的一级面板
+        reversible: true
+        explore_status: covered
+  inspiration_panel:
+    description: AI Image Inspiration 模板列表。
+    trigger: 点击 AI Image 面板内 Inspiration
+    buttons:
+      close:
+        selector: "button:has-text('Close')"
+        role_or_text: "Close"
+        action_result: 关闭 Inspiration 弹层
+        reversible: true
+        explore_status: covered
+      category_trending:
+        selector: "button:has-text('Trending')"
+        role_or_text: "Trending"
+        action_result: 切换大分类
+        reversible: true
+        explore_status: covered
+      template_trend_spiderman1:
+        selector: "[role=button][aria-label='Trend Spiderman1']"
+        role_or_text: "Trend Spiderman1"
+        action_result: 填充 prompt，模型切换为 Nano Banana，字数显示 463/3000
+        reversible: true
+        explore_status: covered
+  layer_panel:
+    description: 图层面板，背景层显示 Bg。
+    trigger: 点击画布右下角 Layer
+    buttons:
+      background_layer:
+        selector: "text=Bg"
+        role_or_text: "Bg"
+        action_result: 显示背景层标识
+        reversible: true
+        explore_status: covered
+  photo_enhancer_panel:
+    description: Photo Enhancer 面板。
+    trigger: 点击 Photo Enhancer
+    buttons:
+      standard_mode:
+        selector: "button:has-text('Standard Mode')"
+        role_or_text: "Standard Mode"
+        action_result: 选择标准模式
+        reversible: true
+        explore_status: covered
+      portrait_mode:
+        selector: "button:has-text('Portrait Mode')"
+        role_or_text: "Portrait Mode"
+        action_result: 选择人像模式
+        reversible: true
+        explore_status: covered
+      old_photo_enhance:
+        selector: "button:has-text('Old Photo Enhance')"
+        role_or_text: "Old Photo Enhance"
+        action_result: 展开老照片模式选项
+        reversible: true
+        explore_status: covered
+      text_mode:
+        selector: "button:has-text('Text Mode')"
+        role_or_text: "Text Mode"
+        action_result: 选择文本模式
+        reversible: true
+        explore_status: covered
+      ultra_hd_mode:
+        selector: "button:has-text('Ultra HD Mode')"
+        role_or_text: "Ultra HD Mode"
+        action_result: 选择超清模式
+        reversible: true
+        explore_status: covered
+      enhance:
+        selector: "button:has-text('Enhance')"
+        role_or_text: "Enhance"
+        action_result: 发起画质增强
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+  old_photo_enhance_panel:
+    description: 老照片增强模式，默认勾选 Fix blur。
+    trigger: 点击 Old Photo Enhance
+    buttons:
+      fix_blur:
+        selector: "button:has-text('Fix blur')"
+        role_or_text: "Fix blur"
+        action_result: 默认选中；图标为 selected
+        reversible: true
+        explore_status: covered
+        assertions_hint: "img src 包含 enhance_old_photo_check_selected"
+      restore_old_photo_color:
+        selector: "button:has-text('Restore old photo color')"
+        role_or_text: "Restore old photo color"
+        action_result: 未选中
+        reversible: true
+        explore_status: covered
+      remove_scratches:
+        selector: "button:has-text('Remove scratches')"
+        role_or_text: "Remove scratches"
+        action_result: 未选中
+        reversible: true
+        explore_status: covered
+  magic_eraser_panel:
+    description: Magic Eraser 面板，默认 Retouch。
+    trigger: 点击 Magic Eraser
+    buttons:
+      retouch:
+        selector: "button:has-text('Retouch')"
+        role_or_text: "Retouch"
+        action_result: 默认选中 Retouch
+        reversible: true
+        explore_status: covered
+      ai_delete:
+        selector: "button:has-text('AI Delete')"
+        role_or_text: "AI Delete"
+        action_result: 切换到 AI Delete
+        reversible: true
+        explore_status: covered
+      auto_remove:
+        selector: "button:has-text('Auto Remove')"
+        role_or_text: "Auto Remove"
+        action_result: 切换到 Auto Remove
+        reversible: true
+        explore_status: covered
+  ai_clothes_changer_panel:
+    description: AI Clothes Changer 面板，缩略图 2:3。
+    trigger: 点击 AI Clothes Changer
+    buttons:
+      category_bikinis:
+        selector: "button:has-text('Bikinis')"
+        role_or_text: "Bikinis"
+        action_result: 切换分类
+        reversible: true
+        explore_status: covered
+      upload:
+        selector: "button:has-text('Upload')"
+        role_or_text: "Upload"
+        action_result: 上传参考图
+        reversible: true
+        explore_status: covered
+      generate:
+        selector: "button:has-text('Generate')"
+        role_or_text: "Generate"
+        action_result: 发起生成
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+  ai_body_editor_panel:
+    description: AI Body Editor 面板。
+    trigger: 点击 AI Body Editor
+    buttons:
+      category_bust:
+        selector: "button:has-text('Bust')"
+        role_or_text: "Bust"
+        action_result: 切换分类
+        reversible: true
+        explore_status: covered
+      generate:
+        selector: "button:has-text('Generate')"
+        role_or_text: "Generate"
+        action_result: 发起生成
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+  ai_image_extender_panel:
+    description: AI Image Extender 面板，含 Customize 与社媒预设。
+    trigger: 点击 AI Image Extender
+    buttons:
+      customize:
+        selector: "button:has-text('Customize')"
+        role_or_text: "Customize"
+        action_result: 展示宽高输入与 Lock Aspect Ratio
+        reversible: true
+        explore_status: covered
+      preset_square:
+        selector: "button:has-text('Square')"
+        role_or_text: "Square"
+        action_result: 选择比例预设
+        reversible: true
+        explore_status: covered
+      ai_extend:
+        selector: "button:has-text('AI Extend')"
+        role_or_text: "AI Extend"
+        action_result: 发起扩展
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+  ai_replace_panel:
+    description: AI Replace 面板，含 prompt、参考图和分类。
+    trigger: 点击 AI Replace
+    buttons:
+      prompt:
+        selector: "textarea[placeholder='Describe content you want to replace or add']"
+        role_or_text: "Prompt"
+        action_result: 输入替换描述
+        reversible: true
+        explore_status: covered
+      reference:
+        selector: "button[aria-label='Reference']"
+        role_or_text: "Reference"
+        action_result: 打开参考图选择
+        reversible: true
+        explore_status: covered
+      generate:
+        selector: "button:has-text('Generate')"
+        role_or_text: "Generate"
+        action_result: 发起生成
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+  ai_face_editor_panel:
+    description: AI Face Editor 面板。
+    trigger: 点击 AI Face Editor
+    buttons:
+      category_retouch:
+        selector: "button:has-text('Retouch')"
+        role_or_text: "Retouch"
+        action_result: 切换分类
+        reversible: true
+        explore_status: covered
+      generate:
+        selector: "button:has-text('Generate')"
+        role_or_text: "Generate"
+        action_result: 发起生成
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+  watermark_remover_panel:
+    description: Watermark Remover 面板，复用 Magic Eraser Auto Remove 布局。
+    trigger: 点击 Watermark Remover
+    buttons:
+      signup_modal:
+        selector: "input[placeholder='Email']"
+        role_or_text: "Email"
+        action_result: 未登录时显示注册弹窗
+        reversible: true
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+  ai_filter_panel:
+    description: AI Filter 面板。
+    trigger: 点击 AI Filter
+    buttons:
+      category_popular:
+        selector: "button:has-text('Popular')"
+        role_or_text: "Popular"
+        action_result: 切换分类
+        reversible: true
+        explore_status: covered
+      generate:
+        selector: "button:has-text('Generate')"
+        role_or_text: "Generate"
+        action_result: 发起生成
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+  hairstyle_try_on_panel:
+    description: HairStyle Try On 面板。
+    trigger: 点击 HairStyle Try On
+    buttons:
+      category_restore:
+        selector: "button:has-text('Restore')"
+        role_or_text: "Restore"
+        action_result: 切换分类
+        reversible: true
+        explore_status: covered
+      generate:
+        selector: "button:has-text('Generate')"
+        role_or_text: "Generate"
+        action_result: 发起生成
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+  old_photo_restore_panel:
+    description: Old Photo Restore 面板，复用 Photo Enhancer 模式区。
+    trigger: 点击 Old Photo Restore
+    buttons:
+      old_photo_enhance:
+        selector: "button:has-text('Old Photo Enhance')"
+        role_or_text: "Old Photo Enhance"
+        action_result: 展开老照片模式
+        reversible: true
+        explore_status: covered
+      enhance:
+        selector: "button:has-text('Enhance')"
+        role_or_text: "Enhance"
+        action_result: 发起增强
+        reversible: false
+        explore_status: skipped
+        dependencies: ["登录账号", "credits"]
+tabs:
+  primary_tabs:
+    selector: "li.mobile-primary-panel__tab"
+    items: ["Trending Tools", "AI Image", "Background", "Adjust", "Insert"]
+    default_selected: "Trending Tools"
+  photo_enhancer_modes:
+    selector: "button:has-text('Standard Mode'), button:has-text('Portrait Mode'), button:has-text('Old Photo Enhance'), button:has-text('Text Mode'), button:has-text('Ultra HD Mode')"
+    items: ["Standard Mode", "Portrait Mode", "Old Photo Enhance", "Text Mode", "Ultra HD Mode"]
+  magic_eraser_modes:
+    selector: "button:has-text('Retouch'), button:has-text('AI Delete'), button:has-text('Auto Remove')"
+    items: ["Retouch", "AI Delete", "Auto Remove"]
+modals:
+  signup_modal:
+    selector: "input[placeholder='Email']"
+    fields: ["Email", "Verification Code"]
+  background_remover_help:
+    selector: "button[aria-label='Help']"
+    fields: ["General Mode", "Try Now", "Previous mode", "Next mode"]
+

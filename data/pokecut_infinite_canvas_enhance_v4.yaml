@@ -1,0 +1,160 @@
+base_url: http://10.17.1.66:3001
+entry_path: /en/create
+accounts:
+  pro:
+    email: 450832596@qq.com
+    code: 123456
+    vip_type: 4
+assets:
+  one_k: 1K.jpg
+  low: 低分辨率.JPG
+  four_k_jpg: 4K.jpg
+  four_k_png: 4K.png
+  eight_k: 8K.jpg
+  face: 有人脸.JPG
+  text: 文字测例.jpg
+waits:
+  canvas_ready_timeout_ms: 90000
+  panel_ready_timeout_ms: 15000
+  upload_settle_ms: 15000
+  action_settle_ms: 1200
+  result_timeout_ms: 360000
+  poll_interval_ms: 5000
+expected:
+  one_k:
+    width: 1200
+    height: 1600
+    default_res: 2k
+    target: [1536, 2048]
+    controls: {2k: false, 4k: false, 8k: false}
+  low:
+    width: 512
+    height: 768
+    default_res: 2k
+    target: [1365, 2048]
+    controls: {2k: false, 4k: false, 8k: false}
+  four_k_jpg:
+    width: 2730
+    height: 4096
+    default_res: 8k
+    target: [5460, 8192]
+    controls: {2k: true, 4k: true, 8k: false}
+  four_k_png:
+    width: 4500
+    height: 3000
+    default_res: 8k
+    target: [8192, 5461]
+    controls: {2k: true, 4k: true, 8k: false}
+  eight_k:
+    width: 8000
+    height: 6000
+    default_res: 8k
+    target: [8192, 6144]
+    controls: {2k: true, 4k: true, 8k: false}
+routes:
+  standard_2k:
+    mode: Standard Mode
+    res: 2k
+    asset: one_k
+    resource_code: picenhance_normal_2k
+    style_id: none
+    ef_mode: '240100021'
+    long_edge: 2048
+  standard_4k:
+    mode: Standard Mode
+    res: 4k
+    asset: one_k
+    resource_code: picenhance_normal_4k
+    style_id: pkweb_comfyui_enhance_normal
+    ef_mode: null
+    long_edge: 4096
+  portrait_2k:
+    mode: Portrait Mode
+    res: 2k
+    asset: face
+    resource_code: picenhance_portrait_2k
+    style_id: none
+    ef_mode: '240900033'
+    long_edge: 2048
+  portrait_4k:
+    mode: Portrait Mode
+    res: 4k
+    asset: face
+    resource_code: picenhance_portrait_4k
+    style_id: pkweb_comfyui_enhance_portrait
+    ef_mode: null
+    long_edge: 4096
+  text_2k:
+    mode: Text Mode
+    res: 2k
+    asset: text
+    resource_code: picenhance_text_2k
+    style_id: pkweb_text_enhance
+    ef_mode: null
+    long_edge: 2048
+  text_4k:
+    mode: Text Mode
+    res: 4k
+    asset: text
+    resource_code: picenhance_text_4k
+    style_id: pkweb_comfyui_enhance_text
+    ef_mode: null
+    long_edge: 4096
+ultra:
+  ultra_2k:
+    mode: Ultra HD Mode
+    res: 2k
+    asset: one_k
+    resource_code: picenhance_ultra_2k
+    style_id: pkweb_comfyui_enhance_natural
+    long_edge: 2048
+    credits: 4
+  ultra_4k:
+    mode: Ultra HD Mode
+    res: 4k
+    asset: one_k
+    resource_code: picenhance_ultra_4k
+    style_id: pkweb_comfyui_enhance_natural
+    long_edge: 4096
+    credits: 4
+eight_k_routes:
+  standard_8k:
+    mode: Standard Mode
+    res: 8k
+    asset: one_k
+    style_id: pkweb_chain_comfyui_enhance_normal
+    resource_code: picenhance_normal_8k
+    long_edge: 8192
+    credits: 2
+  portrait_8k:
+    mode: Portrait Mode
+    res: 8k
+    asset: one_k
+    style_id: pkweb_chain_comfyui_enhance_portrait
+    resource_code: picenhance_portrait_8k
+    long_edge: 8192
+    credits: 2
+  text_8k:
+    mode: Text Mode
+    res: 8k
+    asset: one_k
+    style_id: pkweb_chain_comfyui_enhance_text
+    resource_code: picenhance_text_8k
+    long_edge: 8192
+    credits: 4
+  ultra_8k:
+    mode: Ultra HD Mode
+    res: 8k
+    asset: one_k
+    style_id: pkweb_chain_comfyui_enhance_ultra
+    resource_code: picenhance_ultra_8k
+    long_edge: 8192
+    credits: 6
+  ultra_8k_from_4k:
+    mode: Ultra HD Mode
+    res: 8k
+    asset: four_k_jpg
+    style_id: pkweb_realesrgan
+    resource_code: picenhance_ultra_8k
+    long_edge: 8192
+    credits: 6

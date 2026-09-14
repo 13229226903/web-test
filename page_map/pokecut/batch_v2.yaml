@@ -1,0 +1,635 @@
+page: PokecutBatchEdit
+url: /batch
+landmark:
+  selector: button:has-text('Upload Images')
+  description: 批量编辑落地页主上传按钮；登录后同路径可见账号态与批量编辑入口
+entry:
+  from: Direct
+  trigger: 直接访问 /batch；主按钮或四个功能卡片均可触发文件选择器
+  selector: body
+  note: 匿名可访问落地页；生成/下载类交互需登录 VIP 账号。上传后进入 /batch-edit/edit?pid=*
+elements:
+  upload_images:
+    selector: button:has-text('Upload Images')
+    text: Upload Images
+    description: 落地页主上传入口，触发系统文件选择器；支持单图或多图，产品口径上限 50 张
+  card_remove_bg:
+    selector: text=Batch Remove Backgrounds
+    text: Batch Remove Backgrounds
+    description: 背景移除入口卡片；上传后默认进入 Background > Remove BG
+  card_resizer:
+    selector: text=Batch Resizer
+    text: Batch Resizer
+    description: 尺寸调整入口卡片；上传后默认进入 Resize
+  card_change_bg:
+    selector: text=Batch Change Backgrounds
+    text: Batch Change Backgrounds
+    description: 背景更换入口卡片；实际上传后仍默认进入 Background > Remove BG
+  card_enhancer:
+    selector: text=Batch Enhancer
+    text: Batch Enhancer
+    description: 画质增强入口卡片；上传后默认进入 Enhance
+  left_tab_background:
+    selector: span:has-text('Background')
+    text: Background
+  left_tab_enhance:
+    selector: span:has-text('Enhance')
+    text: Enhance
+  left_tab_resize:
+    selector: span:has-text('Resize')
+    text: Resize
+  subtab_remove_bg:
+    selector: div:has-text('Remove BG')
+    text: Remove BG
+  subtab_change_bg:
+    selector: div:has-text('Change BG')
+    text: Change BG
+  color_picker:
+    selector: img[src*='edit_icon_color_picker.png']
+    description: Change BG > Colors 的自定义选色入口
+  color_swatch:
+    selector: span.color-border
+    description: 预设色块；当前无逐色稳定 ID，需按视觉顺序或补 data 属性
+  color_hex_input:
+    selector: input.hexInput
+    description: 选色面板 HEX 输入框，可输入 #RRGGBB 并回车应用
+  image_tab:
+    selector: text=Images
+    text: Images
+  image_preset:
+    selector: img[src*='thumb_res_bg_']
+    description: Change BG > Images 的预设背景缩略图
+  custom_background_upload:
+    selector: text=Upload
+    text: Upload
+    description: Change BG > Images 的本地上传背景入口
+  remove_background_submit:
+    selector: button:has-text('Remove Background')
+    text: Remove Background
+  ai_enhancer_submit:
+    selector: button:has-text('AI Enhancer')
+    text: AI Enhancer
+  custom_width:
+    selector: '#width'
+    description: Resize 自定义宽度输入框
+  custom_height:
+    selector: '#height'
+    description: Resize 自定义高度输入框
+  aspect_lock:
+    selector: '#aspect-lock'
+    description: Resize 锁定宽高比复选框
+  plus_upload_tile:
+    selector: div.bg-c-light-purple
+    description: 图片区 + 号上传卡片；无稳定 ID，当前用语义 class 识别
+  delete_icon:
+    selector: img[src*='remodver_bg_btn_icon.svg']
+    description: 顶栏删除入口图标
+  download_button:
+    selector: div.btn-bg-purple:has-text('Download')
+    text: Download
+  undo_icon:
+    selector: img[src*='top_btn_undo']
+    description: 顶栏撤销图标；disabled 态使用 top_btn_undo_disabled.svg
+  redo_icon:
+    selector: img[src*='top_btn_redo']
+    description: 顶栏重做图标；disabled 态使用 top_btn_redo_disabled.svg
+  preview_close:
+    selector: img[src*='colos_pop_btn_close.svg']
+    description: 预览弹窗右上角关闭图标
+tabs:
+  left_main:
+  - Background
+  - Enhance
+  - Resize
+  background_sub:
+  - Remove BG
+  - Change BG
+  change_bg_sub:
+  - Colors
+  - Images
+  remove_bg_modes:
+  - General
+  - Head&Face
+  - Text
+  enhance_modes:
+  - Standard Mode
+  - Portrait Mode
+  - Text Mode
+modals:
+  preview:
+    description: 点击右侧图片后打开的预览弹窗，含 Refine 与右上角关闭
+    trigger: 点击右侧图片缩略图
+    close: img[src*='colos_pop_btn_close.svg']
+  refine:
+    description: 预览弹窗中的涂抹编辑弹窗，含 Keep / Eraser / 笔刷大小 / Go Edit / Cancel
+    trigger: 点击 Refine
+    close: Cancel
+  delete_confirm:
+    description: 删除确认弹窗，提示不可恢复
+    trigger: 删除模式中点击 Delect
+    confirm: button:has-text('Delete completely')
+    cancel: button:has-text('Cancel')
+  download:
+    description: 下载格式下拉，含 JPG / PNG / Download
+    trigger: 有图片时点击顶栏 Download
+states:
+  landing_default:
+    description: /batch 匿名默认落地页，含主上传按钮与四个功能卡片
+    trigger: 直接访问 /batch
+    url_or_state_key: /batch
+    buttons:
+      upload_images:
+        selector: button:has-text('Upload Images')
+        role_or_text: button / Upload Images
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；选择图片后进入 /batch-edit/edit?pid=*
+        reversible: false
+        explore_status: covered
+        dependencies: [valid image]
+        assertions_hint: URL 变为 /batch-edit/edit?pid=；右侧出现图片缩略图
+        notes: 支持多选；本次未测试 50 张上限
+      card_remove_bg:
+        selector: text=Batch Remove Backgrounds
+        role_or_text: card / Batch Remove Backgrounds
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后默认选中 Background > Remove BG > General
+        reversible: false
+        explore_status: covered
+        dependencies: [valid image]
+        assertions_hint: 左侧 Background 高亮；Remove BG 子 tab 高亮；General 模式高亮
+        notes: ''
+      card_resizer:
+        selector: text=Batch Resizer
+        role_or_text: card / Batch Resizer
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后默认选中 Resize
+        reversible: false
+        explore_status: covered
+        dependencies: [valid image]
+        assertions_hint: 左侧 Resize 高亮；显示 Custom Size 与 Most used
+        notes: ''
+      card_change_bg:
+        selector: text=Batch Change Backgrounds
+        role_or_text: card / Batch Change Backgrounds
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；实际上传后仍默认选中 Background > Remove BG > General
+        reversible: false
+        explore_status: covered
+        dependencies: [valid image]
+        assertions_hint: Remove BG 子 tab 高亮，而非 Change BG
+        notes: 与用户预期“不同卡片默认 tab 不同”存在差异，见 sync.md bug candidate
+      card_enhancer:
+        selector: text=Batch Enhancer
+        role_or_text: card / Batch Enhancer
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后默认选中 Enhance > Standard Mode
+        reversible: false
+        explore_status: covered
+        dependencies: [valid image]
+        assertions_hint: 左侧 Enhance 高亮；Standard Mode 高亮
+        notes: ''
+  edit_background_remove_bg:
+    description: 编辑页 Background > Remove BG，默认 General 模式
+    trigger: 上传图片后默认进入，或点击 Batch Remove Backgrounds 卡片
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      mode_general:
+        selector: span:has-text('General')
+        role_or_text: mode / General
+        visible_condition: Background > Remove BG
+        enabled_condition: always
+        action_result: 切换到 General 模式；不提交任务
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image]
+        assertions_hint: General 的 span class 包含 text-c-theme
+        notes: ''
+      mode_head_face:
+        selector: span:has-text('Head&Face')
+        role_or_text: mode / Head&Face
+        visible_condition: Background > Remove BG
+        enabled_condition: always
+        action_result: 切换到 Head&Face 模式；不提交任务
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image]
+        assertions_hint: Head&Face 的 span class 包含 text-c-theme
+        notes: ''
+      mode_text:
+        selector: span:has-text('Text')
+        role_or_text: mode / Text
+        visible_condition: Background > Remove BG
+        enabled_condition: always
+        action_result: 切换到 Text 模式；不提交任务
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image]
+        assertions_hint: Text 的 span class 包含 text-c-theme
+        notes: ''
+      remove_background_submit:
+        selector: button:has-text('Remove Background')
+        role_or_text: button / Remove Background
+        visible_condition: Background > Remove BG
+        enabled_condition: 登录 VIP 账号且有可用权益
+        action_result: 提交抠图任务；完成后自动切到 Change BG > Colors
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image, vip login]
+        assertions_hint: Remove BG 子 tab 变为非选中；Change BG 子 tab 高亮；Colors 面板可见
+        notes: 任务完成后可点击右侧图片进入预览与 Refine
+  edit_background_change_bg_colors:
+    description: 编辑页 Background > Change BG > Colors
+    trigger: 抠图完成后自动进入，或点击 Change BG 子 tab
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      color_swatch:
+        selector: span.color-border
+        role_or_text: color swatch
+        visible_condition: Change BG > Colors
+        enabled_condition: 已完成抠图
+        action_result: 点击预设色块后应用到图片背景；选中色块获得 active-color-border
+        reversible: true
+        explore_status: covered
+        dependencies: [cutout image]
+        assertions_hint: active 色块 class 包含 active-color-border；截图与默认态存在差异
+        notes: 色块缺少逐个稳定 ID，建议前端补 data-color
+      color_picker:
+        selector: img[src*='edit_icon_color_picker.png']
+        role_or_text: icon / color picker
+        visible_condition: Change BG > Colors
+        enabled_condition: 已完成抠图
+        action_result: 打开 HSL/RGB/HEX 选色面板
+        reversible: true
+        explore_status: covered
+        dependencies: [cutout image]
+        assertions_hint: 面板可见 input.hexInput
+        notes: ''
+      color_hex_input:
+        selector: input.hexInput
+        role_or_text: input / HEX
+        visible_condition: color picker opened
+        enabled_condition: always
+        action_result: 输入 #RRGGBB 并回车后更新背景
+        reversible: true
+        explore_status: covered
+        dependencies: [color picker opened]
+        assertions_hint: 输入值与截图背景变化一致
+        notes: ''
+  edit_background_change_bg_images:
+    description: 编辑页 Background > Change BG > Images
+    trigger: 在 Change BG 下点击 Images
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      image_preset:
+        selector: img[src*='thumb_res_bg_']
+        role_or_text: image / preset background
+        visible_condition: Change BG > Images
+        enabled_condition: 已完成抠图
+        action_result: 点击预设背景图后应用到图片背景
+        reversible: true
+        explore_status: covered
+        dependencies: [cutout image]
+        assertions_hint: 截图与点击前存在差异
+        notes: 预设图通过 src 识别，建议补 data-preset-id
+      custom_background_upload:
+        selector: text=Upload
+        role_or_text: button / Upload
+        visible_condition: Change BG > Images
+        enabled_condition: 已完成抠图
+        action_result: 触发文件选择器；选择本地图片后应用为背景
+        reversible: true
+        explore_status: covered
+        dependencies: [cutout image, local image]
+        assertions_hint: 截图与上传前存在差异
+        notes: ''
+  edit_enhance:
+    description: 编辑页 Enhance，默认 Standard Mode
+    trigger: 点击左侧 Enhance 或 Batch Enhancer 卡片
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      mode_standard:
+        selector: span:has-text('Standard Mode')
+        role_or_text: mode / Standard Mode
+        visible_condition: Enhance
+        enabled_condition: always
+        action_result: 切换到 Standard 模式
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image]
+        assertions_hint: Standard Mode class 包含 text-c-theme
+        notes: ''
+      mode_portrait:
+        selector: span:has-text('Portrait Mode')
+        role_or_text: mode / Portrait Mode
+        visible_condition: Enhance
+        enabled_condition: always
+        action_result: 切换到 Portrait 模式
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image]
+        assertions_hint: Portrait Mode class 包含 text-c-theme
+        notes: ''
+      mode_text:
+        selector: span:has-text('Text Mode')
+        role_or_text: mode / Text Mode
+        visible_condition: Enhance
+        enabled_condition: always
+        action_result: 切换到 Text 模式
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image]
+        assertions_hint: Text Mode class 包含 text-c-theme
+        notes: ''
+      ai_enhancer_submit:
+        selector: button:has-text('AI Enhancer')
+        role_or_text: button / AI Enhancer
+        visible_condition: Enhance
+        enabled_condition: 登录 VIP 账号且有可用权益
+        action_result: 提交增强任务；完成后点击图片可查看 Before/After 分辨率
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image, vip login]
+        assertions_hint: 对比弹窗显示 Before 与 After 分辨率，例如 1200x1600 -> 2400x3200
+        notes: ''
+  edit_resize:
+    description: 编辑页 Resize，含 Custom Size 与 Most used 模板
+    trigger: 点击左侧 Resize 或 Batch Resizer 卡片
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      template_amazon:
+        selector: span:has-text('Amazon')
+        role_or_text: template / Amazon 2000 x 2000
+        visible_condition: Resize > Most used
+        enabled_condition: always
+        action_result: 点击后宽高输入变为 2000/2000，画布比例变为 1:1
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image]
+        assertions_hint: #width=2000；#height=2000；canvas 宽高比接近 1:1
+        notes: ''
+      custom_width:
+        selector: '#width'
+        role_or_text: input / width
+        visible_condition: Resize > Custom Size
+        enabled_condition: always
+        action_result: 输入宽度并确认后更新画布尺寸
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image]
+        assertions_hint: 输入 800 后画布宽度比例变化
+        notes: ''
+      custom_height:
+        selector: '#height'
+        role_or_text: input / height
+        visible_condition: Resize > Custom Size
+        enabled_condition: always
+        action_result: 输入高度并确认后更新画布尺寸
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image]
+        assertions_hint: 输入 600 后画布高度比例变化
+        notes: ''
+      aspect_lock:
+        selector: '#aspect-lock'
+        role_or_text: checkbox / Lock Aspect Ratio
+        visible_condition: Resize > Custom Size
+        enabled_condition: always
+        action_result: 勾选后宽高联动
+        reversible: true
+        explore_status: covered
+        dependencies: [uploaded image]
+        assertions_hint: checkbox checked 状态与宽高联动一致
+        notes: ''
+  edit_gallery:
+    description: 右侧图片区，含 + 号继续上传
+    trigger: 上传图片后
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      plus_upload_tile:
+        selector: div.bg-c-light-purple
+        role_or_text: tile / +
+        visible_condition: 有图片且非删除模式
+        enabled_condition: 未达到上限
+        action_result: 触发文件选择器，可继续上传图片
+        reversible: false
+        explore_status: covered
+        dependencies: [existing image]
+        assertions_hint: 上传后图片数量增加
+        notes: 删除模式下该 tile 变为 cursor-not-allowed
+  edit_delete_mode:
+    description: 顶栏删除图标触发的图片选择/删除状态
+    trigger: 点击顶栏删除图标
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      image_checkbox:
+        selector: label.select-checkbox
+        role_or_text: checkbox / image select
+        visible_condition: delete mode
+        enabled_condition: always
+        action_result: 勾选图片；selected n 计数更新
+        reversible: true
+        explore_status: covered
+        dependencies: [existing image]
+        assertions_hint: selected 计数与勾选数量一致
+        notes: ''
+      select_all:
+        selector: button:has-text('Select All')
+        role_or_text: button / Select All
+        visible_condition: delete mode
+        enabled_condition: existing image
+        action_result: 选中所有图片
+        reversible: true
+        explore_status: covered
+        dependencies: [existing image]
+        assertions_hint: selected n 等于图片数
+        notes: ''
+      cancel_delete_mode:
+        selector: button:has-text('Cancel')
+        role_or_text: button / Cancel
+        visible_condition: delete mode
+        enabled_condition: always
+        action_result: 退出删除模式，恢复普通图片区
+        reversible: true
+        explore_status: covered
+        dependencies: [delete mode]
+        assertions_hint: Cancel/Select All/Delect 控件消失
+        notes: ''
+      delete_confirm_entry:
+        selector: button:has-text('Delect')
+        role_or_text: button / Delect
+        visible_condition: delete mode
+        enabled_condition: selected image
+        action_result: 打开删除确认弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: [selected image]
+        assertions_hint: 弹窗显示 Delete design completely?
+        notes: 页面文案为 Delect，疑似 Delete 拼写错误
+      delete_confirm:
+        selector: button:has-text('Delete completely')
+        role_or_text: button / Delete completely
+        visible_condition: delete confirm modal
+        enabled_condition: selected image
+        action_result: 删除选中图片；全部删除后回到默认上传态
+        reversible: false
+        explore_status: covered
+        dependencies: [selected image]
+        assertions_hint: 图片数量减少；全删后出现 Upload Images 主按钮
+        notes: ''
+  preview_modal:
+    description: 点击右侧图片后的预览弹窗
+    trigger: 点击右侧图片缩略图
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      refine:
+        selector: button:has-text('Refine')
+        role_or_text: button / Refine
+        visible_condition: preview modal
+        enabled_condition: cutout image
+        action_result: 打开涂抹编辑弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: [cutout image]
+        assertions_hint: Keep/Eraser/Go Edit/Cancel 可见
+        notes: ''
+      close:
+        selector: img[src*='colos_pop_btn_close.svg']
+        role_or_text: icon / close
+        visible_condition: preview modal
+        enabled_condition: always
+        action_result: 关闭预览弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: [preview modal]
+        assertions_hint: Refine 按钮不可见
+        notes: ''
+  refine_modal:
+    description: 抠图结果涂抹编辑弹窗
+    trigger: 预览弹窗点击 Refine
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      eraser_mode:
+        selector: button:has-text('Eraser')
+        role_or_text: button / Eraser
+        visible_condition: refine modal
+        enabled_condition: always
+        action_result: 默认模式；拖拽画布可擦除内容
+        reversible: true
+        explore_status: covered
+        dependencies: [refine modal]
+        assertions_hint: 涂抹后截图与涂抹前存在差异
+        notes: ''
+      keep_mode:
+        selector: button:has-text('Keep')
+        role_or_text: button / Keep
+        visible_condition: refine modal
+        enabled_condition: always
+        action_result: 切换到恢复模式；拖拽画布可恢复内容
+        reversible: true
+        explore_status: covered
+        dependencies: [refine modal]
+        assertions_hint: 涂抹后截图与涂抹前存在差异
+        notes: ''
+      brush_size:
+        selector: input[type='range']
+        role_or_text: input / brush size
+        visible_condition: refine modal
+        enabled_condition: always
+        action_result: 调整笔刷大小
+        reversible: true
+        explore_status: covered
+        dependencies: [refine modal]
+        assertions_hint: 数值与滑杆联动
+        notes: 默认 30
+      go_edit:
+        selector: button:has-text('Go Edit')
+        role_or_text: button / Go Edit
+        visible_condition: refine modal
+        enabled_condition: always
+        action_result: 应用涂抹结果并回到预览弹窗
+        reversible: false
+        explore_status: covered
+        dependencies: [refine modal]
+        assertions_hint: refine 控件消失，preview 保留
+        notes: ''
+      cancel:
+        selector: button:has-text('Cancel')
+        role_or_text: button / Cancel
+        visible_condition: refine modal
+        enabled_condition: always
+        action_result: 不应用本次涂抹并回到预览弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: [refine modal]
+        assertions_hint: refine 控件消失，preview 保留
+        notes: ''
+  download_dropdown:
+    description: 有图片时的下载格式下拉
+    trigger: 点击顶栏 Download
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      format_jpg:
+        selector: button:has-text('JPG')
+        role_or_text: button / JPG
+        visible_condition: download dropdown
+        enabled_condition: existing image
+        action_result: 选择 JPG 格式
+        reversible: true
+        explore_status: covered
+        dependencies: [existing image]
+        assertions_hint: JPG 按钮可见
+        notes: ''
+      format_png:
+        selector: button:has-text('PNG')
+        role_or_text: button / PNG
+        visible_condition: download dropdown
+        enabled_condition: existing image
+        action_result: 选择 PNG 格式
+        reversible: true
+        explore_status: covered
+        dependencies: [existing image]
+        assertions_hint: PNG 按钮可见
+        notes: ''
+      download_confirm:
+        selector: button:has-text('Download')
+        role_or_text: button / Download
+        visible_condition: download dropdown
+        enabled_condition: existing image
+        action_result: 触发 zip 下载，文件名形如 Pokecut_batch_<timestamp>.zip
+        reversible: true
+        explore_status: covered
+        dependencies: [existing image, selected format]
+        assertions_hint: Playwright expect_download 捕获到 zip 文件
+        notes: 无图片时 Download 控件不可见/不可点击
+  undo_redo:
+    description: 顶栏撤销/重做状态
+    trigger: 产生任意编辑历史后
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      undo:
+        selector: img[src*='top_btn_undo']
+        role_or_text: icon / undo
+        visible_condition: always
+        enabled_condition: 存在可撤销历史
+        action_result: 回退上一步操作；无可撤销时图标为 disabled 版本
+        reversible: true
+        explore_status: covered
+        dependencies: [edit history]
+        assertions_hint: 点击后画布状态回退；图标 src 切换
+        notes: ''
+      redo:
+        selector: img[src*='top_btn_redo']
+        role_or_text: icon / redo
+        visible_condition: always
+        enabled_condition: 存在可重做历史
+        action_result: 恢复刚撤销的操作；无可重做时图标为 disabled 版本
+        reversible: true
+        explore_status: covered
+        dependencies: [undo history]
+        assertions_hint: 点击后画布状态恢复；图标 src 切换
+        notes: ''

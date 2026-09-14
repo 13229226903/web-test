@@ -15,7 +15,18 @@ from playwright.sync_api import Page, expect
 
 from conftest import visual_assert
 
-ROOT = Path(__file__).resolve().parents[1]
+
+
+def _repo_root():
+    """归档副本位于 archive/<dir>/，需按 test_images/ 上溯仓库根（原 parents[1] 解析到 archive/ 会找不到素材）。"""
+    here = Path(__file__).resolve()
+    for c in [here.parent, *here.parents]:
+        if (c / "test_images").is_dir():
+            return c
+    return Path(__file__).resolve().parents[1]
+
+
+ROOT = _repo_root()
 URL_PATH = "/tools/ai-image-text-enhancer"
 IMG_1K = ROOT / "test_images" / "1K.jpg"
 IMG_TEXT_SAMPLE = ROOT / "test_images" / "文字测例.jpg"

@@ -1,0 +1,873 @@
+page: PokecutHomeV5
+url: /
+landmark:
+  selector: h1:has-text('All-in-One AI Photo Editor & Generator')
+  description: 首页英文首屏标题；中文态对应 AI 照片编辑与生图工具
+entry:
+  from: Direct
+  trigger: 直接访问站点根路径；中文 locale 会先落在 /zh，可通过页脚语言切换到 /
+  selector: body
+  note: 匿名态应显示 Sign up / Log in；本次探索保持未登录
+elements:
+  nav_logo:
+    selector: header a[href='/'], a[href='/']:has(img[alt*='pokecut' i])
+    text: Pokecut logo
+    description: 顶部 Logo，点击回首页
+  nav_ai_free_tools:
+    selector: button:has-text('AI Free Tools')
+    text: AI Free Tools
+    description: 工具下拉入口
+  nav_portrait_editor:
+    selector: button:has-text('Portrait Editor')
+    text: Portrait Editor
+    description: 人像编辑下拉入口
+  nav_discover:
+    selector: button:has-text('Discover')
+    text: Discover
+    description: 发现下拉入口
+  nav_pricing:
+    selector: a[href='/pricing'], a[href$='/pricing']
+    text: Pricing
+    description: 定价页入口，中文态显示倒计时促销
+  auth_signup:
+    selector: button:has-text('Sign up')
+    text: Sign up
+  auth_login:
+    selector: button:has-text('Log in')
+    text: Log in
+  hero_title:
+    selector: h1:has-text('All-in-One AI Photo Editor & Generator')
+    text: All-in-One AI Photo Editor & Generator
+  hero_desc:
+    selector: p:has-text('Use Pokecut to create, edit, and enhance images in one place')
+  hero_cta:
+    selector: button:has-text('Start Creating for Free')
+    text: Start Creating for Free
+  hero_prompt_upload:
+    selector: button[aria-label='Upload image']
+    text: Upload image
+    note: 点击触发系统文件选择器；选择有效图片后进入 /create/edit?pid=，图片加载到画布。
+  hero_prompt_model:
+    selector: button:has-text('Pokecut Pro')
+    text: Pokecut Pro
+  hero_prompt_settings:
+    selector: button[aria-label='Prompt settings']
+    text: Prompt settings
+  hero_prompt_generate:
+    selector: button[aria-label='Generate']
+    text: Generate
+    note: 输入文本后 Generate 从 disabled 变为 enabled；点击后进入 /create/edit?pid=，URL 携带 pid 参数。
+  popular_tools_region:
+    selector: region:has-text('Popular Pokecut AI tools')
+  feature_clothes_changer:
+    selector: button:has-text('AI Clothes Changer')
+    text: AI Clothes Changer
+    note: 点击触发文件选择器；上传有效图片后进入 /agent 或 /create/edit?pid=，并打开 Clothes Changer 相关面板。
+  feature_text_enhance:
+    selector: button:has-text('Enhance Text in Images')
+    text: Enhance Text in Images
+    note: 点击直接跳转 /tools/ai-image-text-enhancer。
+  feature_portrait_editor:
+    selector: button:has-text('AI Portrait Editor')
+    text: AI Portrait Editor
+    note: 点击触发文件选择器；上传有效图片后进入 /agent 或 /create/edit?pid=，并打开 Portrait Editor 相关面板。
+  feature_more_tools:
+    selector: button:has-text('More Pokecut AI Tools')
+    text: More Pokecut AI Tools
+  models_region:
+    selector: region:has-text('Choose the Right AI Model for Any Image')
+  model_buttons:
+    selector: button:has-text('Nano Banana 2'), button:has-text('Seedream 5.0 Lite'), button:has-text('Nano Banana Pro'),
+      button:has-text('Seedream 5.0 Pro'), button:has-text('Pokecut Pro'), button:has-text('ChatGPT Image 2.0'), button:has-text('Seedream
+      4.0'), button:has-text('Pokecut Basic'), button:has-text('Nano Banana 2 Lite')
+    expected_order:
+    - Nano Banana 2
+    - Seedream 5.0 Lite
+    - Nano Banana Pro
+    - Seedream 5.0 Pro
+    - Pokecut Pro
+    - ChatGPT Image 2.0
+    - Seedream 4.0
+    - Pokecut Basic
+    - Nano Banana 2 Lite
+  templates_region:
+    selector: text=Start Faster with Pokecut's AI Templates
+  templates_cta:
+    selector: button:has-text('See More Creations')
+    text: See More Creations
+    note: 实际点击后跳转 /create。
+    landing: /create
+  templates_cards:
+    selector: null
+    note: a11y snapshot 中模板卡片为 unnamed button，缺少可访问名称；见 sync.md bug candidate
+  test_panel:
+    selector: region:has-text('Test Your Photo Before You Edit')
+    links:
+      Pretty Scale: /tools/pretty-scale
+      Ethnicity Guesser: /tools/ethnicity-guesser-ai
+      Eye Color Detector: /tools/eye-color-detector
+      Body Shape Detector: /tools/body-shape-detector
+    note: 四个链接分别跳转 /tools/pretty-scale、/tools/ethnicity-guesser-ai、/tools/eye-color-detector、/tools/body-shape-detector。
+  portrait_section:
+    selector: region:has-text('Upgrade Every Portrait Details with Pokecut')
+    tabs:
+    - Retouch Face
+    - Change Hair
+    - Retouch Body
+    - Change Background
+    note: 4 个 tab 仅切换首页展示，不跳转；每个 tab 下有 8 个模板卡片，点击模板按 href 跳转对应工具/功能页。
+  batch_section:
+    selector: region:has-text('Edit up to 50 Photos in One Batch')
+    actions:
+    - Remove BG
+    - Resize
+    - Enhance
+    - Change BG
+    note: 4 个按钮均触发文件选择器；上传有效图片后进入 /batch-edit/edit?pid=。
+  enhance_section:
+    selector: region:has-text('Enhance Photo Quality for Every Detail')
+    actions:
+    - HD Enhance
+    - Text Enhance
+    - Portrait Enhance
+    - Ultra Enhance
+    note: HD Enhance / Text Enhance 直接跳转对应工具页；Portrait Enhance / Ultra Enhance 触发文件选择器，上传后进入 /agent 或 /create/edit?pid=。
+  trust_section:
+    selector: text=Pokecut is Trusted by Creators for Every Photo Creation
+    stats:
+    - 3M+ creators
+    - 200+ AI tools
+    - 500M+ edits processed
+    - '#2 Product Hunt'
+  reviews_section:
+    selector: region:has-text('What Users Say About Pokecut?')
+    users:
+      Jessica Miller: https://www.producthunt.com/@jessica_miller_7
+      Angelina Peng: https://www.producthunt.com/@angelina__s
+      Leo Y.: https://www.producthunt.com/@leo_ye
+      Zepeng She: https://www.producthunt.com/@rocsheh
+      Rachit Magon: https://www.producthunt.com/@rachitmagon
+  faq_section:
+    selector: text=Frequently Asked Questions
+    expected_question_count: 8
+    links:
+      pricing: /pricing
+      term_of_use: /term-of-use
+      refund_ticket: '[data-submit-ticket=''refund'']'
+  mobile_app:
+    selector: text=Pokecut Mobile App
+  footer:
+    selector: footer, text=Copyright © 2026 Pokecut All Rights Reserved.
+  footer_language:
+    selector: 'button:has-text(''Language: English''), button:has-text(''语言： English'')'
+  debug_feedback:
+    selector: button:has-text('DEBUG')
+    expected_visible: true
+tabs:
+  portrait_detail:
+    Retouch Face: button:has-text('Retouch Face')
+    Change Hair: button:has-text('Change Hair')
+    Retouch Body: button:has-text('Retouch Body')
+    Change Background: button:has-text('Change Background')
+modals: {}
+states:
+  default:
+    description: 匿名英文首页默认态；包含首屏、主要板块与页脚
+    trigger: 直接访问 / 并确保语言为 English
+    url_or_state_key: /
+    buttons:
+      nav_logo:
+        selector: header a[href='/'], a[href='/']:has(img[alt*='pokecut' i])
+        role_or_text: link / Pokecut logo
+        visible_condition: always
+        enabled_condition: always
+        action_result: 停留或回到首页 /
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL 为 /，logo 可见
+        notes: 'snapshot 证据: shots/home_english_snapshot.yml'
+      nav_ai_free_tools:
+        selector: button:has-text('AI Free Tools')
+        role_or_text: button / AI Free Tools
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开 Popular Tools / Photo Editor / AI Filter 三栏下拉
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: button[aria-expanded='true']，下拉包含 All Tools 等链接
+        notes: '实际点击已验证；证据: shots/nav_ai_free_tools_dropdown.png'
+      nav_portrait_editor:
+        selector: button:has-text('Portrait Editor')
+        role_or_text: button / Portrait Editor
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开 Face Editor / Body Editor / Hair Editor 三栏下拉
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: button[aria-expanded='true']，下拉包含 AI Makeup Photo Editor 等链接
+        notes: '实际点击已验证；证据: .playwright-mcp/page-2026-09-07T02-28-19-042Z.yml'
+      nav_discover:
+        selector: button:has-text('Discover')
+        role_or_text: button / Discover
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开 All Blogs / FAQ / Contact us / About us 下拉
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: button[aria-expanded='true']，下拉包含 /blog、/help、/about
+        notes: '实际点击已验证；证据: .playwright-mcp/page-2026-09-07T02-29-02-459Z.yml'
+      nav_pricing:
+        selector: a[href='/pricing'], a[href$='/pricing']
+        role_or_text: link / Pricing
+        visible_condition: always
+        enabled_condition: always
+        action_result: 跳转 /pricing
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: href 解析为 /pricing
+        notes: snapshot 证据
+      auth_signup:
+        selector: button:has-text('Sign up')
+        role_or_text: button / Sign up
+        visible_condition: anonymous
+        enabled_condition: always
+        action_result: 预期打开注册/登录弹层；本次未提交
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 匿名态可见
+        notes: 用户要求不登录，仅记录入口
+      auth_login:
+        selector: button:has-text('Log in')
+        role_or_text: button / Log in
+        visible_condition: anonymous
+        enabled_condition: always
+        action_result: 预期打开登录弹层；本次未提交
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 匿名态可见
+        notes: 用户要求不登录，仅记录入口
+      hero_cta:
+        selector: button:has-text('Start Creating for Free')
+        role_or_text: button / Start Creating for Free
+        visible_condition: always
+        enabled_condition: always
+        action_result: 预期进入创作页 /create 或 /agent；未在本轮点击确认
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 按钮可见且可点击
+        notes: snapshot 证据
+      hero_prompt_upload:
+        selector: button[aria-label='Upload image']
+        role_or_text: button / Upload image
+        visible_condition: always
+        enabled_condition: always
+        action_result: 预期触发系统文件选择器
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: aria-label 为 Upload image
+        notes: snapshot 证据
+      hero_prompt_model:
+        selector: button:has-text('Pokecut Pro')
+        role_or_text: button / Pokecut Pro
+        visible_condition: always
+        enabled_condition: always
+        action_result: 预期打开模型选择菜单
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 默认显示 Pokecut Pro
+        notes: snapshot 证据
+      hero_prompt_settings:
+        selector: button[aria-label='Prompt settings']
+        role_or_text: button / Prompt settings
+        visible_condition: always
+        enabled_condition: always
+        action_result: 预期打开 Prompt settings 弹层
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: aria-label 为 Prompt settings
+        notes: snapshot 证据
+      hero_prompt_generate:
+        selector: button[aria-label='Generate']
+        role_or_text: button / Generate
+        visible_condition: always
+        enabled_condition: false until prompt/image provided
+        action_result: 满足条件后触发生成；默认 disabled
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - prompt or uploaded image
+        assertions_hint: 默认 disabled
+        notes: snapshot 证据
+      feature_clothes_changer:
+        selector: button:has-text('AI Clothes Changer')
+        role_or_text: button / AI Clothes Changer
+        visible_condition: always
+        enabled_condition: always
+        action_result: 预期进入 AI 换装/相关工具页
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 卡片标题与 Try Now 可见
+        notes: snapshot 证据
+      feature_text_enhance:
+        selector: button:has-text('Enhance Text in Images')
+        role_or_text: button / Enhance Text in Images
+        visible_condition: always
+        enabled_condition: always
+        action_result: 预期进入文字增强工具页
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 卡片标题与 Try Now 可见
+        notes: snapshot 证据
+      feature_portrait_editor:
+        selector: button:has-text('AI Portrait Editor')
+        role_or_text: button / AI Portrait Editor
+        visible_condition: always
+        enabled_condition: always
+        action_result: 预期进入人像编辑工具页
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 卡片标题与 Try Now 可见
+        notes: snapshot 证据
+      feature_more_tools:
+        selector: button:has-text('More Pokecut AI Tools')
+        role_or_text: button / More Pokecut AI Tools
+        visible_condition: always
+        enabled_condition: always
+        action_result: 预期跳转 /tools
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 按钮可见
+        notes: snapshot 证据
+      templates_cta:
+        selector: button:has-text('See More Creations')
+        role_or_text: button / See More Creations
+        visible_condition: always
+        enabled_condition: always
+        action_result: 预期跳转 /create 或模板列表页
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 按钮可见
+        notes: snapshot 证据
+      faq_pricing_link:
+        selector: a[href='/pricing']
+        role_or_text: link / online store
+        visible_condition: FAQ 展开
+        enabled_condition: always
+        action_result: 跳转 /pricing
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: FAQ 内存在 pricing 链接
+        notes: snapshot 证据
+      faq_term_link:
+        selector: a[href='/term-of-use']
+        role_or_text: link / our Terms of Use
+        visible_condition: FAQ 展开
+        enabled_condition: always
+        action_result: 跳转 /term-of-use
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: FAQ 内存在 term-of-use 链接
+        notes: snapshot 证据
+      footer_language:
+        selector: 'button:has-text(''Language: English'')'
+        role_or_text: 'button / Language: English'
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开语言菜单，可切换 English / 简体中文 / 繁體中文 等
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后出现语言选项列表
+        notes: 实际点击已验证；切换 English 后 URL 回到 /
+      debug_feedback:
+        selector: button:has-text('DEBUG')
+        role_or_text: button / DEBUG
+        visible_condition: dev environment
+        enabled_condition: always
+        action_result: 预期打开 DEBUG 面板
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 按钮可见
+        notes: snapshot 证据
+  nav_ai_free_tools_dropdown:
+    description: AI Free Tools 下拉展开态
+    trigger: click nav_ai_free_tools
+    url_or_state_key: /
+    buttons:
+      all_tools:
+        selector: a[href='/tools']
+        role_or_text: link / All Tools
+        visible_condition: dropdown open
+        enabled_condition: always
+        action_result: 跳转 /tools
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - nav_ai_free_tools
+        assertions_hint: 下拉内可见
+        notes: 下拉还包含 Popular Tools / Photo Editor / AI Filter 分组链接
+      batch_photo_edit:
+        selector: a[href='/batch-edit']
+        role_or_text: link / Batch Photo Edit
+        visible_condition: dropdown open
+        enabled_condition: always
+        action_result: 跳转 /batch-edit
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - nav_ai_free_tools
+        assertions_hint: 下拉内可见
+        notes: Popular Tools 分组
+      ai_background_remover:
+        selector: a[href='/tools/background-remover']
+        role_or_text: link / AI Background Remover
+        visible_condition: dropdown open
+        enabled_condition: always
+        action_result: 跳转 /tools/background-remover
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - nav_ai_free_tools
+        assertions_hint: 带 HOT 徽标
+        notes: Popular Tools 分组
+  nav_portrait_editor_dropdown:
+    description: Portrait Editor 下拉展开态
+    trigger: click nav_portrait_editor
+    url_or_state_key: /
+    buttons:
+      all_tools:
+        selector: a[href='/tools']
+        role_or_text: link / All Tools
+        visible_condition: dropdown open
+        enabled_condition: always
+        action_result: 跳转 /tools
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - nav_portrait_editor
+        assertions_hint: 下拉内可见
+        notes: Face / Body / Hair 三栏
+      ai_makeup_photo_editor:
+        selector: a[href='/face-editor/makeup-photo-editor']
+        role_or_text: link / AI Makeup Photo Editor
+        visible_condition: dropdown open
+        enabled_condition: always
+        action_result: 跳转 /face-editor/makeup-photo-editor
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - nav_portrait_editor
+        assertions_hint: 带 NEW 徽标
+        notes: Face Editor 分组
+      body_sculpt:
+        selector: a[href='/image-to-image-ai/breast-expansion']
+        role_or_text: link / Body Sculpt
+        visible_condition: dropdown open
+        enabled_condition: always
+        action_result: 跳转 /image-to-image-ai/breast-expansion
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - nav_portrait_editor
+        assertions_hint: 带 HOT 徽标
+        notes: Body Editor 分组
+  nav_discover_dropdown:
+    description: Discover 下拉展开态
+    trigger: click nav_discover
+    url_or_state_key: /
+    buttons:
+      all_blogs:
+        selector: a[href='/blog']
+        role_or_text: link / All Blogs
+        visible_condition: dropdown open
+        enabled_condition: always
+        action_result: 跳转 /blog
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - nav_discover
+        assertions_hint: 下拉内可见
+        notes: ''
+      faq:
+        selector: a[href='/help']
+        role_or_text: link / FAQ
+        visible_condition: dropdown open
+        enabled_condition: always
+        action_result: 跳转 /help
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - nav_discover
+        assertions_hint: 下拉内可见
+        notes: ''
+      contact_us:
+        selector: a[href*='/help?'][href*='contact-us']
+        role_or_text: link / Contact us
+        visible_condition: dropdown open
+        enabled_condition: always
+        action_result: 跳转帮助页联系表单锚点
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - nav_discover
+        assertions_hint: 下拉内可见
+        notes: ''
+      about_us:
+        selector: a[href='/about']
+        role_or_text: link / About us
+        visible_condition: dropdown open
+        enabled_condition: always
+        action_result: 跳转 /about
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - nav_discover
+        assertions_hint: 下拉内可见
+        notes: ''
+  language_menu:
+    description: 页脚语言菜单展开态
+    trigger: click footer_language
+    url_or_state_key: /
+    buttons:
+      english:
+        selector: text=English
+        role_or_text: option / English
+        visible_condition: language menu open
+        enabled_condition: always
+        action_result: 切换到英文，URL 回到 /
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - footer_language
+        assertions_hint: 页面标题与主要文案为英文
+        notes: 实际点击已验证
+      simplified_chinese:
+        selector: text=简体中文
+        role_or_text: option / 简体中文
+        visible_condition: language menu open
+        enabled_condition: always
+        action_result: 切换到中文，URL 变为 /zh
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - footer_language
+        assertions_hint: 页面标题与主要文案为中文
+        notes: 默认中文 locale 已观察
+  prompt_after_text_input:
+    description: Hero Prompt 输入文本后的状态
+    trigger: 在 AI image prompt 输入文本
+    url_or_state_key: /
+    buttons:
+      hero_prompt_generate_enabled:
+        selector: button[aria-label='Generate']
+        role_or_text: button / Generate
+        visible_condition: prompt has text
+        enabled_condition: true after text input
+        action_result: 点击后跳转 /create/edit?pid=，URL 携带 pid 参数
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - prompt text
+        assertions_hint: Generate enabled；点击后 URL 包含 /create/edit?pid=
+        notes: 来自已确认 PC v3 / mobile home 行为基线。
+  prompt_after_image_upload:
+    description: Hero Prompt 上传图片后的状态
+    trigger: 点击 Upload image 并选择有效图片
+    url_or_state_key: /create/edit?pid=*
+    buttons:
+      hero_prompt_generate_with_image:
+        selector: button[aria-label='Generate']
+        role_or_text: button / Generate
+        visible_condition: image uploaded
+        enabled_condition: true after image upload
+        action_result: 点击后进入画布并生成；URL 包含 pid 参数
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - uploaded image
+        assertions_hint: 图片加载到画布；URL 包含 /create/edit?pid= 或 /agent?pid=
+        notes: 来自已确认 PC v3 / mobile home 行为基线。
+  popular_tools_interaction:
+    description: Popular Pokecut AI tools 三张卡片交互状态
+    trigger: 依次点击 AI Clothes Changer / Enhance Text in Images / AI Portrait Editor
+    url_or_state_key: /agent | /tools/ai-image-text-enhancer
+    buttons:
+      clothes_changer_upload:
+        selector: button:has-text('AI Clothes Changer')
+        role_or_text: button / AI Clothes Changer
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后进入 /agent 或 /create/edit?pid=
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - valid image
+        assertions_hint: URL 包含 /agent 或 /create/edit?pid=；画布出现 Clothes Changer 面板
+        notes: 来自已确认 PC v3 行为基线。
+      text_enhance_direct:
+        selector: button:has-text('Enhance Text in Images')
+        role_or_text: button / Enhance Text in Images
+        visible_condition: always
+        enabled_condition: always
+        action_result: 直接跳转 /tools/ai-image-text-enhancer
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL path 为 /tools/ai-image-text-enhancer
+        notes: 来自已确认 PC v3 行为基线。
+      portrait_editor_upload:
+        selector: button:has-text('AI Portrait Editor')
+        role_or_text: button / AI Portrait Editor
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后进入 /agent 或 /create/edit?pid=
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - valid image
+        assertions_hint: URL 包含 /agent 或 /create/edit?pid=；画布出现 Portrait Editor 面板
+        notes: 来自已确认 PC v3 行为基线。
+  templates_and_test_interaction:
+    description: Templates See More 与 Test 面板链接交互状态
+    trigger: 点击 See More Creations 或四个 Test 链接
+    url_or_state_key: /create | /tools/*
+    buttons:
+      see_more_creations:
+        selector: button:has-text('See More Creations')
+        role_or_text: button / See More Creations
+        visible_condition: always
+        enabled_condition: always
+        action_result: 跳转 /create
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL path 为 /create
+        notes: 来自已确认 PC v3 行为基线。
+      pretty_scale:
+        selector: a[href='/tools/pretty-scale']
+        role_or_text: link / Pretty Scale
+        visible_condition: always
+        enabled_condition: always
+        action_result: 跳转 /tools/pretty-scale
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL path 为 /tools/pretty-scale
+        notes: ''
+      ethnicity_guesser:
+        selector: a[href='/tools/ethnicity-guesser-ai']
+        role_or_text: link / Ethnicity Guesser
+        visible_condition: always
+        enabled_condition: always
+        action_result: 跳转 /tools/ethnicity-guesser-ai
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL path 为 /tools/ethnicity-guesser-ai
+        notes: ''
+      eye_color_detector:
+        selector: a[href='/tools/eye-color-detector']
+        role_or_text: link / Eye Color Detector
+        visible_condition: always
+        enabled_condition: always
+        action_result: 跳转 /tools/eye-color-detector
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL path 为 /tools/eye-color-detector
+        notes: ''
+      body_shape_detector:
+        selector: a[href='/tools/body-shape-detector']
+        role_or_text: link / Body Shape Detector
+        visible_condition: always
+        enabled_condition: always
+        action_result: 跳转 /tools/body-shape-detector
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL path 为 /tools/body-shape-detector
+        notes: ''
+  portrait_tab_switch:
+    description: AI Portrait Detail Studio 四个 tab 切换状态
+    trigger: 依次点击 Retouch Face / Change Hair / Retouch Body / Change Background
+    url_or_state_key: /
+    buttons:
+      retouch_face:
+        selector: button:has-text('Retouch Face')
+        role_or_text: tab / Retouch Face
+        visible_condition: always
+        enabled_condition: always
+        action_result: 切换到 Face 分类，不跳转；显示 8 个模板卡片
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL 不变；Face 分类模板数量为 8
+        notes: 来自已确认 PC v3 行为基线。
+      change_hair:
+        selector: button:has-text('Change Hair')
+        role_or_text: tab / Change Hair
+        visible_condition: always
+        enabled_condition: always
+        action_result: 切换到 Hair 分类，不跳转；显示 8 个模板卡片
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL 不变；Hair 分类模板数量为 8
+        notes: 来自已确认 PC v3 行为基线。
+      retouch_body:
+        selector: button:has-text('Retouch Body')
+        role_or_text: tab / Retouch Body
+        visible_condition: always
+        enabled_condition: always
+        action_result: 切换到 Body 分类，不跳转；显示 8 个模板卡片
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL 不变；Body 分类模板数量为 8
+        notes: 来自已确认 PC v3 行为基线。
+      change_background:
+        selector: button:has-text('Change Background')
+        role_or_text: tab / Change Background
+        visible_condition: always
+        enabled_condition: always
+        action_result: 切换到 Background 分类，不跳转；显示 8 个模板卡片
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL 不变；Background 分类模板数量为 8
+        notes: 来自已确认 PC v3 行为基线。
+      template_card_click:
+        selector: section:has-text('AI Portrait Detail Studio') a[href]
+        role_or_text: link / template card
+        visible_condition: tab selected
+        enabled_condition: always
+        action_result: 点击模板卡片后按 href 跳转对应功能页
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - selected tab
+        assertions_hint: URL 与模板 href 一致
+        notes: 来自已确认 PC v3 行为基线。
+  batch_action:
+    description: Batch 板块四个按钮交互状态
+    trigger: 依次点击 Remove BG / Resize / Enhance / Change BG
+    url_or_state_key: /batch-edit/edit?pid=*
+    buttons:
+      remove_bg:
+        selector: button:has-text('Remove BG')
+        role_or_text: button / Remove BG
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后进入 /batch-edit/edit?pid=
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - valid image
+        assertions_hint: URL 包含 /batch-edit/edit?pid=
+        notes: 来自已确认 PC v3 行为基线。
+      resize:
+        selector: button:has-text('Resize')
+        role_or_text: button / Resize
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后进入 /batch-edit/edit?pid=
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - valid image
+        assertions_hint: URL 包含 /batch-edit/edit?pid=
+        notes: 来自已确认 PC v3 行为基线。
+      enhance:
+        selector: button:has-text('Enhance')
+        role_or_text: button / Enhance
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后进入 /batch-edit/edit?pid=
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - valid image
+        assertions_hint: URL 包含 /batch-edit/edit?pid=
+        notes: 来自已确认 PC v3 行为基线。
+      change_bg:
+        selector: button:has-text('Change BG')
+        role_or_text: button / Change BG
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后进入 /batch-edit/edit?pid=
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - valid image
+        assertions_hint: URL 包含 /batch-edit/edit?pid=
+        notes: 来自已确认 PC v3 行为基线。
+  enhance_action:
+    description: Enhance 板块四个按钮交互状态
+    trigger: 依次点击 HD Enhance / Text Enhance / Portrait Enhance / Ultra Enhance
+    url_or_state_key: /tools/hd-pic-converter | /tools/ai-image-text-enhancer | /agent?pid=*
+    buttons:
+      hd_enhance:
+        selector: button:has-text('HD Enhance')
+        role_or_text: button / HD Enhance
+        visible_condition: always
+        enabled_condition: always
+        action_result: 直接跳转 /tools/hd-pic-converter
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL path 为 /tools/hd-pic-converter
+        notes: 来自已确认 PC v3 行为基线。
+      text_enhance:
+        selector: button:has-text('Text Enhance')
+        role_or_text: button / Text Enhance
+        visible_condition: always
+        enabled_condition: always
+        action_result: 直接跳转 /tools/ai-image-text-enhancer
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: URL path 为 /tools/ai-image-text-enhancer
+        notes: 来自已确认 PC v3 行为基线。
+      portrait_enhance:
+        selector: button:has-text('Portrait Enhance')
+        role_or_text: button / Portrait Enhance
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后进入 /agent?pid= 或 /create/edit?pid=
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - valid image
+        assertions_hint: URL 包含 /agent?pid= 或 /create/edit?pid=
+        notes: 来自已确认 PC v3 行为基线。
+      ultra_enhance:
+        selector: button:has-text('Ultra Enhance')
+        role_or_text: button / Ultra Enhance
+        visible_condition: always
+        enabled_condition: always
+        action_result: 触发文件选择器；上传后进入 /agent?pid= 或 /create/edit?pid=
+        reversible: false
+        explore_status: covered
+        dependencies:
+        - valid image
+        assertions_hint: URL 包含 /agent?pid= 或 /create/edit?pid=
+        notes: 来自已确认 PC v3 行为基线。
