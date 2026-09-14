@@ -1,0 +1,146 @@
+site: Pokecut
+feature: PC 首页
+base_path: /
+account_state: anonymous
+
+hero:
+  title: "All-in-One AI Photo Editor & Generator"
+  description: "Use Pokecut to create, edit, and enhance images in one place"
+  prompt_label: "AI image prompt"
+  prompt_text: "A cute corgi on the beach"
+  upload_button: "Upload image"
+  model_button: "Auto"   # 2026-09-14: 默认模型由 Pokecut Pro 变更为 Auto
+  settings_button: "Prompt settings"
+  generate_button: "Generate"
+  cta: "Start Creating for Free"
+
+navigation:
+  buttons:
+    - "AI Free Tools"
+    - "Portrait Editor"
+    - "Discover"
+  pricing: "Pricing"
+  signup: "Sign up"
+  login: "Log in"
+
+popular_tools:
+  heading: "Popular Pokecut AI tools"
+  cards:
+    - "AI Clothes Changer"
+    - "Enhance Text in Images"
+    - "AI Portrait Editor"
+  more_tools: "More Pokecut AI Tools"
+
+models:
+  heading: "Choose the Right AI Model for Any Image"
+  order:
+    - "Nano Banana 2"
+    - "Seedream 5.0 Lite"
+    - "Nano Banana Pro"
+    - "Seedream 5.0 Pro"
+    - "Pokecut Pro"
+    - "ChatGPT Image 2.0"
+    - "Seedream 4.0"
+    - "Pokecut Basic"
+    - "Nano Banana 2 Lite"
+  menu_options:
+    - "Seedream 5.0 Pro"
+    - "Nano Banana 2 Lite"
+    - "Pokecut Pro"
+    - "Nano Banana Pro"
+    - "ChatGPT Image 2.0"
+    - "Nano Banana 2"
+    - "Nano Banana"
+    - "Seedream 5.0 Lite"
+    - "Seedream4.0"
+
+templates:
+  heading: "Start Faster with Pokecut's AI Templates"
+  cta: "See More Creations"
+  test_panel: "Test Your Photo Before You Edit"
+  links:
+    "Pretty Scale": "/tools/pretty-scale"
+    "Ethnicity Guesser": "/tools/ethnicity-guesser-ai"
+    "Eye Color Detector": "/tools/eye-color-detector"
+    "Body Shape Detector": "/tools/body-shape-detector"
+
+portrait:
+  heading: "AI Portrait Detail Studio"
+  subheading: "Upgrade Every Portrait Details with Pokecut"
+  tabs:
+    - "Retouch Face"
+    - "Change Hair"
+    - "Retouch Body"
+    - "Change Background"
+  template_count: 8
+
+batch:
+  heading: "Edit up to 50 Photos in One Batch"
+  buttons:
+    - "Remove BG"
+    - "Resize"
+    - "Enhance"
+    - "Change BG"
+
+enhance:
+  heading: "Enhance Photo Quality for Every Detail"
+  direct:
+    "HD Enhance": "/tools/hd-pic-converter"
+    "Text Enhance": "/tools/ai-image-text-enhancer"
+  upload:
+    - "Portrait Enhance"
+    - "Ultra Enhance"
+  settings_options:
+    # 2026-09-14 复探：设置面板标签为 "Output Ratio:"，旧 "Output Resolution:" 已不存在
+    - "Output Ratio:"
+    - "Number of images"
+
+trust:
+  heading: "Pokecut is Trusted by Creators for Every Photo Creation"
+  stats:
+    - "3M+ creators"
+    - "200+ AI tools"
+    - "500M+ edits processed"
+    - "#2 Product Hunt"
+
+reviews:
+  heading: "What Users Say About Pokecut?"
+  users:
+    - "Jessica Miller"
+    - "Angelina Peng"
+    - "Leo Y."
+    - "Zepeng She"
+    - "Rachit Magon"
+
+faq:
+  heading: "Frequently Asked Questions"
+  questions:
+    - "What is Pokecut and what can I use it for?"
+    - "How do I use Pokecut?"
+    - "Is Pokecut free?"
+    - "Can I use Pokecut without signing up?"
+    - "Can I use Pokecut's AI photo editor for commercial use?"
+    - "How can I contact Pokecut's support?"
+    - "What makes Pokecut better than other AI photo editing tools?"
+    - "Can Pokecut edit images in batches?"
+
+mobile_app:
+  heading: "Pokecut Mobile App"
+  app_store: "App Store"
+  google_play: "Google Play"
+
+footer:
+  copyright: "Copyright © 2026 Pokecut All Rights Reserved."
+  groups:
+    - "Tools"
+    - "Help"
+    - "Company"
+
+language:
+  english: "English"
+  simplified_chinese: "简体中文"
+  english_heading: "All-in-One AI Photo Editor & Generator"
+  chinese_heading: "AI 照片编辑与生图工具"
+
+external:
+  jessica_miller: "https://www.producthunt.com/@jessica_miller_7"

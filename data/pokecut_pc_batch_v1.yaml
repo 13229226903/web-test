@@ -1,0 +1,68 @@
+site: Pokecut
+feature: PC 批量编辑页
+base_path: /batch
+account_state: vip_login_required_for_generation
+account:
+  email: "450832596@qq.com"
+  code: "123456"
+
+images:
+  single: "test_images/1K.jpg"
+  multi:
+    - "test_images/1K.jpg"
+    - "test_images/无人脸.jpg"
+  third: "test_images/文字测例.jpg"
+  custom_background: "test_images/4K.jpg"
+
+landing:
+  upload_button: "Upload Images"
+  cards:
+    remove_bg: "Batch Remove Backgrounds"
+    resizer: "Batch Resizer"
+    change_bg: "Batch Change Backgrounds"
+    enhancer: "Batch Enhancer"
+
+edit:
+  main_tabs:
+    - "Background"
+    - "Enhance"
+    - "Resize"
+  background_subtabs:
+    - "Remove BG"
+    - "Change BG"
+  remove_bg_modes:
+    - "General"
+    - "Head&Face"
+    - "Text"
+  enhance_modes:
+    - "Standard Mode"
+    - "Portrait Mode"
+    - "Text Mode"
+
+change_bg:
+  default_color: "transparent"
+  sample_color_rgb: "rgb(222, 123, 92)"
+  custom_hex: "#123456"
+  image_preset_src: "thumb_res_bg_black_101516.webp"
+
+resize:
+  template_name: "Amazon"
+  template_width: "2000"
+  template_height: "2000"
+  custom_width: "800"
+  custom_height: "600"
+
+enhance:
+  before_resolution: "1200px * 1600px"
+  after_resolution: "2400px * 3200px"
+
+download:
+  formats:
+    - "JPG"
+    - "PNG"
+  zip_prefix: "Pokecut_batch_"
+  zip_suffix: ".zip"
+
+bugs:
+  delete_button_expected: "Delete"
+  delete_button_actual: "Delete"   # 2026-09-14 复探：历史拼写 Delect 已修复

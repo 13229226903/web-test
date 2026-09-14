@@ -6,6 +6,7 @@ import json
 import pytest
 import allure
 from pathlib import Path
+from helpers_create_entry import dismiss_create_promo
 from playwright.sync_api import Page, expect as pw_expect
 from conftest import allure_screenshot
 
@@ -32,6 +33,7 @@ def enter_canvas(page: Page, base_url: str) -> str:
     """进入无限画布：/create → Start from a Photo → 上传 test_images/低分辨率.JPG。"""
     with allure.step("进入 /create 并上传图片"):
         page.goto(base_url + "/create", timeout=120000, wait_until="domcontentloaded")
+        dismiss_create_promo(page)  # 全新会话 VIP 促销/定价弹窗兜底
         page.wait_for_timeout(8000)
         dismiss_overlay(page)
         card = page.locator("div.cursor-pointer", has=page.locator("p", has_text="Start from a Photo")).first
