@@ -60,3 +60,8 @@ artifacts/stable_regression_registry_20260904_190018/
 
 # 本地临时归档区（存放从根目录收拢的散落产物）
 _local_dump/
+
+# 大体积上传素材（仅本地提供，clone 后如需请自备；见 PROJECT.md 素材说明）
+test_images/10K.jpg
+test_images/4000_2667.png
+test_images/2592_3872.png

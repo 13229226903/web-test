@@ -76,3 +76,5 @@
 - 回归已有归档脚本：回归一下「<功能名>」已登记的脚本，或跑 `tests/<file>.py` 回归并出 Allure 报告。
 
 路由、任务类型、Gate 与角色派发以 `artifacts/runtime/orchestrator.md` 为准；测试命令与 Allure 报告产出以 `skills/ui-test-test-writing/SKILL.md` 为准。
+
+- 大体积上传素材（	est_images/10K.jpg、4000_2667.png、2592_3872.png，单个 ≥10MB）已加入 .gitignore，仅本地提供；clone 后如需使用请自备同名文件。（2026-09-15）
