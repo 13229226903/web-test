@@ -234,6 +234,7 @@ Allure 报告: http://localhost:8123/index.html
 5. review / visual-review 通过后：先执行 `test-writing` 的 report-output 子步骤，生成并检查按用例矩阵输出的 `allure-results-matrix/` 与 `allure-report-matrix/`，确认 case_id / 参数化 id / title / epic / feature 与 `cases.md` 一致，且报告用例总数 = `cases.md` 的 `case_count`，且每条矩阵用例至少有 1 个截图步骤或已记录的例外说明后，启动本地 HTTP 服务器（如 `python -m http.server 8123 --directory reports/allure-report-matrix`），并在浏览器打开 `http://localhost:8123/index.html` 供用户查看（不得直接打开静态 HTML 文件），同时在对话里打印「简易测试报告」（格式见下方「简易测试报告输出」节）；用户确认后才进入 regression-archive gate。不得直接 completed。
 6. 进入 regression-archive gate 时：orchestrator 汇总本次任务的候选沉淀项（同一坑出现 ≥2 次或 1 次但高成本），向用户询问「是否需要沉淀」；用户确认后按 `artifacts/runtime/common.md`「知识沉淀规则」写落点，并记录到 progress / journal。
 7. 用户确认归档：先执行 archive-cleanup——生成删除清单，清理本次任务中未被 `sync.md` / `cases.md` / `impl.md` / `archive.md` / Allure 报告引用的截图、snapshot、临时下载等中间产物；被引用证据必须保留，清理结果写入独立 manifest / result 并记录 progress / journal。然后只做复制、registry 更新、archive.md；归档脚本复跑要另外生成 `allure-results-archive/` 与 `allure-report-archive/`。暂不归档：写 archive.md `skipped_by_user`，可 completed；未引用中间产物仍按本条清理。
+   - **归档副本可独立复跑校验**（复制脚本到 `archive/` 时必做）：核对脚本引用的公共模块是否在仓库根、路径常量（`test_images/`、`data/`、`page_map/`）是否逐级上溯仓库根；不满足则先整改再归档，否则归档副本会在下轮回归里假失败（2026-09-14 实测：7 个副本素材路径报错，误判整轮失败）。
 
 ## 上下文控制
 

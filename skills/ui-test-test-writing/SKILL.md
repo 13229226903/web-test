@@ -36,7 +36,7 @@ description: 根据 confirmed cases 与 versioned page_map 编写自动化脚本
 2. selector 走稳定定位（ID / role / 稳定属性 / 文本，禁用 hash class / :nth-child / 位置索引）——共享红线。
 3. 按钮从 cases 指向的 `states.*.buttons.*.selector` 取，按 trigger / visible / enabled 执行前置；断言覆盖 action_result / assertions_hint。
 4. 上传素材只用 cases 指定的 `test_images/` 文件，不生成 / 下载 / 换图。
-5. 测试目录统一 `tests/`。
+5. 测试**用例文件**统一 `tests/`；跨 `tests/` 与 `archive/` 复用的公共 helper / 驱动模块放**仓库根**，不要在归档目录留副本（详见 `rule.md`）。
 6. 断言：有意义的字段都断言；expected 不为空 / `0` / `-`；视觉 fail 必须传导失败。
 7. 测试数据外置 `data/*.yaml`；账号态按 confirmed `cases.md` / `sync.md` 写入，`conftest.py` 默认仅兜底。
 8. 去重 / 多值覆盖：一条用例覆盖多个等价值时用单条内部循环，不用 `parametrize` 展开，保证 Allure 报告用例总数 = cases.md `case_count`（仅当 cases.md 明确要求参数化时才用）。

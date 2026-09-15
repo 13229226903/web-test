@@ -47,6 +47,20 @@
   命中隐藏节点会导致改值无效、前后对比 diff=0。
 - 来源：`2026-09-10_old_canvas_insert_panel_exploration`，2026-09-11 复跑 24/24 通过（改造后 24 次上传 → 1 次，42min → 9.5min）。
 
+## 脚本复用与仓库资源路径（有稳定资产背书）
+
+- **脚本被复制到别处运行时，仓库资源必须逐级上溯，不要用 `parents[N]` 写死层级**：
+  `tests/` 下 `parents[1]` 是仓库根，但复制到 `archive/<模块>/` 后 `parents[1]` 变成 `archive/`，
+  素材会被解析成 `archive/test_images/...` → `FileNotFoundError`（实测 7 个归档副本整轮回归误报失败）。
+  - 统一写法：逐级上溯，取具备 `test_images/`、`data/`、`page_map/` 的目录作为仓库根（`_repo_root()`）。
+  - 该坑同时覆盖 `test_images/` 素材、`data/*.yaml`、`page_map/*.yaml`——三者都要按仓库根解析。
+- **跨 `tests/` 与 `archive/` 共用的公共 helper 放仓库根**：靠 root `conftest.py` 让仓库根进入 `sys.path`；
+  不要在 `archive/<模块>/` 放同名副本（多份副本必然漂移，改一处漏一处）。
+- **禁止在 `archive/` 下新增 `conftest.py`**：同名模块会遮蔽 root `conftest.py`，
+  归档用例 `from conftest import allure_screenshot` 直接 ImportError（实测已回退该做法）。
+- 来源：`2026-09-14_stable_regression_all_archived`；验证：7 个归档副本素材 / 数据路径整改 + helper 上收仓库根后
+  `pytest --collect-only` = 106 tests / 0 error（2026-09-15）。
+
 ## 测试设计
 
 - 所有字段都填（含非必填），所有有意义的字段都断言。
