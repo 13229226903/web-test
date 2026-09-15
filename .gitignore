@@ -40,3 +40,23 @@ skills/ui-test-page-map-sync/SKILL.before_*.md
 
 # 探索草稿目录（驱动脚本已移到 scripts/mcp/，其余为一次性探针，按任务归档到 artifacts/<task>/evidence/）
 _explore/
+
+# 历史任务证据目录（体积大，仅本地留存；需要时再单独入库）
+artifacts/2026-09-07_pokecut_pc_home_dev_interactions/
+artifacts/2026-09-08_pokecut_pc_batch_dev_interactions/
+artifacts/2026-09-08_task-41_mobile_canvas_optimization/
+artifacts/2026-09-09_task-33_canvas_enhance_optimization/
+artifacts/2026-09-10_old_canvas_insert_panel_exploration/
+artifacts/2026-09-11_old_canvas_sticker_panel_exploration/
+artifacts/2026-09-11_old_canvas_text_panel_exploration/
+artifacts/2026-09-14_seo_main_upload_interactions/
+artifacts/stable_regression_registry_20260904_190018/
+
+# 仓库根目录的临时探针产物（截图 / yml dump）
+/*.png
+/*.jpg
+/*.jpeg
+/*.yml
+
+# 本地临时归档区（存放从根目录收拢的散落产物）
+_local_dump/
