@@ -19,7 +19,16 @@ from helpers_create_entry import dismiss_create_promo
 
 from playwright.sync_api import Page, TimeoutError as PlaywrightTimeoutError, expect
 
-ROOT = Path(__file__).resolve().parents[1]
+def _repo_root() -> Path:
+    """归档副本位于 archive/<dir>/，按 data/ + page_map/ + test_images/ 上溯仓库根。"""
+    here = Path(__file__).resolve()
+    for candidate in [here.parent, *here.parents]:
+        if (candidate / "data").is_dir() and (candidate / "page_map").is_dir() and (candidate / "test_images").is_dir():
+            return candidate
+    return here.parents[1]
+
+
+ROOT = _repo_root()
 DATA = yaml.safe_load((ROOT / "data" / "pokecut_infinite_canvas_enhance_v4.yaml").read_text(encoding="utf-8"))
 TASK_ID = "2026-09-09_task-33_canvas_enhance_optimization"
 TASK_DIR = ROOT / "artifacts" / TASK_ID
