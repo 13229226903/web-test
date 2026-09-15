@@ -47,6 +47,35 @@ def scroll_to(locator):
     page.wait_for_timeout(300)
 
 
+ACCOUNT_EMAIL = "450832596@qq.com"
+ACCOUNT_CODE = "123456"
+MODEL_NAMES = ["Auto", "Nano Banana 2 Lite", "Nano Banana 2", "Nano Banana Pro", "Seedream 5.0 Pro",
+               "Seedream 5.0 Lite", "Seedream4.0", "Pokecut Pro", "Pokecut Basic", "ChatGPT Image 2.0"]
+
+
+def login_vip(page: Page, base_url: str) -> None:
+    """首页 Sign up/Log in 弹层登录 VIP 账号。
+
+    2026-09-15 复探：弹层需先点 Send（获取/校验验证码）再点 Log in 提交；
+    登录成功后 header 的 Sign up / Log in 按钮消失。
+    """
+    goto_home(page, base_url)
+    page.get_by_role("button", name="Sign up").first.click()
+    page.wait_for_timeout(2500)
+    page.get_by_text("Log in", exact=True).last.click()
+    page.wait_for_timeout(1500)
+    page.locator("input[type='email']").first.fill(ACCOUNT_EMAIL)
+    page.locator("input[placeholder='Verification Code']").first.fill(ACCOUNT_CODE)
+    page.wait_for_timeout(500)
+    # Log in 页签下无 Send 按钮（仅注册页签需要先 Send），存在才点
+    send = page.get_by_role("button", name="Send")
+    if send.count():
+        send.first.click()
+        page.wait_for_timeout(2500)
+    page.get_by_role("button", name="Log in").last.click()
+    page.wait_for_timeout(12000)
+
+
 def upload_via(page: Page, trigger, file_path: str):
     with page.expect_file_chooser(timeout=8000) as fc:
         trigger.click()
@@ -474,6 +503,15 @@ class TestL2Interactions:
                     assert page.url.rstrip("/").endswith("/tools")
                 else:
                     assert "/create/edit?pid=" in page.url
+                    if item == "Generate":
+                        # 2026-09-15 复探：生图面板应默认选中 Auto（实测当前为 Nano Banana 2 Lite）
+                        actual_model = None
+                        for idx in range(page.locator("button").count()):
+                            text = (page.locator("button").nth(idx).inner_text() or "").strip()
+                            if text in MODEL_NAMES:
+                                actual_model = text
+                                break
+                        assert actual_model == "Auto", f"生图面板默认模型应为 Auto，实际为 {actual_model}"
         shot(page, f"L2-020_{item}")
 
 
@@ -486,7 +524,20 @@ class TestL3Exceptions:
     @pytest.mark.full
     @allure.title("L3-004: ID Photo Maker 抠图成功进入证件照画布")
     @allure.severity(allure.severity_level.NORMAL)
-    @pytest.mark.skip(reason="blocked_by_bug: 首页 Sign up 登录弹层提交无反应，无法建立登录态")
-    def test_l3_004_id_photo_success(self):
-        """覆盖层级: Layer 3 — 异常/权限；前置条件: 登录具备 ID credits 的账号；预期: 抠图成功进入证件照画布"""
-        pass
+    def test_l3_004_id_photo_success(self, mobile_page: Page, base_url: str):
+        """覆盖层级: Layer 3 — 登录态 + 证件照流程。
+
+        2026-09-15 复探：首页 Sign up/Log in 弹层现已可正常建立登录态（需先 Send 再提交），
+        故选例取消 skip，落地真实断言。
+        前置条件: 登录具备 ID credits 的 VIP 账号；预期: 抠图成功进入证件照画布。
+        """
+        page = mobile_page
+        login_vip(page, base_url)
+        with allure.step("ID Photo Maker 上传有人脸图片"):
+            upload_via(page, page.get_by_role("button", name="ID Photo Maker").first, IMG_VALID)
+            page.wait_for_timeout(30000)
+        with allure.step("断言进入证件照画布"):
+            # 2026-09-15 实测：ID Photo Maker 抠图成功后进入 /tools/id-photo-edit?pid=<uuid>（证件照画布）
+            assert "/tools/id-photo-edit?pid=" in page.url, f"未进入证件照画布: url={page.url}"
+            assert page.locator("canvas, img").count() > 0, "证件照画布未渲染图片/画布元素"
+        shot(page, "L3-004_证件照画布")
