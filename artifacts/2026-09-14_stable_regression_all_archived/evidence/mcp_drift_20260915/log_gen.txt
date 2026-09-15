@@ -1,0 +1,31 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (16.4s)
+### Result
+"{\"navButtons\":[\"Home|Home\",\"All Tools|All Tools\",\"|Upload\",\"Generate|Generate\",\"Pricing|Pricing\"],\"generateUrl\":\"http://10.17.1.66:3001/create/edit?pid=b91698c3-47ca-46ee-b980-9d0878c8d946\",\"panelModelCount\":0,\"modelLabelTexts\":[]}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+  const mp = await ctx.newPage();
+  const res = {};
+  await mp.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await mp.waitForTimeout(8000);
+  // A) 底部导航 Generate → 生图面板默认模型
+  const nav = mp.locator('nav.home-mobile-bottom-nav');
+  res.navButtons = await nav.locator('button').evaluateAll(bs => bs.map(b => (b.innerText||'').trim() + '|' + (b.getAttribute('aria-label')||'')));
+  await nav.getByRole('button', {name:'Generate'}).click();
+  await mp.waitForTimeout(6000);
+  res.generateUrl = mp.url();
+  const panel = mp.locator('.cinematic-model').first();
+  res.panelModelCount = await mp.locator('.cinematic-model').count();
+  if (res.panelModelCount) { res.defaultModelText = (await panel.innerText()).trim(); res.defaultModelHtml = (await panel.evaluate(e => e.outerHTML)).slice(0, 200); }
+  res.modelLabelTexts = await mp.evaluate(() => Array.from(document.querySelectorAll('[class*=model]')).map(e => (e.innerText||'').trim()).filter(t => t && t.length < 40).slice(0, 12));
+  await mp.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260915/mobile_generate_panel.png'});
+  await ctx.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

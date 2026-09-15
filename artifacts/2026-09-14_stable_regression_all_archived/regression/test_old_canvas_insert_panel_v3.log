@@ -1,0 +1,9 @@
+........................                                                 [100%]
+============================== warnings summary ===============================
+tests/test_old_canvas_insert_panel_v3.py: 22 warnings
+  D:\Test\web-test\tests\test_old_canvas_insert_panel_v3.py:185: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    pts = sum(1 for px in diff.getdata() if sum(px) > 12)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+24 passed, 22 warnings in 621.22s (0:10:21)

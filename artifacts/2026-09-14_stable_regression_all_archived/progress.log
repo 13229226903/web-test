@@ -1,0 +1,95 @@
+[2026-09-14 15:41:07] orchestrator task_started task_type=stable_regression scope=all_archived_scripts stop_at=final_report
+[2026-09-14 15:41:07] orchestrator route stable_regression -> run registry Archive column scripts (12) --base-url=http://10.17.1.66:3001
+[2026-09-14 15:41:50] orchestrator step: run archive/portrait_detector/test_pokecut_portrait_detector.py
+[2026-09-14 15:42:28] orchestrator step: finished archive/portrait_detector/test_pokecut_portrait_detector.py exit=1 seconds=37.95 counts={'failed': 1, 'errors': 13}
+[2026-09-14 15:42:28] orchestrator step: run archive/tool_pages/test_ai_image_text_enhancer_experiment.py
+[2026-09-14 15:47:09] orchestrator step: finished archive/tool_pages/test_ai_image_text_enhancer_experiment.py exit=1 seconds=280.16 counts={'failed': 17, 'skipped': 1}
+[2026-09-14 15:47:09] orchestrator step: run archive/infinite_canvas/test_infinite_canvas_text_layer_v2.py
+[2026-09-14 15:48:09] orchestrator step: finished archive/infinite_canvas/test_infinite_canvas_text_layer_v2.py exit=4294967295 seconds=60.33 counts={}
+[2026-09-14 15:48:09] orchestrator step: run archive/mobile_home/test_mobile_home.py
+[2026-09-14 15:49:05] orchestrator finding archive_copies_not_standalone: 7/12 archive/*.py 用脚本相对路径解析 test_images/，在 archive/ 下失效（portrait_detector/tool_pages/infinite_canvas/mobile_home/help_center/detection_ui/pc_home）；首轮 archive 副本试跑 1 failed+13 errors / 17 failed 均为该原因，非产品缺陷
+[2026-09-14 15:49:05] orchestrator decision 改用 registry Tests 列（当前可执行回归脚本）统一 --base-url=http://10.17.1.66:3001 复跑 12 个资产；archive 副本可执行性问题单列记录
+[2026-09-14 15:49:13] orchestrator step: run tests/test_pokecut_portrait_detector.py
+[2026-09-14 15:54:32] orchestrator step: finished tests/test_pokecut_portrait_detector.py exit=0 seconds=318.61 counts={'passed': 14}
+[2026-09-14 15:54:32] orchestrator step: run tests/test_ai_image_text_enhancer_experiment.py
+[2026-09-14 16:07:40] orchestrator step: finished tests/test_ai_image_text_enhancer_experiment.py exit=0 seconds=787.8 counts={'passed': 16, 'skipped': 2}
+[2026-09-14 16:07:40] orchestrator step: run tests/test_infinite_canvas_text_layer_v2.py
+[2026-09-14 16:12:40] orchestrator step: finished tests/test_infinite_canvas_text_layer_v2.py exit=0 seconds=300.08 counts={'passed': 6}
+[2026-09-14 16:12:40] orchestrator step: run tests/test_mobile_home.py
+[2026-09-14 16:19:55] orchestrator step: finished tests/test_mobile_home.py exit=1 seconds=434.92 counts={'passed': 34, 'failed': 3, 'skipped': 1}
+[2026-09-14 16:19:55] orchestrator step: run tests/test_help_page.py
+[2026-09-14 16:23:05] orchestrator step: finished tests/test_help_page.py exit=0 seconds=190.06 counts={'passed': 11}
+[2026-09-14 16:23:05] orchestrator step: run tests/test_detection_ui_seo_l6.py
+[2026-09-14 16:25:58] orchestrator step: finished tests/test_detection_ui_seo_l6.py exit=0 seconds=173.23 counts={'passed': 2}
+[2026-09-14 16:25:58] orchestrator step: run tests/test_pokecut_pc_home_v6.py
+[2026-09-14 16:32:11] orchestrator step: finished tests/test_pokecut_pc_home_v6.py exit=1 seconds=372.36 counts={'passed': 16, 'failed': 1}
+[2026-09-14 16:32:11] orchestrator step: run tests/test_pokecut_pc_batch_v1.py
+[2026-09-14 16:38:33] orchestrator step: finished tests/test_pokecut_pc_batch_v1.py exit=1 seconds=382.5 counts={'passed': 13, 'failed': 3}
+[2026-09-14 16:38:33] orchestrator step: run tests/test_old_canvas_insert_panel_v3.py
+[2026-09-14 16:48:13] orchestrator step: finished tests/test_old_canvas_insert_panel_v3.py exit=0 seconds=580.38 counts={'passed': 24}
+[2026-09-14 16:48:13] orchestrator step: run tests/test_old_canvas_text_panel_v1.py
+[2026-09-14 16:54:42] orchestrator step: finished tests/test_old_canvas_text_panel_v1.py exit=0 seconds=388.36 counts={'passed': 13}
+[2026-09-14 16:54:42] orchestrator step: run tests/test_old_canvas_sticker_panel_v1.py
+[2026-09-14 16:58:07] orchestrator step: finished tests/test_old_canvas_sticker_panel_v1.py exit=0 seconds=205.08 counts={'passed': 9}
+[2026-09-14 16:58:07] orchestrator step: run tests/test_infinite_canvas_enhance_v4.py
+[2026-09-14 17:04:37] orchestrator step: finished tests/test_infinite_canvas_enhance_v4.py exit=1 seconds=389.66 counts={'passed': 3, 'failed': 3}
+[2026-09-14 17:07:15] orchestrator run_registry_regression finished 174 cases: 161 passed / 10 failed / 3 skipped (~4523s)
+[2026-09-14 17:07:15] orchestrator failure_groups: home_pokecut_pro_selector=4, batch_delect_button=3, backend_-1002=2, create_entry_card=1
+[2026-09-14 17:07:15] orchestrator wrote regression/summary.json + report.md; allure generate -> reports/allure-report-regression; server 8123 switched
+[2026-09-14 17:07:15] orchestrator done status=completed artifacts/.current_task cleared
+[2026-09-14 17:25:59] orchestrator bug_triage: 10 条失败按模板提为 BUG-REG-001~010 -> bug_report_regression_20260914.md
+[2026-09-14 17:25:59] orchestrator evidence: 复现 7 条 locator 失败（3:42）并抓取现场截图 -> shots/failure_capture/；根因确认 hero 默认模型=AUTO、/create 被 VIP 弹窗遮挡、batch 删除控件无可访问名
+[2026-09-14 17:25:59] orchestrator report.md 增补 Bug 提报章节并修正 L5-001 归因
+[2026-09-14 18:06:37] orchestrator route stable_regression 局部回退 -> page-map-sync drift round
+[2026-09-14 18:06:37] page-map-sync start drift_reexplore_20260914 driver=playwright_mcp_only (MCP 8931 /mcp)
+[2026-09-14 18:06:37] page-map-sync finding 移动端 hero 模型入口=Auto；弹层选项齐全（脚本漂移）
+[2026-09-14 18:06:37] page-map-sync finding 移动端模板卡 Butt 不存在；img[alt=Slim] 可复现上传进画布
+[2026-09-14 18:06:37] page-map-sync finding PC 首页模型入口 button.cinematic-model 文案=Auto；点击可展开菜单
+[2026-09-14 18:06:37] page-map-sync finding batch 删除态按钮文案=Delete，Delect 已修复（脚本漂移）
+[2026-09-14 18:06:37] page-map-sync finding /create 全新匿名会话弹 .purchase-gift-modal，连点 close 两次后入口可点
+[2026-09-14 18:06:37] page-map-sync wrote sync.md pending_review + mobile_home_v2/home_v7/batch_v3/create_ai_tools_v2
+[2026-09-14 18:06:37] orchestrator gate:sync_review waiting_user
+[2026-09-14 18:17:30] orchestrator gate:sync_review user_confirmed -> test-writing
+[2026-09-14 18:17:30] test-writing patched mobile_home x3 / batch x3 + data / enhance v4 create-promo guard + helpers_create_entry.py
+[2026-09-14 18:17:30] test-writing self_run 6 passed/1 failed; L2-010 修正后 1 passed
+[2026-09-14 18:17:30] test-writing wrote impl.md status=completed; 遗留 pc_home L2-008 待再探
+[2026-09-14 18:17:30] orchestrator gate:review pending
+[2026-09-14 18:27:59] page-map-sync 补探 pc_home L2-008: button.cinematic-model + dispatchEvent 在 MCP 下可开 .cinematic-popup，但 pytest 序列下未复现；标记未收敛待再探
+[2026-09-14 18:35:52] page-map-sync 补探 pc_home L2-008 收敛：button.cinematic-model + dispatchEvent（toggle）可开 .cinematic-popup；设置面板标签 Output Ratio:
+[2026-09-14 18:35:52] test-writing pc_home L2-008 修复并自跑通过（1 passed）；累计 8/8 漂移用例通过
+[2026-09-14 18:35:52] orchestrator gate:review pending
+[2026-09-14 18:41:48] review start inputs=impl.md+sync.md+page_map v_next+evidence
+[2026-09-14 18:41:48] review wrote review.md verdict=pass blocking=0 suggestions=4
+[2026-09-14 18:41:48] orchestrator gate:regression_report_confirmation pending（下一步全量复跑 12 脚本 -> allure-report-regression）
+[2026-09-14 18:42:52] orchestrator step: run tests/test_pokecut_portrait_detector.py
+[2026-09-14 18:47:58] orchestrator step: finished tests/test_pokecut_portrait_detector.py exit=0 seconds=306.8 counts={'passed': 14}
+[2026-09-14 18:47:58] orchestrator step: run tests/test_ai_image_text_enhancer_experiment.py
+[2026-09-14 19:01:07] orchestrator step: finished tests/test_ai_image_text_enhancer_experiment.py exit=0 seconds=788.22 counts={'passed': 15, 'skipped': 3}
+[2026-09-14 19:01:07] orchestrator step: run tests/test_infinite_canvas_text_layer_v2.py
+[2026-09-14 19:06:07] orchestrator step: finished tests/test_infinite_canvas_text_layer_v2.py exit=0 seconds=299.8 counts={'passed': 6}
+[2026-09-14 19:06:07] orchestrator step: run tests/test_mobile_home.py
+[2026-09-14 19:13:03] orchestrator step: finished tests/test_mobile_home.py exit=0 seconds=416.34 counts={'passed': 37, 'skipped': 1}
+[2026-09-14 19:13:03] orchestrator step: run tests/test_help_page.py
+[2026-09-14 19:16:18] orchestrator step: finished tests/test_help_page.py exit=0 seconds=194.95 counts={'passed': 11}
+[2026-09-14 19:16:18] orchestrator step: run tests/test_detection_ui_seo_l6.py
+[2026-09-14 19:18:26] orchestrator step: finished tests/test_detection_ui_seo_l6.py exit=0 seconds=128.12 counts={'passed': 2}
+[2026-09-14 19:18:26] orchestrator step: run tests/test_pokecut_pc_home_v6.py
+[2026-09-14 19:24:31] orchestrator step: finished tests/test_pokecut_pc_home_v6.py exit=0 seconds=364.81 counts={'passed': 17}
+[2026-09-14 19:24:31] orchestrator step: run tests/test_pokecut_pc_batch_v1.py
+[2026-09-14 19:29:28] orchestrator step: finished tests/test_pokecut_pc_batch_v1.py exit=0 seconds=297.38 counts={'passed': 16}
+[2026-09-14 19:29:28] orchestrator step: run tests/test_old_canvas_insert_panel_v3.py
+[2026-09-14 19:39:51] orchestrator step: finished tests/test_old_canvas_insert_panel_v3.py exit=0 seconds=622.88 counts={'passed': 24}
+[2026-09-14 19:39:51] orchestrator step: run tests/test_old_canvas_text_panel_v1.py
+[2026-09-14 19:46:27] orchestrator step: finished tests/test_old_canvas_text_panel_v1.py exit=0 seconds=395.72 counts={'passed': 13}
+[2026-09-14 19:46:27] orchestrator step: run tests/test_old_canvas_sticker_panel_v1.py
+[2026-09-14 19:49:56] orchestrator step: finished tests/test_old_canvas_sticker_panel_v1.py exit=0 seconds=209.61 counts={'passed': 9}
+[2026-09-14 19:49:56] orchestrator step: run tests/test_infinite_canvas_enhance_v4.py
+[2026-09-14 19:57:40] orchestrator step: finished tests/test_infinite_canvas_enhance_v4.py exit=1 seconds=463.72 counts={'passed': 3, 'failed': 3}
+[2026-09-14 20:19:38] orchestrator report-output: 全量复跑 174 用例 167 passed/3 failed/4 skipped (173->167 passed vs 上轮 161)；allure-report-regression 生成并 8123 打开
+[2026-09-14 20:19:38] orchestrator updated regression_registry.md: mobile_home->v2 / pc_home->v7 / batch->v3+stable_regression / enhance 保持 pending_fix；全部 12 行 Last Passed 更新
+[2026-09-14 20:19:38] orchestrator archive copies synced（5 脚本 + helpers_create_entry）
+[2026-09-14 20:19:38] orchestrator gate:archive_confirmation waiting_user
+[2026-09-14 20:58:03] orchestrator archive done: archive.md + cleanup manifest/result(0 deleted) + registry updated; status=archived; artifacts/.current_task cleared
+[2026-09-15 11:39:00] test-writing (follow-up) 修复 L3-004：取消 skip，落地 login_vip（Sign up→Log in 页签→填邮箱验证码→提交）+ ID Photo Maker 上传 → 断言 /tools/id-photo-edit?pid=；自跑 1 passed（54.69s）
+[2026-09-15 11:39:00] test-writing (follow-up) L2-020 Generate 补默认模型断言（期望 Auto）；自跑失败：实际 Nano Banana 2 Lite → 记为 bug_candidate（evidence/bug_candidate_mobile_generate_default_model.md）
+[2026-09-15 11:39:00] orchestrator archive copy synced: archive/mobile_home/test_mobile_home.py

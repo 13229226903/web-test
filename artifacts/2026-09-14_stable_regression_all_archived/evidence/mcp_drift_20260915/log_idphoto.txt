@@ -1,0 +1,18 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (40.5s)
+!! isError=true
+### Error
+TimeoutError: page.waitForEvent: Timeout 15000ms exceeded while waiting for event "filechooser"
+=========================== logs ===========================
+waiting for event "filechooser"
+============================================================
+
+page.waitForEvent: Timeout 15000ms exceeded while waiting for event "filechooser"
+=========================== logs ===========================
+waiting for event "filechooser"
+============================================================
+    at evalmachine.<anonymous>:26:19
+    at async evalmachine.<anonymous>:3:20
+    at async C:\Users\liangjinrun\AppData\Local\npm-cache\_npx\9833c18b2d85bc59\node_modules\playwright-core\lib\coreBundle.js:67888:13
+    at async C:\Users\liangjinrun\AppData\Local\npm-cache\_npx\9833c18b2d85bc59\node_modules\playwright-core\lib\coreBundle.js:72445:26
+END

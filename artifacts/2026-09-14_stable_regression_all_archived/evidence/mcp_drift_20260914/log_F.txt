@@ -1,0 +1,29 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (39.2s)
+### Result
+"{\"autoBtnCount\":1,\"popupVisible\":false,\"popupText\":\"\"}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctxPc = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const pc = await ctxPc.newPage();
+  await pc.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await pc.waitForTimeout(6000);
+  const res = {};
+  const btn = pc.locator('button', {hasText:'Auto'}).first();
+  res.autoBtnCount = await btn.count();
+  if (res.autoBtnCount) {
+    await btn.click();
+    await pc.waitForTimeout(1200);
+    res.popupVisible = await pc.locator('.cinematic-popup').first().isVisible().catch(() => false);
+    res.popupText = (await pc.locator('.cinematic-popup').first().innerText().catch(() => '')).slice(0, 500);
+  }
+  await pc.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/pc_home_model_menu.png'});
+  await ctxPc.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

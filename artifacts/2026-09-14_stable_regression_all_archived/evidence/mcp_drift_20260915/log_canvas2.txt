@@ -1,0 +1,27 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (20.1s)
+### Result
+"{\"url\":\"http://10.17.1.66:3001/create/edit?pid=36b84666-1ac0-447c-b2e6-1b614ef86a6f\",\"modelish\":[{\"tag\":\"DIV\",\"cls\":\"mt-[0.9375rem] flex shrink-0 flex-col gap-[0.5625rem]\",\"t\":\"Nano Banana 2 Lite\\nGenerate\"},{\"tag\":\"DIV\",\"cls\":\"relative flex h-[2.625rem] flex-nowrap items-center justify-between ga\",\"t\":\"Nano Banana 2 Lite\"},{\"tag\":\"DIV\",\"cls\":\"flex shrink-0 flex-nowrap items-center gap-[0.84375rem]\",\"t\":\"Nano Banana 2 Lite\"},{\"tag\":\"BUTTON\",\"cls\":\"relative flex h-[2.625rem] shrink-0 items-center gap-[0.5625rem] round\",\"t\":\"Nano Banana 2 Lite\"},{\"tag\":\"SPAN\",\"cls\":\"whitespace-nowrap\",\"t\":\"Nano Banana 2 Lite\"}],\"hasAuto\":false,\"hasNano2Lite\":true}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+  const mp = await ctx.newPage();
+  const res = {};
+  await mp.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await mp.waitForTimeout(8000);
+  await mp.locator('nav.home-mobile-bottom-nav').getByRole('button', {name:'Generate'}).click();
+  await mp.waitForTimeout(10000);
+  res.url = mp.url();
+  res.modelish = await mp.evaluate(() => Array.from(document.querySelectorAll('button,span,div')).filter(e => { const t=(e.innerText||'').trim(); return t && t.length < 30 && /Nano Banana|^Auto|Seedream|Pokecut/i.test(t); }).slice(0,12).map(e => ({tag:e.tagName, cls:String(e.className).slice(0,70), t:e.innerText.trim()})));
+  res.hasAuto = await mp.evaluate(() => document.body.innerText.includes('Auto'));
+  res.hasNano2Lite = await mp.evaluate(() => document.body.innerText.includes('Nano Banana 2 Lite'));
+  await mp.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260915/canvas_generate_panel2.png'});
+  await ctx.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

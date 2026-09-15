@@ -1,0 +1,6 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (38.7s)
+!! isError=true
+### Error
+ReferenceError: c2 is not defined
+END

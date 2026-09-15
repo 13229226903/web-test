@@ -1,0 +1,36 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (78.2s)
+### Result
+"{\"headerText\":\"\",\"topBtns\":[],\"dialogOpen\":false,\"fc\":false,\"urlAfterUpload\":\"http://10.17.1.66:3001/en\",\"body\":\"All-in-One AI Photo Editor & Generator | Start Creating for Free | Auto | Generate | Remove Background | Clothes Changer | HD Photo Coverter | ID Photo Maker | Body Editor | AI Replace | More Pokecut Tools | Create Faster with Pokecut's AI Templates | Browse ready-made looks for portraits, products, seasonal posts, and so\"}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+  const mp = await ctx.newPage();
+  const res = {};
+  await mp.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await mp.waitForTimeout(8000);
+  await mp.getByRole('button', {name:'Sign up'}).first().click();
+  await mp.waitForTimeout(2500);
+  await mp.getByText('Log in', {exact:true}).last().click().catch(e => res.tabErr = String(e).slice(0,80));
+  await mp.waitForTimeout(2000);
+  await mp.locator('input[type=email]').first().fill('450832596@qq.com');
+  await mp.locator('input[placeholder=\"Verification Code\"]').first().fill('123456');
+  await mp.waitForTimeout(600);
+  await mp.getByRole('button', {name:'Send'}).first().click().catch(()=>{});
+  await mp.waitForTimeout(2500);
+  await mp.getByRole('button', {name:/^Log in$/}).last().click().catch(e => res.loginErr = String(e).slice(0,90));
+  await mp.waitForTimeout(14000);
+  res.headerText = await mp.evaluate(() => (document.querySelector('header') ? document.querySelector('header').innerText : '').replace(/\n+/g,' | ').slice(0,200));
+  res.topBtns = await mp.evaluate(() => Array.from(document.querySelectorAll('button')).map(b => (b.innerText||'').trim()).filter(t => /Sign|Log|Credit|Out/i.test(t)).slice(0,8));
+  res.dialogOpen = await mp.evaluate(() => /Get Free Credits|Verification Code/.test(document.body.innerText));
+  await mp.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260915/mobile_login3.png'});
+  // ID Photo Maker
+  try {
+    const t = mp.getByRole('button', {name:'ID Photo Maker'}).first();
+    await t.scrollIntoViewIfNeeded(); await mp.waitForTimeout(600);
+    const fc = await mp.waitForEvent('filechooser', {timeout:15000}).catch(() => null);
+    await t.click();
+    const ch = fc ? await fc : null;…[truncated]
+END

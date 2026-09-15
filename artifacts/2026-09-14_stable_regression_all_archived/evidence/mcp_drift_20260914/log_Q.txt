@@ -1,0 +1,37 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (18.0s)
+### Result
+"{\"slim\":{\"alt\":\"Slim\",\"chooser\":true,\"url\":\"http://10.17.1.66:3001/create/edit?pid=b65616ae-7b52-412c-8fee-8d15572570be\"},\"finalUrl\":\"http://10.17.1.66:3001/create/edit?pid=b65616ae-7b52-412c-8fee-8d15572570be\"}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+  const mp = await ctx.newPage();
+  await mp.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await mp.waitForTimeout(8000);
+  const res = {};
+  const tryCard = async (alt) => {
+    try {
+      const card = mp.locator('img[alt=\"' + alt + '\"]').first();
+      await card.scrollIntoViewIfNeeded();
+      await mp.waitForTimeout(800);
+      const p = mp.waitForEvent('filechooser', {timeout: 6000});
+      await card.click({force:true});
+      const fc = await p;
+      await fc.setFiles(['D:/Test/web-test/test_images/1K.jpg']);
+      await mp.waitForTimeout(7000);
+      return {alt: alt, chooser: true, url: mp.url()};
+    } catch (e) { return {alt: alt, chooser: false, err: String(e).slice(0, 90)}; }
+  };
+  res.slim = await tryCard('Slim');
+  if (!String(res.slim.url||'').includes('/create/edit')) { res.bodySculpt = await tryCard('Body Sculpt'); }
+  res.finalUrl = mp.url();
+  await mp.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/mobile_template_card_click.png'});
+  await ctx.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

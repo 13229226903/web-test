@@ -1,0 +1,46 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (13.0s)
+### Result
+"{\"modalExists\":1,\"closeControl\":[{\"tag\":\"BUTTON\",\"cls\":\"btn-bg-gradient1 mt-6 h-[4rem] w-[26.25rem] rounded-[1.25rem] text-pc-\",\"src\":\"\",\"y\":709,\"x\":750},{\"tag\":\"IMG\",\"cls\":\"size-[2.25rem] absolute cursor-pointer right-[1.25rem] top-[1.25rem]\",\"src\":\"/icons/svg/colos_pop_btn_close.svg?url\",\"y\":237,\"x\":1429}],\"closed\":\"no-close-found\",\"modalAfter\":1,\"clickableAfter\":\"blocked-by DIV\"}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const cp = await ctx.newPage();
+  await cp.goto('http://10.17.1.66:3001/en/create', {waitUntil:'domcontentloaded'});
+  await cp.waitForTimeout(9000);
+  const res = {};
+  res.modalExists = await cp.locator('.purchase-gift-modal').count();
+  res.closeControl = await cp.evaluate(() => {
+    const m = document.querySelector('.purchase-gift-modal');
+    if (!m) return null;
+    const cands = Array.from(m.querySelectorAll('*')).filter(e => {
+      const t = e.tagName;
+      const src = e.getAttribute && (e.getAttribute('src') || '');
+      const cls = String(e.className || '');
+      return t === 'BUTTON' || /close/i.test(src) || /close/i.test(cls);
+    }).slice(0, 6);
+    return cands.map(e => ({tag: e.tagName, cls: String(e.className).slice(0,70), src: (e.getAttribute('src')||'').slice(0,80), y: Math.round(e.getBoundingClientRect().y), x: Math.round(e.getBoundingClientRect().x)}));
+  });
+  // 关闭弹窗
+  const closed = await cp.evaluate(() => {
+    const m = document.querySelector('.purchase-gift-modal');
+    if (!m) return 'no-modal';
+    const btns = Array.from(m.querySelectorAll('button,div,span,img'));
+    const x = btns.find(e => /close/i.test(String(e.className||'')) && e.getBoundingClientRect().width > 10);
+    if (x) { x.click(); return 'clicked-close'; }
+    return 'no-close-found';
+  });
+  await cp.waitForTimeout(2000);
+  res.closed = closed;
+  res.modalAfter = await cp.locator('.purchase-gift-modal').count();
+  res.clickableAfter = await cp.evaluate(() => {
+    const el = Array.from(document.querySelectorAll('div.cursor-pointer')).find(d => (d.innerText||'').trim() === 'Start from a Photo');
+    if (!el) return 'not-found';
+    const r = el.getBoundingClientRect();
+    const top = document.elementFromPoint(r.x + r.width/2, r.y + r.height/2);
+    return (top === el || el.contains(top)) ? 'clickable' : ('blocked-by ' + (top ? top.tagName : 'null'));
+  });
+  await cp.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/e��[truncated]
+END

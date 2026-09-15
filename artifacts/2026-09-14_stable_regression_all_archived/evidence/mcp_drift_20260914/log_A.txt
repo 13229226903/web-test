@@ -1,0 +1,25 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (9.7s)
+### Result
+"{\"heroCount\":1,\"heroButtons\":[\"Start Creating for Free :: \",\" :: Upload reference image\",\"Auto :: \",\" :: \",\"Generate :: \"]}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const b = page.context().browser();
+  const c = await b.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+  const p = await c.newPage();
+  await p.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await p.waitForTimeout(8000);
+  globalThis.__mp = p;
+  const info = await p.evaluate(() => {
+    const hero = document.querySelector('section.mobile-home-agent-hero');
+    return {heroCount: document.querySelectorAll('section.mobile-home-agent-hero').length,
+            heroButtons: hero ? Array.from(hero.querySelectorAll('button')).map(x => ((x.innerText||'').trim()) + ' :: ' + (x.getAttribute('aria-label')||'')) : []};
+  });
+  await p.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/mobile_home_hero.png'});
+  return JSON.stringify(info);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

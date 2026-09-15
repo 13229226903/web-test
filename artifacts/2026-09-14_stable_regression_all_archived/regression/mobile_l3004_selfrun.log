@@ -1,0 +1,12 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________ TestL3Exceptions.test_l3_004_id_photo_success[chromium] ___________
+tests\test_mobile_home.py:541: in test_l3_004_id_photo_success
+    assert "/create/edit?pid=" in page.url, f"δ���뻭��: url={page.url}"
+E   AssertionError: δ���뻭��: url=http://10.17.1.66:3001/tools/id-photo-edit?pid=3b2a3414-e0e7-4536-8390-a2372d4f31ae#
+E   assert '/create/edit?pid=' in 'http://10.17.1.66:3001/tools/id-photo-edit?pid=3b2a3414-e0e7-4536-8390-a2372d4f31ae#'
+E    +  where 'http://10.17.1.66:3001/tools/id-photo-edit?pid=3b2a3414-e0e7-4536-8390-a2372d4f31ae#' = <Page url='http://10.17.1.66:3001/tools/id-photo-edit?pid=3b2a3414-e0e7-4536-8390-a2372d4f31ae#'>.url
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_mobile_home.py::TestL3Exceptions::test_l3_004_id_photo_success[chromium]
+1 failed, 37 deselected in 54.50s

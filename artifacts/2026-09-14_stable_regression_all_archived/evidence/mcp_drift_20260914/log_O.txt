@@ -1,0 +1,42 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (14.6s)
+### Result
+"{\"btnHtml\":\"<button type=\\\"button\\\" class=\\\"cinematic-model\\\" data-v-eb1e49d0=\\\"\\\"><img src=\\\"/icons/svg/model_icon_auto.svg\\\" alt=\\\"\\\" data-v-eb1e49d0=\\\"\\\"><span class=\\\"cinematic-model-label\\\" data-v-eb1e49d0=\\\"\\\">Auto</span><svg class=\\\"cinematic-model-chevron\\\" width=\\\"12\\\" height=\\\"12\\\" v\",\"afterHover\":{\"hits\":0,\"listbox\":0},\"afterClick\":{\"hits\":28,\"listbox\":0},\"afterSecondClick\":{\"hits\":0,\"listbox\":0},\"ariaExpanded\":null,\"chevronCount\":1}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const pc = await ctx.newPage();
+  await pc.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await pc.waitForTimeout(7000);
+  const res = {};
+  const probe = async (label) => {
+    const t = await pc.evaluate(() => {
+      const names = ['Nano Banana','Seedream','Pokecut Pro','ChatGPT Image'];
+      const hit = Array.from(document.querySelectorAll('div,ul,li')).filter(d => { const s=(d.innerText||'').trim(); return s.length>10 && s.length<600 && names.some(n=>s.includes(n)); }).length;
+      return {hits: hit, listbox: document.querySelectorAll('[role=listbox],[role=menu],[role=option]').length};
+    });
+    res[label] = t;
+  };
+  const btn = pc.locator('button', {hasText:'Auto'}).first();
+  res.btnHtml = (await btn.evaluate(e => e.outerHTML)).slice(0, 260);
+  await btn.hover();
+  await pc.waitForTimeout(1200);
+  await probe('afterHover');
+  await btn.click();
+  await pc.waitForTimeout(2000);
+  await probe('afterClick');
+  await btn.click();
+  await pc.waitForTimeout(2000);
+  await probe('afterSecondClick');
+  res.ariaExpanded = await btn.getAttribute('aria-expanded');
+  res.chevronCount = await pc.locator('button:has-text(\"Auto\") svg').count();
+  await pc.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/pc_home_after_clicks.png'});
+  await ctx.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

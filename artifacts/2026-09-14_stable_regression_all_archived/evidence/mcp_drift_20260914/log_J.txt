@@ -1,0 +1,29 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (11.0s)
+### Result
+"{\"url\":\"http://10.17.1.66:3001/en/create\",\"overlays\":[{\"cls\":\"w-[46.25rem] min-h-[22.25rem] mt-[1.13rem] relative flex flex-row items-center justify-cen\",\"t\":\"Basic | Monthly Credits | All Tool Access | Advanced AI models | HD Download | Ultra Enhance | Batch Editing | 10000+ Design Templates | Unlimited Cloud Storage | VIP | 3\"},{\"cls\":\"w-[25rem] min-h-[22.25rem] py-[1.25rem] px-[2.5rem] flex flex-col gap-[0.625rem]\",\"t\":\"VIP | 300 Credits/month | $1 USD for First Month | Tools Require Credits | Batch Editing | Unlock Ultra Enhance | Unlock Nano Banana Pro | Unlock ChatGPT Image 2 | HD D\"},{\"cls\":\"flex flex-col gap-1\",\"t\":\"300 Credits/month | $1 USD for First Month | Tools Require Credits | Batch Editing | Unlock Ultra Enhance | Unlock Nano Banana Pro | Unlock ChatGPT Image 2 | HD Downlo\"}],\"clickable\":\"blocked-by DIV/purchase-gift-modal__content flex w-full justify-center purc\",\"closeCandidates\":[\"SPAN|gift-offer-time-box|1504,25\",\"SPAN|gift-offer-time-box|1548,25\",\"SPAN|gift-offer-time-box|1592,25\",\"SPAN|text-[--tc-gray-p1] hover:text-black|1804,28\",\"DIV|hidden size-[2.25rem] shrink-0 items-center justify-center m|794,102\",\"DIV|flex h-[1.875rem] w-[1.875rem] items-center justify-center r|1171,99\",\"DIV|flex h-[1.875rem] w-[1.875rem] items-center justify-center r|1221,99\",\"DIV|flex h-[1.875rem] w-[1.875rem] items-center justify-center r|1270,99\",\"SPAN|text-[#686868] text-[0.6875rem] leading-[0.8125rem]|1536,352\",\"DIV|flex items-center gap-[0.5rem] min-w-0 flex-shrink overflow-|524,377\"]}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const cp = await ctx.newPage();
+  await cp.goto('http://10.17.1.66:3001/en/create', {waitUntil:'domcontentloaded'});
+  await cp.waitForTimeout(9000);
+  const res = {};
+  res.url = cp.url();
+  res.overlays = await cp.evaluate(() => {
+    const out = [];
+    document.querySelectorAll('div').forEach(d => {
+      const t = (d.innerText||'').trim();
+      if (/1 USD|VIP/.test(t) && t.length < 400 && d.children.length) {
+        const r = d.getBoundingClientRect();
+        if (r.width > 300 && r.height > 200) out.push({cls:(d.className||'').slice(0,90), t:t.slice(0,160).replace(/\n+/g,' | ')});
+      }
+    });
+    return out.slice(0,4);
+  });
+  res.clickable = await cp.evaluate(() => {
+    const el = Array.from(document.querySelectorAll('div.cursor-pointer')).find(d => (d.innerText||'').trim() === 'Start from a Photo');
+    if (��[truncated]
+END

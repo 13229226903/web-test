@@ -1,0 +1,32 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (58.1s)
+### Result
+"{\"loggedIn\":false,\"dialogOpen\":false}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+  const mp = await ctx.newPage();
+  const res = {};
+  await mp.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await mp.waitForTimeout(8000);
+  await mp.getByRole('button', {name:'Sign up'}).first().click();
+  await mp.waitForTimeout(2500);
+  await mp.locator('input[type=email]').first().fill('450832596@qq.com');
+  await mp.locator('input[placeholder=\"Verification Code\"]').first().fill('123456');
+  await mp.waitForTimeout(600);
+  await mp.getByRole('button', {name:'Send'}).first().click().catch(()=>{});
+  await mp.waitForTimeout(2500);
+  await mp.getByRole('button', {name:'Sign up'}).last().click().catch(e => res.signupErr = String(e).slice(0,90));
+  await mp.waitForTimeout(12000);
+  res.loggedIn = await mp.evaluate(() => /Credits/.test(document.body.innerText) || /Sign Out/i.test(document.body.innerText));
+  res.dialogOpen = await mp.evaluate(() => document.body.innerText.includes('Sign Up to Get Free Credits'));
+  await mp.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260915/mobile_login2.png'});
+  await ctx.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

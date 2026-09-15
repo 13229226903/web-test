@@ -1,0 +1,9 @@
+.............                                                            [100%]
+============================== warnings summary ===============================
+tests/test_old_canvas_text_panel_v1.py: 18 warnings
+  D:\Test\web-test\tests\test_old_canvas_text_panel_v1.py:199: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    px = list(ImageChops.difference(ia, ib).convert("L").getdata())
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+13 passed, 18 warnings in 393.75s (0:06:33)

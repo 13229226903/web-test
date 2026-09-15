@@ -1,0 +1,26 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (16.0s)
+### Result
+"{\"before\":{\"popups\":[\"cinematic-item cinematic-source no-select source-hidden :: \",\"cinematic-item cinematic-promo future no-select visible :: \",\"cinematic-item cinematic-promo future no-select visible :: \",\"cinematic-item cinematic-promo future no-select visible :: \",\"cinematic-item cinematic-promo future no-select visible background-rem :: \"],\"cinematic\":0},\"btnBox\":{\"x\":1015.1484375,\"y\":1115.046875,\"width\":90.28125,\"height\":35.28125},\"afterCoordinateClick\":{\"popups\":[\"cinematic-item cinematic-source no-select source-hidden :: \",\"cinematic-item cinematic-promo future no-select visible :: \",\"cinematic-item cinematic-promo future no-select visible :: \",\"cinematic-item cinematic-promo future no-select visible :: \",\"cinematic-item cinematic-promo future no-select visible background-rem :: \"],\"cinematic\":0},\"afterDispatch\":{\"popups\":[\"cinematic-item cinematic-source no-select source-hidden :: \",\"cinematic-item cinematic-promo future no-select visible :: \",\"cinematic-item cinematic-promo future no-select visible :: \",\"cinematic-item cinematic-promo future no-select visible :: \",\"cinematic-item cinematic-promo future no-select visible background-rem :: \",\"cinematic-popup fixed z-[60] :: Nano Banana / Better visuals & overall image quality. / Gemini has retired\"],\"cinematic\":1}}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const pc = await ctx.newPage();
+  await pc.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await pc.waitForTimeout(8000);
+  const probe = async () => pc.evaluate(() => {
+    const vis = e => { const r = e.getBoundingClientRect(); return r.width > 40 && r.height > 20 && r.y > 60; };
+    const pop = Array.from(document.querySelectorAll('[class*=popup],[class*=dropdown],[class*=menu],[class*=select],[class*=option]')).filter(vis).map(e => String(e.className).slice(0,70) + ' :: ' + (e.innerText||'').trim().slice(0,70).replace(/\n+/g,' / '));
+    return {popups: pop.slice(0, 10), cinematic: document.querySelectorAll('.cinematic-popup').length};
+  });
+  const res = {before: await probe()};
+  const btn = pc.locator('button.cinematic-model').first();
+  const box = await btn.boundingBox();
+  res.btnBox = box;
+  // 策略 A：先聚焦输入框，坐标点击模型按钮
+  await pc.getByRole('textbox').first().click({timeout: 8000}).catch(()=>{});
+  await pc.waitForTimeout(500);
+  if (box) { await pc.mouse.click(box.x + box.width / 2, box.y + box.hei��[truncated]
+END

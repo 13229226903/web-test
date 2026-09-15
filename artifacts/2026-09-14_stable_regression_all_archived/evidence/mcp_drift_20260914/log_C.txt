@@ -1,0 +1,25 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (9.5s)
+### Result
+"{\"buttHits\":[\"kecut logo\\\"></span></a><div class=\\\"ml-auto mr-[16px] flex items-center gap-[8px]\\\"><!----><button class=\\\"flex h-[30px] min-w-[60px] shrink-0 items-cent\",\"dd6_0%,#4b2dd6_100%)] px-[10px] text-[12px] font-bold leading-[20px] text-white\\\">Sign up</button><img class=\\\"touch-manipulation aspect-square w-[44px]\",\"bold text-transparent\\\" data-v-2b4ade73=\\\"\\\">All-in-One AI Photo Editor &amp; Generator</h1><button type=\\\"button\\\" class=\\\"relative mx-auto mt-[1.40625rem]\",\"nsparent\\\" data-v-2b4ade73=\\\"\\\">All-in-One AI Photo Editor &amp; Generator</h1><button type=\\\"button\\\" class=\\\"relative mx-auto mt-[1.40625rem] flex h-[4.46\",\"m] top-[2.7009375rem] size-[0.75rem]\\\" alt=\\\"\\\" data-v-2b4ade73=\\\"\\\"> Start Creating for Free</button></div><div class=\\\"agent-border-flow relative z-[1] mt\",\" max-w-full items-center gap-[0.5rem] overflow-x-auto scrollbar-none\\\" data-v-2b4ade73=\\\"\\\"><button type=\\\"button\\\" class=\\\"flex size-[2.625rem] shrink-0 it\"],\"cardCount\":30,\"cards\":[\"IMG|GPT-Image2\",\"IMG|Try-On\",\"IMG|\",\"IMG|GPT-Image2\",\"IMG|\",\"IMG|Slim\",\"IMG|\",\"IMG|Lofi\",\"IMG|\",\"IMG|Body Sculpt\",\"IMG|\",\"IMG|Muscle\",\"IMG|\",\"IMG|Flux Gen\",\"IMG|\",\"IMG|Flash Effect\",\"IMG|\",\"IMG|Young\",\"IMG|\",\"IMG|Suit\",\"IMG|Spiderman\",\"IMG|\",\"IMG|Proportion Edit\",\"IMG|\",\"IMG|Dark Tan\",\"IMG|\",\"IMG|Smile Lines\",\"IMG|Gold Tan\",\"IMG|\",\"IMG|Jelly Photo Filter\"],\"fileInputs\":1}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const b = page.context().browser();
+  let p = globalThis.__mp;
+  if (!p) {
+    const c = await b.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+    p = await c.newPage();
+    await p.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+    await p.waitForTimeout(8000);
+    globalThis.__mp = p;
+  }
+  const r = await p.evaluate(() => {
+    const html = document.documentElement.outerHTML;
+    const hits = [];
+    const re = /butt/gi;
+    let m;
+    while ((m = re.exec(html)) && hits.length < 6) hits.push(html.slice(Math.max(0, m.index - 90), m.index + 60));
+    const sect = Array.from(document.querySelectorAll('section,div')).find(d => (d.innerText||'').startsWith('Create Faster with'));
+    const cards = sect ? Array.from(sect.querySelectorAll('button,img[alt]')).slice(0, 30).map(e => e.tagName��[truncated]
+END

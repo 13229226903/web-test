@@ -1,0 +1,14 @@
+................                                                         [100%]
+============================== warnings summary ===============================
+tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_005_refine_flow[chromium]
+tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_005_refine_flow[chromium]
+tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_006_changebg_colors[chromium]
+tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_007_changebg_images[chromium]
+tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_007_changebg_images[chromium]
+tests/test_pokecut_pc_batch_v1.py::TestL6BatchSmoke::test_l6_001_smoke_removebg_download[chromium]
+  D:\Test\web-test\tests\test_pokecut_pc_batch_v1.py:192: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for p in diff.getdata() if sum(p) > 20)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+16 passed, 6 warnings in 295.74s (0:04:55)

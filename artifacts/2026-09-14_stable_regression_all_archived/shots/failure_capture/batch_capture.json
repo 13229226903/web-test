@@ -1,0 +1,12 @@
+{
+  "buttons": [
+    "DEBUG",
+    "Remove Background"
+  ],
+  "body_has_Delect": false,
+  "body_has_Delete": false,
+  "buttons_after_select": [
+    "DEBUG",
+    "Remove Background"
+  ]
+}

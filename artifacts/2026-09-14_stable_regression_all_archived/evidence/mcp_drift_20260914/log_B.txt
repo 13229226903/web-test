@@ -1,0 +1,28 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (11.5s)
+### Result
+"{\"ariaOptions\":[\"Upload reference image\",\"Remove Background\",\"Clothes Changer\",\"HD Photo Coverter\",\"ID Photo Maker\",\"Body Editor\",\"AI Replace\",\"HD Enhance\",\"Portrait AI\",\"Text Enhance\",\"Ultra Enhance\",\"3M+ creators\",\"200+ AI tools\",\"500M+ edits processed\",\"Home\",\"All Tools\",\"Upload\",\"Generate\",\"Pricing\"],\"hasPokecutPro\":true,\"hasChatGPT\":true,\"hasSeedream4\":true}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const b = page.context().browser();
+  let p = globalThis.__mp;
+  if (!p) {
+    const c = await b.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+    p = await c.newPage();
+    await p.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+    await p.waitForTimeout(8000);
+    globalThis.__mp = p;
+  }
+  const entry = p.locator('section.mobile-home-agent-hero button', {hasText:'Auto'}).first();
+  await entry.click();
+  await p.waitForTimeout(1500);
+  const opts = await p.evaluate(() => Array.from(document.querySelectorAll('button[aria-label]')).map(x => x.getAttribute('aria-label')).filter(Boolean));
+  const body = await p.evaluate(() => document.body.innerText);
+  await p.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/mobile_model_menu.png'});
+  return JSON.stringify({ariaOptions: opts, hasPokecutPro: body.includes('Pokecut Pro'), hasChatGPT: body.includes('ChatGPT Image 2.0'), hasSeedream4: body.includes('Seedream4.0')});
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

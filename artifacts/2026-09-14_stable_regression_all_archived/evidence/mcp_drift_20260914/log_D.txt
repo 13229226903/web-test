@@ -1,0 +1,28 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (9.4s)
+### Result
+"{\"butt\":[\"ageAIImageEditLoad\\\":799,\\\"homepageEditorTab\\\":800,\\\"homepageFirstH2Intro1Button\\\":801,\\\"homepageFirstH2Intro1Content\\\":802,\\\"homepageFirstH2Intro1Title\",\"\\\":803,\\\"homepageFirstH2Intro2Button\\\":804,\\\"homepageFirstH2Intro2Content\\\":805,\\\"homepageFirstH2Intro2Title\",\"\\\":806,\\\"homepageFirstH2Intro3Button\\\":807,\\\"homepageFirstH2Intro3Content\\\":808,\\\"homepageFirstH2Intro3Title\",\"pageReview3Name\\\":824,\\\"homepageReview3Role\\\":825,\\\"homepageSecondH2Intro1Button\\\":826,\\\"homepageSecondH2Intro1Content\\\":827,\\\"homepageSecondH2Intro1Tit\",\"le\\\":828,\\\"homepageSecondH2Intro2Button\\\":829,\\\"homepageSecondH2Intro2Content\\\":830,\\\"homepageSecondH2Intro2Tit\"],\"buttNames\":[]}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const b = page.context().browser();
+  let p = globalThis.__mp;
+  if (!p) {
+    const c = await b.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+    p = await c.newPage();
+    await p.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+    await p.waitForTimeout(8000);
+    globalThis.__mp = p;
+  }
+  const r = await p.evaluate(() => {
+    const html = document.documentElement.outerHTML;
+    const hits = (html.match(/.{0,70}Butt.{0,70}/g) || []).slice(0, 5);
+    const names = Array.from(document.querySelectorAll('button')).map(x => (x.getAttribute('aria-label') || x.innerText || '').trim()).filter(Boolean);
+    return {butt: hits, buttNames: names.filter(n => /butt/i.test(n) && !/button/i.test(n))};
+  });
+  return JSON.stringify(r);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

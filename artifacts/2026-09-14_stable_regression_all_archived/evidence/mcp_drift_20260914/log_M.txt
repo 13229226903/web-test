@@ -1,0 +1,36 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (21.0s)
+### Result
+"{\"step0\":{\"modals\":[{\"vis\":true,\"t\":\"You get a limited-time offer: Unlock Pokecut VIP for just $1\"}],\"card\":\"blocked-by DIV/purchase-gift-modal__content flex w-full\"},\"step1\":{\"modals\":[{\"vis\":true,\"t\":\"Premium Plan | Credits Purchase | Features | Ultra | Pro | SE | Credits/\"}],\"card\":\"blocked-by DIV/purchase-gift-modal__content flex w-full\"},\"step2\":{\"modals\":[],\"card\":\"clickable\"},\"step3\":{\"modals\":[],\"card\":\"clickable\"}}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const cp = await ctx.newPage();
+  const snap = async () => cp.evaluate(() => {
+    const mods = Array.from(document.querySelectorAll('.purchase-gift-modal')).filter(m => m.getBoundingClientRect().width > 100).map(m => ({vis: m.getBoundingClientRect().width > 100, t: (m.innerText||'').trim().slice(0,60).replace(/\n+/g,' | ')}));
+    const el = Array.from(document.querySelectorAll('div.cursor-pointer')).find(d => (d.innerText||'').trim() === 'Start from a Photo');
+    let clk = 'not-found';
+    if (el) { const r = el.getBoundingClientRect(); const top = document.elementFromPoint(r.x + r.width/2, r.y + r.height/2); clk = (top === el || el.contains(top)) ? 'clickable' : ('blocked-by ' + (top ? top.tagName + '/' + String(top.className).slice(0,40) : 'null')); }
+    return {modals: mods, card: clk};
+  });
+  await cp.goto('http://10.17.1.66:3001/en/create', {waitUntil:'domcontentloaded'});
+  await cp.waitForTimeout(9000);
+  const res = {step0: await snap()};
+  const x = cp.locator('.purchase-gift-modal img[src*="colos_pop_btn_close"]').first();
+  if (await x.count()) { await x.click({force:true}); await cp.waitForTimeout(2000); }
+  res.step1 = await snap();
+  if (await x.count()) { await x.click({force:true}).catch(()=>{}); await cp.waitForTimeout(2000); }
+  res.step2 = await snap();
+  // 备用：ESC 与点击空白\n  await cp.keyboard.press('Escape').catch(()=>{});
+  await cp.waitForTimeout(1200);
+  res.step3 = await snap();
+  await cp.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/create_close_sequence.png'});
+  await ctx.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

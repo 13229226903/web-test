@@ -1,0 +1,26 @@
+......                                                                   [100%]
+============================== warnings summary ===============================
+tests/test_infinite_canvas_text_layer_v2.py::test_text_004_reflection[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:347: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero = sum(1 for p in diff.getdata() if p != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_005_background[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:405: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero_mode = sum(1 for px in diff_mode.getdata() if px != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_005_background[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:426: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero_applied = sum(1 for px in diff_applied.getdata() if px != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:449: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero = sum(1 for p in diff.getdata() if p != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]
+tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:201: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for px in diff.getdata() if px != (0, 0, 0))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+6 passed, 6 warnings in 297.11s (0:04:57)

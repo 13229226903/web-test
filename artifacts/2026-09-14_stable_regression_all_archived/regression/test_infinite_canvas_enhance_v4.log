@@ -1,0 +1,86 @@
+...FFF                                                                   [100%]
+================================== FAILURES ===================================
+______________ TestL6EnhanceWorkflow.test_l6_001_ultra_2k_4k_e2e ______________
+tests\test_infinite_canvas_enhance_v4.py:483: in test_l6_001_ultra_2k_4k_e2e
+    result = wait_result(page, DATA["expected"]["one_k"]["width"], DATA["expected"]["one_k"]["height"], DATA["ultra"]["ultra_2k"]["long_edge"], logs=logs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_infinite_canvas_enhance_v4.py:213: in wait_result
+    pytest.fail(f"Enhance 任务失败，前端 console 出现错误: {joined_logs[-1200:]}")
+E   Failed: Enhance 任务失败，前端 console 出现错误: /59ea7e08d1498771c74f89b7c5933f55/4ec7d714debe7ed7, pollIntervalKey: picEnhance, pollInterval: Object, taskIds: Array(1)}
+E   轮询结果 gzy_comfytextart_PokeCutWeb_1789386815909_2324_cross Cg
+E   GPU处理结束 {resultCode: -112, msg: 未完成, success: false}
+E   [aigc-task-poll] wait next query {flowJobId: 4c0de80d-c411-4cfc-b8c1-084ab356657d, apiUri: /pokecut/api/59ea7e08d1498771c74f89b7c5933f55/4ec7d714debe7ed7, pollIntervalKey: picEnhance, pollInterval: Object, taskIds: Array(1)}
+E   轮询结果 gzy_comfytextart_PokeCutWeb_1789386815909_2324_cross Cg
+E   GPU处理结束 {resultCode: -108, msg: 服务器繁忙, success: false}
+E   sendGaEvent 画质增强功能_处理失败_服务器错误
+E   统计：画质增强功能_处理失败_服务器错误
+E   sendGaEvent 无限画布页画质增强2K-ultra模型失败
+E   统计：无限画布页画质增强2K-ultra模型失败
+E   sendGaEvent 画质增强文字功能_处理失败_服务器错误_新
+E   统计：画质增强文字功能_处理失败_服务器错误_新
+E   sendGaEvent 画质增强功能_处理失败_服务器错误
+E   统计：画质增强功能_处理失败_服务器错误
+E   userBenefit {vipType: 4, vipExpiredTime: 1819374660000, vipRenewalStatus: 1, vipInTrailTime: false, vipSubType: pro}
+E   TaskFlowManager 完成一个job. jobId= 4c0de80d-c411-4cfc-b8c1-084ab356657d
+E   所有任务流执行结束
+E   [CanvasTaskQueue] queued task failed: Error: Canvas Enhance TaskFlow failed
+E       at Object.run (http://10.17.1.66:3001/_nuxt/BeoKINh_.js:2:432090)
+E       at async http://10.17.1.66:3001/_nuxt/-ZwxOs8F.js:1:10598
+_______ TestL6EnhanceWorkflow.test_l6_002_standard_portrait_text_matrix _______
+tests\test_infinite_canvas_enhance_v4.py:547: in test_l6_002_standard_portrait_text_matrix
+    wait_result(page, expected_src["width"], expected_src["height"], cfg["long_edge"], logs=logs)
+tests\test_infinite_canvas_enhance_v4.py:213: in wait_result
+    pytest.fail(f"Enhance 任务失败，前端 console 出现错误: {joined_logs[-1200:]}")
+E   Failed: Enhance 任务失败，前端 console 出现错误: c74f89b7c5933f55/695ad9b325baed31 {styleId: pkweb_comfyui_enhance_normal, resourceCode: picenhance_normal_4k, taskScene: picenhance_text, imgUrl: https://appinference-dl.guangzhuiyuan.com/comfytex…okecutweb/bd590f06ec0ebf673ab3a10f6858d3d1699.zip}
+E   [GA] 跳过客户端 ID 获取：分析服务不可用
+E   sendGaEvent 服务器接口调用失败
+E   统计：服务器接口调用失败, gaParams: {url: http://hxxservice.ad.com/gateway/pokecut/api/59ea7e08d1498771c74f89b7c5933f55/695ad9b325baed31, errorCode: -1002, errorMsg: 任务提交到队列服务失败}
+E   handleSubmitTask result Cg
+E   提交任务失败.
+E   task fail. e= Error: -1002
+E       at xs.handleSubmitTask (http://10.17.1.66:3001/_nuxt/BpFUhXVu.js:2:96446)
+E       at async xs.runSingleFlowSerial (http://10.17.1.66:3001/_nuxt/BpFUhXVu.js:2:83362)
+E       at async http://10.17.1.66:3001/_nuxt/BpFUhXVu.js:2:82475
+E   sendGaEvent 画质增强文字功能_处理失败_服务器错误_新
+E   统计：画质增强文字功能_处理失败_服务器错误_新
+E   sendGaEvent 画质增强功能_处理失败_服务器错误
+E   统计：画质增强功能_处理失败_服务器错误
+E   sendGaEvent 无限画布页画质增强4K-通用模型失败
+E   统计：无限画布页画质增强4K-通用模型失败
+E   TaskFlowManager 完成一个job. jobId= d5758e20-73be-4893-b5d0-b80739420f06
+E   所有任务流执行结束
+E   [CanvasTaskQueue] queued task failed: Error: Canvas Enhance TaskFlow failed
+E       at Object.run (http://10.17.1.66:3001/_nuxt/BeoKINh_.js:2:432090)
+E       at async http://10.17.1.66:3001/_nuxt/-ZwxOs8F.js:1:10598
+_________________ TestL6EnhanceWorkflow.test_l6_003_8k_routes _________________
+tests\test_infinite_canvas_enhance_v4.py:580: in test_l6_003_8k_routes
+    wait_result(page, src["width"], src["height"], cfg["long_edge"], logs=logs)
+tests\test_infinite_canvas_enhance_v4.py:213: in wait_result
+    pytest.fail(f"Enhance 任务失败，前端 console 出现错误: {joined_logs[-1200:]}")
+E   Failed: Enhance 任务失败，前端 console 出现错误: b7c5933f55/695ad9b325baed31 {styleId: pkweb_chain_comfyui_enhance_normal, resourceCode: picenhance_normal_8k, taskScene: picenhance_text, imgUrl: https://appinference-dl.guangzhuiyuan.com/comfytex…okecutweb/461ff232735e2b1d3136d7def54f5e9e187.zip}
+E   [GA] 跳过客户端 ID 获取：分析服务不可用
+E   sendGaEvent 服务器接口调用失败
+E   统计：服务器接口调用失败, gaParams: {url: http://hxxservice.ad.com/gateway/pokecut/api/59ea7e08d1498771c74f89b7c5933f55/695ad9b325baed31, errorCode: -1002, errorMsg: 任务提交到队列服务失败}
+E   handleSubmitTask result Cg
+E   提交任务失败.
+E   task fail. e= Error: -1002
+E       at xs.handleSubmitTask (http://10.17.1.66:3001/_nuxt/BpFUhXVu.js:2:96446)
+E       at async xs.runSingleFlowSerial (http://10.17.1.66:3001/_nuxt/BpFUhXVu.js:2:83362)
+E       at async http://10.17.1.66:3001/_nuxt/BpFUhXVu.js:2:82475
+E   sendGaEvent 画质增强文字功能_处理失败_服务器错误_新
+E   统计：画质增强文字功能_处理失败_服务器错误_新
+E   sendGaEvent 画质增强功能_处理失败_服务器错误
+E   统计：画质增强功能_处理失败_服务器错误
+E   sendGaEvent 无限画布页画质增强8K-通用模型失败
+E   统计：无限画布页画质增强8K-通用模型失败
+E   TaskFlowManager 完成一个job. jobId= c479ccd3-d366-4fef-b4a7-a201613784e9
+E   所有任务流执行结束
+E   [CanvasTaskQueue] queued task failed: Error: Canvas Enhance TaskFlow failed
+E       at Object.run (http://10.17.1.66:3001/_nuxt/BeoKINh_.js:2:432090)
+E       at async http://10.17.1.66:3001/_nuxt/-ZwxOs8F.js:1:10598
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL6EnhanceWorkflow::test_l6_001_ultra_2k_4k_e2e
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL6EnhanceWorkflow::test_l6_002_standard_portrait_text_matrix
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL6EnhanceWorkflow::test_l6_003_8k_routes
+3 failed, 3 passed in 462.12s (0:07:42)

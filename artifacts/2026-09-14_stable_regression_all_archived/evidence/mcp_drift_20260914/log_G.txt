@@ -1,0 +1,28 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (40.1s)
+### Result
+"{\"popupCount\":0,\"popupText\":\"\",\"bodyHasOptions\":\"Seedream 5.0 Pro=false,Nano Banana 2 Lite=false,Pokecut Pro=false,ChatGPT Image 2.0=false\"}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctxA = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const pc = await ctxA.newPage();
+  await pc.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await pc.waitForTimeout(6000);
+  const res = {};
+  await pc.getByRole('textbox', {name:'AI image prompt'}).first().click().catch(e => res.tbErr = String(e).slice(0,80));
+  await pc.waitForTimeout(400);
+  await pc.locator('button', {hasText:'Auto'}).first().click();
+  await pc.waitForTimeout(1500);
+  res.popupCount = await pc.locator('.cinematic-popup').count();
+  res.popupText = (await pc.locator('.cinematic-popup').first().innerText().catch(() => '')).slice(0, 500);
+  res.bodyHasOptions = await pc.evaluate(() => ['Seedream 5.0 Pro','Nano Banana 2 Lite','Pokecut Pro','ChatGPT Image 2.0'].map(o => o + '=' + document.body.innerText.includes(o)).join(','));
+  await pc.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/pc_home_model_menu2.png'});
+  await ctxA.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

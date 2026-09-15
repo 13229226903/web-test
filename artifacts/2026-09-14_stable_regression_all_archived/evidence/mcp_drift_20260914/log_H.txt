@@ -1,0 +1,36 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (10.2s)
+### Result
+"{\"cinematicCount\":0,\"after\":[]}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctxA = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const pc = await ctxA.newPage();
+  await pc.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await pc.waitForTimeout(6000);
+  const res = {};
+  res.cinematicCount = await pc.locator('.cinematic-popup').count();
+  await pc.locator('button', {hasText:'Auto'}).first().click();
+  await pc.waitForTimeout(1800);
+  res.after = await pc.evaluate(() => {
+    const names = ['Nano Banana','Seedream','Pokecut Pro','ChatGPT Image'];
+    const out = [];
+    document.querySelectorAll('div,ul,li').forEach(d => {
+      const t = (d.innerText || '').trim();
+      if (t.length < 500 && names.some(n => t.includes(n))) {
+        const r = d.getBoundingClientRect();
+        if (r.width > 40 && r.height > 20) out.push({cls:(d.className||'').slice(0,80), w:Math.round(r.width), h:Math.round(r.height), t:t.slice(0,160)});
+      }
+    });
+    return out.slice(0, 6);
+  });
+  await pc.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/pc_home_model_menu3.png'});
+  await ctxA.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

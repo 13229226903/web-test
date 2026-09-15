@@ -1,0 +1,45 @@
+{
+  "prompt_settings_exists": 1,
+  "buttons_in_hero": [
+    {
+      "t": "AI Free Tools",
+      "aria": null,
+      "cls": "rounded-r2 font-normal hover:bg-c-text-unsel flex h-[3.125rem] items-center just",
+      "y": 8
+    },
+    {
+      "t": "Portrait Editor",
+      "aria": null,
+      "cls": "rounded-r2 font-normal hover:bg-c-text-unsel flex h-[3.125rem] items-center just",
+      "y": 8
+    },
+    {
+      "t": "Discover",
+      "aria": null,
+      "cls": "hover:bg-c-text-unsel flex h-[3.125rem] items-center justify-center gap-[0.625re",
+      "y": 8
+    },
+    {
+      "t": "Sign up",
+      "aria": null,
+      "cls": "hover:bg-[--bc-gray-3] flex h-[2.75rem] min-w-[4.5rem] items-center justify-cent",
+      "y": 11
+    },
+    {
+      "t": "Log in",
+      "aria": null,
+      "cls": "hover:bg-[--bc-gray-3] mr-[2rem] flex h-[2.75rem] min-w-[4.5rem] items-center ju",
+      "y": 11
+    },
+    {
+      "t": "Start Creating for Free",
+      "aria": null,
+      "cls": "cinematic-cta",
+      "y": 404
+    }
+  ],
+  "textbox_count": 1,
+  "model_labels": [
+    "Auto"
+  ]
+}

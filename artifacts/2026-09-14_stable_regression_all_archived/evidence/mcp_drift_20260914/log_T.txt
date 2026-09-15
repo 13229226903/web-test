@@ -1,0 +1,44 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (46.8s)
+### Result
+"{\"s1_afterTextBoxClick\":{\"cinematic\":0,\"visible\":false},\"s2_afterScroll\":{\"cinematic\":0,\"visible\":false},\"s3_afterDispatch\":{\"cinematic\":1,\"visible\":true},\"s5_afterDispatch2\":{\"cinematic\":0,\"visible\":false},\"popupText\":\"\"}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const pc = await ctx.newPage();
+  await pc.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await pc.waitForTimeout(8000);
+  const res = {};
+  const st = async (k) => { res[k] = {cinematic: await pc.locator('.cinematic-popup').count(), visible: await pc.locator('.cinematic-popup').first().isVisible().catch(()=>false)}; };
+  await pc.getByRole('textbox', {name:'AI image prompt'}).first().click().catch(e => res.tbErr = String(e).slice(0,70));
+  await pc.waitForTimeout(500);
+  await st('s1_afterTextBoxClick');
+  const btn = pc.locator('button.cinematic-model').first();
+  await btn.scrollIntoViewIfNeeded();
+  await pc.waitForTimeout(500);
+  await st('s2_afterScroll');
+  await btn.dispatchEvent('click');
+  await pc.waitForTimeout(2500);
+  await st('s3_afterDispatch');
+  if (!res.s3_afterDispatch.visible) {
+    const box = await btn.boundingBox();
+    if (box) { await pc.mouse.click(box.x + box.width/2, box.y + box.height/2); }
+    await pc.waitForTimeout(2500);
+    await st('s4_afterCoordClick');
+  }
+  if (!res.s4_afterCoordClick || !res.s4_afterCoordClick.visible) {
+    await btn.dispatchEvent('click');
+    await pc.waitForTimeout(2500);
+    await st('s5_afterDispatch2');
+  }
+  res.popupText = (await pc.locator('.cinematic-popup').first().innerText().catch(()=>'' )).slice(0,220);
+  await pc.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/pc_model_sequence.png'});
+  await ctx.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

@@ -1,0 +1,31 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (10.0s)
+### Result
+"{\"listbox\":0,\"option\":0,\"menu\":0,\"menuitem\":0,\"popish\":[]}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctxA = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const pc = await ctxA.newPage();
+  await pc.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await pc.waitForTimeout(6000);
+  await pc.getByRole('textbox').first().click().catch(()=>{});
+  await pc.waitForTimeout(400);
+  const auto = pc.locator('button', {hasText:'Auto'}).first();
+  await auto.click();
+  await pc.waitForTimeout(1500);
+  const res = await pc.evaluate(() => {
+    const q = s => document.querySelectorAll(s).length;
+    const vis = el => { const r = el.getBoundingClientRect(); return r.width > 30 && r.height > 20; };
+    const popish = Array.from(document.querySelectorAll('div,ul')).filter(d => /popup|dropdown|menu|option/i.test(d.className||'') && vis(d)).slice(0, 8).map(d => ({cls:(d.className||'').slice(0,90), t:(d.innerText||'').trim().slice(0,120)}));
+    return {listbox:q('[role=listbox]'), option:q('[role=option]'), menu:q('[role=menu]'), menuitem:q('[role=menuitem]'), popish};
+  });
+  await pc.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/pc_home_model_roles.png'});
+  await ctxA.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

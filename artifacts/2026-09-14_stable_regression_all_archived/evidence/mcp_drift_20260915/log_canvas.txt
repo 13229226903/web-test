@@ -1,0 +1,24 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (13.2s)
+### Result
+"{\"canvasUrl\":\"http://10.17.1.66:3001/\",\"modelish\":[{\"tag\":\"DIV\",\"cls\":\"agent-border-flow relative z-[1] mt-[1.6875rem] w-full rounded-[0.9375rem] borde\",\"t\":\"Auto\\nGenerate\",\"aria\":null},{\"tag\":\"DIV\",\"cls\":\"agent-border-flow__controls relative mt-auto flex h-[2.625rem] items-center just\",\"t\":\"Auto\",\"aria\":null},{\"tag\":\"DIV\",\"cls\":\"relative flex min-w-0 items-center gap-[0.375rem]\",\"t\":\"Auto\",\"aria\":null},{\"tag\":\"BUTTON\",\"cls\":\"flex h-[2.625rem] min-w-0 items-center gap-[0.5555625rem] rounded-[0.5625rem] bo\",\"t\":\"Auto\",\"aria\":null},{\"tag\":\"SPAN\",\"cls\":\"truncate\",\"t\":\"Auto\",\"aria\":null},{\"tag\":\"BUTTON\",\"cls\":\"home-cta-float home-figma-cta mobile-popular-feature-more relative mx-auto mt-[1\",\"t\":\"More Pokecut Tools\",\"aria\":null},{\"tag\":\"SPAN\",\"cls\":\"home-figma-cta__content\",\"t\":\"More Pokecut Tools\",\"aria\":null},{\"tag\":\"SPAN\",\"cls\":\"home-figma-cta__text\",\"t\":\"More Pokecut Tools\",\"aria\":null},{\"tag\":\"DIV\",\"cls\":\"pk-collapse-header flex items-center justify-between px-[1.875rem]\",\"t\":\"How do I use Pokecut?\",\"aria\":null},{\"tag\":\"DIV\",\"cls\":\"flex min-h-[5.625rem] min-w-0 flex-1 items-center py-[1.875rem] pr-[2.25rem] tex\",\"t\":\"How do I use Pokecut?\",\"aria\":null}]}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const ctx = await br.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+  const mp = await ctx.newPage();
+  const res = {};
+  // A) 画布内「生图面板」的模型入口
+  await mp.goto('http://10.17.1.66:3001/create/edit?pid=b91698c3-47ca-46ee-b980-9d0878c8d946', {waitUntil:'domcontentloaded'});
+  await mp.waitForTimeout(10000);
+  res.canvasUrl = mp.url();
+  res.modelish = await mp.evaluate(() => Array.from(document.querySelectorAll('button,div,span')).filter(e => { const t=(e.innerText||'').trim(); return t && t.length < 30 && /Nano Banana|Auto|Seedream|Pokecut/i.test(t); }).slice(0,10).map(e => ({tag:e.tagName, cls:String(e.className).slice(0,80), t:e.innerText.trim(), aria:e.getAttribute('aria-label')})));
+  await mp.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260915/canvas_generate_panel.png'});
+  await ctx.close();
+  return JSON.stringify(res);
+})(page);
+```
+### Page
+- Page URL: about:blank
+END

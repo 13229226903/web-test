@@ -1,0 +1,34 @@
+MCP_READY
+BEGIN browser_run_code_unsafe (20.0s)
+### Result
+"{\"pcMenu\":null,\"mobileFileInput\":[\"DIV|flex min-w-0 flex-col gap-[0.4375rem]|\",\"DIV|agent-border-flow relative z-[1] mt-[1.6875rem] w-full round|Auto / Generate\",\"SECTION|mobile-home-agent-hero relative isolate w-full overflow-visi|All-in-One AI Photo Editor & Generator / Start Creat\",\"DIV|home-mobile-top|All-in-One AI Photo Editor & Generator / Start Creat\",\"DIV|home-font-scope w-full|All-in-One AI Photo Editor & Generator / Start Creat\",\"DIV|md:mt-[4.0625rem] flex w-full flex-col items-center|Unlock Pokecut VIP for just $1 USD / 23 / : / 59 / : / \"],\"mobileTemplateCards\":[\"GPT-Image2\",\"Try-On\",\"GPT-Image2\",\"Slim\",\"Lofi\",\"Body Sculpt\",\"Muscle\",\"Flux Gen\",\"Flash Effect\",\"Young\",\"Suit\",\"Spiderman\",\"Proportion Edit\",\"Dark Tan\",\"Smile Lines\",\"Gold Tan\",\"Jelly Photo Filter\",\"High Crown\"]}"
+### Ran Playwright code
+```js
+await (async (page) => {
+  const br = page.context().browser();
+  const res = {};
+  const ctxA = await br.newContext({viewport:{width:1920,height:1080},locale:'en-US'});
+  const pc = await ctxA.newPage();
+  await pc.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await pc.waitForTimeout(7000);
+  await pc.locator('button.cinematic-model').first().click();
+  await pc.waitForTimeout(1800);
+  res.pcMenu = await pc.evaluate(() => {
+    const names = ['Nano Banana','Seedream','Pokecut Pro'];
+    const cands = Array.from(document.querySelectorAll('div,ul')).filter(d => { const s=(d.innerText||'').trim(); return s.length>10 && s.length<700 && names.every(n=>s.includes(n)); });
+    const el = cands[cands.length-1];
+    return el ? {cls: String(el.className).slice(0,110), items: el.querySelectorAll('button,li,[class*=item]').length, text: el.innerText.trim().slice(0,240).replace(/\n+/g,' | ')} : null;
+  });
+  await pc.screenshot({path:'artifacts/2026-09-14_stable_regression_all_archived/evidence/mcp_drift_20260914/pc_model_menu_open.png'});
+  await ctxA.close();
+  const ctxB = await br.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:3,locale:'en-US',userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'});
+  const mp = await ctxB.newPage();
+  await mp.goto('http://10.17.1.66:3001/en', {waitUntil:'domcontentloaded'});
+  await mp.waitForTimeout(8000);
+  res.mobileFileInput = await mp.evaluate(() => {
+    const inp = document.querySelector('input[type=file]');
+    if (!inp) return null;
+    const chain = [];
+    let el = inp;
+    for (let��[truncated]
+END

@@ -1,0 +1,238 @@
+
+=== START test_pokecut_portrait_detector :: tests/test_pokecut_portrait_detector.py ===
+=== END test_pokecut_portrait_detector exit=0 seconds=306.8 counts={'passed': 14} ===
+..............                                                           [100%]
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+14 passed in 304.11s (0:05:04)
+
+=== START test_ai_image_text_enhancer_experiment :: tests/test_ai_image_text_enhancer_experiment.py ===
+=== END test_ai_image_text_enhancer_experiment exit=0 seconds=788.22 counts={'passed': 15, 'skipped': 3} ===
+..s..s...........s                                                       [100%]
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+15 passed, 3 skipped in 784.85s (0:13:04)
+
+=== START test_infinite_canvas_text_layer_v2 :: tests/test_infinite_canvas_text_layer_v2.py ===
+=== END test_infinite_canvas_text_layer_v2 exit=0 seconds=299.8 counts={'passed': 6} ===
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:201: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for px in diff.getdata() if px != (0, 0, 0))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+6 passed, 6 warnings in 297.11s (0:04:57)
+
+=== START test_mobile_home :: tests/test_mobile_home.py ===
+=== END test_mobile_home exit=0 seconds=416.34 counts={'passed': 37, 'skipped': 1} ===
+.....................................s                                   [100%]
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+37 passed, 1 skipped in 414.51s (0:06:54)
+
+=== START test_help_page :: tests/test_help_page.py ===
+=== END test_help_page exit=0 seconds=194.95 counts={'passed': 11} ===
+...........                                                              [100%]
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+11 passed in 192.70s (0:03:12)
+
+=== START test_detection_ui_seo_l6 :: tests/test_detection_ui_seo_l6.py ===
+=== END test_detection_ui_seo_l6 exit=0 seconds=128.12 counts={'passed': 2} ===
+..                                                                       [100%]
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+2 passed in 126.55s (0:02:06)
+
+=== START test_pokecut_pc_home_v6 :: tests/test_pokecut_pc_home_v6.py ===
+=== END test_pokecut_pc_home_v6 exit=0 seconds=364.81 counts={'passed': 17} ===
+.................                                                        [100%]
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+17 passed in 362.63s (0:06:02)
+
+=== START test_pokecut_pc_batch_v1 :: tests/test_pokecut_pc_batch_v1.py ===
+=== END test_pokecut_pc_batch_v1 exit=0 seconds=297.38 counts={'passed': 16} ===
+  D:\Test\web-test\tests\test_pokecut_pc_batch_v1.py:192: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for p in diff.getdata() if sum(p) > 20)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+16 passed, 6 warnings in 295.74s (0:04:55)
+
+=== START test_old_canvas_insert_panel_v3 :: tests/test_old_canvas_insert_panel_v3.py ===
+=== END test_old_canvas_insert_panel_v3 exit=0 seconds=622.88 counts={'passed': 24} ===
+  D:\Test\web-test\tests\test_old_canvas_insert_panel_v3.py:185: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    pts = sum(1 for px in diff.getdata() if sum(px) > 12)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+24 passed, 22 warnings in 621.22s (0:10:21)
+
+=== START test_old_canvas_text_panel_v1 :: tests/test_old_canvas_text_panel_v1.py ===
+=== END test_old_canvas_text_panel_v1 exit=0 seconds=395.72 counts={'passed': 13} ===
+  D:\Test\web-test\tests\test_old_canvas_text_panel_v1.py:199: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    px = list(ImageChops.difference(ia, ib).convert("L").getdata())
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+13 passed, 18 warnings in 393.75s (0:06:33)
+
+=== START test_old_canvas_sticker_panel_v1 :: tests/test_old_canvas_sticker_panel_v1.py ===
+=== END test_old_canvas_sticker_panel_v1 exit=0 seconds=209.61 counts={'passed': 9} ===
+.........                                                                [100%]
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+9 passed in 207.52s (0:03:27)
+
+=== START test_infinite_canvas_enhance_v4 :: tests/test_infinite_canvas_enhance_v4.py ===
+=== END test_infinite_canvas_enhance_v4 exit=1 seconds=463.72 counts={'passed': 3, 'failed': 3} ===
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL6EnhanceWorkflow::test_l6_001_ultra_2k_4k_e2e
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL6EnhanceWorkflow::test_l6_002_standard_portrait_text_matrix
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL6EnhanceWorkflow::test_l6_003_8k_routes
+3 failed, 3 passed in 462.12s (0:07:42)
+
+=== SUMMARY ===
+[
+  {
+    "name": "test_pokecut_portrait_detector",
+    "script": "tests/test_pokecut_portrait_detector.py",
+    "archive": "archive/portrait_detector/test_pokecut_portrait_detector.py",
+    "status": "stable_regression",
+    "exit_code": 0,
+    "seconds": 306.8,
+    "counts": {
+      "passed": 14
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_pokecut_portrait_detector.log"
+  },
+  {
+    "name": "test_ai_image_text_enhancer_experiment",
+    "script": "tests/test_ai_image_text_enhancer_experiment.py",
+    "archive": "archive/tool_pages/test_ai_image_text_enhancer_experiment.py",
+    "status": "stable_regression",
+    "exit_code": 0,
+    "seconds": 788.22,
+    "counts": {
+      "passed": 15,
+      "skipped": 3
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_ai_image_text_enhancer_experiment.log"
+  },
+  {
+    "name": "test_infinite_canvas_text_layer_v2",
+    "script": "tests/test_infinite_canvas_text_layer_v2.py",
+    "archive": "archive/infinite_canvas/test_infinite_canvas_text_layer_v2.py",
+    "status": "stable_regression",
+    "exit_code": 0,
+    "seconds": 299.8,
+    "counts": {
+      "passed": 6
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_infinite_canvas_text_layer_v2.log"
+  },
+  {
+    "name": "test_mobile_home",
+    "script": "tests/test_mobile_home.py",
+    "archive": "archive/mobile_home/test_mobile_home.py",
+    "status": "stable_regression",
+    "exit_code": 0,
+    "seconds": 416.34,
+    "counts": {
+      "passed": 37,
+      "skipped": 1
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_mobile_home.log"
+  },
+  {
+    "name": "test_help_page",
+    "script": "tests/test_help_page.py",
+    "archive": "archive/help_center/test_help_page.py",
+    "status": "stable_regression",
+    "exit_code": 0,
+    "seconds": 194.95,
+    "counts": {
+      "passed": 11
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_help_page.log"
+  },
+  {
+    "name": "test_detection_ui_seo_l6",
+    "script": "tests/test_detection_ui_seo_l6.py",
+    "archive": "archive/detection_ui/test_detection_ui_seo_l6.py",
+    "status": "stable_regression",
+    "exit_code": 0,
+    "seconds": 128.12,
+    "counts": {
+      "passed": 2
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_detection_ui_seo_l6.log"
+  },
+  {
+    "name": "test_pokecut_pc_home_v6",
+    "script": "tests/test_pokecut_pc_home_v6.py",
+    "archive": "archive/pc_home/test_pokecut_pc_home_v6.py",
+    "status": "stable_regression",
+    "exit_code": 0,
+    "seconds": 364.81,
+    "counts": {
+      "passed": 17
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_pokecut_pc_home_v6.log"
+  },
+  {
+    "name": "test_pokecut_pc_batch_v1",
+    "script": "tests/test_pokecut_pc_batch_v1.py",
+    "archive": "archive/pc_batch/test_pokecut_pc_batch_v1.py",
+    "status": "pending_fix",
+    "exit_code": 0,
+    "seconds": 297.38,
+    "counts": {
+      "passed": 16
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_pokecut_pc_batch_v1.log"
+  },
+  {
+    "name": "test_old_canvas_insert_panel_v3",
+    "script": "tests/test_old_canvas_insert_panel_v3.py",
+    "archive": "archive/infinite_canvas_insert_panel/test_old_canvas_insert_panel_v3.py",
+    "status": "stable_regression",
+    "exit_code": 0,
+    "seconds": 622.88,
+    "counts": {
+      "passed": 24
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_old_canvas_insert_panel_v3.log"
+  },
+  {
+    "name": "test_old_canvas_text_panel_v1",
+    "script": "tests/test_old_canvas_text_panel_v1.py",
+    "archive": "archive/infinite_canvas_text_panel/test_old_canvas_text_panel_v1.py",
+    "status": "stable_regression",
+    "exit_code": 0,
+    "seconds": 395.72,
+    "counts": {
+      "passed": 13
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_old_canvas_text_panel_v1.log"
+  },
+  {
+    "name": "test_old_canvas_sticker_panel_v1",
+    "script": "tests/test_old_canvas_sticker_panel_v1.py",
+    "archive": "archive/infinite_canvas_sticker_panel/test_old_canvas_sticker_panel_v1.py",
+    "status": "stable_regression",
+    "exit_code": 0,
+    "seconds": 209.61,
+    "counts": {
+      "passed": 9
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_old_canvas_sticker_panel_v1.log"
+  },
+  {
+    "name": "test_infinite_canvas_enhance_v4",
+    "script": "tests/test_infinite_canvas_enhance_v4.py",
+    "archive": "archive/infinite_canvas_enhance/test_infinite_canvas_enhance_v4.py",
+    "status": "pending_fix",
+    "exit_code": 1,
+    "seconds": 463.72,
+    "counts": {
+      "passed": 3,
+      "failed": 3
+    },
+    "log": "artifacts/2026-09-14_stable_regression_all_archived/regression/test_infinite_canvas_enhance_v4.log"
+  }
+]

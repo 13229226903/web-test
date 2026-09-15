@@ -1,0 +1,143 @@
+{
+  "hero_buttons": [
+    {
+      "text": "Start Creating for Free",
+      "aria": null,
+      "cls": "relative mx-auto mt-[1.40625rem] flex h-[4.4625rem] w-[26.30625rem] items-center justify-center overflow-hidden rounded-[1.125rem] border-[0.1419375rem] border-white bg-[linear-gradient(180deg,#6070fc_6.64%,#4626fa_55.39%,#4023c9_107.63%)] text-pmd-normal-btn font-bold text-white shadow-[0_0.375rem_1.125rem_rgba(156,146,255,0.7),inset_0_0.05915625rem_0.571875rem_0.11821875rem_#d2eaff,inset_0_0.05915625rem_0.44465625rem_0.1891875rem_#e4f2ff]",
+      "html": "<button type=\"button\" class=\"relative mx-auto mt-[1.40625rem] flex h-[4.4625rem] w-[26.30625rem] items-center justify-center overflow-hidden rounded-[1.125rem] border-[0.1419375rem] border-white bg-[linear-gradient(180deg,#6070fc_6.64%,#4626fa_55.39%,#4023c9_107.63%)] text-pmd-normal-btn font-bold t"
+    },
+    {
+      "text": "",
+      "aria": "Upload reference image",
+      "cls": "flex size-[2.625rem] shrink-0 items-center justify-center rounded-r2 border border-white/70 bg-[rgba(255,255,255,0.36)]",
+      "html": "<button type=\"button\" class=\"flex size-[2.625rem] shrink-0 items-center justify-center rounded-r2 border border-white/70 bg-[rgba(255,255,255,0.36)]\" aria-label=\"Upload reference image\" data-v-2b4ade73=\"\"><img src=\"/icons/svg/create_icon_upload_img.svg\" class=\"size-[1.5rem]\" alt=\"\" data-v-2b4ade73=\""
+    },
+    {
+      "text": "Auto",
+      "aria": null,
+      "cls": "flex h-[2.625rem] min-w-0 items-center gap-[0.5555625rem] rounded-[0.5625rem] border border-white/70 bg-[rgba(255,255,255,0.36)] px-[1.111125rem] text-[1.125rem] font-bold leading-[1.875rem] text-c-primary-text",
+      "html": "<button type=\"button\" class=\"flex h-[2.625rem] min-w-0 items-center gap-[0.5555625rem] rounded-[0.5625rem] border border-white/70 bg-[rgba(255,255,255,0.36)] px-[1.111125rem] text-[1.125rem] font-bold leading-[1.875rem] text-c-primary-text\" data-v-2b4ade73=\"\"><img src=\"/icons/svg/model_icon_auto.svg"
+    },
+    {
+      "text": "",
+      "aria": null,
+      "cls": "flex size-[2.625rem] items-center justify-center rounded-[0.5625rem] border-0 bg-[rgba(205,205,205,0.27)]",
+      "html": "<button type=\"button\" class=\"flex size-[2.625rem] items-center justify-center rounded-[0.5625rem] border-0 bg-[rgba(205,205,205,0.27)]\" data-v-2b4ade73=\"\"><img src=\"/icons/svg/ratio_size_1x1.svg\" class=\"size-[2.25rem]\" alt=\"1:1\" data-v-2b4ade73=\"\"></button>"
+    },
+    {
+      "text": "Generate",
+      "aria": null,
+      "cls": "cursor-not-allowed bg-[var(--bc-gray-1)] opacity-40 mt-[0.75rem] flex h-[3rem] w-full items-center justify-center gap-[0.5rem] rounded-r3 text-pmd-normal-btn font-bold text-white",
+      "html": "<button type=\"button\" class=\"cursor-not-allowed bg-[var(--bc-gray-1)] opacity-40 mt-[0.75rem] flex h-[3rem] w-full items-center justify-center gap-[0.5rem] rounded-r3 text-pmd-normal-btn font-bold text-white\" disabled=\"\" data-v-2b4ade73=\"\"><img src=\"/icons/svg/create_generate_icon_text.svg\" class=\"s"
+    }
+  ],
+  "model_entry_clicked": "Auto",
+  "model_options_present": {
+    "Pokecut Pro": true,
+    "ChatGPT Image 2.0": true,
+    "Nano Banana": true,
+    "Nano Banana 2": true,
+    "Seedream4.0": true,
+    "Auto": true
+  },
+  "popup_candidates": [
+    {
+      "tag": "DIV",
+      "cls": "fixed z-[100] w-max max-w-[calc(100vw-2.5rem)] overflow-visible rounded-[0.75rem] bg-white p-[0.75rem] shadow-gray-2",
+      "w": 156,
+      "h": 372,
+      "txt": "Nano Banana\nAuto\nSeedream 5.0 Pro\nNano Banana 2 Lite\nPokecut Pro\nNano Banana Pro\nChatGPT Image 2.0\nNano Banana 2\nSeedream 5.0 Lite\nSeedream4.0\nGemini has retired Nano Banana 1. We recommend Banana 2 Lite for better quality and faster speed."
+    },
+    {
+      "tag": "DIV",
+      "cls": "max-h-[calc(100vh-4rem)] w-max max-w-[calc(100vw-2.5rem)] overflow-y-auto mobile-home-model-menu-scroll flex flex-col gap-[0.375rem] rounded-[0.5rem]",
+      "w": 140,
+      "h": 356,
+      "txt": "Nano Banana\nAuto\nSeedream 5.0 Pro\nNano Banana 2 Lite\nPokecut Pro\nNano Banana Pro\nChatGPT Image 2.0\nNano Banana 2\nSeedream 5.0 Lite\nSeedream4.0"
+    },
+    {
+      "tag": "DIV",
+      "cls": "relative",
+      "w": 140,
+      "h": 32,
+      "txt": "Nano Banana"
+    },
+    {
+      "tag": "DIV",
+      "cls": "relative",
+      "w": 140,
+      "h": 32,
+      "txt": "Nano Banana 2 Lite"
+    },
+    {
+      "tag": "DIV",
+      "cls": "relative",
+      "w": 140,
+      "h": 32,
+      "txt": "Nano Banana Pro"
+    },
+    {
+      "tag": "DIV",
+      "cls": "relative",
+      "w": 140,
+      "h": 32,
+      "txt": "Nano Banana 2"
+    },
+    {
+      "tag": "DIV",
+      "cls": "pointer-events-auto absolute left-[calc(100%+0.625rem)] top-[1.9375rem] z-20 w-[12.625rem] -translate-y-[33.333333%] rounded-[0.5rem] bg-white px-[0.625rem] pb-[0.5rem] pt-[0.625rem] text-center shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.25)]",
+      "w": 135,
+      "h": 49,
+      "txt": "Gemini has retired Nano Banana 1. We recommend Banana 2 Lite for better quality and faster speed.\nI got it"
+    },
+    {
+      "tag": "DIV",
+      "cls": "relative flex flex-col items-center font-['SF_UI_Display']",
+      "w": 121,
+      "h": 37,
+      "txt": "Gemini has retired Nano Banana 1. We recommend Banana 2 Lite for better quality and faster speed.\nI got it"
+    }
+  ],
+  "butt_hits": [],
+  "butt_button_names": [],
+  "mobile_tool_buttons": [
+    "200+\nAI tools",
+    "3M+\ncreators",
+    "500M+\nedits processed",
+    "AI Replace",
+    "All Tools",
+    "Auto",
+    "Background",
+    "Body",
+    "Body Editor",
+    "ChatGPT Image 2.0",
+    "Clothes Changer",
+    "DEBUG",
+    "Face",
+    "Generate",
+    "HD Enhance",
+    "HD Photo Coverter",
+    "Hair",
+    "Home",
+    "I got it",
+    "ID Photo Maker",
+    "Language: English",
+    "More Pokecut Tools",
+    "Nano Banana",
+    "Nano Banana 2",
+    "Nano Banana 2 Lite",
+    "Nano Banana Pro",
+    "Pokecut Pro",
+    "Portrait AI",
+    "Pricing",
+    "Remove Background",
+    "See More Creations",
+    "Seedream 5.0 Lite",
+    "Seedream 5.0 Pro",
+    "Seedream4.0",
+    "Sign up",
+    "Start Creating for Free",
+    "Text Enhance",
+    "Ultra Enhance"
+  ]
+}

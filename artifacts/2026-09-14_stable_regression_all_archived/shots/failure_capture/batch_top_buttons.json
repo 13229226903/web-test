@@ -1,0 +1,38 @@
+[
+  {
+    "text": "Remove Background",
+    "aria": null,
+    "title": null,
+    "cls": "flex w-[22.5rem] h-[5rem] items-center justify-center py-[0.625rem] px-[1.875rem] gap-[0.625rem] rounded-r3 btn-bg-gradient1 mx-auto mb-[2rem] cursor-not-allowed",
+    "y": 542,
+    "x": 101,
+    "html": "<img class=\"size-[1.5rem]\" src=\"/icons/svg/ai_tools_edit_sub_btn_icon_remove.svg\" alt=\"\" data-v-5f93699c=\"\"><span class="
+  },
+  {
+    "text": "AI Enhancer",
+    "aria": null,
+    "title": null,
+    "cls": "flex w-[22.5rem] h-[5rem] items-center justify-center rounded-r5 text-pc-normal-content text-[#fff] font-bold mb-5 bg-c-text-unsel cursor-not-allowed",
+    "y": 0,
+    "x": 0,
+    "html": "AI Enhancer"
+  },
+  {
+    "text": "Upload Images",
+    "aria": null,
+    "title": null,
+    "cls": "flex items-center justify-center w-[33.86638rem] h-[7.5rem] mt-[1.25rem] ml-[1.25rem] shrink-0 rounded-[1.875rem] bg-[linear-gradient(180deg,#515AE6_0%,#371ADF_100%)]",
+    "y": 698,
+    "x": 940,
+    "html": "<div class=\"inline-flex items-center justify-center gap-[3.5rem]\"><img class=\"size-[3rem]\" src=\"/img/upload_logo.webp\" a"
+  },
+  {
+    "text": "DEBUG",
+    "aria": null,
+    "title": null,
+    "cls": "debug-float-btn",
+    "y": 1000,
+    "x": 1840,
+    "html": " DEBUG "
+  }
+]
