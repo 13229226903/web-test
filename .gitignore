@@ -37,3 +37,6 @@ skills/ui-test-page-map-sync/SKILL.before_*.md
 # 根目录历史备份文件，不入库
 *.bak
 *.bak_*
+
+# 探索草稿目录（驱动脚本已移到 scripts/mcp/，其余为一次性探针，按任务归档到 artifacts/<task>/evidence/）
+_explore/
