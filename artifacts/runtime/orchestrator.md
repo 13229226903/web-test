@@ -152,6 +152,28 @@ sync.md: <路径> (pending_review)
 - 每行一条用例 / AC（新功能）或关键覆盖点（存量首次探索），行首 ✅（covered）/ ⚠️（gap）/ ❌（bug_candidate）/ ⏭（skipped）。
 - gap 与 bug_candidate 必须带一句话说明，不得只给数量。
 - 阻塞主流程的 bug_candidate 要标注 `blocked`，提示先提 bug / 等用户决定。
+- gap / skipped 若因账号 / 数据 / 权限态，必须注明「已按 PROJECT.md 账号表核对后仍缺的账号态」，不得以笼统“无账号”代替。
+
+### 疑似 Bug 输出规则（探索结果摘要内）
+
+- bug_candidate 除在逐行摘要给出一句话现象外，还必须在摘要内按统一模板完整输出：
+  `Bug 标题` + `[步骤]` + `[结果]` + `[期望]` + 结果截图（截图保存于 `artifacts/<task_id>/shots/`，摘要用 Markdown 图片或绝对路径引用）。
+- 模板如下（每条 bug 一个段落，便于直接转 issue）：
+
+```text
+Bug <N>｜<一句话标题>
+[步骤]
+1. <可复现步骤>
+2. ...
+[结果]
+<实测现象 + 证据（含截图/console/DOM 数值）>
+[期望]
+<需求 / AC 预期>
+截图: <shots/xxx.png 路径或内嵌图>
+```
+
+- 完整版落 sync.md 的 `bug_candidates` / `requirement_actual_diffs`；对话摘要只保留模板正文与截图，不展开整页日志。
+
 
 ## 简易测试报告输出（新功能 / 存量首次探索）
 

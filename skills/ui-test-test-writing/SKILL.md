@@ -6,6 +6,7 @@ description: 根据 confirmed cases 与 versioned page_map 编写自动化脚本
 # test-writing
 
 > 共享契约（通用红线 / Artifact 接力 / progress / 项目约束）见 `artifacts/runtime/common.md`。
+> 编码与技术避坑规则（selector / 等待 / Vue 交互 / 状态持久化 / 截图粒度）另见 `rule.md`，写代码前定向检索。
 
 ## 职责
 1. 读 confirmed cases + page_map + 项目约定。
@@ -73,11 +74,43 @@ description: 根据 confirmed cases 与 versioned page_map 编写自动化脚本
 - 步骤与截图：`with allure.step("导航到目标页面"):` / `with allure.step("执行操作"):` / `with allure.step("截图记录"):`，截图放在对应步骤内；步骤名称来自 cases.md 的 `步骤` / `截图点`。
 - 每条用例的步骤按 cases.md 的 `步骤` 列书写；截图放在对应 `截图点` 的步骤内，不要用固定「用例结束态」替代全部步骤。
 - 首页加载等公共动作不是每条用例都放，按 cases.md 截图点放置。
-- 每条断言后都应在对应步骤内截图留存该断言的状态（同一 `allure.step` 可复用一个截图点）；至少每个有语义的断言 / 状态变化都有视觉证据，不得只在用例结尾截一张结束态代替。
-- 统一截图 helper 只作全页截图备选（`conftest.allure_screenshot`）；常规步骤截图用 `page.screenshot()` 直接 attach。
+- 上传异常类用例优先走真实可见上传按钮 + `expect_file_chooser()`，不要直接 `set_input_files()` 到隐藏 input，避免绕过业务组件的前端校验 / toast 链路。
+
+## 提交类用例任务记录（taskId / efMode / styleId）
+
+- 生成 / 处理类用例（真实提交后端任务，如 Enhance 提交）在**成功提交后**必须抓取并记录该次任务的 `taskId`，并同时记录 `efMode` 或 `styleId`（存在则记，缺则不写不伪造）：
+  - `taskId`（必记）：提交前注册 `page.on("console")`，用正则抓纯文本 `轮询结果\s+([A-Za-z0-9_\-]+)\s+Ng`；或解析 `handleSubmitTask result` 对象的 `data.taskId`（`msg.args[1].json_value()`）；或 `[aigc-task-poll]` 轮询对象 `taskIds[0]`。
+  - `efMode`（legacy picEnhance 链路，如 Normal 2K = `240100021`）：`handleSubmitTask data` 文本 `efMode:\s*(\d+)` 或对应 args 对象。
+  - `styleId`（ComfyUI / aiEnhance 链路，如 `pkweb_comfyui_enhance_natural`、`pkweb_realesrgan`、`pkweb_chain_comfyui_enhance_ultra`）：`[AIGC 提交][开始提交]` 文本 `styleId:\s*([^,}\s]+)`。
+  - 链路差异：2K 非 Ultra legacy 链路会出现 `styleId: none` 但带 `efMode`；ComfyUI 链路有 `styleId` 无 `efMode`；两者都没有时记录 `resourceCode` 并标注“efMode 待后端核验”。
+- 断言 `taskId` 非空；记录内容以 `allure.attach.file()` 或 JSON attachment 进 Allure 报告（字段：taskId / efMode / styleId），按需另落 json 便于对账。
+- 每次提交前清空监听列表或使用独立 page，避免多任务 id 串扰；提交后异步等待用**轮询等 console 出现 taskId 或结果图层**，不得只固定 sleep。
+- 任务 id 规则与探索阶段一致，来源见 page-map-sync SKILL「提交任务证据记录规则」与 `explore_18_taskid_console.json` 实测样例。
+
+## 截图时机与粒度（有稳定资产背书）
+
+- 跳转、切语言、打开新标签页后不要立刻截图；先等渲染完成，否则可能得到纯白截图。
+- 通用做法：截图前等待 `networkidle`（建议 2s 超时，超时可接受）并再等 500ms；必要时再滚动到目标区域。
+- **截图粒度是“状态”，不是“断言条数”**：
+  - 一个步骤内如果有多条断言但 UI 状态未变化，只截一张图，放在整组断言之后。
+  - 不要在同一步骤内为每条 `assert` / `expect` 各截一张图。
+  - 不要同时保留“步骤截图”和“用例末尾汇总截图”来记录同一个状态。
+- **必须截图的状态**：
+  - 初始 / 默认态
+  - 用户操作后的新状态（上传、切 tab、打开弹层、选中、删除、下载等）
+  - 异步任务完成后的结果态
+  - 视觉对比类步骤的前后状态（如 Refine 的 Eraser / Keep）
+- **可省略截图的情况**：
+  - 多条断言只是检查同一静止 UI 的不同字段
+  - 等价路径产生完全相同的视觉状态；可只保留一个代表状态截图
+  - 纯导航 / 纯等待步骤，且没有可断言的新状态
+- **Allure 附件**：优先使用 `allure.attach.file()` 附加截图文件；不要只在 step 内用 `allure.attach(bytes)`，否则报告生成后可能出现附件展不开的问题。
+- **证据截图默认整页（viewport 全幅），不要默认裁切**：附件需要包含左侧面板 / 画布 / 右侧属性面板 / 顶部栏等上下文；
+  只有需要聚焦某个视觉效果的“特写”才显式裁切（如画布区域）。纯做像素差异比对的裁切图**不要**附加进 Allure 证据。
+  来源：`2026-09-10_old_canvas_insert_panel_exploration`，用户反馈“只截到图片没截整页”后修订，2026-09-11 复跑 24/24 通过。
 - 空态 / 初始态 / 未操作前截图必须在触发状态变化的操作之前截取；状态变化后再补一张变化后截图，不得用变化后的截图冒充空态。
 - 异常 / 负向用例截图必须贴近异常提示或失败状态；预期提示未出现时，仍要在失败前截图当前态并让用例失败，不要用普通首屏截图伪装异常覆盖。
-- 上传异常类用例优先走真实可见上传按钮 + `expect_file_chooser()`，不要直接 `set_input_files()` 到隐藏 input，避免绕过业务组件的前端校验 / toast 链路。
+- 来源：`2026-09-07_pokecut_pc_home_dev_interactions`，2026-09-08 复跑 17/17 通过，空白截图 0；`2026-09-08_pokecut_pc_batch_dev_interactions` 补充 step 附件、状态级截图与等价状态去重规则。
 
 ## 失败分类
 | 现象 | 怀疑 | 行动 |
@@ -103,6 +136,7 @@ description: 根据 confirmed cases 与 versioned page_map 编写自动化脚本
 - 自修复只允许改 selector、等待、导航、数据格式、测试实现；不得为绿灯改 expected / 语义。
 - Allure 中文标题 / 描述 / 步骤并含 Layer；参数化标题显示实际值。
 - 不省略 progress.log。
+- 统计埋点 / GA 事件（探索结论中的事件名与触发方式）不写入回归脚本；埋点验证只在探索 sync.md / evidence 层输出，除非用户显式要求写。
 
 ## progress
 - start / step:wrote <file> / step:collect_only / step:round N / done:impl.md / gate:regression_archive_candidate

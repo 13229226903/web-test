@@ -28,6 +28,25 @@
 - 三点菜单 / hover 菜单：先 hover 行，再点触发图标，菜单才渲染。
 - popconfirm / tooltip 经常没有 `role=dialog`，按文本或就近容器定位。
 
+## 画布类页面的状态持久化与会话级复用（有稳定资产背书）
+
+- **画布编辑会持久化到 `pid`**：旧画布（`/create/edit?pid=...`）的图层增删 / 属性修改会写回同一个 pid，
+  上一条用例的改动会带进下一条。复用画布时不要假设“重新打开 URL = 干净初始态”。
+  - 用例执行顺序固定：结构 / 属性只读组在前，新增图层组在后；会改变图层尺寸的效果（如 Reflection 倒影）排在所属组最后。
+  - 会互相污染的属性组（Opacity / Adjust / Shadow / Outline / Filter / Blend）在每条用例开始前统一调 reset helper 复位到默认值。
+- **模板入口有频率限制**：连续走 `/template` 首卡上传约 17 次后会触发人机校验 / 上传不跳转（原始探索脚本同样失败）。
+  → 不要逐条用例走上传入口；改 session 级前置只上传 / 建任务 1 次并记录画布 URL，其余用例新开 page 打开同一 URL（不重新上传）。
+- **同一 pid 复用画布时，多层同文案/同色图层会完全重叠**：画布截图看不出层数，单层参数（Opacity/Space 等）改动在合成结果里几乎不可见
+  （实测差异可低至 0.0001）。需要层数的用例必须用**图层列表面板计数**（如旧画布 Left Layer 面板：`layer-choosed` / `layer-unchoosed` 行）判定，不能只看画布；
+  需要像素断言的用例应在操作前**清掉历史图层**（用户授权时可删）或给新图层换区别色，否则像素断言失去鉴别力。
+  来源：`2026-09-11_old_canvas_text_panel_exploration`，13/13 通过。
+- **面板内多个同类控件（滑杆/色块）必须按"label 下方最近的控件"定位**：同一分区里滑杆按行排列（如 Scope/Opacity/Distance/Angle），
+  若取"分区内第一个 `input[type=range]`"，改 Distance 会实际打到 Scope；`querySelector` 也要限定在**该 label 所在行/最近容器**内，而不是整个分区。
+  来源：同上（旧画布文字属性面板 Reflection 分区实测现象：Scope 被改、Distance 不变）。
+- **同一页面可能挂载多套隐藏复用 section**：定位面板 / 分组时只认可见节点（`is_visible()` 过滤或 `:visible`），
+  命中隐藏节点会导致改值无效、前后对比 diff=0。
+- 来源：`2026-09-10_old_canvas_insert_panel_exploration`，2026-09-11 复跑 24/24 通过（改造后 24 次上传 → 1 次，42min → 9.5min）。
+
 ## 测试设计
 
 - 所有字段都填（含非必填），所有有意义的字段都断言。
@@ -41,6 +60,11 @@
 - **文件上传**：优先真实按钮 + `page.expect_file_chooser()` 选图；`input[type=file].set_input_files()` 只作回退，且会丢失 Vue 工具上下文。
 - **context 配置**：必须设 `viewport` + `locale: "en-US"`，否则 Vue 文件选择器无法被拦截（`conftest.py` 已统一兜底）。
 - 滑块 / 数值型 Vue 控件：改值后用 `dispatchEvent(new Event('input'/'change', {bubbles: true}))` 触发更新。
+- **提交 / 确认控件未必是 `button`**：旧画布的绘制态 Apply / Cancel 实际是 `div`。定位交互元素时不要写死标签，
+  用「可见文本 + 可见性过滤」拿到中心坐标后 `page.mouse.click(x, y)`；退出判据用「该控件消失」。来源：2026-09-10 旧画布任务，24/24 通过。
+- **色板 / 调色板类控件通常无 aria 与文本**：按容器内元素的 computed `backgroundColor` 精确匹配目标色，
+  再点其 `div.cursor-pointer` 祖先；直接点色块可能弹出调色板 overlay，需 Escape 关闭后再继续。来源：同上。
+
 
 ## 视觉审查模型
 

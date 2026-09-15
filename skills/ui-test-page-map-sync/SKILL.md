@@ -6,6 +6,7 @@ description: 用 Playwright MCP 安全探索提测后的目标页面与状态，
 # page-map-sync
 
 > 共享契约（通用红线 / Artifact 接力 / progress / 项目约束）见 `artifacts/runtime/common.md`。
+> 编码与技术避坑规则（selector / 等待 / Vue 交互 / 状态持久化 / 截图粒度）另见 `rule.md`，探索前定向检索。
 > 本角色的页面探索驱动固定为 Playwright MCP only；不默认启用 Chrome DevTools MCP。
 
 
@@ -32,6 +33,17 @@ description: 用 Playwright MCP 安全探索提测后的目标页面与状态，
 - 现有 page_map 只读参考。
 - 账号：登录 / 购买 / 订阅 / credits 需要账号时，按需求 / 账号态从 `PROJECT.md`「素材与环境」的账号表选择（不套 `conftest.py` 默认）。
 
+## 账号态与素材规则执行自检（每次探索必做）
+
+- 规则适用性（无豁免，必须执行）：登录 / 扣点 / 权限 / credits / 批量拦截等需要账号态的用例，账号只从 `PROJECT.md`「素材与环境」账号表取值；`conftest.py` 默认仅兜底，不套用。
+  - 会员态 → `450832596@qq.com`；单项购买态 → `03201449879@qq.com`；免费 / 新用户 / 非会员 / 普通登录态 → 随机唯一邮箱现造（示例 `autotest<时间戳>@qq.com`）；未登录 → 匿名会话；验证码一律 `123456`。
+  - 只验证普通登录 / 免费态时不得误用会员或单项购买账号改变 UI 预期（PROJECT.md 红线）。
+- 探索开始前（写 state.md assumptions 时）做账号态计划：扫描 requirement AC 中所有需要登录 / 账号态 / 扣点 / 会员 / 权限 / credits / 批量拦截的条目，逐条标注「所需账号态 → 计划使用账号（或 anonymous）」，计划写入 state.md assumptions 或 evidence 开头。
+- 未完成上述映射前，任何「需要用账号态的用例」不得直接标 gap / skipped。
+- 每条生成 / 账号态证据必须记录**所用账号（邮箱或 anonymous）与环境（测试服 / 预部署）**，写进 evidence 与 sync 覆盖矩阵说明，便于复核“这条是谁跑出来的”。
+- 确实无可用账号态时才标 gap / skipped，并写明「已按 PROJECT.md 账号表核对，仍缺 <具体账号态>」。
+- 环境顺序：测试服优先；仅测试服生成失败才经 DEBUG 面板切预部署并重新登录，切换后不得复用旧登录态。上传只可用 `test_images/` 白名单。
+
 ## 模式判定
 - 新功能：**用例驱动探索**——按 `requirement_draft` 的用例 / AC 逐条在实际页面执行 / 核对，差异记 `gap` / `bug_candidate`，不混 `skipped`；不做脱离用例的全量盲扫。
 - 存量首次探索 / 补资产：以实际页面补齐 page_map / sync。
@@ -55,14 +67,43 @@ description: 用 Playwright MCP 安全探索提测后的目标页面与状态，
 4. 基于 Playwright MCP snapshot 与截图证据收集：顶部按钮 + icon、状态触发按钮、input、表头 / 列表项、三点菜单、Filter、modal / dialog / popover 字段。
 5. 每页面 / 状态生成下一版 yaml；未覆盖项写入覆盖矩阵；新功能写 `requirement_actual_diffs` / `bug_candidates`。
 
+### 提交任务证据记录规则（成功提交后必记 taskId / efMode / styleId）
+- 探索中执行登录后生成/处理类任务（如 Enhance 提交）且**成功提交**后，只需记录该组合的：
+  - `taskId`（必记）：F12 Console `handleSubmitTask result` 对象 `data.taskId`（格式如 `gzy_picenhance_PokeCutWeb_<ts>_<rand>_dev_cross`）；或 `[aigc-task-poll]` 轮询对象 `taskIds[0]`；或纯文本日志 `轮询结果 <taskId>`。
+  - `efMode` / `styleId`（存在则记，缺则不写不伪造）：
+    - legacy picEnhance 链路：取 `handleSubmitTask data.efMode`（如 Normal 2K = `240100021`）；
+    - ComfyUI / aiEnhance 链路：取 `[AIGC 提交][开始提交] styleId`（如 `pkweb_comfyui_enhance_natural`、`pkweb_realesrgan`、`pkweb_chain_comfyui_enhance_ultra`）。
+    - 两者均无时（如部分 2K 非 Ultra 链路 styleId=none），记 `resourceCode` 并在说明标注“efMode 待后端核验”，不额外记其他字段。
+- 每个「模式 × 分辨率」代表组合至少保留 1 次成功提交的 taskId 证据；写入 evidence/*.json 或 sync.md 对应 AC 行，并记入 progress.log，不得只报“提交成功”而无 id。
+
+
 ### 新功能差异对照规则
 - `diff_type`：`covered` / `gap` / `bug_candidate` / `skipped`。
 - `bug_candidate` 阻塞主流程时，`recommended_action=blocked` / `file_bug`，停在 sync gate 等用户决定，不推后续阶段。
 
+### 疑似 Bug 输出模板（bug_candidate 必填）
+- 探索中判定的每个 `bug_candidate`，无论是否阻塞主流程，都必须按统一模板记录并输出：
+  `Bug 标题` + 环境/模块/优先级/前置 + `[步骤]`（编号、可复现）+ `[结果]`（实测现象与证据）+ `[期望]`（需求/AC 预期）+ 结果截图。
+- 截图必须来自本次实测并保存到 `artifacts/<task_id>/shots/`（每 bug 至少 1 张结果截图）；关键数值/状态可用 DOM naturalWidth、控制台 styleId/jobId 等旁证补充在 `[结果]` 或证据说明里。
+- sync.md 的 `bug_candidates` / `requirement_actual_diffs` 中每个 bug_candidate 条目至少含：标题、结论类型、`[步骤]/[结果]/[期望]`、截图路径；对话「探索结果摘要」中每个 bug_candidate 也按此模板完整输出，便于直接转 issue。
+
 ### 按钮探索规则
+
 - 按状态分层清点：默认 / hover / 滚动 / tab / modal / popover / 上传后 / 登录后 / 预部署 / 生成结果后 / 语言切换 / 窄屏。
 - 每按钮记录：可见条件、触发结果、是否可恢复、是否跳过；禁用 / 受约束按钮也要记录前置与原因。
 - 可达且可恢复即纳入，不因藏在 hover / 二级面板 / 状态切换后而漏掉。
+
+## 统计事件需求探索规则（埋点 / GA）
+
+- 触发范围：仅「新功能 / 大改版 / 首次提测」且需求含统计埋点（如 “xx 使用 / 失败 / 下载 上报”）时才做统计事件探索；存量功能首次探索 / 补资产**不做**统计探索，不为无埋点需求的补资产任务做 GA / 埋点核对。
+- 验证口径：F12 Console 搜「统计」即可验证前端埋点（`sendGaEvent <事件名>` 与 `debug 统计：<事件名>` 成对出现），不需要外部报表 / 日志系统；事件名与需求 AC 逐条对照，不因“无报表权限”直接标 skipped。
+- 触发方式：在真实操作后采集 Console（如提交生成任务、下载结果、失败 / 重试等）；登录态与账号按 PROJECT.md / task data 选择，素材只用 test_images/。
+- sync.md 统计结果输出：按用例 / 事件分组用表格列出，列为 `操作 | 实际事件 | 期望事件 | 结论`——
+  - 操作：复现动作（如 Standard 2K × 1K.jpg 提交）；
+  - 实际事件：Console 搜「统计」得到的完整事件名（如 `无限画布页画质增强2K-通用模型使用`）；
+  - 期望事件：需求 AC 文案（x / yy 按实际操作代入）；
+  - 结论：一致 ✅ / 缺失或命名不一致 ⚠️ gap / ❌ bug_candidate（附实际文案）。
+- 回归落点约束：探索到的统计资产（事件名、触发结论）只写入 sync.md / evidence，**不写进最终回归脚本**；test-writing 不把埋点 / GA 验证写成自动化断言，除非用户显式要求。
 
 ## page_map 版本化
 - 读最高版本，生成 `_v<N+1>`；legacy 首版为 `_v2`；禁止覆盖历史。
@@ -78,6 +119,7 @@ description: 用 Playwright MCP 安全探索提测后的目标页面与状态，
 ## sync.md 结构（字段表）
 - frontmatter：`task_id`、`agent`、`status(pending_review|confirmed|failed|blocked)`、`repair_scope(full_exploration|selector_drift)`、`gate_exemption`、`inputs`、`outputs`、`next_agent`、`created_at`。
 - outputs：`scanned_pages`、`page_map_versions`、`coverage_gates`、`state_button_coverage`、`requirement_actual_diffs`、`bug_candidates`、`skipped`、`special_dependencies`、`specs_updated`。
+- `bug_candidates` 每条含 bug 标题、AC/模块、优先级、`[步骤]/[结果]/[期望]`、截图路径（见「疑似 Bug 输出模板」）。
 - 正文：探索摘要、页面覆盖矩阵、需求差异、关键发现、下游注意事项、状态化按钮覆盖摘要、版本差异摘要。
 
 ## Human Gate
