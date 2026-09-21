@@ -1,0 +1,63 @@
+schema_version: "1.0"
+task_id: "<task_id>"
+status: "pending_review"  # pending_review | ready_for_case_design | implementation_ready | blocked
+page_map_ref: "<repo-relative page_map path>"
+sync_ref: "artifacts/<task_id>/sync.md"
+exploration_report_ref: "artifacts/<task_id>/exploration_report.md"
+created_at: "<datetime>"
+updated_at: "<datetime>"
+blocking_items: []
+unresolved_conflicts: []
+contracts:
+  - case_id: "<case_id or provisional coverage id>"
+    source_case: "<cases.md anchor or AC/coverage id>"
+    source_evidence:
+      - "<evidence path>"
+    platform: "<desktop | mobile>"
+    viewport: "<viewport / device profile>"
+    environment: "<test | predeploy>"
+    account:
+      state: "<anonymous | free_zero_credit | member | ...>"
+      isolation: "<shared | new_account_per_case | fresh_context>"
+      reuse_allowed: false
+      reset_strategy: "<how to reset credits / entitlement / session>"
+    data:
+      assets:
+        - "test_images/<file>"
+      values: {}
+    entry:
+      url: "<url or path>"
+      flow: []
+    state_chain:
+      - state: "<page_map state>"
+        ready_when:
+          - "<observable predicate>"
+        exit_when:
+          - "<observable predicate>"
+    actions:
+      - action_id: "<id>"
+        button_ref: "states.<state>.buttons.<button_id>"
+        action: "<click | fill | upload | touch | dispatch>"
+        value: null
+        driver: "<playwright | touch | dispatchEvent | other>"
+        ready_when:
+          - "<observable predicate>"
+        result:
+          - "<state / DOM / URL / event result>"
+        fallback: null
+    event_capture:
+      enabled: true
+      reset_before_action: true
+      start_after: "<action_id>"
+      stop_after:
+        - "<state / callback / event>"
+      expected:
+        - event: "<event name>"
+          send_count: 1
+          debug_count: 1
+    evidence:
+      screenshots: []
+      console: []
+      dom: []
+    implementation_status: "ready"  # ready | pending | blocked
+

@@ -1,0 +1,54 @@
+page: Car Photo Editor
+url: /tools/car-photo-editor
+landmark:
+  selector: input[type=file]
+  description: SEO 首屏主上传区域；实际点击目标见 elements.main_upload_trigger。
+entry:
+  from: 直接访问 /tools/car-photo-editor
+  trigger: 等待 CSR 渲染完成后，在上传区域执行主上传操作。
+  selector: button.seo-first-screen-upload-button
+elements:
+  main_upload_area:
+    selector: button.seo-first-screen-upload-button
+    description: 登录后可见的 SEO 首屏上传区域。
+  main_upload_trigger:
+    selector: button.seo-first-screen-upload-button
+    role_or_text: Upload Image
+    description: 本次实际执行的主上传入口。
+  file_input:
+    selector: input[type=file]
+    description: 上传区域关联的文件输入；实际 selector 以落地页为准。
+tabs: {}
+modals: {}
+states:
+  landing:
+    description: Powerful & Easy Car Photo Editor Online for Free | Pokecut 的 SEO 落地页初始态。
+    trigger: 导航到目标 URL 并完成登录。
+    url_or_state_key: http://10.17.1.66:3001/tools/car-photo-editor
+    buttons:
+      main_upload:
+        selector: button.seo-first-screen-upload-button
+        role_or_text: Upload Image
+        visible_condition: SEO 首屏上传区域完成渲染。
+        enabled_condition: 已登录且页面可交互。
+        action_result: 点击后经 file chooser 上传 test_images/1K.jpg；右侧自动展开 AI Background，含 Recommended / Customize AI Background
+          与场景卡片
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - 会员账号 450832596@qq.com
+        - test_images/1K.jpg
+        - 测试服
+        assertions_hint: 上传后 URL=http://10.17.1.66:3001/agent?pid=<uuid>#；默认面板/状态=AI Background。
+        notes: 证据：artifacts/2026-09-14_seo_main_upload_interactions/shots/tools__car_photo_editor_after_upload.png；Playwright
+          MCP 实际点击主上传入口。
+  after_upload:
+    description: 上传后稳定态：agent_canvas，自动面板=AI Background。
+    trigger: 主上传按钮 + test_images/1K.jpg
+    url_or_state_key: http://10.17.1.66:3001/agent?pid=<uuid>#
+    buttons: {}
+notes:
+- 任务来源：2026-09-14_seo_main_upload_interactions；驱动：Playwright MCP (@playwright/mcp 0.0.79)。
+- 范围只覆盖 SEO 页主上传按钮与上传后首个稳定状态；未展开调参面板内部控件。
+- 默认面板：AI Background。右侧自动展开 AI Background，含 Recommended / Customize AI Background 与场景卡片
+- 证据截图：artifacts/2026-09-14_seo_main_upload_interactions/shots/tools__car_photo_editor_after_upload.png。

@@ -1,0 +1,123 @@
+module:
+  name: seo-landing
+  display_name: SEO 落地页
+knowledge_slices:
+- schema_version: '1.0'
+  knowledge_id: KB-ENTRY-0001
+  knowledge_type: legacy_entry
+  title: SEO 落地页主上传入口使用稳定选择器
+  subject_key: seo_landing.main_upload_entry
+  status: active
+  priority: P1
+  confidence: high
+  summary: SEO 落地页主上传入口优先使用模板级稳定选择器，不依赖 CTA 文案。
+  rule:
+    given:
+    - 用户进入 SEO 落地页
+    when:
+    - 用户需要从首屏开始上传图片
+    then:
+    - 优先定位模板级主上传入口
+    - 上传入口应能触发文件选择器
+    exceptions:
+    - 稳定入口不存在时，按对应 page_map 的 upload_selector / fallback_selector 处理
+  entry_points:
+  - id: main_upload
+    state: landing_initial
+    usable: true
+    selector_authority: current_versioned_page_map
+    page_map_refs:
+    - page_map/pokecut/seo_upload/
+    - page_map/pokecut/seo_upload_mobile/
+  source_refs:
+  - ref: artifacts/2026-09-15_seo_main_upload_mobile_interactions
+    type: stable_asset
+    note: selector 扫描和回归证据
+  retrieval_tags:
+    module:
+    - seo-landing
+    page:
+    - landing
+    entry:
+    - upload
+    - main_upload
+    - first_screen
+    state:
+    - initial
+    action:
+    - upload
+    - file_chooser
+    account:
+    - anonymous
+    error:
+    - entry_not_mounted
+    - timeout
+    platform:
+    - desktop
+    - mobile
+  created_at: '2026-09-21T00:00:00+08:00'
+  updated_at: '2026-09-21T00:00:00+08:00'
+  source_of_truth: knowledge
+  evidence:
+  - kind: stable_asset
+    ref: artifacts/2026-09-15_seo_main_upload_mobile_interactions
+    verified_at: '2026-09-21'
+    result: confirmed
+  last_verified_at: '2026-09-21'
+- schema_version: '1.0'
+  knowledge_id: KB-PITFALL-0005
+  knowledge_type: historical_pitfall
+  title: 网关 502/504 或入口未挂载先同 URL 重试一次
+  subject_key: seo_landing.gateway_502_entry_not_mounted.retry_once
+  status: active
+  priority: P1
+  confidence: high
+  summary: 落地页返回 502/504 或主入口短时间未挂载时，先同一 URL 重试一次，不能立即判定为业务断言失败。
+  rule:
+    given:
+    - 页面返回 502/504
+    - 主上传入口在等待窗口内未挂载
+    when:
+    - 准备将其判定为断言失败
+    then:
+    - 同一 URL 重试一次
+    exceptions:
+    - 重试成功时记录环境偶发，不修改业务断言
+    - 重试仍失败时记录 blocked 或 bug_candidate
+  source_refs:
+  - ref: artifacts/2026-09-15_seo_main_upload_mobile_interactions
+    type: stable_asset
+    note: 历史验证
+  retrieval_tags:
+    module:
+    - seo-landing
+    page:
+    - landing
+    entry:
+    - upload
+    state:
+    - initial
+    action:
+    - load
+    - retry
+    account:
+    - anonymous
+    error:
+    - '502'
+    - '504'
+    - 网关
+    - 入口未挂载
+    - entry_not_mounted
+    - timeout
+    platform:
+    - desktop
+    - mobile
+  created_at: '2026-09-21T00:00:00+08:00'
+  updated_at: '2026-09-21T00:00:00+08:00'
+  source_of_truth: knowledge
+  evidence:
+  - kind: stable_asset
+    ref: artifacts/2026-09-15_seo_main_upload_mobile_interactions
+    verified_at: '2026-09-21'
+    result: confirmed
+  last_verified_at: '2026-09-21'

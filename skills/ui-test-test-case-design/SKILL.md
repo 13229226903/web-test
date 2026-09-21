@@ -21,7 +21,7 @@ description: 解析 PRD/需求生成 requirement_draft，或基于 confirmed syn
 ## 输入
 - 需求内容 / PRD 版本或追溯标识（缺失标 `PRD 版本未提供`）、task 范围。
 - `requirement_draft`：不依赖 sync；只读 PRD。
-- `final_after_sync`：必读 confirmed sync + page_map + PRD，处理 `requirement_actual_diffs` / `bug_candidates`。
+- `final_after_sync`：必读 confirmed sync + page_map + PRD + `automation_handoff.yaml`，处理 `requirement_actual_diffs` / `bug_candidates`。
 
 ## phase 规则（新功能两段式）
 - `requirement_draft`：PRD 是正确答案，输出需求理解、AC 映射、测试点初稿、预计状态、待提测清单；允许 `page_ref: TBD`；默认 completed；❌ 不允许进入 test-writing。
@@ -51,8 +51,9 @@ description: 解析 PRD/需求生成 requirement_draft，或基于 confirmed syn
 ## 用例要求
 - 每条用例可直接翻译为 Playwright：进入方式、操作（page_ref + 实际值 + 文件名）、等待、断言、截图点。
 - 图片上传写 `test_images/` 具体文件名；人脸数量 / 分辨率边界不写“上传图片”。
-- final 可自动化测试点必须关联 page_map 元素 / buttons；文案以需求为正确答案，页面不符记 bug_candidate。
-- 购买 / 订阅 / credits 用例记录测试账号、环境、消耗与回滚需求。
+- final 可自动化测试点必须关联 page_map 元素 / buttons 和 `automation_handoff.yaml` 的 `execution_contract_ref`；文案以需求为正确答案，页面不符记 bug_candidate。
+- 购买 / 订阅 / credits 用例记录测试账号、环境、消耗、隔离 / reset 策略与回滚需求。
+- 不得用“承接上一用例”“打开弹窗”“等待成功”等模糊步骤替代状态链；每一步必须能映射到 `button_ref`、实际值、ready_when 和 action_result。
 
 ## page_ref 规则
 - `requirement_draft` 允许 `page_ref: TBD` / 预计位置；`final_after_sync` 必须替换为真实版本化 page_ref。
@@ -63,7 +64,7 @@ description: 解析 PRD/需求生成 requirement_draft，或基于 confirmed syn
 - 参数 ID 必须同时出现在 cases.md、Allure 标题与 pytest collect-only 输出。
 
 ## cases.md 结构（字段表）
-- frontmatter：`task_id`、`agent`、`phase(requirement_draft|final_after_sync)`、`status(completed|pending_review|confirmed)`、`inputs`、`outputs(case_count, priority_breakdown)`、`next_agent`、`created_at`、`updated_at`。
+- frontmatter：`task_id`、`agent`、`phase(requirement_draft|final_after_sync)`、`status(completed|pending_review|confirmed)`、`inputs`、`outputs(case_count, priority_breakdown)`、`page_map_version`、`automation_handoff`、`next_agent`、`created_at`、`updated_at`。
 - 正文按 Layer 分节输出（直观版）：
   - `## 需求理解`
   - `## L1 页面元素 / 结构（regression）`
@@ -81,6 +82,19 @@ description: 解析 PRD/需求生成 requirement_draft，或基于 confirmed syn
 - L4 为 AC 映射表：`AC | 摘要 | 覆盖用例 | 期望/缺口`。
 - 各节 ID 前缀统一；L5 参数化标题显示实际值，禁止 `[None]`/`[最小值]` 无值 ID。
 
+## 自动化交接要求
+
+- `final_after_sync` 产出的每条可自动化用例必须填 `execution_contract_ref`，指向 `automation_handoff.yaml#<case_id>`。
+- cases 的 `page_map_version` 必须与 handoff、sync 当前输入一致；任何 page_map / sync / cases 修订都必须使 handoff 回退为 `ready_for_case_design`，重新确认后才能写代码。
+- 合并多个统计事件或等价路径时，必须保留每个动作的独立 `state_chain`、`event_capture` 和截图 / Console 证据；不能只在一行写“同链路合并”。
+- 用例确认前运行：
+
+```powershell
+python scripts/validate_automation_handoff.py --handoff artifacts/<task_id>/evidence/automation_handoff.yaml --sync artifacts/<task_id>/sync.md --cases artifacts/<task_id>/cases.md
+```
+
+校验失败时退回 page-map-sync 或本角色，不得让 test-writing 自行补缺失的业务事实。
+
 ## Human Gate
 - `requirement_draft` 默认 completed（除非用户要先审）；`final_after_sync` 必须 pending_review，用户确认后 confirmed。
 - 只有 `phase=final_after_sync` 且 confirmed 后，orchestrator 才接力 test-writing。
@@ -97,7 +111,7 @@ description: 解析 PRD/需求生成 requirement_draft，或基于 confirmed syn
 - 禁止反复重写 cases.md 绕过 pending_review；未确认不得进入 test-writing。
 
 ## progress
-- start / step:loaded <file> / step:prd_parsed / step:designed N cases / gate:cases_review / done:cases.md
+- start / step:loaded <file> / step:prd_parsed / step:loaded automation_handoff / step:designed N cases / gate:cases_review / done:cases.md+handoff_checked
 
 ## 上下游
 - 上游：orchestrator（draft 不要求 sync；final 要求 sync confirmed）。
@@ -109,3 +123,11 @@ description: 解析 PRD/需求生成 requirement_draft，或基于 confirmed syn
 - 期望可断言，避免“正常显示”类模糊词。
 - 上传 / 生成 / credits 用例写明登录、环境顺序、数据与授权要求。
 - AI 审查列为“是”时写明确视觉判断目标；Allure 用中文标题 / 描述 / 步骤并标注 Layer。
+
+## 业务知识库使用
+
+- `requirement_draft` 可读取前置 `knowledge_context` 补全 PRD 未说明的旧入口、历史规则、账号态和校验，但必须标为 `legacy_candidate` / `needs_verification`，不得伪装成新的 PRD AC。
+- `final_after_sync` 只消费与 confirmed `sync.md`、versioned `page_map` 一致的知识；知识库命中须映射到真实 `page_ref` 或当前任务证据。
+- 每条由历史业务规则驱动的用例，至少追溯到 `knowledge_id`、confirmed `sync.md` / `page_map` 或用户明确需求之一。
+- 知识库与 PRD / 页面冲突时，保留新需求预期和页面实际差异，标记 `gap` / `bug_candidate`，不得用历史知识抹平冲突。
+- 发现新的可复用业务经验时只提交 `knowledge_candidate`，不直接修改知识库 active 切片。

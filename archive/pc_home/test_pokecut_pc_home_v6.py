@@ -17,18 +17,16 @@ import yaml
 from playwright.sync_api import Page, expect, TimeoutError as PlaywrightTimeoutError
 
 
-DATA_FILE = Path(__file__).resolve().parent.parent / "data" / "pokecut_pc_home_v6.yaml"
-
-
-def _repo_root():
-    """归档副本位于 archive/<dir>/，需按 test_images/ 上溯仓库根（原 parents[1] 解析到 archive/ 会找不到素材）。"""
+def _repo_root() -> Path:
+    """归档副本位于 archive/<dir>/，需按 test_images/ + data/ 上溯仓库根。"""
     here = Path(__file__).resolve()
     for c in [here.parent, *here.parents]:
-        if (c / "test_images").is_dir():
+        if (c / "test_images").is_dir() and (c / "data").is_dir():
             return c
     return Path(__file__).resolve().parent.parent
 
 
+DATA_FILE = _repo_root() / "data" / "pokecut_pc_home_v6.yaml"
 TEST_IMAGE = _repo_root() / "test_images" / "1K.jpg"
 
 

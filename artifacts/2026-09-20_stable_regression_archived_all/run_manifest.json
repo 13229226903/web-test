@@ -1,0 +1,101 @@
+[
+  {
+    "feature": "人像检测三入口页（Ethnicity / Body Shape / Face Comparison）",
+    "url": "http://10.17.1.66:3001/tools/ethnicity-guesser-ai 、/tools/body-shape-detector 、/tools/face-comparison",
+    "task_id": "2026-08-28_pokecut_portrait_detector_interactions",
+    "tests": "tests/test_pokecut_portrait_detector.py",
+    "archive": "archive/portrait_detector/test_pokecut_portrait_detector.py",
+    "exists": true,
+    "line": 33
+  },
+  {
+    "feature": "文字画质增强实验页（AI Image Text Enhancer）",
+    "url": "http://10.17.1.66:3001/tools/ai-image-text-enhancer",
+    "task_id": "2026-08-29_pokecut_ai_image_text_enhancer",
+    "tests": "tests/test_ai_image_text_enhancer_experiment.py",
+    "archive": "archive/tool_pages/test_ai_image_text_enhancer_experiment.py",
+    "exists": true,
+    "line": 34
+  },
+  {
+    "feature": "画布页文字功能",
+    "url": "http://10.17.1.66:3001/create → /agent?pid=<uuid>",
+    "task_id": "2026-08-30_pokecut_canvas_text_layer",
+    "tests": "tests/test_infinite_canvas_text_layer_v2.py",
+    "archive": "archive/infinite_canvas/test_infinite_canvas_text_layer_v2.py",
+    "exists": true,
+    "line": 35
+  },
+  {
+    "feature": "Pokecut 移动端首页优化（Mobile Home v3）",
+    "url": "http://10.17.1.66:3001/ （移动端 390x844）",
+    "task_id": "task-22_feishu_mobile_home",
+    "tests": "tests/test_mobile_home.py",
+    "archive": "archive/mobile_home/test_mobile_home.py",
+    "exists": true,
+    "line": 36
+  },
+  {
+    "feature": "帮助中心（/help）",
+    "url": "http://10.17.1.66:3001/help",
+    "task_id": "2026-08-31_pokecut_help_center",
+    "tests": "tests/test_help_page.py",
+    "archive": "archive/help_center/test_help_page.py",
+    "exists": true,
+    "line": 37
+  },
+  {
+    "feature": "旧画布 Insert 面板与图层属性（legacy canvas）",
+    "url": "http://10.17.1.66:3001/template → /create/edit?pid=<uuid>#",
+    "task_id": "2026-09-10_old_canvas_insert_panel_exploration",
+    "tests": "tests/test_old_canvas_insert_panel_v3.py",
+    "archive": "archive/infinite_canvas_insert_panel/test_old_canvas_insert_panel_v3.py",
+    "exists": true,
+    "line": 41
+  },
+  {
+    "feature": "旧画布文字功能（Text 面板 + 文字图层参数）",
+    "url": "http://10.17.1.66:3001/template → /create/edit?pid=<uuid>#",
+    "task_id": "2026-09-11_old_canvas_text_panel_exploration",
+    "tests": "tests/test_old_canvas_text_panel_v1.py",
+    "archive": "archive/infinite_canvas_text_panel/test_old_canvas_text_panel_v1.py",
+    "exists": true,
+    "line": 42
+  },
+  {
+    "feature": "旧画布贴纸调参面板（legacy canvas，一个贴纸）",
+    "url": "http://10.17.1.66:3001/zh/template → /zh/create/edit?pid=<uuid>#",
+    "task_id": "2026-09-11_old_canvas_sticker_panel_exploration",
+    "tests": "tests/test_old_canvas_sticker_panel_v1.py",
+    "archive": "archive/infinite_canvas_sticker_panel/test_old_canvas_sticker_panel_v1.py",
+    "exists": true,
+    "line": 43
+  },
+  {
+    "feature": "SEO 页面主上传按钮交互（24 个唯一 SEO 页面）",
+    "url": "http://10.17.1.66:3001 + 24 条 SEO 路径（含 /de、/zh-tw、/th 语言入口）",
+    "task_id": "2026-09-14_seo_main_upload_interactions",
+    "tests": "tests/test_seo_main_upload_interactions_v1.py",
+    "archive": "archive/seo_upload_interactions/test_seo_main_upload_interactions_v1.py",
+    "exists": true,
+    "line": 45
+  },
+  {
+    "feature": "SEO 页面主上传按钮交互（24 个唯一 SEO 页面）· 移动端",
+    "url": "http://10.17.1.66:3001 + 24 条 SEO 路径（含 /de、/zh-tw、/th 语言入口）",
+    "task_id": "2026-09-15_seo_main_upload_mobile_interactions",
+    "tests": "tests/mobile/test_seo_main_upload_mobile_v1.py",
+    "archive": "archive/seo_upload_mobile/test_seo_main_upload_mobile_v1.py",
+    "exists": true,
+    "line": 46
+  },
+  {
+    "feature": "Create / Chat to Edit / Auto 意图识别（10 条 prompt）",
+    "url": "http://10.17.1.66:3001/create → /agent?pid=<uuid>",
+    "task_id": "2026-09-17_create_auto_intent_recognition",
+    "tests": "tests/test_create_chat_to_edit_auto_v1.py",
+    "archive": "archive/create_auto_intent_recognition/test_create_chat_to_edit_auto_v1.py",
+    "exists": true,
+    "line": 47
+  }
+]

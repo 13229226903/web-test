@@ -1,0 +1,89 @@
+schema_version: "1.0"
+name: "project-business-knowledge-slice"
+required_fields:
+  - schema_version
+  - knowledge_id
+  - knowledge_type
+  - title
+  - subject_key
+  - status
+  - priority
+  - confidence
+  - summary
+  - rule
+  - source_of_truth
+  - source_refs
+  - evidence
+  - retrieval_tags
+  - last_verified_at
+  - created_at
+  - updated_at
+
+enums:
+  knowledge_type:
+    - business_rule
+    - legacy_entry
+    - state_transition
+    - validation_rule
+    - permission_rule
+    - data_constraint
+    - historical_pitfall
+    - environment_behavior
+    - ui_residue
+    - technical_test_rule
+  status:
+    - active
+    - needs_verification
+    - conflict
+    - superseded
+    - retired
+    - ui_residue
+  priority:
+    - P0
+    - P1
+    - P2
+    - P3
+  confidence:
+    - high
+    - medium
+    - low
+
+rule_shape:
+  required:
+    - given
+    - when
+    - then
+  optional:
+    - exceptions
+
+source_ref_shape:
+  required:
+    - ref
+  optional:
+    - type
+    - note
+
+evidence_shape:
+  required:
+    - kind
+    - ref
+    - verified_at
+    - result
+
+source_of_truth:
+  allowed_examples:
+    - "knowledge"
+    - "PROJECT.md"
+    - "rule.md"
+    - "page_map"
+    - "artifacts"
+
+privacy:
+  forbidden_key_fragments:
+    - password
+    - cookie
+    - token
+    - secret
+    - api_key
+    - access_key
+    - verification_code

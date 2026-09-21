@@ -7,12 +7,24 @@
 - @allure.title = L{N}-{NNN}: 用例中文标题
 - 步骤用 allure.step 包裹，截图在对应步骤内。
 """
+import re
+
 import pytest
 import allure
 from pathlib import Path
 from playwright.sync_api import Page, expect
 
-TEST_IMAGES = Path(__file__).resolve().parent.parent / "test_images"
+
+def _repo_root() -> Path:
+    """按 test_images/ 上溯仓库根：兼容 tests/ 与 archive/<模块>/ 两种存放位置。"""
+    here = Path(__file__).resolve()
+    for c in [here.parent, *here.parents]:
+        if (c / "test_images").is_dir():
+            return c
+    return Path(__file__).resolve().parent.parent
+
+
+TEST_IMAGES = _repo_root() / "test_images"
 IMG_VALID = str(TEST_IMAGES / "有人脸.JPG")
 IMG_DAMAGED = str(TEST_IMAGES / "损坏的图.png")
 BASE_PATH = "/"
@@ -51,6 +63,11 @@ ACCOUNT_EMAIL = "450832596@qq.com"
 ACCOUNT_CODE = "123456"
 MODEL_NAMES = ["Auto", "Nano Banana 2 Lite", "Nano Banana 2", "Nano Banana Pro", "Seedream 5.0 Pro",
                "Seedream 5.0 Lite", "Seedream4.0", "Pokecut Pro", "Pokecut Basic", "ChatGPT Image 2.0"]
+DEFAULT_MODEL = "Nano Banana 2 Lite"
+# 2026-09-21 复探：比例列表随模型变化，当前默认模型 Nano Banana 2 Lite 的实际比例以页面为准。
+RATIO_OPTIONS_BY_MODEL = {
+    DEFAULT_MODEL: ["1:1", "3:4", "4:5", "4:3", "9:16", "16:9", "2:3", "3:2"],
+}
 
 
 def login_vip(page: Page, base_url: str) -> None:
@@ -146,8 +163,8 @@ class TestL1PageStructure:
             expect(page.get_by_role("button", name="Start Creating for Free")).to_be_visible()
             ph = page.locator("textarea[aria-label]").first.get_attribute("placeholder")
             assert ph and ph.startswith("Start with Pokecut's free AI image generation")
-            # 2026-09-14 漂移修正：默认模型由 Pokecut Pro 变为 Auto（page_map mobile_home_v2）
-            expect(page.locator("section.mobile-home-agent-hero button").filter(has_text="Auto")).to_be_visible()
+            # 2026-09-21 漂移修正：默认模型实际为 Nano Banana 2 Lite（page_map mobile_home_v3）
+            expect(page.locator("section.mobile-home-agent-hero button").filter(has_text=DEFAULT_MODEL)).to_be_visible()
             gen = page.locator("section.mobile-home-agent-hero button", has_text="Generate").first
             expect(gen).to_be_disabled()
         shot(page, "L1-002_首屏文案控件")
@@ -193,13 +210,13 @@ class TestL2Interactions:
     @allure.title("L2-003: 模型入口展开模型列表")
     @allure.severity(allure.severity_level.NORMAL)
     def test_l2_003_model_popover(self, mobile_page: Page, base_url: str):
-        """覆盖层级: Layer 2 — 交互行为；步骤: 打开首页 -> 点击模型入口（当前默认 Auto）；预期: 模型选项齐全"""
+        """覆盖层级: Layer 2 — 交互行为；步骤: 打开首页 -> 点击模型入口（当前默认 Nano Banana 2 Lite）；预期: 模型选项齐全"""
         page = mobile_page
         with allure.step("导航到目标页面"):
             goto_home(page, base_url)
         with allure.step("执行操作"):
-            # 2026-09-14 漂移修正：点击模型入口（当前默认文案 Auto），弹层选项断言保持不变
-            page.locator("section.mobile-home-agent-hero button").filter(has_text="Auto").first.click()
+            # 2026-09-21 漂移修正：点击实际默认模型入口 Nano Banana 2 Lite，弹层选项断言保持不变
+            page.locator("section.mobile-home-agent-hero button").filter(has_text=DEFAULT_MODEL).first.click()
             page.wait_for_timeout(1200)
             body = page.inner_text("body")
             for opt in ["ChatGPT Image 2.0", "Nano Banana", "Nano Banana 2", "Seedream4.0"]:
@@ -211,17 +228,26 @@ class TestL2Interactions:
     @allure.title("L2-004: 比例入口展开比例列表")
     @allure.severity(allure.severity_level.NORMAL)
     def test_l2_004_ratio_popover(self, mobile_page: Page, base_url: str):
-        """覆盖层级: Layer 2 — 交互行为；步骤: 打开首页 -> 点击比例入口；预期: 8 档比例"""
+        """覆盖层级: Layer 2 — 交互行为；步骤: 打开首页 -> 点击比例入口；预期: 当前默认模型对应比例齐全"""
         page = mobile_page
         with allure.step("导航到目标页面"):
             goto_home(page, base_url)
         with allure.step("执行操作"):
+            # 2026-09-21 漂移修正：比例项随模型变化；当前默认模型 Nano Banana 2 Lite 的实际列表为 8 项。
+            expect(page.locator("section.mobile-home-agent-hero button").filter(has_text=DEFAULT_MODEL)).to_be_visible()
             ratio = page.locator("section.mobile-home-agent-hero button:not([aria-label])[class*='size-[2.625rem]']").first
             ratio.click()
             page.wait_for_timeout(1200)
-            body = page.inner_text("body")
-            for opt in ["16:9", "1:1", "2:3", "9:16", "9:21"]:
-                assert opt in body, f"缺少比例选项: {opt}"
+            actual_ratios = []
+            for idx in range(page.locator("button").count()):
+                button = page.locator("button").nth(idx)
+                text = (button.inner_text() or "").strip()
+                if re.fullmatch(r"\d+:\d+", text) and button.is_visible():
+                    actual_ratios.append(text)
+            expected_ratios = RATIO_OPTIONS_BY_MODEL[DEFAULT_MODEL]
+            assert actual_ratios == expected_ratios, (
+                f"{DEFAULT_MODEL} 比例列表应为 {expected_ratios}，实际为 {actual_ratios}"
+            )
         shot(page, "L2-004_比例弹层")
 
     @pytest.mark.no_login
@@ -326,13 +352,13 @@ class TestL2Interactions:
         with allure.step("导航到目标页面"):
             goto_home(page, base_url)
         with allure.step("执行操作"):
-            # 2026-09-14 漂移修正：原 "Butt" 模板入口不存在，改用实测可上传进画布的 Slim 模板卡。
-            # 卡片缩略图 img 为叠加层（class 含 invisible），需 force 点击才触发文件选择器（MCP 实测路径）。
-            trigger = page.locator("img[alt='Slim']").first
+            # 2026-09-21 漂移修正：Slim 卡片实际为 div[role=button][aria-label=Slim]；
+            # 卡片图片 alt 为描述性文案，不能继续用 img[alt=Slim] 定位。
+            trigger = page.locator("div[role='button'][aria-label='Slim']").first
             trigger.scroll_into_view_if_needed()
             page.wait_for_timeout(300)
             with page.expect_file_chooser(timeout=10000) as chooser_info:
-                trigger.click(force=True)
+                trigger.click()
             chooser_info.value.set_files(IMG_VALID)
             page.wait_for_timeout(300)
             page.wait_for_timeout(6000)
@@ -504,14 +530,14 @@ class TestL2Interactions:
                 else:
                     assert "/create/edit?pid=" in page.url
                     if item == "Generate":
-                        # 2026-09-15 复探：生图面板应默认选中 Auto（实测当前为 Nano Banana 2 Lite）
+                        # 2026-09-21 复探：生图面板实际默认模型为 Nano Banana 2 Lite（以 page_map mobile_home_v3 为准）
                         actual_model = None
                         for idx in range(page.locator("button").count()):
                             text = (page.locator("button").nth(idx).inner_text() or "").strip()
                             if text in MODEL_NAMES:
                                 actual_model = text
                                 break
-                        assert actual_model == "Auto", f"生图面板默认模型应为 Auto，实际为 {actual_model}"
+                        assert actual_model == DEFAULT_MODEL, f"生图面板默认模型应为 {DEFAULT_MODEL}，实际为 {actual_model}"
         shot(page, f"L2-020_{item}")
 
 

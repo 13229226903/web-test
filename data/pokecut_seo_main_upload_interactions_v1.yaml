@@ -1,0 +1,522 @@
+version: 1
+task_id: 2026-09-14_seo_main_upload_interactions
+account:
+  email: 450832596@qq.com
+  code: '123456'
+  state: VIP
+image: test_images/1K.jpg
+cases:
+- id: L2-001
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/hd-pic-converter 上传 1K.jpg 后到达 Enhance 配置面板
+  page_path: /tools/hd-pic-converter
+  page_map: page_map/pokecut/seo_upload/tools__hd_pic_converter_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: pk_upload_area2
+  main_selector: div.pk-upload-area2 p:text-is("Upload Image")
+  guide_selector: null
+  expected_kind: same_url
+  expected_url: /tools/hd-pic-converter
+  required_keywords:
+  - Choose a model that suits your image
+  - Upscale to
+  - Enhance
+  processing_text_gone: null
+  timeout_ms: 60000
+  assert_no_right_panel: false
+  screenshot: L2-001_final.png
+  expected_panel: Enhance 配置面板
+- id: L2-002
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/change-passport-to-blue-background 上传 1K.jpg 后到达 Background 且自动应用蓝色背景
+  page_path: /tools/change-passport-to-blue-background
+  page_map: page_map/pokecut/seo_upload/tools__change_passport_to_blue_background_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=49f5bd4d-e4ea-4bfa-8160-cec80cb68df8#
+  required_keywords:
+  - Background
+  - Colors
+  - Confirm
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  assert_blue_background: true
+  screenshot: L2-002_final.png
+  expected_panel: Background（蓝色背景已应用）
+- id: L2-003
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/landscape-to-portrait-converter 上传 1K.jpg 后到达 AI Extend
+  page_path: /tools/landscape-to-portrait-converter
+  page_map: page_map/pokecut/seo_upload/tools__landscape_to_portrait_converter_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=1b53004a-ffe3-4f17-9e4f-c5e2cf9b25fb#
+  required_keywords:
+  - AI Extend
+  - Customize
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-003_final.png
+  expected_panel: AI Extend
+- id: L2-004
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/watermark-remover 上传 1K.jpg 后到达 Erase
+  page_path: /tools/watermark-remover
+  page_map: page_map/pokecut/seo_upload/tools__watermark_remover_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=c810e731-cf74-4730-8cf6-24a393d47bde#
+  required_keywords:
+  - Erase
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-004_final.png
+  expected_panel: Erase
+- id: L2-005
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/cv-photo-editor 上传 1K.jpg 后到达 Photo Size
+  page_path: /tools/cv-photo-editor
+  page_map: page_map/pokecut/seo_upload/tools__cv_photo_editor_v1.yaml
+  state_ref: states.guide_upload.buttons.guide_upload
+  upload_mode: cv_guide
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: p:text-is("Upload Image")
+  expected_kind: id_photo
+  expected_url: http://10.17.1.66:3001/tools/id-photo-edit?pid=7c984cd9-cd51-4faa-8888-d442a4ed1020#
+  required_keywords:
+  - Photo Size
+  - United States Passport
+  - 1200*1200
+  - 2inch*2inch
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-005_final.png
+  expected_panel: Photo Size
+- id: L2-006
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/add-motion-blur-effect-to-photo 上传 1K.jpg 后到达 Motion Blur
+  page_path: /tools/add-motion-blur-effect-to-photo
+  page_map: page_map/pokecut/seo_upload/tools__add_motion_blur_effect_to_photo_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=47299ea5-2438-49af-b7ef-919fd736ccc2#
+  required_keywords:
+  - Motion
+  - Angle
+  - Confirm
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-006_final.png
+  expected_panel: Motion Blur
+- id: L2-007
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/ai-beard-remover 上传 1K.jpg 后到达 AI Enhancer
+  page_path: /tools/ai-beard-remover
+  page_map: page_map/pokecut/seo_upload/tools__ai_beard_remover_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=b351aba0-f5d0-4213-bb15-860f32c3b5c2#
+  required_keywords:
+  - Manual Mode
+  - Smart Auto Mode
+  - No Beard
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-007_final.png
+  expected_panel: Enhance (Manual Mode / Smart Auto Mode)
+- id: L2-008
+  layer: L2
+  priority: P1
+  execution: full
+  title: /ai-replace/ai-clothes-changer 上传 1K.jpg 后到达 AI Clothes Changer
+  page_path: /ai-replace/ai-clothes-changer
+  page_map: page_map/pokecut/seo_upload/ai_replace__ai_clothes_changer_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=293902c6-ac02-4591-9b3c-9f223b63ce27#
+  required_keywords:
+  - AI Clothes Changer
+  - Generate
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-008_final.png
+  expected_panel: AI Clothes Changer
+- id: L2-009
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/relight-photo 上传 1K.jpg 后到达 AI Enhancer
+  page_path: /tools/relight-photo
+  page_map: page_map/pokecut/seo_upload/tools__relight_photo_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=cdbeb961-bd94-4818-90ce-4b9ebf53e60b#
+  required_keywords:
+  - AI Enhancer
+  - Ultra HD Mode
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-009_final.png
+  expected_panel: AI Enhancer
+- id: L2-010
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/photo-restoration 上传 1K.jpg 后到达 AI Enhancer / Old Photo Mode
+  page_path: /tools/photo-restoration
+  page_map: page_map/pokecut/seo_upload/tools__photo_restoration_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: generic_visible_button
+  main_selector: role=button[name='Upload Image']
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=00182e59-b221-40ca-94d2-08b9ec5f6b5d#
+  required_keywords:
+  - AI Enhancer
+  - Old Photo Mode
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-010_final.png
+  expected_panel: AI Enhancer / Old Photo Mode
+- id: L2-011
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/zoom-in-photos 上传 1K.jpg 后到达放大结果态
+  page_path: /tools/zoom-in-photos
+  page_map: page_map/pokecut/seo_upload/tools__zoom_in_photos_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: same_url
+  expected_url: /tools/zoom-in-photos
+  required_keywords:
+  - Before
+  - After
+  - Download HD
+  processing_text_gone: null
+  timeout_ms: 240000
+  assert_no_right_panel: false
+  screenshot: L2-011_final.png
+  expected_panel: 放大结果态（Before/After + Download HD）
+- id: L2-012
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/monogram-maker 上传 1K.jpg 后到达 Text / Basic
+  page_path: /tools/monogram-maker
+  page_map: page_map/pokecut/seo_upload/tools__monogram_maker_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=beef3395-5bf7-4f77-a798-323fd2d4d5cd#
+  required_keywords:
+  - Basic
+  - Alignment
+  - Font
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-012_final.png
+  expected_panel: Text / Basic
+- id: L2-013
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/photo-background-editor 上传 1K.jpg 后到达 Background
+  page_path: /tools/photo-background-editor
+  page_map: page_map/pokecut/seo_upload/tools__photo_background_editor_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=27fe0430-ffb8-4b0a-ae69-38eb0630aca6#
+  required_keywords:
+  - Background
+  - Colors
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-013_final.png
+  expected_panel: Background
+- id: L2-014
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/phone-wallpaper-maker 上传 1K.jpg 后到达 Template（编辑器加载完成态）
+  page_path: /tools/phone-wallpaper-maker
+  page_map: page_map/pokecut/seo_upload/tools__phone_wallpaper_maker_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: legacy
+  expected_url: http://10.17.1.66:3001/create/edit?pid=f27b5ce5-7e77-4132-8869-8671823d81ea#
+  required_keywords:
+  - Template
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  assert_editor_settled: true
+  screenshot: L2-014_final.png
+  expected_panel: Template（编辑器加载完成态）
+- id: L2-015
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/photo-border 上传 1K.jpg 后到达 Border
+  page_path: /tools/photo-border
+  page_map: page_map/pokecut/seo_upload/tools__photo_border_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=9028cec8-b46f-4d62-a685-8ea82787ee77#
+  required_keywords:
+  - Types
+  - Color
+  - Size
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-015_final.png
+  expected_panel: Border
+- id: L2-016
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/silhouette-maker 上传 1K.jpg 后到达 Adjust
+  page_path: /tools/silhouette-maker
+  page_map: page_map/pokecut/seo_upload/tools__silhouette_maker_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=7ecc7534-bb49-4ccc-80f8-2dbb0bf04ae3#
+  required_keywords:
+  - Adjust
+  - Brightness
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-016_final.png
+  expected_panel: Adjust
+- id: L2-017
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/add-hearts-to-photo 上传 1K.jpg 后到达 Sticker
+  page_path: /tools/add-hearts-to-photo
+  page_map: page_map/pokecut/seo_upload/tools__add_hearts_to_photo_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=9d0cc8e4-e8a6-4bc2-8de3-3265f3801fcf#
+  required_keywords:
+  - Valentine1
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-017_final.png
+  expected_panel: Sticker
+- id: L2-018
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/youtube-banner-maker 上传 1K.jpg 后出现裁剪框与 Crop 按钮
+  page_path: /tools/youtube-banner-maker
+  page_map: page_map/pokecut/seo_upload/tools__youtube_banner_maker_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=30b0c143-59f9-4d06-a888-d995f8963056#
+  required_keywords:
+  - Crop
+  - Template
+  - Width
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  assert_crop_overlay: true
+  screenshot: L2-018_final.png
+  expected_panel: 裁剪框 + Crop 按钮
+- id: L2-019
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/car-photo-editor 上传 1K.jpg 后到达 AI Background
+  page_path: /tools/car-photo-editor
+  page_map: page_map/pokecut/seo_upload/tools__car_photo_editor_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/agent?pid=02faff1b-0516-4168-b092-22c712eb2fe0#
+  required_keywords:
+  - AI Background
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-019_final.png
+  expected_panel: AI Background
+- id: L2-020
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/add-name-and-date-on-photo 上传 1K.jpg 后到达 Name and Date
+  page_path: /tools/add-name-and-date-on-photo
+  page_map: page_map/pokecut/seo_upload/tools__add_name_and_date_on_photo_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: legacy
+  expected_url: http://10.17.1.66:3001/create/edit?pid=682ecf52-e17a-4339-b09f-8654650b3a91#
+  required_keywords:
+  - Name and Date
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-020_final.png
+  expected_panel: Name and Date
+- id: L2-021
+  layer: L2
+  priority: P1
+  execution: full
+  title: /de/tools/big-head-cutout-face-cutout 上传 1K.jpg 后生成头部抠图结果图
+  page_path: /de/tools/big-head-cutout-face-cutout
+  page_map: page_map/pokecut/seo_upload/de__tools__big_head_cutout_face_cutout_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/de/agent?pid=4e8fe9e4-12bb-4589-aa5f-74259e0713ee#
+  required_keywords: []
+  processing_text_gone: Denke nach
+  timeout_ms: 180000
+  assert_no_right_panel: false
+  assert_cutout_result: true
+  screenshot: L2-021_final.png
+  expected_panel: 头部抠图结果图（透明背景）
+- id: L2-022
+  layer: L2
+  priority: P1
+  execution: full
+  title: /tools/christmas-card-maker 上传 1K.jpg 后到达 Template / Christmas Story
+  page_path: /tools/christmas-card-maker
+  page_map: page_map/pokecut/seo_upload/tools__christmas_card_maker_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: legacy
+  expected_url: http://10.17.1.66:3001/create/edit?pid=1a224ef9-942a-4627-abae-26c524af02a4#
+  required_keywords:
+  - Christmas Story
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-022_final.png
+  expected_panel: Template / Christmas Story
+- id: L2-023
+  layer: L2
+  priority: P1
+  execution: full
+  title: /zh-tw/tools/motion-blur 上传 1K.jpg 后到达 Motion Blur
+  page_path: /zh-tw/tools/motion-blur
+  page_map: page_map/pokecut/seo_upload/zh_tw__tools__motion_blur_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/zh-tw/agent?pid=ed30e784-febe-419c-bc88-8e798be61e88#
+  required_keywords:
+  - 全局模糊
+  - 運動
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-023_final.png
+  expected_panel: Motion Blur
+- id: L2-024
+  layer: L2
+  priority: P1
+  execution: full
+  title: /th/tools/hd-pic-converter 上传 1K.jpg 后到达 AI Enhancer / Ultra HD Mode
+  page_path: /th/tools/hd-pic-converter
+  page_map: page_map/pokecut/seo_upload/th__tools__hd_pic_converter_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_mode: seo_first_screen
+  main_selector: button.seo-first-screen-upload-button
+  guide_selector: null
+  expected_kind: agent
+  expected_url: http://10.17.1.66:3001/th/agent?pid=b62b0031-c2fa-4da3-8136-8d2ac4297e3c#
+  required_keywords:
+  - Ultra HD
+  - 2k
+  - 4k
+  - 8k
+  processing_text_gone: null
+  timeout_ms: 120000
+  assert_no_right_panel: false
+  screenshot: L2-024_final.png
+  expected_panel: AI Enhancer / Ultra HD Mode
+case_count: 24
+dedup_note: 2026-09-15 去重：原 4 条 L6 smoke 与 L2-001/L2-005/L2-010/L2-022 完全等价（同页面同链路），已删除；L2 本身即 P0/P1 主链路覆盖。

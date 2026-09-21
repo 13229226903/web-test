@@ -1,0 +1,174 @@
+knowledge_slices:
+- schema_version: '1.0'
+  knowledge_id: KB-RULE-0002
+  knowledge_type: business_rule
+  title: 移动端登录通过 Sign up 弹窗完成
+  subject_key: auth.mobile.signup_modal_login
+  status: active
+  priority: P0
+  confidence: high
+  summary: 移动端没有独立 Login 入口，需要从 Sign up 进入弹窗后填写 Email 和验证码。
+  rule:
+    given:
+    - 用户处于移动端站点
+    when:
+    - 用户需要登录
+    then:
+    - 点击 Sign up
+    - 在弹窗中填写 Email 和 Verification Code
+    exceptions: []
+  source_refs:
+  - ref: PROJECT.md
+    type: project_fact
+    note: 移动端登录约定
+  retrieval_tags:
+    module:
+    - auth
+    page:
+    - mobile
+    entry:
+    - login
+    - signup
+    state:
+    - logged_out
+    action:
+    - login
+    account:
+    - free
+    - member
+    error: []
+    platform:
+    - mobile
+  created_at: '2026-09-21T00:00:00+08:00'
+  updated_at: '2026-09-21T00:00:00+08:00'
+  source_of_truth: PROJECT.md
+  evidence:
+  - kind: project_rule
+    ref: PROJECT.md
+    verified_at: '2026-09-21'
+    result: confirmed
+  last_verified_at: '2026-09-21'
+- schema_version: '1.0'
+  knowledge_id: KB-RULE-0003
+  knowledge_type: permission_rule
+  title: 账号态必须按用例目的选择，不使用 conftest 默认值替代
+  subject_key: account.permission.select_by_test_purpose
+  status: active
+  priority: P0
+  confidence: high
+  summary: 会员、单项购买、免费和匿名账号改变业务预期时，必须按用例目的选择账号态。
+  rule:
+    given:
+    - 用例涉及登录、会员、购买、credits、权限或批量拦截
+    when:
+    - 准备执行探索或回归
+    then:
+    - 按 confirmed cases / sync.md 和 PROJECT.md 账号表选择账号态
+    - 普通登录或免费态不得误用会员账号
+    exceptions:
+    - conftest.py 默认值只能作为兜底，不能作为账号选择依据
+  source_refs:
+  - ref: PROJECT.md
+    type: project_fact
+    note: 账号态选择规则
+  - ref: artifacts/runtime/common.md
+    type: runtime_rule
+    note: 账号态由探索结果决定
+  retrieval_tags:
+    module:
+    - auth
+    - all
+    page:
+    - all
+    entry:
+    - login
+    state:
+    - logged_out
+    - logged_in
+    action:
+    - login
+    - purchase
+    - generate
+    - download
+    account:
+    - free
+    - member
+    - single_purchase
+    - anonymous
+    error:
+    - permission
+    - credits
+    platform:
+    - desktop
+    - mobile
+  created_at: '2026-09-21T00:00:00+08:00'
+  updated_at: '2026-09-21T00:00:00+08:00'
+  source_of_truth: PROJECT.md + artifacts/runtime/common.md
+  evidence:
+  - kind: project_rule
+    ref: PROJECT.md
+    verified_at: '2026-09-21'
+    result: confirmed
+  last_verified_at: '2026-09-21'
+- schema_version: '1.0'
+  knowledge_id: KB-ENV-0004
+  knowledge_type: environment_behavior
+  title: 生成类探索优先测试服，失败后再切预部署并重新登录
+  subject_key: environment.generation.test_then_predeploy
+  status: active
+  priority: P1
+  confidence: high
+  summary: 生成、购买、订阅或 credits 探索先使用测试服，只有测试服失败才切预部署并重新登录。
+  rule:
+    given:
+    - 任务需要生成、购买、订阅或验证 credits
+    when:
+    - 测试服上的目标动作失败
+    then:
+    - 通过目标页 DEBUG 面板切到预部署
+    - 切换后重新登录并重新执行
+    exceptions:
+    - 预部署也失败时，在 sync.md / page_map 标记 skipped 并附两边证据
+  source_refs:
+  - ref: PROJECT.md
+    type: project_fact
+    note: 后端环境顺序
+  - ref: artifacts/runtime/common.md
+    type: runtime_rule
+    note: 生成 / 购买 / 订阅探索边界
+  retrieval_tags:
+    module:
+    - all
+    page:
+    - all
+    entry:
+    - generation
+    - purchase
+    - subscription
+    state:
+    - initial
+    - submitted
+    - failed
+    action:
+    - generate
+    - purchase
+    - subscribe
+    account:
+    - free
+    - member
+    - single_purchase
+    error:
+    - generation_failed
+    - credits_failed
+    platform:
+    - desktop
+    - mobile
+  created_at: '2026-09-21T00:00:00+08:00'
+  updated_at: '2026-09-21T00:00:00+08:00'
+  source_of_truth: PROJECT.md
+  evidence:
+  - kind: project_rule
+    ref: PROJECT.md
+    verified_at: '2026-09-21'
+    result: confirmed
+  last_verified_at: '2026-09-21'

@@ -15,7 +15,15 @@ import yaml
 from PIL import Image, ImageChops
 from playwright.sync_api import expect
 
-ROOT = Path(__file__).resolve().parents[1]
+def _repo_root() -> Path:
+    """逐级上溯到含 data/ 的仓库根（复制到 archive/ 后 parents[N] 会指错，见 rule.md）。"""
+    for c in Path(__file__).resolve().parents:
+        if (c / "data" / "pokecut_pc_batch_v1.yaml").is_file():
+            return c
+    return Path(__file__).resolve().parents[1]
+
+
+ROOT = _repo_root()
 with open(ROOT / "data" / "pokecut_pc_batch_v1.yaml", "r", encoding="utf-8") as f:
     DATA = yaml.safe_load(f)
 

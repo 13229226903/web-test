@@ -41,9 +41,30 @@ from pathlib import Path
 from typing import Any, Callable, Optional
 from urllib.parse import urlparse
 
+
+def _force_utf8_stdio() -> None:
+    """Windows 控制台默认 GBK，中文输出会崩；这里只重配置编码，不替换流对象。
+
+    禁止写成 `sys.stdout = io.TextIOWrapper(sys.stdout.buffer, ...)`：在 pytest
+    capture 下会接管 pytest 的临时流，收集结束时关闭它即报
+    `ValueError: I/O operation on closed file.`（整仓 `pytest --collect-only` 退出码 1）。
+    pytest 的 capture 流本身已是 UTF-8，故直接跳过。
+    """
+    for name in ("stdout", "stderr"):
+        stream = getattr(sys, name, None)
+        if stream is None or type(stream).__module__.split(".")[0] == "_pytest":
+            continue
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:
+            continue
+        try:
+            reconfigure(encoding="utf-8", errors="replace")
+        except (ValueError, OSError, io.UnsupportedOperation, AttributeError):
+            pass
+
+
 if sys.platform == "win32":
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+    _force_utf8_stdio()
 
 
 # ---------------------------------------------------------------------------

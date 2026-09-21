@@ -16,9 +16,10 @@
 
 - 标准产物名、目录、frontmatter schema、正文结构、Gate 和状态机均以 runtime / role skill 为准。
 - `sync` gate artifact 固定为 `artifacts/<task_id>/sync.md`；不得因执行方式、临时说明或探索手段不同而改名。
-- 补充材料可以另存为 evidence / appendix，但 `state.md` 的接力指针必须指向标准产物。
+- 探索阶段固定补充两个 sidecar：`artifacts/<task_id>/exploration_report.md`（人审摘要）和 `artifacts/<task_id>/evidence/automation_handoff.yaml`（机器交接契约）；它们不替代 `sync.md`。
+- 补充材料可以另存为 evidence / appendix，但 `state.md` 的接力指针必须指向标准产物和这两个 sidecar。
 - 写产物前若仓库已有同类 artifact，应优先对齐同类历史格式；不确定时先查看同类历史产物，而不是自创结构。
-- 执行前应在 `state.md` 固化关键字段，至少包含：`task_type`、`execution_mode`、`target_url`、`artifacts.sync`、`next_step`；如有特定探索驱动，再记录对应 driver 字段。
+- 执行前应在 `state.md` 固化关键字段，至少包含：`task_type`、`execution_mode`、`target_url`、`artifacts.sync`、`artifacts.exploration_report`、`artifacts.automation_handoff`、`next_step`；如有特定探索驱动，再记录对应 driver 字段。
 
 ## 执行模式自动选择
 
@@ -39,6 +40,20 @@
 - Playwright MCP 只作为页面观察与交互驱动层；MCP snapshot / screenshot / console 等输出是探索证据，不替代 `page_map`、`sync.md`、`progress.log` 或后续 pytest / Playwright 可复跑脚本。
 - Chrome DevTools MCP 不作为默认诊断工具；如果仅凭 Playwright MCP 无法判定按钮无响应、接口异常、白屏、性能问题或 JS 根因，应在 `sync.md` 记录 `diagnostic_limit: playwright_mcp_only_no_devtools_trace`，并按 `bug_candidate` / `blocked` 处理，不扩大工具链。
 - selector 规则不因 MCP 改变：仍优先 ID、role、稳定属性、文本，禁止 hash class、`:nth-child`、位置 XPath；不得把 Playwright MCP 临时 element ref 直接沉淀为测试 selector。
+- **MCP preflight 红线**：恢复或接力任务时，不得假设上一会话的 Playwright MCP 连接仍然存在。若 `state.md` 要求 `exploration_driver: playwright_mcp_only`，主控必须在当前会话先调用一次已暴露的最小 Playwright MCP 工具确认可用；只有 preflight 通过，才允许写入或保留 `playwright_mcp_only`。
+- 当前会话未暴露 Playwright MCP 工具时，不得静默降级为本地 Playwright、CDP 或 CUA；应在 `state.md` blockers 记录 `playwright_mcp_unavailable`，append progress，并请用户启用 Playwright MCP 或明确授权替代驱动。
+- 若用户明确授权本地 Playwright、CDP 或 CUA，必须如实改写 `exploration_driver`（如 `local_playwright_headless`），并在 progress 记录授权来源与切换时间；不得把替代驱动的结果伪装成 MCP 结果。
+
+## 探索驱动与代码调试驱动边界
+
+- **不强制 test-writing 调试使用 Playwright MCP**：MCP 是 `page-map-sync` 的页面探索 / 事实复核驱动；test-writing 的代码、fixture、断言、收集和自跑优先使用可复跑的 pytest + Playwright 测试驱动。
+- 代码失败先按故障类型分流：
+  - `test_code`：Python、fixture、Allure、数据格式、断言实现 → test-writing 本地修复；
+  - `runtime_environment`：网络、服务排队、环境偶发 → 按环境探针 / 重试规则处理；
+  - `page_behavior_unknown`：入口、状态、selector、ready 条件、账号行为与 handoff 不一致 → 停止代码猜测，回退 page-map-sync，并在当前会话重新做 MCP preflight 后复探；
+  - `product_bug`：页面实际与需求 expected 不一致 → 保留断言，使用 MCP 复核证据并记录 bug_candidate，不改绿灯。
+- test-writing 不得为了排查代码失败而偷偷把本地 Playwright、CDP 或 CUA 结果伪装成 MCP 探索证据；如果需要重新确认页面事实，必须回到 page-map-sync。
+- handoff 中声明的 `driver`（如 touch / dispatchEvent / 坐标点击）是**自动化实现驱动**，不等于探索驱动；它必须有探索证据和实现理由，不能在代码阶段临时发明。
 
 ## 任务声明
 
@@ -63,6 +78,25 @@ assets: <accounts/data/environment>
 - 存量首次探索：`<url>` 这个功能已经上线了，帮我补页面地图、用例和脚本。
 - 稳定回归：回归一下 homepage 已登记的脚本。
 - 单角色：只更新 xxx 页面的地图 / 根据这份需求写用例 / 按 confirmed cases 写自动化 / 审查这次脚本改动 / AI 看一下这两张截图。
+
+## 探索到编码的闭环契约
+
+```text
+page-map-sync
+  → page_map + sync.md(pending_review) + exploration_report.md + automation_handoff.yaml(pending_review)
+  → 用户审核 exploration_report.md
+  → sync confirmed + handoff ready_for_case_design
+  → test-case-design
+  → cases.md(pending_review → confirmed)
+  → validate_automation_handoff.py
+  → handoff implementation_ready
+  → test-writing
+```
+
+- `exploration_report.md` 是人审入口：只展示范围、入口、覆盖、gap、bug、skipped、风险和需要决策的事项；详细证据仍在 `sync.md` / evidence。
+- `automation_handoff.yaml` 是角色间唯一的自动化实现交接：每个 case 必须有入口、账号、环境、状态链、动作、ready/exit 条件、特殊 driver、事件采集边界和证据。
+- page_map、sync、cases 任一版本或范围变化，都使 handoff 回退为 `ready_for_case_design`；未重新校验不得进入 test-writing。
+- 使用校验：`python scripts/validate_automation_handoff.py --handoff <path> --sync <path> --cases <path>`。
 
 ## 路由
 
@@ -105,6 +139,8 @@ current_step: <role or waiting/gate step>
 execution_mode: codex_subagent | codex_single_context
 task_type: new_feature_test | existing_feature_first_exploration | stable_regression | single_agent
 human_gates_pending: []
+knowledge_context: null
+handoff_status: pending_review | ready_for_case_design | implementation_ready | blocked
 agent_call_count:
   page-map-sync: 0
   test-case-design: 0
@@ -112,6 +148,10 @@ agent_call_count:
   review: 0
   visual-review: 0
 created_at: <timestamp>
+artifacts:
+  sync: artifacts/<task_id>/sync.md
+  exploration_report: artifacts/<task_id>/exploration_report.md
+  automation_handoff: artifacts/<task_id>/evidence/automation_handoff.yaml
 ---
 # 调度历史
 # 终态原因
@@ -129,7 +169,7 @@ created_at: <timestamp>
 
 ## 探索结果摘要输出（新功能 / 存量首次探索的 page-map-sync 阶段）
 
-探索阶段不跑 pytest、不产出 Allure 报告（Allure 是 test-writing 执行自动化用例后的产物）。探索结束时必须在对话里打印「探索结果摘要」，按用例 / AC 逐行展示：
+探索阶段不跑 pytest、不产出 Allure 报告（Allure 是 test-writing 执行自动化用例后的产物）。探索结束时以 `exploration_report.md` 作为人审正文；对话只打印不超过 50 行的「探索结果摘要」和报告路径，按用例 / AC（Acceptance Criteria，验收条件）或存量功能覆盖点逐行展示：
 
 ```text
 【探索结果摘要】<YYYY-MM-DD HH:MM>
@@ -228,8 +268,8 @@ Allure 报告: http://localhost:8123/index.html
 ## 接力与 Gate
 
 1. artifact `pending_review/failed/blocked` 不接力。
-2. `sync.md pending_review`：在对话里打印「探索结果摘要」（格式见下方「探索结果摘要输出」节），通知用户审核覆盖矩阵、差异、bug candidate；停止。确认后改 confirmed；阻塞 bug 先提 bug / blocked，不进用例或脚本。
-3. `cases.md pending_review`：通知用户审核用例矩阵；停止。确认后才能 test-writing。
+2. `sync.md pending_review`：必须同时生成 `exploration_report.md` 和 `automation_handoff.yaml(status=pending_review)`；对话只打印报告摘要和路径，通知用户审核探索报告。停止。用户确认后，orchestrator 将 sync 改 `confirmed`、handoff 改 `ready_for_case_design`；阻塞 bug / gap 不得伪装成 covered。
+3. `cases.md pending_review`：通知用户审核用例矩阵；停止。用户确认后，先以 `ready_for_case_design` 执行 `validate_automation_handoff.py --cases`；校验通过后由 orchestrator 将 handoff 改为 `implementation_ready` 并再次校验。只有第二次校验通过且 page_map 版本、case_id、状态链和证据全部一致，才能进入 test-writing。
 4. `impl.md completed` 且自跑失败为 0：先 review；review fail 回 test-writing 或 blocked。视觉需求再 visual-review。
 5. review / visual-review 通过后：先执行 `test-writing` 的 report-output 子步骤，生成并检查按用例矩阵输出的 `allure-results-matrix/` 与 `allure-report-matrix/`，确认 case_id / 参数化 id / title / epic / feature 与 `cases.md` 一致，且报告用例总数 = `cases.md` 的 `case_count`，且每条矩阵用例至少有 1 个截图步骤或已记录的例外说明后，启动本地 HTTP 服务器（如 `python -m http.server 8123 --directory reports/allure-report-matrix`），并在浏览器打开 `http://localhost:8123/index.html` 供用户查看（不得直接打开静态 HTML 文件），同时在对话里打印「简易测试报告」（格式见下方「简易测试报告输出」节）；用户确认后才进入 regression-archive gate。不得直接 completed。
 6. 进入 regression-archive gate 时：orchestrator 汇总本次任务的候选沉淀项（同一坑出现 ≥2 次或 1 次但高成本），向用户询问「是否需要沉淀」；用户确认后按 `artifacts/runtime/common.md`「知识沉淀规则」写落点，并记录到 progress / journal。
@@ -248,3 +288,63 @@ Allure 报告: http://localhost:8123/index.html
 - 角色 skill 失败 / 超时：state 记 failed 和调度历史。
 - 角色 skill 越界：拒绝接力并 blocked。
 - Gate 中收到新 prompt：判断是继续等 gate 还是用户切换任务，并在 state 记录决策。
+
+## 知识库前置检索与角色分发
+
+任务完成 `task_type`、`entry_url / entry_path`、`scope` 和 `state.md` 初始化后，orchestrator 必须先执行一次业务知识库前置检索，再加载第一个业务角色。
+
+### 检索边界
+
+- 不全量读取 `knowledge/`，先读取 `knowledge/index.yaml`，再按当前任务的模块、页面、功能、入口、状态、账号态、环境和平台过滤。
+- 初始化最多 2 个 Query：一条查业务规则 / 权限 / 校验，一条查旧入口 / 历史路径；单次最多 5 条，去重后最多注入 8 条。
+- `stable_regression` 只按 registry key、脚本、page_map 和最近失败范围窄检索，不重新加载整个模块。
+- 纯 review / visual-review 默认不做业务前置检索，除非输入中存在业务规则冲突或视觉业务语义。
+
+推荐命令：
+
+```powershell
+python scripts/knowledge.py search --mode init --module <module> --page <page> --purpose rule --limit 5 --details --ledger artifacts/<task_id>/knowledge-ledger.yaml
+python scripts/knowledge.py search --mode init --module <module> --page <page> --purpose entry --limit 5 --details --ledger artifacts/<task_id>/knowledge-ledger.yaml
+```
+
+### state.md handoff
+
+在 `state.md` 增加：
+
+```yaml
+knowledge:
+  prefetch_status: completed | no_hit | conflict
+  prefetch_ids: []
+  runtime_ids: []
+  exception_ids: []
+  unresolved_conflicts: []
+  retrieval_ledger: artifacts/<task_id>/knowledge-ledger.yaml
+  budget:
+    init_queries_remaining: 0
+    runtime_queries_remaining: 6
+    exception_queries_remaining: 3
+```
+
+角色只读取 `knowledge_context` 中的相关切片，不自行扫描知识库。每个命中必须标注 `use_as`：`entry_candidate`、`rule_candidate`、`expected_candidate`、`retry_hint`、`verification_required` 或 `do_not_assert`。
+- 正式新增知识按模块 / shared 归档；task_id 只作为候选和证据，不得按任务新建长期知识文件。新任务命中已有 `subject_key` 时更新原切片证据，不复制新条目；新版本替换旧规则时使用新 `knowledge_id` + `supersedes`。
+
+### 角色消费边界
+
+| 角色 | 默认消费 | 运行时追加检索 |
+|---|---|---|
+| `test-case-design` | 业务规则、入口、权限、校验 | 需求或历史规则存在明确歧义时 |
+| `page-map-sync` | 旧入口、状态迁移、历史校验、UI 残留 | 入口 / 状态 / 账号态无法判定时 |
+| `test-writing` | confirmed cases 实际引用的知识 | 业务型异常时；selector 问题走 page-map-sync |
+| `review` | cases / impl 实际引用的知识 | 发现引用冲突时 |
+| `visual-review` | 视觉具有业务语义的知识 | 视觉语义无法判定时 |
+
+### 检索状态与 Gate
+
+- 必须记录 `hit_exact`、`hit_related`、`no_hit` 或 `conflict`；不得把“未命中”伪装成已命中。
+- 入口、权限、credits、历史校验等高风险主题如果 `no_hit`，必须形成现场验证清单后才能继续。
+- 角色发现新经验时只写当前任务 artifact 的 `knowledge_candidate`；在 `regression-archive gate` 汇总并经用户确认后，才运行：
+
+```powershell
+python scripts/knowledge.py validate
+python scripts/knowledge.py rebuild-index
+```

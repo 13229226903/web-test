@@ -1,0 +1,580 @@
+version: 1
+task_id: 2026-09-17_mobile_canvas_stats_first10
+source_cases: artifacts/2026-09-17_mobile_canvas_stats_first10/cases.md
+image: test_images/1K.jpg
+code: '123456'
+zz:
+  pc: 年ultra
+  mobile: 月SE试用
+cases:
+- id: P-INF-01
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 注册登录
+  platform: pc
+  flow: pc_infinite_register
+  title: PC 无限画布增强点数用完触发注册与注册成功
+  expected:
+  - 无限画布页画质增强ultra功能点数用完触发注册
+  - 无限画布页画质增强ultra功能点数用完触发注册成功
+  known_bug: true
+  screenshot: pc_inf_01_register.png
+- id: P-INF-02
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 无限画布
+  platform: pc
+  flow: pc_infinite_purchase
+  title: PC 无限画布点数用完触发购买成功
+  expected:
+  - 无限画布页点数用完触发购买年ultra成功
+  screenshot: pc_inf_02_purchase_success.png
+- id: P-INF-03
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 无限画布
+  platform: pc
+  flow: pc_infinite_download
+  title: PC 无限画布结果图下载保存
+  expected:
+  - 无限画布页画质增强ultra功能图片下载保存
+  screenshot: pc_inf_03_result_download.png
+- id: P-NEW-01
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布增强购买出现与成功
+  entry: /tools/photo-enhancer
+  actions: []
+  expected:
+  - 新画布增强购买出现en_photo-enhancer
+  - 新画布增强年ultra购买成功en_photo-enhancer
+  screenshot: pc_new_01_enhancer.png
+- id: P-NEW-02
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布抠图购买出现与成功
+  entry: /tools/background-remover
+  actions:
+  - click: Remove Background
+  expected:
+  - 新画布抠图购买出现en_background-remover
+  - 新画布抠图年ultra购买成功en_background-remover
+  screenshot: pc_new_02_remove_bg.png
+- id: P-NEW-03
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布消除购买出现与成功
+  entry: /tools/magic-eraser-with-ai-detection
+  actions:
+  - click: AI Delete
+  - click: All
+  - click: Remove
+  expected:
+  - 新画布消除购买出现en_magic-eraser-with-ai-detection
+  - 新画布消除年ultra购买成功en_magic-eraser-with-ai-detection
+  screenshot: pc_new_03_magic_eraser.png
+- id: P-NEW-04
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布改图购买出现与成功
+  entry: /it/ai-replace
+  actions:
+  - drag_canvas: true
+  - fill_first_textarea: borsa
+  expected:
+  - 新画布改图购买出现it_ai-replace
+  - 新画布改图年ultra购买成功it_ai-replace
+  screenshot: pc_new_04_ai_replace.png
+- id: P-NEW-05
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布扩图购买出现与成功
+  entry: /pt/ferramentas/expandir-imagem-ia
+  actions: []
+  expected:
+  - 新画布扩图购买出现pt_expandir-imagem-ia
+  - 新画布扩图年ultra购买成功pt_expandir-imagem-ia
+  screenshot: pc_new_05_extend.png
+- id: P-NEW-06
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布脸部购买出现与成功
+  entry: /ai-replace/add-smile-to-photo
+  actions:
+  - click: Remove Acne
+  - click: Generate
+  expected:
+  - 新画布脸部购买出现en_add-smile-to-photo
+  - 新画布脸部年ultra购买成功en_add-smile-to-photo
+  screenshot: pc_new_06_face.png
+- id: P-NEW-07
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布身材购买出现与成功
+  entry: /body-editor
+  actions:
+  - click: Natural Breast
+  - click: Generate
+  expected:
+  - 新画布身材购买出现en_body-editor
+  - 新画布身材年ultra购买成功en_body-editor
+  screenshot: pc_new_07_body.png
+- id: P-NEW-08
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布发型购买出现与成功
+  entry: /hair-editor/virtual-hair-color-try-on
+  actions:
+  - click: Blonde
+  - click: Generate
+  expected:
+  - 新画布发型购买出现en_virtual-hair-color-try-on
+  - 新画布发型年ultra购买成功en_virtual-hair-color-try-on
+  screenshot: pc_new_08_hair.png
+- id: P-NEW-09
+  layer: L2
+  priority: P2
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: skipped_dependency
+  title: PC 新画布 AI滤镜购买出现与成功
+  skip_reason: AI滤镜 SEO URL 未提供，等待用户补充
+  screenshot: pc_new_09_skipped.png
+- id: P-NEW-10
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布图生图购买出现与成功
+  entry: /image-to-image-ai
+  entry_action: upload_then_generate
+  actions: []
+  expected:
+  - 新画布图生图购买出现en_image-to-image-ai
+  - 新画布图生图年ultra购买成功en_image-to-image-ai
+  screenshot: pc_new_10_image2image.png
+- id: P-NEW-11
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布文生图购买出现与成功
+  entry: /ai-image-generator
+  entry_action: generate_only
+  actions: []
+  expected:
+  - 新画布文生图购买出现en_ai-image-generator
+  - 新画布文生图年ultra购买成功en_ai-image-generator
+  screenshot: pc_new_11_text2image.png
+- id: P-NEW-12
+  layer: L2
+  priority: P1
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布AI背景购买出现与成功
+  entry: /ai-background
+  actions: []
+  expected:
+  - 新画布AI背景购买出现en_ai-background
+  - 新画布AI背景年ultra购买成功en_ai-background
+  screenshot: pc_new_12_ai_background.png
+- id: P-NEW-13
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布背景模糊购买出现与成功
+  entry: /tools/gaussian-blur
+  actions: []
+  expected:
+  - 新画布背景模糊购买出现en_gaussian-blur
+  - 新画布背景模糊年ultra购买成功en_gaussian-blur
+  screenshot: pc_new_13_blur.png
+- id: P-NEW-14
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布照片修复购买出现与成功
+  entry: /tools/photo-restoration
+  actions:
+  - click: Old Photo Enhance
+  expected:
+  - 新画布照片修复购买出现en_photo-restoration
+  - 新画布照片修复年ultra购买成功en_photo-restoration
+  screenshot: pc_new_14_photo_restoration.png
+- id: P-NEW-15
+  layer: L2
+  priority: P1
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布贴纸购买出现与成功
+  entry: /tools/add-hearts-to-photo
+  actions:
+  - click: Valentine 2
+  - click_vip_sticker: true
+  - select_all_layers: true
+  - click: Download
+  expected:
+  - 新画布贴纸购买出现en_add-hearts-to-photo
+  - 新画布贴纸年ultra购买成功en_add-hearts-to-photo
+  screenshot: pc_new_15_sticker.png
+- id: P-NEW-16
+  layer: L2
+  priority: P0
+  epic: PC端
+  feature: 新画布
+  platform: pc
+  flow: seo_new_canvas
+  title: PC 新画布换背购买出现与成功
+  entry: /tools/background-changer
+  actions: []
+  expected:
+  - 新画布换背购买出现en_background-changer
+  - 新画布换背年ultra购买成功en_background-changer
+  screenshot: pc_new_16_background_changer.png
+- id: M-CORE-01
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 注册登录
+  platform: mobile
+  flow: mobile_register_pair
+  title: 移动端画布点数用完触发注册与注册成功
+  expected:
+  - 移动端画布点数用完触发注册
+  - 移动端画布点数用完触发注册成功
+  screenshot: mobile_login_01_register_pair.png
+- id: M-CORE-02
+  layer: L2
+  priority: P1
+  epic: 移动端
+  feature: 注册登录
+  platform: mobile
+  flow: mobile_feature_register
+  title: 移动端 xx 功能点数用完触发注册与注册成功
+  expected:
+  - 移动端画布画质增强ultra功能点数用完触发注册
+  - 移动端画布AI扩图功能点数用完触发注册
+  - 移动端画布画质增强ultra功能点数用完触发注册成功
+  - 移动端画布AI扩图功能点数用完触发注册成功
+  screenshot: mobile_login_02_feature_register.png
+- id: M-CORE-03
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 画布页
+  platform: mobile
+  flow: mobile_purchase_appearance
+  title: 移动端点数用完触发购买与 xx 功能购买
+  expected:
+  - 移动端画布点数用完触发购买
+  - 移动端画布AI扩图功能点数用完触发购买
+  screenshot: mobile_canvas_03_purchase_appearance.png
+- id: M-CORE-04
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 画布页
+  platform: mobile
+  flow: mobile_purchase_success
+  title: 移动端 xx 功能与通用购买成功
+  expected:
+  - 移动端画布AI扩图功能点数用完触发购买年ultra成功
+  - 移动端画布点数用完触发购买年ultra成功
+  screenshot: mobile_canvas_04_purchase_success.png
+- id: M-CORE-05
+  layer: L2
+  priority: P1
+  epic: 移动端
+  feature: 画布页
+  platform: mobile
+  flow: mobile_modal_appear
+  title: 移动端画布页 xx 弹窗出现
+  expected:
+  - 移动端画布页_画质增强弹窗出现
+  - 移动端画布页_AI消除弹窗出现
+  screenshot: mobile_canvas_05_feature_modal.png
+- id: M-CORE-06
+  layer: L2
+  priority: P1
+  epic: 移动端
+  feature: 画布页
+  platform: mobile
+  flow: mobile_modal_confirm
+  title: 移动端画布页 xx 弹窗确认
+  expected:
+  - 移动端画布页_调节弹窗确认
+  - 移动端画布页_背景移除通用弹窗确认
+  screenshot: mobile_canvas_06_modal_confirm.png
+- id: M-CORE-07
+  layer: L2
+  priority: P1
+  epic: 移动端
+  feature: 画布页
+  platform: mobile
+  flow: mobile_popup_download
+  title: 移动端画布页画质增强结果弹窗下载
+  expected:
+  - 移动端画布页_画质增强ultra弹窗下载
+  screenshot: mobile_canvas_07_modal_download.png
+- id: M-NEW-01
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布增强购买出现与成功
+  entry: /tools/photo-enhancer
+  actions:
+  - click: Enhance
+  expected:
+  - 新画布增强购买出现en_photo-enhancer
+  - 新画布增强月SE试用购买成功en_photo-enhancer
+  screenshot: mobile_new_01_enhancer.png
+- id: M-NEW-02
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布抠图购买出现与成功
+  entry: /tools/background-remover
+  actions:
+  - click: Remove Background
+  expected:
+  - 新画布抠图购买出现en_background-remover
+  - 新画布抠图月SE试用购买成功en_background-remover
+  screenshot: mobile_new_02_remove_bg.png
+- id: M-NEW-03
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布消除购买出现与成功
+  entry: /tools/magic-eraser-with-ai-detection
+  actions:
+  - click: AI Delete
+  - paint_mask_cdp: true
+  - click_remove_submit: true
+  expected:
+  - 新画布消除购买出现en_magic-eraser-with-ai-detection
+  - 新画布消除月SE试用购买成功en_magic-eraser-with-ai-detection
+  screenshot: mobile_new_03_magic_eraser.png
+- id: M-NEW-04
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布改图购买出现与成功
+  entry: /it/ai-replace
+  actions:
+  - click: AI Replace
+  - drag_canvas: true
+  - fill_last_textarea: borsa
+  - click: Genera
+  expected:
+  - 新画布改图购买出现it_ai-replace
+  - 新画布改图月SE试用购买成功it_ai-replace
+  known_bug: true
+  screenshot: mobile_new_04_ai_replace.png
+- id: M-NEW-05
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布扩图购买出现与成功
+  entry: /pt/ferramentas/expandir-imagem-ia
+  actions:
+  - click: Estenda IA
+  expected:
+  - 新画布扩图购买出现pt_expandir-imagem-ia
+  - 新画布扩图月SE试用购买成功pt_expandir-imagem-ia
+  screenshot: mobile_new_05_extend.png
+- id: M-NEW-06
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布脸部购买出现与成功
+  entry: /ai-replace/add-smile-to-photo
+  actions:
+  - click: Teeth Smile
+  - click: Generate
+  expected:
+  - 新画布脸部购买出现en_add-smile-to-photo
+  - 新画布脸部月SE试用购买成功en_add-smile-to-photo
+  screenshot: mobile_new_06_face.png
+- id: M-NEW-07
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布身材购买出现与成功
+  entry: /body-editor
+  actions:
+  - click: Fuller Breast
+  - click: Generate
+  expected:
+  - 新画布身材购买出现en_body-editor
+  - 新画布身材月SE试用购买成功en_body-editor
+  screenshot: mobile_new_07_body.png
+- id: M-NEW-08
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布发型购买出现与成功
+  entry: /hair-editor/virtual-hair-color-try-on
+  actions:
+  - click: Full Head Color
+  - click: Generate
+  expected:
+  - 新画布发型购买出现en_virtual-hair-color-try-on
+  - 新画布发型月SE试用购买成功en_virtual-hair-color-try-on
+  screenshot: mobile_new_08_hair.png
+- id: M-NEW-09
+  layer: L2
+  priority: P2
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: skipped_dependency
+  title: 移动端新画布 AI滤镜购买出现与成功
+  skip_reason: AI滤镜 SEO URL 未提供，等待用户补充
+  screenshot: mobile_new_09_skipped.png
+- id: M-NEW-10
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布图生图购买出现与成功
+  entry: /image-to-image-ai
+  entry_action: upload_then_generate
+  actions: []
+  expected:
+  - 新画布图生图购买出现en_image-to-image-ai
+  - 新画布图生图月SE试用购买成功en_image-to-image-ai
+  screenshot: mobile_new_10_image2image.png
+- id: M-NEW-11
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布文生图购买出现与成功
+  entry: /ai-image-generator
+  entry_action: generate_only
+  actions: []
+  expected:
+  - 新画布文生图购买出现en_ai-image-generator
+  - 新画布文生图月SE试用购买成功en_ai-image-generator
+  screenshot: mobile_new_11_text2image.png
+- id: M-NEW-12
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布背景模糊购买出现与成功
+  entry: /tools/gaussian-blur
+  actions: []
+  expected:
+  - 新画布背景模糊购买出现en_gaussian-blur
+  - 新画布背景模糊月SE试用购买成功en_gaussian-blur
+  screenshot: mobile_new_12_blur.png
+- id: M-NEW-13
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布照片修复购买出现与成功
+  entry: /tools/photo-restoration
+  actions:
+  - click: Enhance
+  expected:
+  - 新画布照片修复购买出现en_photo-restoration
+  - 新画布照片修复月SE试用购买成功en_photo-restoration
+  screenshot: mobile_new_13_photo_restoration.png
+- id: M-NEW-14
+  layer: L2
+  priority: P0
+  epic: 移动端
+  feature: 新画布
+  platform: mobile
+  flow: seo_new_canvas
+  title: 移动端新画布换背购买出现与成功
+  entry: /tools/background-changer
+  actions: []
+  expected:
+  - 新画布换背购买出现en_background-changer
+  - 新画布换背月SE试用购买成功en_background-changer
+  screenshot: mobile_new_14_background_changer.png

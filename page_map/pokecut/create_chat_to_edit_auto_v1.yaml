@@ -1,0 +1,194 @@
+# Pokecut Create 页 - Chat to Edit / Auto 模型页面地图 v1
+# 采集环境: http://10.17.1.66:3001，PC 1440x900，en-US，会员账号 User8JY
+# 采集时间: 2026-09-17
+page: Create Chat to Edit Auto
+url: /create
+landmark:
+  selector: "h2:has-text('Chat to Edit')"
+  description: Create 页顶部 Chat to Edit 标题，作为主功能区块 landmark
+entry:
+  from: Login / Home / Direct URL
+  trigger: 登录后自动跳转 /create；或直接访问 /create
+  selector: "h2:has-text('Chat to Edit')"
+
+elements:
+  chat_to_edit_prompt:
+    selector: "textarea[placeholder='What do you want to design today?']"
+    description: Chat to Edit 输入框，用于输入自然语言 prompt
+    visible_condition: /create 页面加载后可见
+    enabled_condition: 始终可输入
+    action_result: 输入 prompt 后字数统计更新；提交按钮变为可用
+    reversible: true
+    explore_status: covered
+    dependencies: []
+    assertions_hint: "placeholder 与字数 0/3000 可见"
+    notes: "提交前必须同时具备 prompt 与至少 1 张参考图"
+
+  upload_reference_images:
+    selector: "div[title='Upload reference images']"
+    description: 上传参考图按钮，点击后打开系统文件选择器
+    visible_condition: /create 页面加载后可见
+    enabled_condition: 始终可用
+    action_result: 选择文件后显示缩略图、删除按钮和 1/N 计数
+    reversible: true
+    explore_status: covered
+    dependencies: []
+    assertions_hint: "上传后出现 1/N 计数与缩略图"
+    notes: "本任务使用 test_images/1K.jpg，原始分辨率 1200x1600"
+
+  model_selector:
+    selector: "div[title='Model']"
+    description: 模型选择器，点击展开模型列表
+    visible_condition: /create 页面加载后可见
+    enabled_condition: 始终可用
+    action_result: 展开模型下拉列表，包含 Auto、Seedream、Nano Banana 等选项
+    reversible: true
+    explore_status: covered
+    dependencies: []
+    assertions_hint: "默认显示 Nano Banana 2 Lite；展开后可见 Auto"
+    notes: ""
+
+  auto_model_option:
+    selector: "div.cursor-pointer:has(img[src*='model_icon_auto.svg'])"
+    description: 模型列表中的 Auto 选项
+    visible_condition: 点击 model_selector 后可见
+    enabled_condition: 始终可选
+    action_result: 选中 Auto；模型选择器文本变为 Auto，右侧显示 5 credits
+    reversible: true
+    explore_status: covered
+    dependencies: [model_selector]
+    assertions_hint: "选中后 div[title='Model'] 文本为 Auto"
+    notes: "Auto 会根据 prompt 自动选择能力；Debug 弹窗可显示能力 id"
+
+  submit_task:
+    selector: "div.cursor-pointer:has(img[src*='create_chat_send_btn.svg'])"
+    description: Chat to Edit 提交按钮
+    visible_condition: prompt 与参考图齐备后可见/可用
+    enabled_condition: prompt 非空且至少 1 张参考图
+    action_result: 提交 Auto 生成任务并跳转 /agent?pid=<uuid>
+    reversible: false
+    explore_status: covered
+    dependencies: [chat_to_edit_prompt, upload_reference_images, auto_model_option]
+    assertions_hint: "点击后 URL 变为 /agent?pid=..."
+    notes: "提交后任务继续在画布页执行；taskId 从控制台 AutoIntentRecognition / taskflow-result-file / AutoCanvasSuccess 提取"
+
+  result_resolution_display:
+    selector: "text=/\\d+ x \\d+/"
+    description: 画布页结果图选中后显示的分辨率文本
+    visible_condition: 结果图生成并选中后可见
+    enabled_condition: 结果图存在
+    action_result: 显示如 3072 x 4096、2400 x 3200、1200 x 1600
+    reversible: true
+    explore_status: covered
+    dependencies: [submit_task]
+    assertions_hint: "按用例预期断言具体分辨率或倍率"
+    notes: "本任务 10 条 prompt 的实际分辨率均已记录在 evidence/auto_intent_results.yaml"
+
+states:
+  create_initial:
+    description: /create 初始态；Chat to Edit 输入框为空，默认模型 Nano Banana 2 Lite
+    trigger: 直接访问 /create
+    url_or_state_key: /create
+    buttons:
+      upload_reference_images:
+        selector: "div[title='Upload reference images']"
+        role_or_text: Upload reference images
+        visible_condition: 页面加载后可见
+        enabled_condition: 始终
+        action_result: 打开文件选择器
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "可见且可点击"
+        notes: ""
+      model_selector:
+        selector: "div[title='Model']"
+        role_or_text: Model
+        visible_condition: 页面加载后可见
+        enabled_condition: 始终
+        action_result: 展开模型列表
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: "默认文本 Nano Banana 2 Lite"
+        notes: ""
+
+  model_dropdown_open:
+    description: 点击 Model 后的模型下拉列表展开态
+    trigger: 点击 model_selector
+    url_or_state_key: /create
+    buttons:
+      auto_model_option:
+        selector: "div.cursor-pointer:has(img[src*='model_icon_auto.svg'])"
+        role_or_text: Auto
+        visible_condition: 下拉展开后可见
+        enabled_condition: 始终
+        action_result: 选中 Auto 并收起下拉
+        reversible: true
+        explore_status: covered
+        dependencies: [model_selector]
+        assertions_hint: "Auto 项含 NEW 标签"
+        notes: ""
+
+  image_uploaded:
+    description: 上传 1 张参考图后的状态
+    trigger: 点击 upload_reference_images 并选择文件
+    url_or_state_key: /create
+    buttons:
+      delete_uploaded_image:
+        selector: "div.group:has(img) div.cursor-pointer:has-text('✕')"
+        role_or_text: 删除参考图
+        visible_condition: hover 缩略图时可见
+        enabled_condition: 已上传图片
+        action_result: 删除当前参考图
+        reversible: true
+        explore_status: covered
+        dependencies: [upload_reference_images]
+        assertions_hint: "计数从 1/N 变为 0/N"
+        notes: "删除按钮仅在 hover 时显示"
+
+  prompt_filled:
+    description: 输入 prompt 且已上传参考图、已选择 Auto 的可提交态
+    trigger: 在 chat_to_edit_prompt 输入文本
+    url_or_state_key: /create
+    buttons:
+      submit_task:
+        selector: "div.cursor-pointer:has(img[src*='create_chat_send_btn.svg'])"
+        role_or_text: 提交任务
+        visible_condition: prompt 与图片齐备
+        enabled_condition: prompt 非空且至少 1 张图
+        action_result: 提交任务并跳转 /agent?pid=<uuid>
+        reversible: false
+        explore_status: covered
+        dependencies: [chat_to_edit_prompt, upload_reference_images, auto_model_option]
+        assertions_hint: "按钮图标 create_chat_send_btn.svg 可见"
+        notes: ""
+
+  agent_processing:
+    description: 提交后跳转到无限画布并显示生成进度
+    trigger: 点击 submit_task
+    url_or_state_key: /agent?pid=<uuid>
+    buttons: {}
+    notes: |
+      页面标题从 Free Infinite Canvas 变为带百分比的处理态；
+      控制台出现 AutoIntentRecognition、taskflow-result-file、AutoCanvasSuccess 日志。
+
+  agent_result_ready:
+    description: 生成完成后画布出现结果图，选中结果图显示分辨率
+    trigger: 等待 AutoCanvasSuccess 且结果图渲染完成
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      result_resolution_display:
+        selector: "text=/\\d+ x \\d+/"
+        role_or_text: 结果分辨率
+        visible_condition: 结果图选中后可见
+        enabled_condition: 结果图存在
+        action_result: 显示实际分辨率
+        reversible: true
+        explore_status: covered
+        dependencies: [submit_task]
+        assertions_hint: "与 evidence/auto_intent_results.yaml 中 actual_resolution 一致"
+        notes: ""
+
+tabs: {}
+modals: {}

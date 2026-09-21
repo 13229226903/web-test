@@ -1,0 +1,510 @@
+version: 1
+task_id: 2026-09-15_seo_main_upload_mobile_interactions
+platform: mobile
+viewport:
+  width: 390
+  height: 844
+  device_scale_factor: 3
+  is_mobile: true
+  has_touch: true
+account:
+  email: 450832596@qq.com
+  code: '123456'
+  state: VIP
+  login_note: 移动端只有 Sign up 入口；弹窗内填邮箱+验证码提交即登录
+image: test_images/1K.jpg
+case_count: 24
+cases:
+- id: L2-001
+  layer: L2
+  priority: P1
+  title: /tools/hd-pic-converter 移动端上传 1K.jpg 后到达原地配置态
+  page_path: /tools/hd-pic-converter
+  page_map: page_map/pokecut/seo_upload_mobile/tools__hd-pic-converter_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: input[type=file]
+  upload_fallback_selector: input[type=file]
+  route: same_page_config
+  default_panel: null
+  expected_function_panel: null
+  expected_function_panel_kind: none
+  expected_canvas: []
+  required_keywords:
+  - Select the mode and resolution you need
+  - Standard Mode
+  - Enhance
+  timeout_ms: 120000
+  screenshot: L2-001_final.png
+- id: L2-002
+  layer: L2
+  priority: P1
+  title: /tools/change-passport-to-blue-background 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/change-passport-to-blue-background
+  page_map: page_map/pokecut/seo_upload_mobile/tools__change-passport-to-blue-background_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Background
+  expected_function_panel: 'Change BG'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-002_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-003
+  layer: L2
+  priority: P1
+  title: /tools/landscape-to-portrait-converter 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/landscape-to-portrait-converter
+  page_map: page_map/pokecut/seo_upload_mobile/tools__landscape-to-portrait-converter_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: 'AI Image Extender'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-003_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-004
+  layer: L2
+  priority: P1
+  title: /tools/watermark-remover 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/watermark-remover
+  page_map: page_map/pokecut/seo_upload_mobile/tools__watermark-remover_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: 'Magic Eraser'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-004_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-005
+  layer: L2
+  priority: P1
+  title: /tools/cv-photo-editor 移动端上传 1K.jpg 后到达证件照画布（Photo Size）
+  page_path: /tools/cv-photo-editor
+  page_map: page_map/pokecut/seo_upload_mobile/tools__cv-photo-editor_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: id_photo
+  default_panel: null
+  expected_function_panel: null
+  expected_function_panel_kind: none
+  expected_canvas: []
+  required_keywords:
+  - Photo Size
+  - United States Passport
+  - 1200*1200
+  - 2inch*2inch
+  timeout_ms: 120000
+  screenshot: L2-005_final.png
+- id: L2-006
+  layer: L2
+  priority: P1
+  title: /tools/add-motion-blur-effect-to-photo 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/add-motion-blur-effect-to-photo
+  page_map: page_map/pokecut/seo_upload_mobile/tools__add-motion-blur-effect-to-photo_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Background
+  expected_function_panel: 'Blur Background'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-006_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-007
+  layer: L2
+  priority: P1
+  title: /tools/ai-beard-remover 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/ai-beard-remover
+  page_map: page_map/pokecut/seo_upload_mobile/tools__ai-beard-remover_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: 'Magic Eraser'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-007_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-008
+  layer: L2
+  priority: P1
+  title: /ai-replace/ai-clothes-changer 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /ai-replace/ai-clothes-changer
+  page_map: page_map/pokecut/seo_upload_mobile/ai-replace__ai-clothes-changer_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: 'Clothes Changer'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-008_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-009
+  layer: L2
+  priority: P1
+  title: /tools/relight-photo 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/relight-photo
+  page_map: page_map/pokecut/seo_upload_mobile/tools__relight-photo_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: 'Photo Enhancer'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-009_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-010
+  layer: L2
+  priority: P1
+  title: /tools/photo-restoration 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/photo-restoration
+  page_map: page_map/pokecut/seo_upload_mobile/tools__photo-restoration_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: input[type=file]
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: 'Photo Enhancer'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-010_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-011
+  layer: L2
+  priority: P1
+  title: /tools/zoom-in-photos 移动端上传 1K.jpg 后到达放大结果态
+  page_path: /tools/zoom-in-photos
+  page_map: page_map/pokecut/seo_upload_mobile/tools__zoom-in-photos_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: same_page_result
+  default_panel: null
+  expected_function_panel: null
+  expected_function_panel_kind: none
+  expected_canvas: []
+  required_keywords:
+  - Before
+  - After
+  - Download HD
+  timeout_ms: 120000
+  screenshot: L2-011_final.png
+- id: L2-012
+  layer: L2
+  priority: P1
+  title: /tools/monogram-maker 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/monogram-maker
+  page_map: page_map/pokecut/seo_upload_mobile/tools__monogram-maker_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: null
+  expected_function_panel_kind: none
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-012_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-013
+  layer: L2
+  priority: P1
+  title: /tools/photo-background-editor 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/photo-background-editor
+  page_map: page_map/pokecut/seo_upload_mobile/tools__photo-background-editor_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Background
+  expected_function_panel: 'Change BG'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-013_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-014
+  layer: L2
+  priority: P1
+  title: /tools/phone-wallpaper-maker 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/phone-wallpaper-maker
+  page_map: page_map/pokecut/seo_upload_mobile/tools__phone-wallpaper-maker_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: 'Remove Background'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-014_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-015
+  layer: L2
+  priority: P1
+  title: /tools/photo-border 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/photo-border
+  page_map: page_map/pokecut/seo_upload_mobile/tools__photo-border_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: null
+  expected_function_panel_kind: none
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-015_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-016
+  layer: L2
+  priority: P1
+  title: /tools/silhouette-maker 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/silhouette-maker
+  page_map: page_map/pokecut/seo_upload_mobile/tools__silhouette-maker_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: 'Remove Background'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-016_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-017
+  layer: L2
+  priority: P1
+  title: /tools/add-hearts-to-photo 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/add-hearts-to-photo
+  page_map: page_map/pokecut/seo_upload_mobile/tools__add-hearts-to-photo_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: null
+  expected_function_panel_kind: none
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-017_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-018
+  layer: L2
+  priority: P1
+  title: /tools/youtube-banner-maker 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/youtube-banner-maker
+  page_map: page_map/pokecut/seo_upload_mobile/tools__youtube-banner-maker_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: 'Crop'
+  expected_function_panel_kind: crop
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-018_final.png
+  expect_crop_state: true
+  known_bug:
+    id: BUG-2026-0916-01
+    status: open
+    summary: 移动端 /tools/youtube-banner-maker 上传 1K.jpg 后进入 /create/edit 却打开通用 Trending Tools 工具列表面板，未进入 YouTube 横幅裁剪态
+    requirement_expected: 裁剪态——画布上出现裁剪框（含网格线）+ 可见 Crop 按钮，而非通用 Trending Tools 工具列表
+    evidence:
+    - evidence/L2-018_panel_reprobe.json
+    - evidence/L2-018_panel_reprobe.log
+    - data/screenshots/L2-018_final.png
+    - page_map/pokecut/seo_upload/tools__youtube_banner_maker_v1.yaml（PC 端同页：裁剪框 + Template 3:4 + Crop 按钮）
+    reported_by: user
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-019
+  layer: L2
+  priority: P1
+  title: /tools/car-photo-editor 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/car-photo-editor
+  page_map: page_map/pokecut/seo_upload_mobile/tools__car-photo-editor_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Background
+  expected_function_panel: null
+  expected_function_panel_kind: none
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-019_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-020
+  layer: L2
+  priority: P1
+  title: /tools/add-name-and-date-on-photo 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/add-name-and-date-on-photo
+  page_map: page_map/pokecut/seo_upload_mobile/tools__add-name-and-date-on-photo_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: null
+  expected_function_panel_kind: none
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-020_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-021
+  layer: L2
+  priority: P1
+  title: /de/tools/big-head-cutout-face-cutout 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /de/tools/big-head-cutout-face-cutout
+  page_map: page_map/pokecut/seo_upload_mobile/de__tools__big-head-cutout-face-cutout_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Tools
+  expected_function_panel: 'Hintergrund entfernen'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-021_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-022
+  layer: L2
+  priority: P1
+  title: /tools/christmas-card-maker 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /tools/christmas-card-maker
+  page_map: page_map/pokecut/seo_upload_mobile/tools__christmas-card-maker_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: Trending Tools
+  expected_function_panel: null
+  expected_function_panel_kind: none
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-022_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-023
+  layer: L2
+  priority: P1
+  title: /zh-tw/tools/motion-blur 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /zh-tw/tools/motion-blur
+  page_map: page_map/pokecut/seo_upload_mobile/zh-tw__tools__motion-blur_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: 背景
+  expected_function_panel: null
+  expected_function_panel_kind: none
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-023_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合
+- id: L2-024
+  layer: L2
+  priority: P1
+  title: /th/tools/hd-pic-converter 移动端上传 1K.jpg 后进入旧画布（底部主面板）
+  page_path: /th/tools/hd-pic-converter
+  page_map: page_map/pokecut/seo_upload_mobile/th__tools__hd-pic-converter_v1.yaml
+  state_ref: states.landing.buttons.main_upload
+  upload_selector: button.seo-first-screen-upload-button
+  upload_fallback_selector: input[type=file]
+  route: legacy_canvas
+  default_panel: เครื่องมือฟรี
+  expected_function_panel: 'เครื่องมือปรับภาพ'
+  expected_function_panel_kind: workspace
+  expected_canvas:
+  - - 350
+    - 468
+  required_keywords: []
+  timeout_ms: 120000
+  screenshot: L2-024_final.png
+  panel_note: default_panel 为探索实测参考值；实测运行时默认激活 tab 可能是 Trending Tools 或该工具类目，断言只校验激活 tab 属于本页 tab 集合

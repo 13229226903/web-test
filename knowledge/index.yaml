@@ -1,0 +1,129 @@
+index_schema_version: '1.0'
+generated_at: '2026-09-21T19:47:55+08:00'
+knowledge_index:
+- knowledge_id: KB-RULE-0003
+  file: shared.yaml
+  subject_key: account.permission.select_by_test_purpose
+  knowledge_type: permission_rule
+  status: active
+  priority: P0
+  confidence: high
+  source_of_truth: PROJECT.md + artifacts/runtime/common.md
+  last_verified_at: '2026-09-21'
+  title: 账号态必须按用例目的选择，不使用 conftest 默认值替代
+  summary: 会员、单项购买、免费和匿名账号改变业务预期时，必须按用例目的选择账号态。
+  tags:
+  - all
+  - anonymous
+  - auth
+  - credits
+  - desktop
+  - download
+  - free
+  - generate
+  - logged_in
+  - logged_out
+  - login
+  - member
+  - mobile
+  - permission
+  - purchase
+  - single_purchase
+- knowledge_id: KB-RULE-0002
+  file: shared.yaml
+  subject_key: auth.mobile.signup_modal_login
+  knowledge_type: business_rule
+  status: active
+  priority: P0
+  confidence: high
+  source_of_truth: PROJECT.md
+  last_verified_at: '2026-09-21'
+  title: 移动端登录通过 Sign up 弹窗完成
+  summary: 移动端没有独立 Login 入口，需要从 Sign up 进入弹窗后填写 Email 和验证码。
+  tags:
+  - auth
+  - free
+  - logged_out
+  - login
+  - member
+  - mobile
+  - signup
+- knowledge_id: KB-ENV-0004
+  file: shared.yaml
+  subject_key: environment.generation.test_then_predeploy
+  knowledge_type: environment_behavior
+  status: active
+  priority: P1
+  confidence: high
+  source_of_truth: PROJECT.md
+  last_verified_at: '2026-09-21'
+  title: 生成类探索优先测试服，失败后再切预部署并重新登录
+  summary: 生成、购买、订阅或 credits 探索先使用测试服，只有测试服失败才切预部署并重新登录。
+  tags:
+  - all
+  - credits_failed
+  - desktop
+  - failed
+  - free
+  - generate
+  - generation
+  - generation_failed
+  - initial
+  - member
+  - mobile
+  - purchase
+  - single_purchase
+  - submitted
+  - subscribe
+  - subscription
+- knowledge_id: KB-PITFALL-0005
+  file: modules/seo-landing.yaml
+  subject_key: seo_landing.gateway_502_entry_not_mounted.retry_once
+  knowledge_type: historical_pitfall
+  status: active
+  priority: P1
+  confidence: high
+  source_of_truth: knowledge
+  last_verified_at: '2026-09-21'
+  title: 网关 502/504 或入口未挂载先同 URL 重试一次
+  summary: 落地页返回 502/504 或主入口短时间未挂载时，先同一 URL 重试一次，不能立即判定为业务断言失败。
+  tags:
+  - '502'
+  - '504'
+  - anonymous
+  - desktop
+  - entry_not_mounted
+  - initial
+  - landing
+  - load
+  - mobile
+  - retry
+  - seo-landing
+  - timeout
+  - upload
+  - 入口未挂载
+  - 网关
+- knowledge_id: KB-ENTRY-0001
+  file: modules/seo-landing.yaml
+  subject_key: seo_landing.main_upload_entry
+  knowledge_type: legacy_entry
+  status: active
+  priority: P1
+  confidence: high
+  source_of_truth: knowledge
+  last_verified_at: '2026-09-21'
+  title: SEO 落地页主上传入口使用稳定选择器
+  summary: SEO 落地页主上传入口优先使用模板级稳定选择器，不依赖 CTA 文案。
+  tags:
+  - anonymous
+  - desktop
+  - entry_not_mounted
+  - file_chooser
+  - first_screen
+  - initial
+  - landing
+  - main_upload
+  - mobile
+  - seo-landing
+  - timeout
+  - upload

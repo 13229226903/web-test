@@ -1,0 +1,52 @@
+page: Zoom In Photos (Mobile)
+url: /tools/zoom-in-photos
+viewport: mobile 390x844 (Pixel 10 emulation, dpr=3, touch)
+landmark:
+  selector: input[type=file]
+  description: 移动端 SEO 页主上传入口；实际点击目标见 states.landing.buttons.main_upload。
+entry:
+  from: 直接访问 /tools/zoom-in-photos（移动端）
+  trigger: 登录（移动端 Sign up 弹窗内输入邮箱+验证码提交）后，点击主上传入口。
+  selector: input[type=file]
+elements:
+  main_upload_trigger:
+    selector: (由 "clicked:Upload Image" 实测触发)
+    description: 本次实际执行的移动端主上传入口。
+  file_input:
+    selector: input[type=file]
+    description: 与上传区域关联的文件输入（实测 fallback setInputFiles 可生效）。
+states:
+  landing:
+    description: 移动端 SEO 落地页初始态。
+    trigger: 移动端访问 /tools/zoom-in-photos。
+    url_or_state_key: http://10.17.1.66:3001/tools/zoom-in-photos
+    buttons:
+      main_upload:
+        selector: button.seo-first-screen-upload-button
+        fallback_selector: input[type=file]
+        visible_condition: 移动端首屏上传区域渲染完成。
+        enabled_condition: 已登录（移动端 Sign up 可登录）或匿名可上传。
+        action_result: 点击上传入口并经 file chooser / setInputFiles 上传 test_images/1K.jpg；上传后进入 same_page。
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - 会员账号 450832596@qq.com（移动端 Sign up 弹窗可完成登录）
+        - test_images/1K.jpg
+        - 移动端视口 390x844
+        assertions_hint: 上传后 URL=http://10.17.1.66:3001/tools/zoom-in-photos；默认激活面板=None。
+        notes: 证据：artifacts/2026-09-15_seo_main_upload_mobile_interactions/shots/mobile2_tools__zoom-in-photos_after_upload.png；Playwright MCP 实际点击移动端主上传入口；R8 实测（evidence/landing_selector_scan.json）：该页存在可见的 button.seo-first-screen-upload-button，作为主路径；input[type=file] 为兜底。
+  after_upload:
+    description: 上传后稳定态：same_page，默认激活面板=None。
+    trigger: 主上传入口 + test_images/1K.jpg（移动端）
+    url_or_state_key: http://10.17.1.66:3001/tools/zoom-in-photos
+    panels:
+      default_active_panel: None
+      tabs:
+        []
+    buttons: {}
+notes:
+- 任务来源：2026-09-15_seo_main_upload_mobile_interactions；驱动：Playwright MCP only（移动端设备模拟）。
+- 范围只覆盖移动端 SEO 页主上传入口与上传后首个稳定态；未展开面板内部控件。
+- 默认面板：None；画布尺寸：[[206, 275]]。
+- 证据截图：artifacts/2026-09-15_seo_main_upload_mobile_interactions/shots/mobile2_tools__zoom-in-photos_after_upload.png。
+- 登录说明：移动端首页/工具页只有 Sign up 入口，弹窗内直接输入邮箱+验证码提交即可完成登录。

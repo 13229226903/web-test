@@ -1,0 +1,84 @@
+entry_path: /create
+account:
+  email: 450832596@qq.com
+  code: "123456"
+  display_name: User8JY
+reference_image: test_images/1K.jpg
+original_resolution:
+  width: 1200
+  height: 1600
+waits:
+  page_load_ms: 7000
+  action_settle_ms: 1200
+  submit_timeout_ms: 60000
+  result_timeout_ms: 240000
+  poll_interval_ms: 1500
+cases:
+  - case_id: L6-001
+    prompt: enhance
+    expected_style_id: pkweb_comfyui_enhance_natural
+    expected_resolution:
+      width: 3072
+      height: 4096
+    expected_resolution_label: 4K
+  - case_id: L6-002
+    prompt: 人像增强
+    expected_style_id: pkweb_comfyui_enhance_portrait
+    expected_resolution:
+      width: 3072
+      height: 4096
+    expected_resolution_label: 4K
+  - case_id: L6-003
+    prompt: 文字增强
+    expected_style_id: pkweb_comfyui_enhance_text
+    expected_resolution:
+      width: 3072
+      height: 4096
+    expected_resolution_label: 4K
+  - case_id: L6-004
+    prompt: 老照片修复
+    expected_style_id: photoenhance_oldphoto
+    expected_resolution:
+      width: 2400
+      height: 3200
+    expected_resolution_label: 2x
+  - case_id: L6-005
+    prompt: 去水印
+    expected_style_id: pc_remove_watermark
+    expected_resolution:
+      width: 1200
+      height: 1600
+    expected_resolution_label: same_as_original
+  - case_id: L6-006
+    prompt: 穿上比基尼
+    expected_style_id: aireplace_bikini_1
+    expected_resolution:
+      width: 1200
+      height: 1600
+    expected_resolution_label: same_as_original
+  - case_id: L6-007
+    prompt: 去除眼袋
+    expected_style_id: pkweb_comfyui_removeeyebag
+    expected_resolution:
+      width: 1200
+      height: 1600
+    expected_resolution_label: same_as_original
+  - case_id: L6-008
+    prompt: 增肌
+    expected_style_id: pkweb_comfyui_male_strongabs
+    expected_resolution:
+      width: 1200
+      height: 1600
+    expected_resolution_label: same_as_original
+  - case_id: L6-009
+    prompt: 变成光头
+    expected_style_id: pkweb_comfyui_baldhead
+    expected_resolution:
+      width: 1200
+      height: 1600
+    expected_resolution_label: same_as_original
+  - case_id: L6-010
+    prompt: 背景换成沙滩
+    expected_style_id: ""
+    expected_resolution: null
+    expected_resolution_label: not_required

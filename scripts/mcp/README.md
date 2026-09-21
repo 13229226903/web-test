@@ -10,6 +10,8 @@ npx -y @playwright/mcp@latest --port 8931 --host 127.0.0.1 --allowed-hosts * --i
 
 - `--allowed-hosts *`：不设会返回 403（Host 校验）
 - `--isolated`：内存态 profile，避免污染本机浏览器配置
+- 移动端探索：加设备模拟参数（如 `--mobile`，或等价 device emulation）——viewport / UA / `is_mobile` / `touch` 是 context 级参数，
+  缺了会以桌面 context 打开，页面渲染 PC 版且**不报错**；导航后先跑 viewport guard 自检再开始探索。
 
 ## 驱动会话
 

@@ -1,0 +1,85 @@
+page: CV Photo Editor
+url: /tools/cv-photo-editor
+landmark:
+  selector: section.seo-first-screen-layout
+  description: CV Photo Editor SEO 首屏与首次引导上传弹窗。
+entry:
+  from: 直接访问 /tools/cv-photo-editor
+  trigger: 点击首屏 Create My CV Photo，打开引导弹窗。
+  selector: button.seo-first-screen-upload-button
+elements:
+  main_upload_area:
+    selector: section.seo-first-screen-layout
+    description: CV 工具首屏区域。
+  main_upload_trigger:
+    selector: button.seo-first-screen-upload-button
+    role_or_text: Create My CV Photo
+    description: 首次点击后打开引导上传弹窗，不直接打开 file chooser。
+  file_input:
+    selector: '#file-upload'
+    description: 引导弹窗内关联的文件输入；页面存在两份同名 id，实际操作用引导弹窗内一份。
+  guide_upload_trigger:
+    selector: p:text-is("Upload Image")
+    role_or_text: Upload Image
+    description: 引导弹窗内的真实上传触发点；点击后打开 file chooser。
+tabs: {}
+modals:
+  guide_upload:
+    selector: div.cursor-pointer:has(p:text-is("Upload Image"))
+    description: 首次上传引导弹窗，含正确/错误示例轮播、Upload Image、拖拽/粘贴说明。
+    trigger: 点击 landing 态 Create My CV Photo
+    buttons: &id001
+      guide_upload:
+        selector: p:text-is("Upload Image")
+        role_or_text: Upload Image
+        visible_condition: 引导弹窗打开
+        enabled_condition: 页面完成 CSR 渲染且账号已登录
+        action_result: 点击后打开 file chooser；选择 test_images/1K.jpg 后关闭弹窗，并在原 SEO 页执行 idphoto/removeBg 任务处理。
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - 会员账号 450832596@qq.com
+        - test_images/1K.jpg
+        - 测试服
+        assertions_hint: file chooser 打开；选择文件后出现原页处理态，随后进入证件照画布。
+        notes: 证据 shots/cv_round2_guide_open.png。
+states:
+  landing:
+    description: CV Photo Editor SEO 落地页初始态。
+    trigger: 导航到 /tools/cv-photo-editor 并完成登录。
+    url_or_state_key: http://10.17.1.66:3001/tools/cv-photo-editor
+    buttons:
+      main_upload:
+        selector: button.seo-first-screen-upload-button
+        role_or_text: Create My CV Photo
+        visible_condition: SEO 首屏完成渲染。
+        enabled_condition: 已登录且页面可交互。
+        action_result: 点击后打开首次上传引导弹窗，不直接打开 file chooser。
+        reversible: true
+        explore_status: covered
+        dependencies:
+        - 会员账号 450832596@qq.com
+        - 测试服
+        assertions_hint: 引导弹窗可见，包含 Upload Image 和示例图片。
+        notes: 证据 shots/cv_round2_guide_open.png。
+  guide_upload:
+    description: 首次上传引导弹窗打开态。
+    trigger: 点击 landing.main_upload。
+    url_or_state_key: /tools/cv-photo-editor + guide modal open
+    buttons: *id001
+  processing_on_landing:
+    description: 选择图片后仍在原页处理；MCP console 在约 7.7s 记录 removeBg/idphoto 开始处理，约 11.6s 记录生成成功。
+    trigger: 引导弹窗 Upload Image + test_images/1K.jpg
+    url_or_state_key: /tools/cv-photo-editor#processing
+    buttons: {}
+  after_upload:
+    description: 处理成功后进入证件照画布页；默认展开 Photo Size，Country/Region=United States，United States Passport 选中。
+    trigger: 原页处理成功
+    url_or_state_key: /tools/id-photo-edit?pid=<uuid>#
+    buttons: {}
+notes:
+- 任务来源：2026-09-14_seo_main_upload_interactions；驱动：Playwright MCP (@playwright/mcp 0.0.79)。
+- 首次打开/首次点击 Create My CV Photo 后先出现引导弹窗，必须点击弹窗内 Upload Image 才会触发真正 file chooser。
+- MCP console 证据：sendGaEvent 上传成功；[AIGC 公告板] funcType=idphoto/styleId=none/serverFuncType=removeBg；约 3.9 秒后生成成功；随后进入 /tools/id-photo-edit?pid=<uuid>#。
+- 处理任务未在可访问 console 中输出 taskId；resourceCode=not set，styleId=none，记录为当前证据限制，不伪造 taskId。
+- 证据截图：shots/cv_round2_guide_open.png、shots/tools__cv_photo_editor_after_upload.png。

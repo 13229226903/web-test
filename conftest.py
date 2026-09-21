@@ -211,6 +211,62 @@ def session_page(session_context):
     page.close()
 
 
+# ═══════════════════════════════════════════════════════════════
+# 移动端会话 fixture —— 仅供 SEO 移动端套件（tests/mobile/）使用
+# 口径：Pixel 10 UA（历史例外；规则默认 iPhone 390x844，见 PROJECT.md「素材与环境」）
+# 新移动端任务请按 iPhone 默认口径另建 fixture，不要直接复用本组
+# 说明：fixture 必须放仓库根。子目录 conftest.py 会以同名模块 `conftest` 占位，
+#      遮蔽本文件，导致其它用例 `from conftest import allure_screenshot` ImportError
+#      （rule.md「脚本复用与仓库资源路径」）。
+# ═══════════════════════════════════════════════════════════════
+
+def login_mobile(page, email: str, code: str) -> None:
+    """移动端登录：只有 `Sign up` 入口，弹窗内直接填邮箱+验证码提交即登录（无需点 Send）。"""
+    from playwright.sync_api import expect as pw_expect
+
+    if page.get_by_role("button", name="Sign up").count() == 0:
+        return
+    page.get_by_role("button", name="Sign up").first.click()
+    page.wait_for_timeout(1200)
+    email_input = page.get_by_role("textbox", name="Email")
+    pw_expect(email_input).to_be_visible(timeout=15000)
+    email_input.fill(email)
+    page.get_by_role("textbox", name="Verification Code").fill(code)
+    page.get_by_role("button", name="Sign up").last.click()
+    page.wait_for_timeout(8000)
+
+
+@pytest.fixture(scope="session")
+def seo_mobile_context(browser, base_url):
+    """SEO 移动端专用：390x844 / dpr3 / touch / Pixel 10 UA（历史例外口径），只登录一次。"""
+    email = os.environ.get("POKECUT_TEST_EMAIL", "450832596@qq.com")
+    code = os.environ.get("POKECUT_TEST_CODE", "123456")
+
+    context = browser.new_context(
+        viewport={"width": 390, "height": 844},
+        device_scale_factor=3,
+        is_mobile=True,
+        has_touch=True,
+        locale="en-US",
+        user_agent=("Mozilla/5.0 (Linux; Android 16; Pixel 10) AppleWebKit/537.36 "
+                    "(KHTML, like Gecko) Chrome/154.0.8037.0 Mobile Safari/537.36"),
+    )
+    page = context.new_page()
+    page.goto(base_url, timeout=120000)
+    page.wait_for_timeout(4000)
+    login_mobile(page, email, code)
+    yield context
+    context.close()
+
+
+@pytest.fixture
+def seo_mobile_session_page(seo_mobile_context):
+    """SEO 移动端每条用例独立 page，复用移动端登录态。"""
+    page = seo_mobile_context.new_page()
+    yield page
+    page.close()
+
+
 @pytest.fixture
 def standalone_page(playwright):
     """独立 chromium page — 绕过 pytest-playwright 的 browser 管理，

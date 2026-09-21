@@ -12,6 +12,15 @@
 - 生成 / 购买 / 订阅 / credits 探索遵守项目账号和环境规则，并记录实际环境与状态变化。
 - 上传素材只能使用 `test_images/` 现有文件。
 - `seo-new-pages` 仅在用户明确要求 SEO 新页检测时使用。
+- MCP 声明不跨会话继承：历史 artifact 只能证明当时的记录，不能证明当前会话已暴露对应 MCP 工具。任务要求 `playwright_mcp_only` 时，必须先在当前会话做最小 preflight；未通过则记录 `playwright_mcp_unavailable` 并停止。禁止静默降级为本地 Playwright、CDP 或 CUA；若用户明确授权替代驱动，必须在 `state.md` / progress 中如实改写并记录实际 driver。
+
+## 探索交接与失效规则
+
+- 探索阶段固定产出 `sync.md`、`exploration_report.md`、`evidence/automation_handoff.yaml`；前者是完整事实，第二个是人审摘要，第三个是自动化实现契约。
+- `sync.md`、`page_map`、`cases.md` 任一发生版本、范围、账号、入口或 expected 变化，自动化 handoff 立即失效，必须回到 `ready_for_case_design` 并重新校验。
+- 新增 / 变更任务的 test-writing 只能消费 `automation_handoff.status=implementation_ready` 的交接包；缺少 `ready_when`、reset、特殊 driver、事件采集边界或证据时不得自行补全。无变化的 stable regression 直接复用 confirmed registry 资产。
+- 同一根因连续两次代码自修失败，必须退回上游角色；代码阶段不承担第二次探索。
+- 代码调试不默认使用 MCP；只有故障分类为 `page_behavior_unknown` 时，才回退 page-map-sync 并重新使用 MCP 复核页面事实。
 
 ## Artifact 接力
 
@@ -45,3 +54,15 @@
 - Base URL、验证码、账号、素材白名单、DEBUG 开关文案等固定值不在此重复固化；全局账号 / 验证码 / 素材 / DEBUG 以 `PROJECT.md` 为准，通用编码与技术规则以 `rule.md` 为准。
 - 账号态由探索结果（confirmed `sync.md` / `cases.md`）决定并写入任务级 `data/*.yaml`，探索与脚本阶段都据此取值，`conftest.py` 默认值仅兜底，不作为选账号依据。
 - 任务级覆盖以对应任务的 `state.md`、`data/*.yaml` 和已确认 artifact 为准。
+
+## 业务知识库运行契约
+
+- 知识库目录为 `knowledge/`；索引为 `knowledge/index.yaml`，正文按 `shared.yaml` 与 `modules/<module>.yaml` 拆分，禁止把所有项目逻辑合并成单一总文档。
+- 知识库是业务经验检索层，不替代 `rule.md`、`PROJECT.md`、`page_map/`、`sync.md`、`cases.md`；每条知识必须通过 `source_refs` 指向权威来源。
+- 业务任务初始化必须做窄范围前置检索：先查索引，再读取 Top-K 命中切片；禁止全量加载知识库。
+- 初始化最多 2 个 Query、每个最多召回 5 条；运行时单次最多 4 条；异常兜底单次最多 3 条；同主题无新证据不得重复检索。
+- 每次检索必须记录 `hit_exact` / `hit_related` / `no_hit` / `conflict` 之一；无命中不是失败，但高风险主题必须转为现场验证清单。
+- `active` 可作为候选依据；`needs_verification` 不得直接转为测试断言；`conflict`、`superseded`、`retired`、`ui_residue` 不得作为默认入口或预期。
+- 角色发现的可复用经验先记录为当前任务 `knowledge_candidate`，归档前由 orchestrator 汇总、去重并向用户确认；未经确认不得写入 `active`。
+- 知识库禁止保存密码、验证码、Cookie、Token、API key 等敏感值。
+- 正式知识按业务模块归档，不按 task_id 建长期文件；task_id 只保留在候选、source_refs、evidence 和验证记录中。跨模块规则进 shared，模块规则进 `knowledge/modules/<module>.yaml`，页面当前事实进 page_map notes。

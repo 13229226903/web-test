@@ -26,6 +26,8 @@ description: 根据 confirmed cases 与 versioned page_map 编写自动化脚本
 6. 每条用例有可执行步骤清单（进入、操作、等待、断言、截图点）。
 7. AI 审查用例有可执行视觉判断目标，不能只写“截图正常”。
 8. Layer / 执行策略 / 用例 ID / L5 边界值可核对；sync 无未处理阻塞 bug_candidates。
+9. 完整流程或本轮发生探索 / 需求变化时，`automation_handoff.yaml` 必须存在且 `status=implementation_ready`；page_map 版本与 cases / sync 一致；每个 case_id 都有 execution contract。仅执行已登记且无变化的 `stable_regression` 可直接复用 registry 资产。
+10. handoff 已闭合账号隔离、环境、状态 ready/exit、特殊 driver、事件采集边界和 evidence；不得在写代码阶段自行补业务事实。
 
 ## 新功能阻塞缺陷处理
 - 只消费 `final_after_sync` 且 confirmed 的 cases；若仍是 draft / page_ref TBD / 有未处理阻塞 bug，写 `impl.md status=blocked` 退回。
@@ -34,19 +36,21 @@ description: 根据 confirmed cases 与 versioned page_map 编写自动化脚本
 ## 实现风格
 1. 优先复用既有数据驱动 / PO 层，不为单场景硬编码一次性 selector。
 2. selector 走稳定定位（ID / role / 稳定属性 / 文本，禁用 hash class / :nth-child / 位置索引）——共享红线。
-3. 按钮从 cases 指向的 `states.*.buttons.*.selector` 取，按 trigger / visible / enabled 执行前置；断言覆盖 action_result / assertions_hint。
-4. 上传素材只用 cases 指定的 `test_images/` 文件，不生成 / 下载 / 换图。
-5. 测试**用例文件**统一 `tests/`；跨 `tests/` 与 `archive/` 复用的公共 helper / 驱动模块放**仓库根**，不要在归档目录留副本（详见 `rule.md`）。
-6. 断言：有意义的字段都断言；expected 不为空 / `0` / `-`；视觉 fail 必须传导失败。
-7. 测试数据外置 `data/*.yaml`；账号态按 confirmed `cases.md` / `sync.md` 写入，`conftest.py` 默认仅兜底。
-8. 去重 / 多值覆盖：一条用例覆盖多个等价值时用单条内部循环，不用 `parametrize` 展开，保证 Allure 报告用例总数 = cases.md `case_count`（仅当 cases.md 明确要求参数化时才用）。
+3. 按钮和动作只从 handoff 的 `button_ref` / `driver` / `ready_when` 实现，再解析到 cases 指向的 `states.*.buttons.*`；不得根据自然语言重新猜入口、文案、等待或 fallback。
+4. 断言覆盖 handoff 的 action result、event_capture 和 cases 的 expected；业务实际与需求不一致时保留断言并回传 bug_candidate。
+5. 上传素材只用 cases 指定的 `test_images/` 文件，不生成 / 下载 / 换图。
+6. 测试**用例文件**统一 `tests/`；跨 `tests/` 与 `archive/` 复用的公共 helper / 驱动模块放**仓库根**，不要在归档目录留副本（详见 `rule.md`）。
+7. 断言：有意义的字段都断言；expected 不为空 / `0` / `-`；视觉 fail 必须传导失败。
+8. 测试数据外置 `data/*.yaml`；账号态和 reset 策略按 confirmed handoff / cases 写入，`conftest.py` 默认仅兜底。
+9. 去重 / 多值覆盖：一条用例覆盖多个等价值时用单条内部循环，不用 `parametrize` 展开，保证 Allure 报告用例总数 = cases.md `case_count`（仅当 cases.md 明确要求参数化时才用）。
 
 ## 自跑流程
-1. 写代码 / data → 2. compliance 自检（无删断言 / 弱化 / 空 expected / 通配 selector）→ 3. `collect-only` 无 error/warning → 4. headless 自跑 → 5. 全过写 impl.md completed；review 后追加 report-output 生成并打开 allure matrix 报告。
+1. `validate_automation_handoff.py` → 2. 写代码 / data → 3. compliance 自检（无删断言 / 弱化 / 空 expected / 通配 selector）→ 4. `collect-only` 无 error/warning → 5. 按 handoff 分组做低成本代表路径 smoke → 6. headless 自跑 → 7. 全过写 impl.md completed；review 后追加 report-output 生成并打开 allure matrix 报告。
+- 同一根因连续 2 次失败（账号 / 状态 / 入口 / 事件窗口 / 特殊 driver）时，停止自修并退回 handoff 所属角色；不得把探索重新塞进 test-writing。
 - 失败 round+1，最多 3 轮，超限 `blocked_after_3_retries`。
 
 ## impl.md 结构（字段表）
-- frontmatter：`task_id`、`agent`、`status(completed|blocked|blocked_after_3_retries|likely_bug)`、`inputs`、`outputs(test_file,data_file,collect_only,self_run)`、`regression_candidate(eligible,reason,suggested_tests,suggested_archive,registry_key)`、`next_agent`。
+- frontmatter：`task_id`、`agent`、`status(completed|blocked|blocked_after_3_retries|likely_bug)`、`inputs(cases,sync,page_map,automation_handoff)`、`outputs(test_file,data_file,collect_only,self_run,handoff_validation)`、`regression_candidate(eligible,reason,suggested_tests,suggested_archive,registry_key)`、`next_agent`。
 - 正文：实现摘要、每轮自修日志、命令、结果、失败归因、报告路径与截图覆盖说明。
 
 ## Vue 交互与文件选择器
@@ -112,6 +116,16 @@ description: 根据 confirmed cases 与 versioned page_map 编写自动化脚本
 - 异常 / 负向用例截图必须贴近异常提示或失败状态；预期提示未出现时，仍要在失败前截图当前态并让用例失败，不要用普通首屏截图伪装异常覆盖。
 - 来源：`2026-09-07_pokecut_pc_home_dev_interactions`，2026-09-08 复跑 17/17 通过，空白截图 0；`2026-09-08_pokecut_pc_batch_dev_interactions` 补充 step 附件、状态级截图与等价状态去重规则。
 
+- 截图前同样要满足 `rule.md`「画布"已渲染"的判定」的**布局指纹**判据（canvas 数 + 工作区画布 / 选中框 / 面板几何连续两次一致），
+  否则会截到主画布与工具工作区画布同时可见的过渡帧。
+
+## 调试驱动边界
+
+- 代码实现、fixture、collect-only、断言、Allure 和本地自跑问题，默认使用 pytest + Playwright 的可复跑测试驱动，不调用 MCP。
+- 只有当失败无法由代码 / 数据 / 环境解释，且涉及入口、状态、selector、ready 条件、账号业务行为或页面实际结果时，才标记 `page_behavior_unknown`，停止猜测并退回 page-map-sync；page-map-sync 在当前会话完成 MCP preflight 后再复探。
+- 重新复核页面事实得到的结果只能写回 `sync.md` / page_map / automation_handoff，不能把本地调试结果伪装为 MCP 证据。
+- handoff 已声明的 `driver`（如 `touch`、`dispatchEvent`、坐标点击）可以在自动化实现中使用，但不得在代码阶段临时新增未经探索证据支持的 driver。
+
 ## 失败分类
 | 现象 | 怀疑 | 行动 |
 |---|---|---|
@@ -124,6 +138,12 @@ description: 根据 confirmed cases 与 versioned page_map 编写自动化脚本
 | 只有截图无结果断言 | 用例实现不完整 | 补真实结果断言或 AI 审查 |
 | collect-only 出现 `[None]` / `[最小值]` | 参数 ID 缺实际值 | 回退用例设计，不真跑 |
 | PRD 边界与页面实际不一致 | 产品缺陷 / PRD 差异 | 保留断言，标 `likely_bug` / `PRD_actual_mismatch` 请用户裁决 |
+| handoff 缺 page_ref / ready_when / reset / event window | 探索或用例交接不完整 | 停止写代码，退回 page-map-sync / test-case-design |
+| 页面入口 / 状态 / selector / ready 条件与 handoff 不一致 | 页面事实未知或发生漂移 | 标记 `page_behavior_unknown`，回 page-map-sync + MCP 复核 |
+| 同一业务根因连续两次自修失败 | handoff 证据不足或状态机缺口 | 停止重试，退回上游，不扩展 round |
+
+> **已知产品缺陷的标记口径**：用 `pytest.mark.xfail(strict=True)` 挂已知缺陷时，Allure 显示的是 **skipped 而不是 failed**；
+> 必须在交付说明里显式告知，需要红色失败信号时去掉 xfail。来源：`2026-09-15_seo_main_upload_mobile_interactions`（L2-018 / BUG-2026-0916-01）。
 
 ## 角色红线（共享红线见 common.md）
 - 按钮交互不得脱离 `states.*.buttons` 自行重猜 selector；page_map 缺失退回 page-map-sync。
@@ -136,11 +156,25 @@ description: 根据 confirmed cases 与 versioned page_map 编写自动化脚本
 - 自修复只允许改 selector、等待、导航、数据格式、测试实现；不得为绿灯改 expected / 语义。
 - Allure 中文标题 / 描述 / 步骤并含 Layer；参数化标题显示实际值。
 - 不省略 progress.log。
+- 未通过 handoff validator 不得写代码；不得在代码阶段新增未经探索确认的业务入口、账号规则、状态转换或 expected。
 - 统计埋点 / GA 事件（探索结论中的事件名与触发方式）不写入回归脚本；埋点验证只在探索 sync.md / evidence 层输出，除非用户显式要求写。
 
 ## progress
-- start / step:wrote <file> / step:collect_only / step:round N / done:impl.md / gate:regression_archive_candidate
+- start / step:validate_handoff / step:wrote <file> / step:collect_only / step:round N / step:route_back <role> / done:impl.md / gate:regression_archive_candidate
 
 ## 上下游
 - 上游：orchestrator（cases confirmed）。
 - 下游：全过 → null（orchestrator 派 review）；selector 漂移 → page-map-sync；真 bug / PRD 差异 / 超 3 轮 → null 等人。
+
+## 自动化交接使用
+
+- 完整流程或本轮发生探索 / 需求变化时，入口通过检查后必须先读取 `automation_handoff.yaml`，再按 `execution_contract_ref` 读取 cases 和对应 evidence；不全量扫描历史 evidence。
+- handoff 是新增 / 变更实现事实的唯一输入；cases / sync 的自然语言只用于说明和追溯。缺字段、版本不一致或状态未 ready 时，退回上游，不在代码阶段猜测。稳定回归无变化时以 registry + confirmed 资产为准。
+
+## 业务知识库使用
+
+- 入口前置检查通过后，只读取 confirmed `cases.md` / `sync.md` 中引用的 `knowledge_id` 和 orchestrator 传入的相关上下文，不全量扫描知识库。
+- `active` 知识只能作为已确认 cases 的补充依据；`needs_verification`、`conflict`、`superseded`、`retired`、`ui_residue` 不得直接成为 selector、expected 或业务断言。
+- 业务账号态、历史校验和状态前置必须能追溯到 cases、sync、PROJECT.md 或 active 知识；selector 仍必须来自当前 versioned `page_map`。
+- 运行中若出现业务型异常，最多追加一次 exception Query；selector 漂移、代码错误、Allure 或截图问题按现有回退路径处理。
+- 发现反复出现且可复用的业务实现经验时，在 `impl.md` 或 progress 中记录 `knowledge_candidate`，不直接写入 active。
