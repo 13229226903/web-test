@@ -1,0 +1,17 @@
+schema_version: '1.0'
+updated_at: '2026-11-04'
+policy:
+  definition: 'Active quarantine entries are visible in reports, excluded from release gate pass counts, and never counted as clean_pass or retry_pass.'
+  required_fields:
+    - case_id
+    - reason
+    - owner
+    - opened_at
+    - expires_at
+    - evidence
+  upgrade_after_consecutive_runs: 3
+  prohibited:
+    - 'Deleting quarantined results from attempt logs or reports.'
+    - 'Using quarantine to bypass a known product bug without an explicit owner and expiry.'
+    - 'Counting quarantined cases as passed.'
+quarantine: []

@@ -7,20 +7,11 @@ import pytest
 import allure
 from pathlib import Path
 from helpers_create_entry import dismiss_create_promo
+from helpers.waiting import poll_until, settle, wait_ready, wait_visible
 from playwright.sync_api import Page, expect as pw_expect
 from conftest import allure_screenshot
 
-def _repo_root():
-    """归档副本位于 archive/<dir>/，需按 test_images/ 上溯仓库根。"""
-    cur = os.path.dirname(os.path.abspath(__file__))
-    for _ in range(6):
-        if os.path.isdir(os.path.join(cur, "test_images")):
-            return cur
-        cur = os.path.dirname(cur)
-    return os.path.dirname(cur)
-
-
-TEST_IMAGE = os.path.join(_repo_root(), "test_images", "低分辨率.JPG")
+TEST_IMAGE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "test_images", "低分辨率.JPG"))
 
 # ═══════════════════════════════════════════════════════════════
 # 工具函数
@@ -36,21 +27,32 @@ def dismiss_overlay(page: Page):
             }
         });
     }""")
-    page.wait_for_timeout(1000)
+    # 兜底移除遮罩后等 DOM 稳定；无独立可观察信号。
+    settle(page, 1000)
 
 
 def enter_canvas(page: Page, base_url: str) -> str:
-    """进入无限画布：/create → Start from a Photo → 上传 test_images/低分辨率.JPG。"""
+    """进入无限画布：/create → Start with Photos → 上传 test_images/低分辨率.JPG。"""
     with allure.step("进入 /create 并上传图片"):
         page.goto(base_url + "/create", timeout=120000, wait_until="domcontentloaded")
         dismiss_create_promo(page)  # 全新会话 VIP 促销/定价弹窗兜底
-        page.wait_for_timeout(8000)
+        wait_ready(
+            page,
+            lambda: page.locator("button[data-tool-id='start-photo']").count() > 0,
+            timeout=25000,
+            settle_ms=0,
+        )
         dismiss_overlay(page)
-        card = page.locator("div.cursor-pointer", has=page.locator("p", has_text="Start from a Photo")).first
+        # 2026-10-12 漂移修复：入口卡由 div.cursor-pointer + 文案 "Start from a Photo"
+        # 变为 button[data-tool-id='start-photo']，文案改为 "Start with Photos"；
+        # 改用稳定数据属性定位，不再依赖文案与 Tailwind 工具类。
+        card = page.locator("button[data-tool-id='start-photo']").first
         with page.expect_file_chooser(timeout=30000) as fc_info:
             card.click()
         fc_info.value.set_files(TEST_IMAGE)
-        page.wait_for_timeout(12000)
+        wait_ready(page, lambda: "/agent?pid=" in page.url, timeout=60000, settle_ms=0)
+        # 画布初始化：左侧工具栏 text 入口挂载。
+        wait_ready(page, lambda: page.locator("button[data-tool-id='text']").count() > 0, timeout=30000, settle_ms=0)
     allure_screenshot(page, "进入画布")
     return page.url
 
@@ -58,7 +60,7 @@ def enter_canvas(page: Page, base_url: str) -> str:
 def add_text(page: Page):
     with allure.step("点击左侧 Add Text 添加文字图层"):
         page.locator("button[data-tool-id='text']").first.click()
-        page.wait_for_timeout(3000)
+        wait_ready(page, lambda: page.locator("button", has_text="Basic").count() > 0, timeout=15000)
     allure_screenshot(page, "添加文字图层")
 
 
@@ -171,16 +173,16 @@ def make_two_line_text(page: Page):
     """把文字图层改成两行内容并提交。"""
     with allure.step("双击文字层并输入两行文字"):
         page.mouse.dblclick(900, 500)
-        page.wait_for_timeout(1200)
         ta = page.locator("textarea.fixed.h-px.w-px").first
-        pw_expect(ta).to_be_visible(timeout=5000)
+        pw_expect(ta).to_be_visible(timeout=10000)
         ta.fill("line1\nline2")
-        page.wait_for_timeout(1000)
+        wait_ready(page, lambda: ta.input_value() == "line1\nline2", timeout=5000, settle_ms=0)
         page.keyboard.press("Escape")
-        page.wait_for_timeout(1000)
+        # 退出编辑态以 textarea 消失为信号。
+        wait_ready(page, lambda: page.locator("textarea.fixed.h-px.w-px").count() == 0, timeout=10000, settle_ms=0)
         # 点工具栏 Adjust 重新打开属性面板
         click_button_by_text(page, "Adjust", ymin=400, ymax=440, xmin=500)
-        page.wait_for_timeout(1200)
+        wait_ready(page, lambda: page.locator("button", has_text="Basic").count() > 0, timeout=10000)
 
 
 def panel_dimension_text(page: Page):
@@ -247,6 +249,7 @@ def canvas_image_box(page: Page):
         return best;
     }""")
 
+@allure.label("case_id", "TC-TEXT-001")
 def test_text_001_entry_and_left_tools(page: Page, base_url: str):
     allure.dynamic.title("[L6][P0] 入口上传 + 左侧工具栏 + Add Text")
     allure.dynamic.epic("画布页文字功能")
@@ -257,10 +260,16 @@ def test_text_001_entry_and_left_tools(page: Page, base_url: str):
         assert page.locator(f"button[data-tool-id='{tool}']").count() == 1
     add_text(page)
     body = page.locator("body").inner_text()
-    for text in ["Adjust", "Move Up", "Move Down", "To Top", "To Bottom", "Flip h", "Flip v", "Delete", "Rotation"]:
+    # 2026-10-12 漂移修复：Rotate 控件已从文本按钮变为图标按钮
+    # （button.rotation-button，文案只保留在 aria-label / title），
+    # 因此不再用 body 文本断言 Rotation，改用稳定属性定位断言其存在。
+    for text in ["Adjust", "Move Up", "Move Down", "To Top", "To Bottom", "Flip h", "Flip v", "Delete"]:
         assert text in body
+    rotate_btn = page.locator("button.rotation-button[aria-label='Rotation']")
+    assert rotate_btn.count() == 1, "文字图层 Rotate 控件（button.rotation-button[aria-label=Rotation]）未找到"
 
 
+@allure.label("case_id", "TC-TEXT-002")
 def test_text_002_select_reopen_tabs_basic(page: Page, base_url: str):
     allure.dynamic.title("[L2][P0] 选中/收起/重开 + Tab/Alignment/Font/Fill")
     allure.dynamic.epic("画布页文字功能")
@@ -269,31 +278,32 @@ def test_text_002_select_reopen_tabs_basic(page: Page, base_url: str):
     add_text(page)
     # 空白收起
     page.mouse.click(900, 300)
-    page.wait_for_timeout(1200)
+    wait_ready(page, lambda: page.locator("button", has_text="Basic").count() == 0, timeout=10000)
     assert page.locator("button", has_text="Basic").count() == 0
     # 空白后重新添加文字以恢复选中态，再用 Move Up 制造“面板关闭但工具栏保留”，验证 Adjust 重开
     add_text(page)
     click_button_by_text(page, "Move Up", ymin=400, ymax=440, xmin=500)
-    page.wait_for_timeout(1200)
+    wait_ready(page, lambda: page.locator("button", has_text="Basic").count() == 0, timeout=10000)
     assert page.locator("button", has_text="Basic").count() == 0
     click_button_by_text(page, "Adjust", ymin=400, ymax=440, xmin=500)
-    page.wait_for_timeout(1200)
+    wait_ready(page, lambda: page.locator("button", has_text="Basic").count() >= 1, timeout=10000)
     assert page.locator("button", has_text="Basic").count() >= 1
     # Tab 切换
     click_button_by_text(page, "Basic", ymin=430, ymax=500)
-    page.wait_for_timeout(800)
+    wait_ready(page, lambda: page.locator("button", has_text="Font").count() >= 1, timeout=10000, settle_ms=0)
     # Alignment 点击
     page.evaluate("""() => {
         const ps=[...document.querySelectorAll('p')].filter(p=>p.textContent.trim()==='Alignment');
         for(const p of ps){const r=p.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const box=p.parentElement; if(box){const bs=[...box.querySelectorAll('button')]; bs[0].dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); return true;}}}
         return false;
     }""")
-    page.wait_for_timeout(800)
+    # Alignment 点击为纯前端，等 Font/Fill 出现作为面板就绪信号。
     # Font/Fill 存在
     assert page.locator("button", has_text="Font").count() >= 1
     assert page.locator("button", has_text="Fill").count() >= 1
 
 
+@allure.label("case_id", "TC-TEXT-003")
 def test_text_003_space(page: Page, base_url: str):
     allure.dynamic.title("[L5][P0] Space 单行禁用 + 两行 Height 生效")
     allure.dynamic.epic("画布页文字功能")
@@ -301,7 +311,7 @@ def test_text_003_space(page: Page, base_url: str):
     enter_canvas(page, base_url)
     add_text(page)
     click_button_by_text(page, "Space", ymin=480, ymax=820)
-    page.wait_for_timeout(1000)
+    wait_ready(page, lambda: get_section_sliders(page, "Space") is not None, timeout=10000)
     allure_screenshot(page, "Space单行Height禁用")
     sliders = get_section_sliders(page, "Space")
     assert sliders[0]["disabled"] is False
@@ -309,18 +319,27 @@ def test_text_003_space(page: Page, base_url: str):
     make_two_line_text(page)
     allure_screenshot(page, "两行文字图层")
     click_button_by_text(page, "Space", ymin=480, ymax=820)
-    page.wait_for_timeout(1000)
+    wait_ready(
+        page,
+        lambda: (get_section_sliders(page, "Space") or [{}, {}])[1].get("disabled") is False,
+        timeout=10000,
+    )
     sliders = get_section_sliders(page, "Space")
     assert sliders[1]["disabled"] is False
     before = panel_dimension_text(page)
     set_section_sliders(page, "Space", [0, 50])
-    page.wait_for_timeout(1500)
+    wait_ready(
+        page,
+        lambda: (get_section_sliders(page, "Space") or [{}, {}])[1].get("value") == "50",
+        timeout=10000,
+    )
     allure_screenshot(page, "Space两行Height调整后")
     after = panel_dimension_text(page)
     assert before != after
     assert get_section_sliders(page, "Space")[1]["value"] == "50"
 
 
+@allure.label("case_id", "TC-TEXT-004")
 def test_text_004_reflection(page: Page, base_url: str, tmp_path):
     allure.dynamic.title("[L5][P0] Reflection 四参数可调 + 实际反射效果")
     allure.dynamic.epic("画布页文字功能")
@@ -329,7 +348,7 @@ def test_text_004_reflection(page: Page, base_url: str, tmp_path):
     enter_canvas(page, base_url)
     add_text(page)
     click_section_small(page, "Reflection")
-    page.wait_for_timeout(1000)
+    wait_ready(page, lambda: len(get_section_sliders(page, "Reflection") or []) == 4, timeout=10000)
     allure_screenshot(page, "Reflection展开四滑块")
     sliders = get_section_sliders(page, "Reflection")
     assert sliders is not None and len(sliders) == 4
@@ -337,7 +356,15 @@ def test_text_004_reflection(page: Page, base_url: str, tmp_path):
     page.screenshot(path=str(before))
     # 先开启开关
     assert click_section_toggle(page, "Reflection")
-    page.wait_for_timeout(1000)
+    wait_ready(
+        page,
+        lambda: "bg-[#232323]" in (page.evaluate("""() => {
+            const spans=[...document.querySelectorAll('span')].filter(s=>s.textContent.trim()==='Reflection');
+            for(const sp of spans){const r=sp.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const row=sp.parentElement; const toggles=[...row.querySelectorAll('button')].filter(b=>b.getBoundingClientRect().width>=30&&b.getBoundingClientRect().width<=50); if(toggles[0]) return toggles[0].className;}}
+            return '';
+        }""") or ""),
+        timeout=10000,
+    )
     cls = page.evaluate("""() => {
         const spans=[...document.querySelectorAll('span')].filter(s=>s.textContent.trim()==='Reflection');
         for(const sp of spans){const r=sp.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const row=sp.parentElement; const toggles=[...row.querySelectorAll('button')].filter(b=>b.getBoundingClientRect().width>=30&&b.getBoundingClientRect().width<=50); if(toggles[0]) return toggles[0].className;}}
@@ -346,7 +373,11 @@ def test_text_004_reflection(page: Page, base_url: str, tmp_path):
     assert "bg-[#232323]" in cls
     # 四参数调整（开关开启后）
     vals = set_section_sliders(page, "Reflection", [20, 20, 20, 45])
-    page.wait_for_timeout(1000)
+    wait_ready(
+        page,
+        lambda: [s["value"] for s in (get_section_sliders(page, "Reflection") or [])] == ["20", "20", "20", "45"],
+        timeout=10000,
+    )
     allure_screenshot(page, "Reflection四参数调整后")
     assert vals == ["20", "20", "20", "45"]
     after = tmp_path / "reflection_after.png"
@@ -358,6 +389,7 @@ def test_text_004_reflection(page: Page, base_url: str, tmp_path):
     assert nonzero > 10000
 
 
+@allure.label("case_id", "TC-TEXT-005")
 def test_text_005_background(page: Page, base_url: str, tmp_path):
     allure.dynamic.title("[L2][P0] Background 无填充/色盘/取色")
     allure.dynamic.epic("画布页文字功能")
@@ -366,7 +398,15 @@ def test_text_005_background(page: Page, base_url: str, tmp_path):
     enter_canvas(page, base_url)
     add_text(page)
     click_button_by_text(page, "Background", ymin=480, ymax=820)
-    page.wait_for_timeout(1000)
+    wait_ready(
+        page,
+        lambda: "edit_icon_color_picker" in (page.evaluate("""() => {
+            const spans=[...document.querySelectorAll('span')].filter(s=>s.textContent.trim()==='Background');
+            for(const sp of spans){const r=sp.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const row=sp.parentElement; const content=row.nextElementSibling; if(content){return content.innerHTML;}}}
+            return '';
+        }""") or ""),
+        timeout=10000,
+    )
     allure_screenshot(page, "Background展开三按钮")
     content = page.evaluate("""() => {
         const spans=[...document.querySelectorAll('span')].filter(s=>s.textContent.trim()==='Background');
@@ -380,12 +420,12 @@ def test_text_005_background(page: Page, base_url: str, tmp_path):
         for(const sp of spans){const r=sp.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const row=sp.parentElement; const content=row.nextElementSibling; if(content){const bs=[...content.querySelectorAll('button')]; const pal=bs.find(b=>b.innerHTML.includes('edit_icon_color_picker')); if(pal){pal.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); return true;}}}}
         return false;
     }""")
-    page.wait_for_timeout(1500)
+    wait_visible(page, page.locator("input.hexInput"), timeout=10000)
     allure_screenshot(page, "Background色盘弹窗")
     assert page.locator("input.hexInput").is_visible()
     page.locator("input.hexInput").fill("#0000ff")
     page.keyboard.press("Enter")
-    page.wait_for_timeout(1200)
+    wait_ready(page, lambda: page.locator("input.hexInput").input_value() == "#0000ff", timeout=10000)
     assert page.locator("input.hexInput").input_value() == "#0000ff"
     # 再次点击色盘按钮关闭调色弹窗（Escape 在 Enter 后无法关闭）
     page.evaluate("""() => {
@@ -393,7 +433,8 @@ def test_text_005_background(page: Page, base_url: str, tmp_path):
         for(const sp of spans){const r=sp.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const row=sp.parentElement; const content=row.nextElementSibling; if(content){const bs=[...content.querySelectorAll('button')]; const pal=bs.find(b=>b.innerHTML.includes('edit_icon_color_picker')); if(pal){pal.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); return true;}}}}
         return false;
     }""")
-    page.wait_for_timeout(1000)
+    # 关闭色盘为纯前端切换，等 hex 输入框消失。
+    wait_ready(page, lambda: page.locator("input.hexInput").count() == 0 or not page.locator("input.hexInput").is_visible(), timeout=10000)
     palette_png = page.screenshot()
     palette_path = tmp_path / "bg_palette_blue.png"
     palette_path.write_bytes(palette_png)
@@ -404,7 +445,8 @@ def test_text_005_background(page: Page, base_url: str, tmp_path):
         for(const sp of spans){const r=sp.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const row=sp.parentElement; const content=row.nextElementSibling; if(content){const bs=[...content.querySelectorAll('button')]; const picker=bs[2]; if(picker){picker.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); return true;}}}}
         return false;
     }""")
-    page.wait_for_timeout(1000)
+    # 进入取色模式为纯前端状态，等像素证据由后续 diff 断言覆盖。
+    settle(page, 1000)
     mode_png = page.screenshot()
     mode_path = tmp_path / "bg_picker_mode.png"
     mode_path.write_bytes(mode_png)
@@ -422,9 +464,8 @@ def test_text_005_background(page: Page, base_url: str, tmp_path):
     assert target_dist > 80, f"取色目标与色盘蓝色太接近: dist={target_dist}"
     target = (target_info[0], target_info[1])
     page.mouse.move(target[0], target[1])
-    page.wait_for_timeout(300)
     page.mouse.click(target[0], target[1])
-    page.wait_for_timeout(1500)
+    wait_ready(page, lambda: page.locator(".color-picker-wrapper").count() == 0, timeout=10000)
     assert page.locator(".color-picker-wrapper").count() == 0, "取色后仍未退出取色模式"
     applied_png = page.screenshot()
     applied_path = tmp_path / "bg_picker_applied.png"
@@ -436,6 +477,7 @@ def test_text_005_background(page: Page, base_url: str, tmp_path):
     nonzero_applied = sum(1 for px in diff_applied.getdata() if px != (0, 0, 0))
     assert nonzero_applied > 5000
 
+@allure.label("case_id", "TC-TEXT-006")
 def test_text_006_outline(page: Page, base_url: str, tmp_path):
     allure.dynamic.title("[L2][P0] Outline Types/色盘/取色/四滑块/描边效果")
     allure.dynamic.epic("画布页文字功能")
@@ -444,13 +486,14 @@ def test_text_006_outline(page: Page, base_url: str, tmp_path):
     enter_canvas(page, base_url)
     add_text(page)
     click_section_small(page, "Outline")
-    page.wait_for_timeout(1000)
+    wait_ready(page, lambda: len(get_section_sliders(page, "Outline") or []) == 4, timeout=10000)
     allure_screenshot(page, "Outline展开")
     # 描边效果：先记录开启前后
     before = tmp_path / "outline_before.png"
     page.screenshot(path=str(before))
     assert click_section_toggle(page, "Outline")
-    page.wait_for_timeout(1000)
+    # 反向/像素效果断言前，让描边渲染稳定。
+    settle(page, 1000)
     allure_screenshot(page, "Outline开关开启")
     after = tmp_path / "outline_after.png"
     page.screenshot(path=str(after))
@@ -464,11 +507,16 @@ def test_text_006_outline(page: Page, base_url: str, tmp_path):
         for(const sp of spans){const r=sp.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const row=sp.parentElement; const content=row.nextElementSibling; if(content){const bs=[...content.querySelectorAll('button')]; bs[1].dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); return true;}}}
         return false;
     }""")
-    page.wait_for_timeout(800)
+    # 纯前端类型切换，截图前让其稳定。
+    settle(page, 800)
     allure_screenshot(page, "Outline Types切换")
     # 四滑块
     vals = set_section_sliders(page, "Outline", [70, 20, 10, 30])
-    page.wait_for_timeout(1000)
+    wait_ready(
+        page,
+        lambda: [s["value"] for s in (get_section_sliders(page, "Outline") or [])] == ["70", "20", "10", "30"],
+        timeout=10000,
+    )
     allure_screenshot(page, "Outline四滑块调整后")
     assert vals == ["70", "20", "10", "30"]
     # 色盘弹窗
@@ -477,13 +525,13 @@ def test_text_006_outline(page: Page, base_url: str, tmp_path):
         for(const sp of spans){const r=sp.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const row=sp.parentElement; const content=row.nextElementSibling; if(content){const bs=[...content.querySelectorAll('button')]; const pal=bs.find(b=>b.innerHTML.includes('edit_icon_color_picker')); if(pal){pal.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); return true;}}}}
         return false;
     }""")
-    page.wait_for_timeout(1500)
+    wait_visible(page, page.locator("input.hexInput"), timeout=10000)
     allure_screenshot(page, "Outline色盘弹窗")
     assert page.locator("input.hexInput").is_visible()
     # 色盘应用品红 #ff00ff，作为后续取色的区分基准
     page.locator("input.hexInput").fill("#ff00ff")
     page.keyboard.press("Enter")
-    page.wait_for_timeout(1200)
+    wait_ready(page, lambda: page.locator("input.hexInput").input_value() == "#ff00ff", timeout=10000)
     assert page.locator("input.hexInput").input_value() == "#ff00ff"
     # 再次点击色盘按钮关闭调色弹窗（Escape 在 Enter 后无法关闭）
     page.evaluate("""() => {
@@ -491,7 +539,7 @@ def test_text_006_outline(page: Page, base_url: str, tmp_path):
         for(const sp of spans){const r=sp.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const row=sp.parentElement; const content=row.nextElementSibling; if(content){const bs=[...content.querySelectorAll('button')]; const pal=bs.find(b=>b.innerHTML.includes('edit_icon_color_picker')); if(pal){pal.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); return true;}}}}
         return false;
     }""")
-    page.wait_for_timeout(800)
+    wait_ready(page, lambda: page.locator("input.hexInput").count() == 0 or not page.locator("input.hexInput").is_visible(), timeout=10000)
     outline_palette_png = page.screenshot()
     outline_palette_path = tmp_path / "outline_palette_magenta.png"
     outline_palette_path.write_bytes(outline_palette_png)
@@ -502,7 +550,8 @@ def test_text_006_outline(page: Page, base_url: str, tmp_path):
         for(const sp of spans){const r=sp.getBoundingClientRect(); if(r.width>0&&r.x>=1000){const row=sp.parentElement; const content=row.nextElementSibling; if(content){const bs=[...content.querySelectorAll('button')]; const picker=bs[6]; if(picker){picker.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})); return true;}}}}
         return false;
     }""")
-    page.wait_for_timeout(1000)
+    # 进入取色模式为纯前端状态，等像素证据由后续 diff 断言覆盖。
+    settle(page, 1000)
     outline_mode_png = page.screenshot()
     outline_mode_path = tmp_path / "outline_picker_mode.png"
     outline_mode_path.write_bytes(outline_mode_png)
@@ -516,9 +565,8 @@ def test_text_006_outline(page: Page, base_url: str, tmp_path):
     assert target_dist > 80, f"取色目标与色盘蓝色太接近: dist={target_dist}"
     target = (target_info[0], target_info[1])
     page.mouse.move(target[0], target[1])
-    page.wait_for_timeout(300)
     page.mouse.click(target[0], target[1])
-    page.wait_for_timeout(1500)
+    wait_ready(page, lambda: page.locator(".color-picker-wrapper").count() == 0, timeout=10000)
     assert page.locator(".color-picker-wrapper").count() == 0, "Outline 取色后仍未退出取色模式"
     outline_applied_png = page.screenshot()
     outline_applied_path = tmp_path / "outline_picker_applied.png"

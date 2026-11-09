@@ -1,0 +1,2433 @@
+{
+  "collected": 571,
+  "label_marker": 56,
+  "dynamic_runtime": 47,
+  "title_derivable": 204,
+  "missing": [
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_001_seo_title[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_001_seo_title[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_002_hero_content[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_002_hero_content[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_003_hero_cta_click[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_003_hero_cta_click[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_004_trust_data[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_004_trust_data[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_005_image_text_section_1[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_005_image_text_section_1[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_006_pixl_concerto_link[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_006_pixl_concerto_link[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_007_image_text_section_3[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_007_image_text_section_3[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_008_image_text_section_4[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_008_image_text_section_4[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_009_feature_cards[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_009_feature_cards[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_010_bottom_cta_click[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_010_bottom_cta_click[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_011_video_attributes[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_011_video_attributes[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_about_page.py::TestAboutPage::test_about_012_zh_i18n[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_about_page.py::TestAboutPage::test_about_012_zh_i18n[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_upload_in_page_and_default_state[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_upload_in_page_and_default_state[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_resolution_visibility_and_disabled[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_resolution_visibility_and_disabled[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_result_non_enhance_resolution_and_no_compare[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_result_non_enhance_resolution_and_no_compare[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_cost_refresh_and_rules[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_cost_refresh_and_rules[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_effect_tooltips[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_effect_tooltips[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_free_trial_display_free[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_free_trial_display_free[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_member_free_icon_and_cost[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_member_free_icon_and_cost[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_single_purchase_cost_rules[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_single_purchase_cost_rules[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_1k_defaults_to_2k[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_1k_defaults_to_2k[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_2730x4096_over2k[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_2730x4096_over2k[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_4500x3000_over4k[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_4500x3000_over4k[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_6144x8192_over4k_not_highest[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_6144x8192_over4k_not_highest[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l3_corrupt_image_upload_does_not_crash[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l3_corrupt_image_upload_does_not_crash[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l3_free_account_purchase_intercept[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l3_free_account_purchase_intercept[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l6_default_enhance_2k_generation_download_and_continue[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l6_default_enhance_2k_generation_download_and_continue[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_result_edit_more_enters_editor_or_route[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_result_edit_more_enters_editor_or_route[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_mobile_upload_modes_and_cost[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_mobile_upload_modes_and_cost[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_batch_edit_seo.py::TestBatchEditSEO::test_batch_edit_seo[chromium-bulk-background-remover]",
+      "case_id": "MISSING_CASE_ID:tests/test_batch_edit_seo.py::TestBatchEditSEO::test_batch_edit_seo[chromium-bulk-background-remover]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-en]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-en]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-en]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-en]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-en]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-en]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_001_entry_file_chooser[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_001_entry_file_chooser[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_002_navigate_to_edit[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_002_navigate_to_edit[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_003a_ai_filter_face[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_003a_ai_filter_face[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_003b_ai_filter_hair[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_003b_ai_filter_hair[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_007_no_face[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_007_no_face[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_008_multi_face[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_008_multi_face[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_004a_formal_wear_template[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_004a_formal_wear_template[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_004b_formal_wear_custom[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_004b_formal_wear_custom[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_005_change_bg_red[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_005_change_bg_red[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_006_size_presets[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_id_photo_maker.py::TestIDPhotoMaker::test_id_006_size_presets[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_bg_remove.py::test_enter_infinite_canvas[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_bg_remove.py::test_enter_infinite_canvas[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_bg_remove.py::test_bg_remove_process_and_result[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_bg_remove.py::test_bg_remove_process_and_result[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_bg_remove.py::test_bg_remove_download_result[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_bg_remove.py::test_bg_remove_download_result[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_bg_remove.py::test_bg_remove_credits_consumed[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_bg_remove.py::test_bg_remove_credits_consumed[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_text_layer.py::TestInfiniteCanvasTextLayer::test_text_spacing[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_text_layer.py::TestInfiniteCanvasTextLayer::test_text_spacing[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_text_layer.py::TestInfiniteCanvasTextLayer::test_text_004_reflection[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_text_layer.py::TestInfiniteCanvasTextLayer::test_text_004_reflection[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_text_layer.py::TestInfiniteCanvasTextLayer::test_text_005_background[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_text_layer.py::TestInfiniteCanvasTextLayer::test_text_005_background[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_text_layer.py::TestInfiniteCanvasTextLayer::test_text_006_outline[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_text_layer.py::TestInfiniteCanvasTextLayer::test_text_006_outline[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_text_layer.py::TestInfiniteCanvasTextLayer::test_text_flip_rotate[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_text_layer.py::TestInfiniteCanvasTextLayer::test_text_flip_rotate[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_zoom_in_photos[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_zoom_in_photos[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_photo_restoration[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_photo_restoration[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_monogram_maker[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_monogram_maker[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_phone_wallpaper_maker[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_phone_wallpaper_maker[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_photo_border[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_photo_border[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_digicam_effect[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_digicam_effect[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_add_hearts_to_photo[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_add_hearts_to_photo[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_youtube_banner_maker[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_youtube_banner_maker[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_outline_image[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_outline_image[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_add_name_and_date_on_photo[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_add_name_and_date_on_photo[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_big_head_cutout[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_big_head_cutout[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_private_save_breast_expansion[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_private_save_breast_expansion[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_other_seo.py::TestOtherSEOPages::test_private_save_ai_bikini[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_other_seo.py::TestOtherSEOPages::test_private_save_ai_bikini[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-red-eye-remover]",
+      "case_id": "MISSING_CASE_ID:tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-red-eye-remover]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_seo_ai_explore.py::TestAISemanticExplore::test_single_page_explore[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_seo_ai_explore.py::TestAISemanticExplore::test_single_page_explore[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_seo_ai_explore.py::TestAISemanticExplore::test_batch_ai_explore[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_seo_ai_explore.py::TestAISemanticExplore::test_batch_ai_explore[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_seo_ai_explore.py::TestAISemanticExplore::test_new_page_discovery_explore[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_seo_ai_explore.py::TestAISemanticExplore::test_new_page_discovery_explore[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_seo_new_pages.py::TestSEONewPages::test_seo_new_page[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_seo_new_pages.py::TestSEONewPages::test_seo_new_page[chromium]",
+      "title": "[新页面批次] SEO新页面检测（PC + Mobile）",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-background-remover]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-background-remover]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_hd_pic_converter[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_hd_pic_converter[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_add_a_person_to_a_photo[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_add_a_person_to_a_photo[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_change_passport_to_blue_background[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_change_passport_to_blue_background[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_batch_edit[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_batch_edit[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_ai_background[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_ai_background[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_ai_image_generator[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_ai_image_generator[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_image_to_image_ai[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_image_to_image_ai[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_collage_maker[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_collage_maker[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-background-remover]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-background-remover]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_hd_pic_converter_zh[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_hd_pic_converter_zh[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_add_a_person_to_a_photo_zh[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_add_a_person_to_a_photo_zh[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_batch_edit_zh[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_batch_edit_zh[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_ai_background_zh[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_ai_background_zh[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_ai_image_generator_zh[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_ai_image_generator_zh[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_image_to_image_ai_zh[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_image_to_image_ai_zh[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_collage_maker_zh[chromium]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_collage_maker_zh[chromium]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_ai_image_text_enhancer_experiment.py::test_text_l3_highest_clarity_secondary_workflow_gap",
+      "case_id": "MISSING_CASE_ID:tests/test_ai_image_text_enhancer_experiment.py::test_text_l3_highest_clarity_secondary_workflow_gap",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_batch_edit_seo.py::TestBatchEditSEO::test_batch_edit_seo[chromium-bulk-background-changer]",
+      "case_id": "MISSING_CASE_ID:tests/test_batch_edit_seo.py::TestBatchEditSEO::test_batch_edit_seo[chromium-bulk-background-changer]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-zh]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-zh]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-zh]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-zh]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-zh]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-zh]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-photo-blemish-remover]",
+      "case_id": "MISSING_CASE_ID:tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-photo-blemish-remover]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-photo-enhancer]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-photo-enhancer]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-ja-\\u65e5\\u672c\\u8a9e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-ja-\\u65e5\\u672c\\u8a9e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-photo-enhancer]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-photo-enhancer]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_batch_edit_seo.py::TestBatchEditSEO::test_batch_edit_seo[chromium-bulk-image-enhancer]",
+      "case_id": "MISSING_CASE_ID:tests/test_batch_edit_seo.py::TestBatchEditSEO::test_batch_edit_seo[chromium-bulk-image-enhancer]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-zh-tw]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-zh-tw]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-zh-tw]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-zh-tw]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-zh-tw]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-zh-tw]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-ai-face-smoother]",
+      "case_id": "MISSING_CASE_ID:tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-ai-face-smoother]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-background-changer]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-background-changer]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-de-Deutsch]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-de-Deutsch]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-background-changer]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-background-changer]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_batch_edit_seo.py::TestBatchEditSEO::test_batch_edit_seo[chromium-bulk-image-resizer]",
+      "case_id": "MISSING_CASE_ID:tests/test_batch_edit_seo.py::TestBatchEditSEO::test_batch_edit_seo[chromium-bulk-image-resizer]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-es]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-es]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-es]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-es]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-es]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-es]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-body-editor]",
+      "case_id": "MISSING_CASE_ID:tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-body-editor]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-ai-image-extender]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-ai-image-extender]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-fr-Fran\\xe7ais]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-fr-Fran\\xe7ais]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-ai-image-extender]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-ai-image-extender]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-pt]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-pt]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-pt]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-pt]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-pt]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-pt]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-privacy-policy-fr]",
+      "case_id": "MISSING_CASE_ID:tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-privacy-policy-fr]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-magic-eraser]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-magic-eraser]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-th-\\u0e44\\u0e17\\u0e22]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-th-\\u0e44\\u0e17\\u0e22]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-magic-eraser]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-magic-eraser]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-ru]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-ru]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-ru]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-ru]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-ru]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-ru]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-term-of-use-de]",
+      "case_id": "MISSING_CASE_ID:tests/test_redirect_seo.py::TestRedirectSEO::test_redirect[chromium-term-of-use-de]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-blur-background]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-blur-background]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-blur-background]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-blur-background]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-id]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-id]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-id]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-id]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-id]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-id]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-id-photo-maker]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages.py::TestToolPages::test_tool_page[chromium-id-photo-maker]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-it-Italiano]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-it-Italiano]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-id-photo-maker]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_zh.py::TestToolPagesZH::test_tool_page_zh[chromium-id-photo-maker]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-th]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-th]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-th]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-th]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-th]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-th]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-tr-T\\xfcrk\\xe7e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-tr-T\\xfcrk\\xe7e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-ja]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-ja]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-ja]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-ja]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-ja]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-ja]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-pt-Portugu\\xeas]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-pt-Portugu\\xeas]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-fr]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-fr]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-fr]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-fr]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-fr]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-fr]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-es-Espa\\xf1ol]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-es-Espa\\xf1ol]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-it]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-it]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-it]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-it]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-it]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-it]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-vi]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-vi]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-vi]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-vi]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-vi]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-vi]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-id-Indonesia]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-remover-Background Remover-Background Remover-url_kws0-panel_kw_en0-panel_kw_zh_tw0-\\u79fb\\u9664\\u80cc\\u666f-id-Indonesia]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-tr]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-tr]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-tr]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-tr]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-tr]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-tr]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-de]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_001_header_hero_models[chromium-de]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-de]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_002_popular_templates_test_panel[chromium-de]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-de]",
+      "case_id": "MISSING_CASE_ID:tests/test_home_page_i18n.py::TestHomePageI18n::test_home_i18n_003_portrait_batch_enhance_footer[chromium-de]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-ja-\\u65e5\\u672c\\u8a9e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-ja-\\u65e5\\u672c\\u8a9e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-de-Deutsch]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-de-Deutsch]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-fr-Fran\\xe7ais]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-fr-Fran\\xe7ais]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-th-\\u0e44\\u0e17\\u0e22]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-th-\\u0e44\\u0e17\\u0e22]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-it-Italiano]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-it-Italiano]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-tr-T\\xfcrk\\xe7e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-tr-T\\xfcrk\\xe7e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l1_structure[L1-001]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l1_structure[L1-001]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l1_structure[L1-002]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l1_structure[L1-002]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l1_structure[L1-003]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l1_structure[L1-003]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l1_structure[L1-004]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l1_structure[L1-004]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-001]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-001]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-002]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-002]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-003]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-003]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-004]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-004]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-005]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-005]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-006]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-006]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-008]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-008]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-009]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-009]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-010]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l2_interactions[L2-010]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l3_failures[L3-001]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l3_failures[L3-001]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l3_failures[L3-006]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l3_failures[L3-006]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-002]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-002]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-004]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-004]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-005]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-005]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-006]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-006]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-007]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-007]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-009]",
+      "case_id": "MISSING_CASE_ID:tests/test_infinite_canvas_inspiration_matrix_fill.py::test_matrix_l5_bounds[L5-009]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l1_003_insert_entry_and_panel",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l1_003_insert_entry_and_panel",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l1_004_right_panel_container",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l1_004_right_panel_container",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_001_template_entry_to_canvas",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_001_template_entry_to_canvas",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_004_text_draw_panel",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_004_text_draw_panel",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_005_general_draw_panel",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_005_general_draw_panel",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_021_image_blend",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_021_image_blend",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_015_image_opacity",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_015_image_opacity",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_016_image_adjust",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_016_image_adjust",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_017_image_shadow",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_017_image_shadow",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_018_image_outline",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_018_image_outline",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_020_image_filter",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_020_image_filter",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_019_image_reflection",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_019_image_reflection",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l3_004_color_overlay_dismiss",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l3_004_color_overlay_dismiss",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_002_local_upload",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_002_local_upload",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_003_my_cuts_insert",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_003_my_cuts_insert",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_006_shape_added",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_006_shape_added",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_007_line_added",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_007_line_added",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_008_custom_line_dialog",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_008_custom_line_dialog",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_009_text_draw_apply",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_009_text_draw_apply",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_010_general_draw_apply",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_010_general_draw_apply",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_011_shape_params",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_011_shape_params",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_012_shape_fill_image",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_012_shape_fill_image",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_013_line_params",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_013_line_params",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_old_canvas_insert_panel_v3.py::test_l2_014_custom_line_apply",
+      "case_id": "MISSING_CASE_ID:tests/test_old_canvas_insert_panel_v3.py::test_l2_014_custom_line_apply",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-pt-Portugu\\xeas]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-pt-Portugu\\xeas]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-es-Espa\\xf1ol]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-es-Espa\\xf1ol]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-id-Indonesia]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/photo-enhancer-Photo Enhancer-Photo Enhancer-url_kws1-panel_kw_en1-panel_kw_zh_tw1-\\u753b\\u8d28\\u589e\\u5f3a-id-Indonesia]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-ja-\\u65e5\\u672c\\u8a9e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-ja-\\u65e5\\u672c\\u8a9e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-de-Deutsch]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-de-Deutsch]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-fr-Fran\\xe7ais]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-fr-Fran\\xe7ais]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-th-\\u0e44\\u0e17\\u0e22]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-th-\\u0e44\\u0e17\\u0e22]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-it-Italiano]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-it-Italiano]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-tr-T\\xfcrk\\xe7e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-tr-T\\xfcrk\\xe7e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-pt-Portugu\\xeas]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-pt-Portugu\\xeas]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-es-Espa\\xf1ol]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-es-Espa\\xf1ol]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-id-Indonesia]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/background-changer-Background Changer-Background Changer-url_kws2-panel_kw_en2-panel_kw_zh_tw2-\\u80cc\\u666f\\u66f4\\u6362-id-Indonesia]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-ja-\\u65e5\\u672c\\u8a9e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-ja-\\u65e5\\u672c\\u8a9e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-de-Deutsch]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-de-Deutsch]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-fr-Fran\\xe7ais]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-fr-Fran\\xe7ais]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-th-\\u0e44\\u0e17\\u0e22]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-th-\\u0e44\\u0e17\\u0e22]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-it-Italiano]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-it-Italiano]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-tr-T\\xfcrk\\xe7e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-tr-T\\xfcrk\\xe7e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-pt-Portugu\\xeas]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-pt-Portugu\\xeas]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-es-Espa\\xf1ol]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-es-Espa\\xf1ol]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-id-Indonesia]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/ai-image-extender-Image Extender-Image Extender-url_kws3-panel_kw_en3-panel_kw_zh_tw3-\\u6269\\u56fe-id-Indonesia]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-ja-\\u65e5\\u672c\\u8a9e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-ja-\\u65e5\\u672c\\u8a9e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-de-Deutsch]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-de-Deutsch]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-fr-Fran\\xe7ais]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-fr-Fran\\xe7ais]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-th-\\u0e44\\u0e17\\u0e22]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-th-\\u0e44\\u0e17\\u0e22]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-it-Italiano]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-it-Italiano]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-tr-T\\xfcrk\\xe7e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-tr-T\\xfcrk\\xe7e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-pt-Portugu\\xeas]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-pt-Portugu\\xeas]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-es-Espa\\xf1ol]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-es-Espa\\xf1ol]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-id-Indonesia]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/magic-eraser-with-ai-detection-Magic Eraser-Magic Eraser-url_kws4-panel_kw_en4-panel_kw_zh_tw4-AI\\u6d88\\u9664-id-Indonesia]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-zh-tw-\\u7e41\\u4f53\\u4e2d\\u6587]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-ja-\\u65e5\\u672c\\u8a9e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-ja-\\u65e5\\u672c\\u8a9e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-de-Deutsch]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-de-Deutsch]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-fr-Fran\\xe7ais]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-fr-Fran\\xe7ais]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-th-\\u0e44\\u0e17\\u0e22]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-th-\\u0e44\\u0e17\\u0e22]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-vi-Ti\\u1ebfng Vi\\u1ec7t]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-it-Italiano]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-it-Italiano]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-tr-T\\xfcrk\\xe7e]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-tr-T\\xfcrk\\xe7e]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-pt-Portugu\\xeas]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-pt-Portugu\\xeas]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-es-Espa\\xf1ol]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-es-Espa\\xf1ol]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-ru-\\u0420\\u0443\\u0441\\u0441\\u043a\\u0438\\u0439]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    },
+    {
+      "nodeid": "tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-id-Indonesia]",
+      "case_id": "MISSING_CASE_ID:tests/test_tool_pages_i18n.py::TestToolPagesI18n::test_tool_page_i18n[chromium-/tools/id-photo-maker-ID Photo-ID Photo-url_kws5-panel_kw_en5-panel_kw_zh_tw5-\\u8bc1\\u4ef6\\u7167-id-Indonesia]",
+      "title": "",
+      "resolved_static": false,
+      "dynamic_runtime": false,
+      "title_derivable": false,
+      "derived_case_id": ""
+    }
+  ],
+  "dynamic_nodeids": [
+    "tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-001]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-001]",
+    "tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-002]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-002]",
+    "tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-003]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-003]",
+    "tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-004]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-004]",
+    "tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-005]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-005]",
+    "tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-006]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-006]",
+    "tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-007]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-007]",
+    "tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-008]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-008]",
+    "tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-009]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-009]",
+    "tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-010]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-010]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-011]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-012]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-013]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-014]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-015]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-016]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-017]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-018]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-019]",
+    "tests/test_create_chat_to_edit_model_matrix_v1.py::TestL2ModelMatrixSubmit::test_model_matrix_submit[chromium-P-MX-L2-020]",
+    "tests/test_infinite_canvas_inspiration_debug.py::test_dbg_submit_fail_then_recover",
+    "tests/test_infinite_canvas_inspiration_debug.py::test_dbg_query_fail_then_recover",
+    "tests/test_infinite_canvas_inspiration_debug.py::test_dbg_query_fail_modes[L3-004]",
+    "tests/test_infinite_canvas_inspiration_debug.py::test_dbg_query_fail_modes[L3-005]",
+    "tests/test_infinite_canvas_inspiration_debug.py::test_reference_model_switch_truncates_to_new_limit",
+    "tests/test_infinite_canvas_inspiration_debug.py::test_reference_multi_select_overflow_shows_tip",
+    "tests/test_regression_governance.py::test_attempt_recorder_writes_clean_pass",
+    "tests/test_regression_governance.py::test_summary_distinguishes_clean_retry_failed",
+    "tests/test_regression_governance.py::test_quarantine_is_never_counted_as_pass",
+    "tests/test_regression_governance.py::test_teardown_failure_is_broken_not_clean_pass",
+    "tests/test_regression_governance.py::test_case_id_label_is_authoritative",
+    "tests/test_regression_governance.py::test_case_id_coverage_counts_only_resolved",
+    "tests/test_regression_governance.py::test_dynamic_label_case_id_recovered_from_allure",
+    "tests/test_regression_governance.py::test_case_id_rules_global_prefix_used_verbatim",
+    "tests/test_regression_governance.py::test_case_id_rules_short_id_is_namespaced",
+    "tests/test_regression_governance.py::test_case_id_rules_rejects_unknown_and_layer_only",
+    "tests/test_regression_governance.py::test_summary_extracts_case_id_from_title"
+  ]
+}

@@ -1,0 +1,76 @@
+# 版本说明: 注册购买顺序 ABC 实验 PC 端首版页面地图（新功能提测探索）。
+page: Purchase Registration ABC Experiment (PC)
+url: /create , /
+platform: desktop
+viewport: 1920x1080
+viewport_guard: passed
+collected_at: '2026-10-21'
+account_states:
+  anonymous: 未登录（顶栏 Sign up / Log in）
+  free_new: 0321066909@qq.com（免费、曾购订阅，不符合试用资格）
+  free_zero: 随机邮箱（免费、credits=0）
+  pro: 165065310@qq.com
+  se: 132046506@qq.com
+  ultra: 0203010100@qq.com
+entry:
+  credits_plus:
+    selector: "button[aria-label='Get More Credits']"
+    note: PC 顶栏 Credits 加号；匿名/登录均可触发购买弹窗
+  create_auto:
+    note: 已登录访问 /create 自动弹内购弹窗；未登录不主动弹
+debug_panel:
+  open_button: "button:has-text('DEBUG')"
+  group_section_heading: "购买注册顺序 ABC 分组"
+  group_fields: [后端分组, 当前生效分组, 最近重分配结果]
+  reassign_button: "button:has-text('后端重新分配')"
+  reassign_requires_logged_out: true
+  reassign_precondition: 必须先点『删除当前 IP 匿名权益』清掉 IP 绑定，再点『后端重新分配』；否则同一出口 IP 会被固定在原组
+  reassign_observed_sequence: A -> B -> C（循环命中）
+  delete_anon_benefit_button: "button:has-text('删除当前 IP 匿名权益')"
+  delete_anon_benefit_api: "/gateway/pokecut/api/debug/deleteUnLoginUserBenefits"
+  reassign_api: "/gateway/pokecut/api/debug/reassignPurchasePopupExperiment"
+states:
+  b_product_modal:
+    landmark: "text=Premium Plan"
+    billing_toggle_selector: ".purchase-pro-plan__billing img"
+    plan_cards_selector: "li.purchase-pro-plan__card"
+    plan_order: [Ultra, Pro, SE]
+    buttons:
+      primary: "button.purchase-pro-plan__button"
+    note: 选中年付 SE 时主按钮文案变为 Try Free Trial；否则 Get Started
+  b_login_modal:
+    landmark: "text=Sign in to complete your purchase"
+    buttons:
+      submit: "[data-testid='auth-submit']"
+      google: "button:has-text('Continue With Google')"
+      apple: "text=Continue With Apple"
+    inputs:
+      email: "[data-testid='auth-email-input']"
+      code: "[data-testid='auth-code-input']"
+    note: 登录弹窗自身无取消/返回控件；商品弹窗 X 会关闭整条链路
+  b_checkout_payment:
+    landmark: "text=Payment method"
+    note: B 组登录成功进入 checkout；PC 默认 PayPal；A 版支付 UI
+  a_login_modal:
+    landmark: "全屏登录弹窗（未登录触发购买时直接打开，无商品弹窗）"
+    inputs:
+      email: "[data-testid='auth-email-input']"
+      code: "[data-testid='auth-code-input']"
+    buttons:
+      submit: "[data-testid='auth-submit']"
+    note: A 组顺序为 购买 -> 注册/登录 -> 按内购项校验 -> checkout；登录后有 $1 首月 SE 推广弹窗
+  c_checkout_login:
+    landmark: "Connect Your Account"
+    title_element: "Select Payment method"
+    buttons:
+      connect: "button:has-text('Connect')"
+    note: 仅在『未登录触发内购弹窗 -> 弹窗内登录』后出现；显示 User name；支付方式蒙层解除后可直接选择
+  c_product_modal:
+    note: C 组未登录先在商品弹窗选内购项，确认后进入 checkout 内登录承接区，不弹独立登录弹窗
+  qualification_toast:
+    selector_text: "The free trial is for new subscribers only. Please choose another plan."
+    note: toast 自动消失；不符合资格的试用项在主按钮文案上回退为 Get Started
+selectors_notes:
+  - 购买弹窗关闭: ".purchase-dialog__close"
+  - 频次切换: ".purchase-pro-plan__billing img"
+  - 禁止使用 hash class / nth-child / 位置 xpath

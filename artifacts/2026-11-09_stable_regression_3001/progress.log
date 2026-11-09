@@ -1,0 +1,10 @@
+[2026-11-09 09:28:49] orchestrator start 2026-11-09_stable_regression_3001 (stable_regression, codex_single_context)
+[2026-11-09 09:28:49] route: 19 stable_regression suites on http://10.17.1.66:3001; exclude enhance(pending_fix)
+[2026-11-09 09:28:49] runner launched PID 19860; run_id=reg-20261109-092813-43ce2d
+[2026-11-09 09:43:50] orchestrator pause: user reported test backend down (3001); terminated runner tree PID 19860/26000; run aborted during suite '人像检测三入口页' (portrait)
+[2026-11-09 09:43:50] state -> blocked/paused: pending backend recovery; no verdict recorded
+[2026-11-09 10:08:45] orchestrator resume: backend 3001 recovered (200); relaunch full 19 suites
+[2026-11-09 10:08:45] runner PID 27956 launched
+[2026-11-09 14:30:37] ALL DONE: 19/19 suites executed; run_id=reg-20261109-100837-2442f8; total=308 clean=273 retry=9 xfail=3 skipped=5 failed=18 gate=failed; duration=14493.3s
+[2026-11-09 14:30:37] allure report generated -> reports/allure-report-regression-3001
+[2026-11-09 14:30:37] blocking suites: mobile-home(1), create-auto(4), canvas-stats(7), sticker(1), model-matrix(5)

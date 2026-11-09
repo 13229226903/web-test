@@ -14,11 +14,13 @@ from urllib.parse import urlparse
 import allure
 import pytest
 import yaml
-from playwright.sync_api import Page, expect, TimeoutError as PlaywrightTimeoutError
+from playwright.sync_api import Page, expect
+
+from helpers.waiting import wait_network_quiet, wait_ready, wait_visible
 
 
 def _repo_root() -> Path:
-    """归档副本位于 archive/<dir>/，需按 test_images/ + data/ 上溯仓库根。"""
+    """按 test_images/ + data/ 上溯仓库根：兼容 tests/ 与 archive/<模块>/ 两种存放位置。"""
     here = Path(__file__).resolve()
     for c in [here.parent, *here.parents]:
         if (c / "test_images").is_dir() and (c / "data").is_dir():
@@ -28,6 +30,7 @@ def _repo_root() -> Path:
 
 DATA_FILE = _repo_root() / "data" / "pokecut_pc_home_v6.yaml"
 TEST_IMAGE = _repo_root() / "test_images" / "1K.jpg"
+TEST_IMAGE_2 = _repo_root() / "test_images" / "4K.jpg"
 
 
 @pytest.fixture(scope="module")
@@ -42,16 +45,18 @@ def home_data():
 def goto_home(page: Page, base_url: str):
     """打开 PC 首页并等待 SPA 水合完成。"""
     page.goto(f"{base_url.rstrip('/')}/", wait_until="domcontentloaded", timeout=60000)
-    page.wait_for_timeout(4000)
+    # SPA 水合完成的可观察信号：Hero 的 Generate 按钮已挂载。
+    wait_visible(page, page.locator("h1").first, timeout=20000, settle_ms=0)
+    wait_ready(
+        page,
+        lambda: page.locator("button[aria-label='Generate']").count() > 0,
+        timeout=15000,
+    )
 
 
 def wait_for_render(page: Page, timeout: int = 2000):
-    """等待页面渲染完成后再截图。"""
-    try:
-        page.wait_for_load_state("networkidle", timeout=timeout)
-    except PlaywrightTimeoutError:
-        pass
-    page.wait_for_timeout(500)
+    """截图前等待网络静默；CSR 页面达不到 networkidle 时按上限返回。"""
+    wait_network_quiet(page, timeout=timeout, idle_ms=300)
 
 
 def shot(page: Page, name: str):
@@ -80,7 +85,7 @@ def section_by_text(page: Page, heading: str):
     """按标题文本定位首页板块，并滚动到可见。"""
     locator = page.locator("section").filter(has_text=heading).first
     locator.scroll_into_view_if_needed()
-    page.wait_for_timeout(800)
+    wait_visible(page, locator, timeout=10000, settle_ms=0)
     return locator
 
 
@@ -88,7 +93,7 @@ def control_by_text(page: Page, text: str):
     """按文本定位可见的 a/button 控件。"""
     locator = page.locator("a, button").filter(has_text=text).first
     locator.scroll_into_view_if_needed()
-    page.wait_for_timeout(300)
+    wait_visible(page, locator, timeout=10000, settle_ms=0)
     return locator
 
 
@@ -119,7 +124,20 @@ def upload_via_file_chooser(page: Page, control, image_path: Path):
     with page.expect_file_chooser(timeout=15000) as chooser:
         control.click()
     chooser.value.set_files(str(image_path))
-    page.wait_for_timeout(3000)
+    # 上传完成由调用方的可见缩略图 / URL 变化断言负责等待。
+
+
+def upload_multi_via_file_chooser(page: Page, control, image_paths):
+    """通过真实控件上传多张图片。
+
+    2026-11-03 改版：/batch 与首页 Batch 板块入口上传 >=2 张图片后才进入 /agent（无限画布）
+    并自动展开 Batch Edit；单张会停留原页面。
+    """
+    control.scroll_into_view_if_needed()
+    with page.expect_file_chooser(timeout=15000) as chooser:
+        control.click()
+    chooser.value.set_files([str(p) for p in image_paths])
+    # 上传完成由调用方的 URL 变化断言负责等待。
 
 
 def click_and_assert_path(page: Page, control, expected_path: str):
@@ -218,14 +236,17 @@ class TestL1PageStructure:
         with allure.step("检查 Popular Pokecut AI tools 卡片"):
             scroll_to = page.get_by_role("region", name=home_data["popular_tools"]["heading"]).first
             scroll_to.scroll_into_view_if_needed()
-            page.wait_for_timeout(800)
             for label in home_data["popular_tools"]["cards"]:
                 expect(control_by_text(page, label)).to_be_visible(timeout=15000)
             expect(control_by_text(page, home_data["popular_tools"]["more_tools"])).to_be_visible(timeout=15000)
         with allure.step("检查 AI Models 顺序"):
             models_heading = page.get_by_text(home_data["models"]["heading"], exact=False).first
             models_heading.scroll_into_view_if_needed()
-            page.wait_for_timeout(800)
+            wait_ready(
+                page,
+                lambda: len(actual_model_order(page)) >= len(home_data["models"]["order"]),
+                timeout=10000,
+            )
             assert actual_model_order(page) == home_data["models"]["order"], \
                 f"模型顺序应为 {home_data['models']['order']}，实际: {actual_model_order(page)}"
         with allure.step("截图记录工具卡与模型列表"):
@@ -250,7 +271,6 @@ class TestL1PageStructure:
             goto_home(page, base_url)
             templates_heading = page.get_by_text(home_data["templates"]["heading"], exact=False).first
             templates_heading.scroll_into_view_if_needed()
-            page.wait_for_timeout(800)
             expect(control_by_text(page, home_data["templates"]["cta"])).to_be_visible(timeout=15000)
         with allure.step("点击 See More Creations 并断言 /create"):
             click_and_assert_path(page, control_by_text(page, home_data["templates"]["cta"]), "/create")
@@ -260,7 +280,6 @@ class TestL1PageStructure:
                 goto_home(page, base_url)
                 test_heading = page.get_by_text(home_data["templates"]["test_panel"], exact=False).first
                 test_heading.scroll_into_view_if_needed()
-                page.wait_for_timeout(800)
                 link = page.locator("a").filter(has_text=label).first
                 click_and_assert_path(page, link, expected_path)
                 shot(page, f"PC-HOME-L1-004_{label.replace(' ', '_')}")
@@ -286,15 +305,22 @@ class TestL1PageStructure:
                 goto_home(page, base_url)
                 portrait_section = section_by_text(page, home_data["portrait"]["heading"])
                 tab_button = portrait_section.get_by_role("button", name=tab, exact=True).first
-                tab_button.click()
-                page.wait_for_timeout(1200)
                 template_cards = portrait_section.locator("a[href]")
+                pre_href = template_cards.first.get_attribute("href")
+                tab_button.click()
+                # tab 切换会整体替换卡片；等第一张卡的 href 变化，避免读到旧分类的 href。
+                wait_ready(
+                    page,
+                    lambda: template_cards.first.get_attribute("href") != pre_href,
+                    timeout=5000,
+                    settle_ms=0,
+                )
                 expect(template_cards).to_have_count(home_data["portrait"]["template_count"], timeout=15000)
-                first_card = template_cards.first
-                href = first_card.get_attribute("href") or ""
+                href = template_cards.first.get_attribute("href") or ""
                 assert href, f"{tab} 分类第一个模板缺少 href"
-                first_card.click()
-                page.wait_for_timeout(2000)
+                # 按 href 精确定位，避免读取 href 与点击之间卡片再次被替换。
+                portrait_section.locator(f"a[href='{href}']").first.click()
+                wait_for_path(page, urlparse(href).path)
                 assert urlparse(page.url).path == urlparse(href).path, \
                     f"{tab} 模板应跳转 {urlparse(href).path}，实际: {page.url}"
                 shot(page, f"PC-HOME-L1-005_portrait_{tab.replace(' ', '_')}")
@@ -303,8 +329,8 @@ class TestL1PageStructure:
                 goto_home(page, base_url)
                 batch_section = section_by_text(page, home_data["batch"]["heading"])
                 button = batch_section.locator("a, button, [role='button']").filter(has_text=label).first
-                upload_via_file_chooser(page, button, TEST_IMAGE)
-                wait_for_pid_path(page, ["/batch-edit/edit"])
+                upload_multi_via_file_chooser(page, button, [TEST_IMAGE, TEST_IMAGE_2])
+                wait_for_pid_path(page, ["/agent"])
                 shot(page, f"PC-HOME-L1-005_batch_{label.replace(' ', '_')}")
         with allure.step("检查 Enhance 4 个按钮"):
             for label, expected_path in home_data["enhance"]["direct"].items():
@@ -340,11 +366,19 @@ class TestL1PageStructure:
         with allure.step("检查 Trust 与 Reviews"):
             trust_heading = page.get_by_text(home_data["trust"]["heading"], exact=False).first
             trust_heading.scroll_into_view_if_needed()
-            page.wait_for_timeout(800)
+            wait_ready(
+                page,
+                lambda: all(text in body_text(page) for text in home_data["trust"]["stats"]),
+                timeout=10000,
+            )
             assert_body_contains(page, home_data["trust"]["stats"])
             reviews_heading = page.get_by_text(home_data["reviews"]["heading"], exact=False).first
             reviews_heading.scroll_into_view_if_needed()
-            page.wait_for_timeout(800)
+            wait_ready(
+                page,
+                lambda: all(text in body_text(page) for text in home_data["reviews"]["users"]),
+                timeout=10000,
+            )
             assert_body_contains(page, home_data["reviews"]["users"])
         with allure.step("截图记录 Trust 与 Reviews"):
             shot(page, "PC-HOME-L1-006_trust_reviews")
@@ -369,17 +403,28 @@ class TestL1PageStructure:
             faq_heading = page.get_by_text(home_data["faq"]["heading"], exact=False).first
             faq_heading.scroll_into_view_if_needed()
             page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-            page.wait_for_timeout(1500)
+            wait_ready(page, lambda: page.locator("h3").count() >= len(home_data["faq"]["questions"]), timeout=10000)
             actual_questions = [text.strip() for text in page.locator("h3").all_inner_texts()]
             assert actual_questions == home_data["faq"]["questions"], f"FAQ 问题应完全匹配，实际: {actual_questions}"
             mobile_heading = page.get_by_text(home_data["mobile_app"]["heading"], exact=False).first
             mobile_heading.scroll_into_view_if_needed()
-            page.wait_for_timeout(800)
+            wait_ready(
+                page,
+                lambda: all(
+                    text in body_text(page)
+                    for text in (home_data["mobile_app"]["app_store"], home_data["mobile_app"]["google_play"])
+                ),
+                timeout=10000,
+            )
             assert_body_contains(page, [home_data["mobile_app"]["app_store"], home_data["mobile_app"]["google_play"]])
             copyright = page.get_by_text(home_data["footer"]["copyright"], exact=False).last
             footer = copyright.locator("xpath=..")
             footer.scroll_into_view_if_needed()
-            page.wait_for_timeout(800)
+            wait_ready(
+                page,
+                lambda: all(group in footer.inner_text(timeout=2000) for group in home_data["footer"]["groups"]),
+                timeout=10000,
+            )
             footer_text = footer.inner_text(timeout=15000)
             for group in home_data["footer"]["groups"]:
                 assert group in footer_text, f"页脚缺少链接组: {group}"
@@ -417,7 +462,7 @@ class TestL2Interactions:
         with allure.step("展开 AI Free Tools 下拉"):
             button = page.get_by_role("button", name=home_data["navigation"]["buttons"][0], exact=True).first
             button.click()
-            page.wait_for_timeout(1000)
+            wait_ready(page, lambda: button.get_attribute("aria-expanded") == "true", timeout=10000)
             assert button.get_attribute("aria-expanded") == "true", "AI Free Tools 展开后 aria-expanded 应为 true"
         with allure.step("检查 AI Free Tools 下拉分组与链接"):
             assert_body_contains(page, ["Popular Tools", "Photo Editor", "AI Filter"])
@@ -426,10 +471,10 @@ class TestL2Interactions:
             expect(page.get_by_role("link", name="AI Background Remover").first).to_be_visible(timeout=15000)
         with allure.step("关闭 AI Free Tools 并展开 Portrait Editor 下拉"):
             page.keyboard.press("Escape")
-            page.wait_for_timeout(500)
+            wait_ready(page, lambda: button.get_attribute("aria-expanded") != "true", timeout=5000)
             portrait_button = page.get_by_role("button", name=home_data["navigation"]["buttons"][1], exact=True).first
             portrait_button.click()
-            page.wait_for_timeout(1000)
+            wait_ready(page, lambda: portrait_button.get_attribute("aria-expanded") == "true", timeout=10000)
             assert portrait_button.get_attribute("aria-expanded") == "true", "Portrait Editor 展开后 aria-expanded 应为 true"
         with allure.step("检查 Portrait Editor 下拉分组与链接"):
             assert_body_contains(page, ["Face Editor", "Body Editor", "Hair Editor"])
@@ -457,12 +502,17 @@ class TestL2Interactions:
         """
         with allure.step("先进入中文页"):
             page.goto(f"{base_url.rstrip('/')}/zh", wait_until="domcontentloaded", timeout=60000)
-            page.wait_for_timeout(4000)
+            wait_ready(
+                page,
+                lambda: page.locator("h1").first.inner_text(timeout=2000).strip()
+                == home_data["language"]["chinese_heading"],
+                timeout=20000,
+            )
         with allure.step("打开语言菜单并切换 English"):
             language_button = page.get_by_role("button", name=re.compile("Language|语言")).first
             language_button.click()
-            page.wait_for_timeout(800)
             english_option = page.get_by_text(home_data["language"]["english"], exact=True).first
+            wait_visible(page, english_option, timeout=10000, settle_ms=0)
             english_option.click()
             wait_for_path(page, "/")
         with allure.step("确认英文标题并截图"):
@@ -472,8 +522,8 @@ class TestL2Interactions:
         with allure.step("再次打开语言菜单并切换简体中文"):
             language_button = page.get_by_role("button", name="Language: English").first
             language_button.click()
-            page.wait_for_timeout(800)
             chinese_option = page.get_by_text(home_data["language"]["simplified_chinese"], exact=True).first
+            wait_visible(page, chinese_option, timeout=10000, settle_ms=0)
             chinese_option.click()
             wait_for_path(page, "/zh")
         with allure.step("确认中文标题并截图"):
@@ -510,7 +560,11 @@ class TestL2Interactions:
             expect(generate).to_be_disabled()
         with allure.step("点击输入框并输入文本"):
             textbox.click()
-            page.wait_for_timeout(500)
+            wait_ready(
+                page,
+                lambda: textbox.get_attribute("readonly") is None and textbox.input_value() == "",
+                timeout=5000,
+            )
             assert textbox.get_attribute("readonly") is None, "点击后 Prompt 输入框应变为可编辑"
             assert textbox.input_value() == "", "点击后 Prompt 输入框应清空默认示例文案"
             textbox.fill(home_data["hero"]["prompt_text"])
@@ -577,7 +631,6 @@ class TestL2Interactions:
             goto_home(page, base_url)
         with allure.step("点击 Prompt 后打开模型菜单"):
             page.get_by_role("textbox", name=home_data["hero"]["prompt_label"]).first.click()
-            page.wait_for_timeout(300)
             model_button = page.locator("button.cinematic-model").first
             model_button.scroll_into_view_if_needed()
             # 2026-09-14 复探（page_map home_v7）：模型入口为 button.cinematic-model（文案 Auto），
@@ -585,12 +638,10 @@ class TestL2Interactions:
             # 2026-09-14 复探：等模型入口可交互（SPA 水合）后再触发；菜单是 toggle，
             # 仅在未展开时 dispatch，循环兜底避免水合未完成导致首次点击无效。
             model_button.wait_for(state="visible", timeout=15000)
-            page.wait_for_timeout(1500)
             for _ in range(3):
-                if page.locator(".cinematic-popup").count():
+                if wait_ready(page, lambda: page.locator(".cinematic-popup").count() > 0, timeout=2000, settle_ms=0):
                     break
                 model_button.dispatch_event("click")
-                page.wait_for_timeout(1500)
             popup = page.locator(".cinematic-popup").first
             expect(popup).to_be_visible(timeout=15000)
             popup_text = popup.inner_text(timeout=15000)
@@ -599,11 +650,10 @@ class TestL2Interactions:
             shot(page, "PC-HOME-L2-008_prompt_model_menu")
         with allure.step("关闭模型菜单并打开设置面板"):
             page.keyboard.press("Escape")
-            page.wait_for_timeout(500)
+            wait_ready(page, lambda: not page.locator(".cinematic-popup").first.is_visible(), timeout=5000)
             settings_button = page.locator("button[aria-label='Prompt settings']").first
             settings_button.scroll_into_view_if_needed()
             settings_button.click()
-            page.wait_for_timeout(1000)
             popup = page.locator(".cinematic-popup").first
             expect(popup).to_be_visible(timeout=15000)
             popup_text = popup.inner_text(timeout=15000)
@@ -690,7 +740,6 @@ class TestL2Interactions:
             click_and_assert_path(page, button, "/tools")
         with allure.step("截图记录工具列表"):
             page.evaluate("window.scrollTo(0, 0)")
-            page.wait_for_timeout(1000)
             shot(page, "PC-HOME-L2-012_more_tools")
 
 
@@ -720,7 +769,6 @@ class TestL3Exceptions:
         try:
             with allure.step("以 zh-CN locale 访问根路径"):
                 page.goto(f"{base_url.rstrip('/')}/", wait_until="domcontentloaded", timeout=60000)
-                page.wait_for_timeout(5000)
                 wait_for_path(page, "/zh")
             with allure.step("确认中文标题"):
                 expect(page.locator("h1").first).to_have_text(home_data["language"]["chinese_heading"], timeout=15000)
@@ -746,7 +794,7 @@ class TestL3Exceptions:
             goto_home(page, base_url)
             link = page.locator("a").filter(has_text=home_data["reviews"]["users"][0]).first
             link.scroll_into_view_if_needed()
-            page.wait_for_timeout(800)
+            wait_visible(page, link, timeout=10000, settle_ms=0)
             assert link.get_attribute("target") == "_blank", "用户评论外链应 target=_blank"
         with allure.step("点击外链并确认新标签页"):
             with page.expect_popup(timeout=30000) as popup_info:
@@ -757,6 +805,5 @@ class TestL3Exceptions:
                 f"新标签页应打开 Product Hunt 用户页，实际: {new_page.url}"
             assert urlparse(page.url).path == "/", "原首页标签不应被外链替换"
             new_page.evaluate("window.scrollTo(0, 0)")
-            new_page.wait_for_timeout(2000)
             shot(new_page, "PC-HOME-L3-003_external_link")
             new_page.close()

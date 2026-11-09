@@ -1,0 +1,104 @@
+# 旧画布 AI Tools 功能栏 —— 测试数据（task 2026-10-13_old_canvas_ai_tools_exploration）
+# 依据 confirmed cases.md（6 条，去重后）与 page_map/pokecut/infinite_canvas_ai_tools_v1.yaml
+task_id: 2026-10-13_old_canvas_ai_tools_exploration
+base_url: http://10.17.1.66:3001
+account:
+  email: 450832596@qq.com
+  code: '123456'
+  state: member_pro
+material: test_images/1K.jpg
+
+# 面板形态分组（去重维度）
+groups:
+  preset_select:            # P-AIT-01
+    - name: Photo Enhancer
+      # 2026-10-29 补强：新增 Low-Res Mode；会员/有积分账号默认选中 Ultra HD Mode。
+      expected_modes: [Standard Mode, Low-Res Mode, Portrait Mode, Text Mode, Ultra HD Mode]
+      default_mode: Ultra HD Mode
+      presets: [Standard Mode, Low-Res Mode, Portrait Mode, Text Mode, Ultra HD Mode]
+      category: null
+      expect_progress: true
+    - name: AI Upscaler
+      presets: [Portrait Mode]
+      category: null
+      expect_progress: false
+    - name: Old Photo Restore
+      presets: []
+      category: null
+      expect_progress: false
+    - name: Text Enhancer
+      presets: [Standard Mode]
+      category: null
+      expect_progress: true
+    - name: AI Image Extender
+      presets: [Portrait, Instagram post]
+      category: null
+      expect_progress: false
+    - name: AI Face Editor
+      presets: [Remove Acne]
+      category: null
+      expect_progress: false
+    - name: AI Body Editor
+      presets: [Fuller Breast]
+      category: null
+      expect_progress: false
+    - name: AI Filter
+      presets: [Silent Film]
+      category: null
+      extra_cross_category: {category: Ramadan, preset: Lantern Glow}
+      expect_progress: false
+    - name: HairStyle Try On
+      presets: [Blonde]
+      category: Color
+      expect_progress: false
+    - name: AI Facial Expression
+      presets: [Teeth Smile]
+      category: Expression
+      expect_progress: false
+
+  mode_and_category:        # P-AIT-02
+    - name: Magic Eraser
+      smart_auto_cross: [{category: Face, preset: Remove Acne}, {category: Body, preset: Remove Blemishes}]
+      sweep_manual: true
+    - name: Watermark Remover
+      smart_auto_cross: [{category: Mark, preset: Remove Watermark}, {category: Object, preset: Remove Glare}]
+      # 实测（2026-10-13）：切 Manual Mode 后 DOM 仍停留在参数面板、manual_paint_canvas 不出现、
+      # 主按钮 Remove 保持可用 → 本环境 Manual Mode 不可达，按 blocked 分支记录，不做弱化断言。
+      sweep_manual: false
+    - name: Hair Removal
+      smart_auto_cross: [{category: Body, preset: Fix Bra Bulge}]
+      sweep_manual: true
+    - name: AI Clothes Changer
+      mode: Clothes Changer
+      # 分类列表横向滚动，Wedding Dress 在视口外不可点；改用可见分类（跨分类等价类不变）
+      categories: [Formal Wear, Dresses]
+      tile_kind: thumb_aireplace_clothes_
+      sweep_manual: false
+
+  opens_with_result:        # P-AIT-03
+    - name: Background Remover
+      # 实测：默认选中项随图片内容变化；已生成过的模型会命中缓存（无新任务），
+      # 必须切到尚未生成过的模型才会真正失效并要求重新提交，故按候选顺序逐个尝试。
+      model_candidates: [Head&Face, Text, General]
+      switch_regenerates: true
+      submit_after_switch: Remove Background
+    - name: Blur Background
+      switch_model: Motion
+      # 客户端即时预览（本地重算），状态恒为结果态、不产生服务端任务
+      switch_regenerates: false
+
+  mask_required:            # P-AIT-04
+    - name: AI Replace
+      description: a red apple
+      mode: Replace Object
+
+  navigate_only:            # P-AIT-05
+    - name: AI Image Generator
+
+  destructive:            # P-AIT-06
+    - name: Face Cutout
+      # 实测（探针，同一 pid 复现）：本图默认选中 Head&Face；切 General 命中缓存仍为结果态，
+      # 切 **Text** 才会真正失效（Confirm 禁用 + 主按钮变回 Remove Background）并需点它重新生成。
+      model_candidates: [Text, General, Head&Face]
+      switch_regenerates: true
+      submit_after_switch: Remove Background

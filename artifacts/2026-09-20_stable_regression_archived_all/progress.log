@@ -1,0 +1,26 @@
+[2026-09-20 18:07:21] orchestrator start task stable_regression scope=registry stable_regression scripts matching http://10.17.1.66:3001
+[2026-09-20 18:08:26] orchestrator step: run archive archive/portrait_detector/test_pokecut_portrait_detector.py
+[2026-09-20 18:13:38] orchestrator step: finished archive archive/portrait_detector/test_pokecut_portrait_detector.py exit=0 seconds=311.89 counts={'passed': 14} result=passed
+[2026-09-20 18:13:38] orchestrator step: run archive archive/tool_pages/test_ai_image_text_enhancer_experiment.py
+[2026-09-20 18:26:45] orchestrator step: finished archive archive/tool_pages/test_ai_image_text_enhancer_experiment.py exit=0 seconds=786.53 counts={'passed': 15, 'skipped': 3} result=passed_with_skips
+[2026-09-20 18:26:45] orchestrator step: run archive archive/infinite_canvas/test_infinite_canvas_text_layer_v2.py
+[2026-09-20 18:31:41] orchestrator step: finished archive archive/infinite_canvas/test_infinite_canvas_text_layer_v2.py exit=0 seconds=296.06 counts={'passed': 6} result=passed
+[2026-09-20 18:31:41] orchestrator step: run archive archive/mobile_home/test_mobile_home.py
+[2026-09-20 18:39:45] orchestrator step: finished archive archive/mobile_home/test_mobile_home.py exit=1 seconds=484.45 counts={'passed': 33, 'failed': 5} result=failed
+[2026-09-20 18:39:45] orchestrator step: run archive archive/help_center/test_help_page.py
+[2026-09-20 18:42:54] orchestrator step: finished archive archive/help_center/test_help_page.py exit=0 seconds=189.45 counts={'passed': 11} result=passed
+[2026-09-20 18:42:54] orchestrator step: run archive archive/infinite_canvas_insert_panel/test_old_canvas_insert_panel_v3.py
+[2026-09-20 18:52:25] orchestrator step: finished archive archive/infinite_canvas_insert_panel/test_old_canvas_insert_panel_v3.py exit=0 seconds=570.34 counts={'passed': 24} result=passed
+[2026-09-20 18:52:25] orchestrator step: run archive archive/infinite_canvas_text_panel/test_old_canvas_text_panel_v1.py
+[2026-09-20 18:58:52] orchestrator step: finished archive archive/infinite_canvas_text_panel/test_old_canvas_text_panel_v1.py exit=0 seconds=387.06 counts={'passed': 13} result=passed
+[2026-09-20 18:58:52] orchestrator step: run archive archive/infinite_canvas_sticker_panel/test_old_canvas_sticker_panel_v1.py
+[2026-09-20 19:02:18] orchestrator step: finished archive archive/infinite_canvas_sticker_panel/test_old_canvas_sticker_panel_v1.py exit=0 seconds=205.98 counts={'passed': 9} result=passed
+[2026-09-20 19:02:18] orchestrator step: run archive archive/seo_upload_interactions/test_seo_main_upload_interactions_v1.py
+[2026-09-20 19:10:20] orchestrator step: finished archive archive/seo_upload_interactions/test_seo_main_upload_interactions_v1.py exit=0 seconds=482.34 counts={'passed': 24} result=passed
+[2026-09-20 19:10:20] orchestrator step: run archive archive/seo_upload_mobile/test_seo_main_upload_mobile_v1.py
+[2026-09-20 19:14:52] orchestrator step: finished archive archive/seo_upload_mobile/test_seo_main_upload_mobile_v1.py exit=0 seconds=272.24 counts={'passed': 23, 'xfailed': 1} result=passed_with_skips
+[2026-09-20 19:14:52] orchestrator step: run archive archive/create_auto_intent_recognition/test_create_chat_to_edit_auto_v1.py
+[2026-09-20 19:22:17] orchestrator step: finished archive archive/create_auto_intent_recognition/test_create_chat_to_edit_auto_v1.py exit=0 seconds=445.0 counts={'passed': 11} result=passed
+[2026-09-20 19:22:17] orchestrator run_archived_regression finished: suites=11 passed_suites=8 skip_suites=2 failed_suites=1 counts={'passed': 183, 'skipped': 3, 'failed': 5, 'xfailed': 1} total_seconds=4431.39
+[2026-09-20 19:24:33] orchestrator report-output: wrote report.md; allure-report-archive generated; http://localhost:8123/index.html HTTP 200 opened
+[2026-09-20 19:24:33] orchestrator done status=completed result=183 passed / 5 failed / 3 skipped / 1 xfailed

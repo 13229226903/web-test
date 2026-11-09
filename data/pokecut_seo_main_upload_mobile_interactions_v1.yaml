@@ -100,6 +100,7 @@ cases:
   priority: P1
   title: /tools/cv-photo-editor 移动端上传 1K.jpg 后到达证件照画布（Photo Size）
   page_path: /tools/cv-photo-editor
+  image: test_images/低分辨率.JPG
   page_map: page_map/pokecut/seo_upload_mobile/tools__cv-photo-editor_v1.yaml
   state_ref: states.landing.buttons.main_upload
   upload_selector: button.seo-first-screen-upload-button

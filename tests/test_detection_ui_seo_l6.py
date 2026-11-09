@@ -4,7 +4,7 @@
 - L6-001 face 全流程：登录→上传→双图生成→双下载→PC Continue
 - L6-002 nose 全流程：登录→上传→分析成功→模糊承接→Get It Now
 
-环境：测试服失败时按 PROJECT.md 通过 DEBUG 面板切「预部署」并重新登录，
+环境：测试服直接登录（2026-11-02：预部署服务器未开启，去除切「预部署」回退路径）。
 账号 450832596@qq.com / 验证码 123456；素材 test_images/有人脸.JPG。
 用户已确认 skip：BUG-NOSE-001、BUG-FACE-MOBILE-001。
 """
@@ -15,6 +15,8 @@ import re
 import allure
 import pytest
 from playwright.sync_api import Page
+
+from helpers.waiting import poll_until, settle, wait_canvas_ready, wait_network_quiet, wait_visible
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 IMG_FACE = str(ROOT / "test_images" / "有人脸.JPG")
@@ -30,12 +32,13 @@ PAGE_FACE = "/tools/ai-face-reader"
 
 def coord_click(page: Page, locator, label: str = ""):
     """Vue 控件优先坐标点击。"""
+    # box 计算前等控件可定位即可（bounding_box 自带等待），无需固定停等
     locator.scroll_into_view_if_needed(timeout=10000)
-    page.wait_for_timeout(200)
     box = locator.bounding_box(timeout=10000)
     assert box, f"无 bounding box: {label or locator}"
     page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
-    page.wait_for_timeout(300)
+    # 点击后状态由调用方断言；这里只做一次最小有界停等让 Vue 事件入队
+    settle(page, 300)
 
 
 def upload_file(page: Page, locator, path: str):
@@ -46,17 +49,26 @@ def upload_file(page: Page, locator, path: str):
 
 
 def close_modal_if_present(page: Page):
-    """关闭登录后可能出现的限时优惠/购买浮层。"""
+    """关闭登录后可能出现的限时优惠/购买浮层（最多等 3s 出现，出现即关）。"""
+    gift = page.locator(".purchase-gift-modal img.cursor-pointer").first
+    dialog = page.locator(".purchase-dialog__close").first
+    # 浮层异步弹出：有界等待可见，未出现即返回，不再盲等 3×800ms
+    if not poll_until(
+        page,
+        lambda: (gift.count() and gift.is_visible()) or (dialog.count() and dialog.is_visible()),
+        timeout=3000,
+        interval=300,
+    ):
+        return
     for _ in range(3):
-        page.wait_for_timeout(800)
         try:
-            close_btn = page.locator(".purchase-gift-modal img.cursor-pointer").first
-            if close_btn.count() and close_btn.is_visible():
-                coord_click(page, close_btn, "close_purchase_gift")
+            if gift.count() and gift.is_visible():
+                coord_click(page, gift, "close_purchase_gift")
+                poll_until(page, lambda: not (gift.count() and gift.is_visible()), timeout=4000, interval=300)
                 continue
-            close_btn2 = page.locator(".purchase-dialog__close").first
-            if close_btn2.count() and close_btn2.is_visible():
-                coord_click(page, close_btn2, "close_purchase_dialog")
+            if dialog.count() and dialog.is_visible():
+                coord_click(page, dialog, "close_purchase_dialog")
+                poll_until(page, lambda: not (dialog.count() and dialog.is_visible()), timeout=4000, interval=300)
                 continue
         except Exception:
             pass
@@ -65,28 +77,22 @@ def close_modal_if_present(page: Page):
 
 def goto(page: Page, base_url: str, path: str):
     page.goto(f"{base_url}{path}", timeout=120000)
-    page.wait_for_timeout(6000)
+    # 页面就绪信号：主上传入口出现（比固定 6s 更快、更准）
+    wait_visible(page, page.get_by_text("Try Image to Image AI Now"), timeout=30000)
+    wait_network_quiet(page, timeout=3000, idle_ms=0)
     close_modal_if_present(page)
 
 
 def switch_predeploy_and_login(page: Page, base_url: str):
-    """DEBUG 面板切「预部署」并登录（测试服失败回退路径）。"""
+    """在测试服直接登录（2026-11-02：预部署服务器未开启，去除 DEBUG 切环境）。"""
     goto(page, base_url, PAGE_FACE)
-    debug_btn = page.locator("button:has-text('DEBUG')").first
-    coord_click(page, debug_btn, "debug")
-    page.wait_for_timeout(1500)
-    predeploy = page.locator(".debug-panel").get_by_text("预部署", exact=True).first
-    coord_click(page, predeploy, "predeploy")
-    # 切换环境会刷新页面，等待 DEBUG 按钮重新出现
-    page.locator("button:has-text('DEBUG')").first.wait_for(state="visible", timeout=60000)
-    page.wait_for_timeout(5000)
-
     # 已登录则直接返回
     if page.locator("text=Log in").count() == 0 and page.locator("text=User").count():
         return
 
     coord_click(page, page.get_by_text("Log in", exact=True).first, "login")
-    page.wait_for_timeout(2000)
+    # 登录弹窗就绪信号：email 输入框可见
+    wait_visible(page, page.locator('[data-testid="auth-email-input"]'), timeout=15000)
     email_input = page.locator('[data-testid="auth-email-input"]').first
     code_input = page.locator('[data-testid="auth-code-input"]').first
     submit = page.locator('[data-testid="auth-submit"]').first
@@ -97,13 +103,15 @@ def switch_predeploy_and_login(page: Page, base_url: str):
     page.keyboard.press("Control+A")
     page.keyboard.type(CODE, delay=5)
     coord_click(page, submit, "auth_submit")
-    # 等待登录弹窗消失或用户菜单出现
-    for _ in range(60):
-        page.wait_for_timeout(1000)
-        if page.locator('[data-testid="auth-dialog"]').count() == 0 or page.locator("text=User").count():
-            break
+    # 登录成功信号：登录弹窗消失或用户菜单出现
+    poll_until(
+        page,
+        lambda: page.locator('[data-testid="auth-dialog"]').count() == 0 or page.locator("text=User").count() > 0,
+        timeout=60000,
+        interval=1000,
+    )
     close_modal_if_present(page)
-    page.wait_for_timeout(3000)
+    wait_network_quiet(page, timeout=3000, idle_ms=0)
 
 
 def _column_ready(needle_text: str, require_img: bool):
@@ -157,14 +165,19 @@ def wait_blur_placeholder(page: Page, timeout_ms: int = 150000):
 
 
 def wait_agent_canvas(page: Page, timeout_ms: int = 60000):
-    """等待无限画布 /agent 加载并返回 URL。"""
+    """等待无限画布 /agent 加载完成并返回 URL。
+
+    2026-11-05: 仅等 URL 会抢在画布渲染前截图（截到空白加载页）。
+    URL 到位后追加等「可见 canvas / 大尺寸图层图片」真正渲染。
+    """
     page.wait_for_url(re.compile(r"/agent\?pid="), timeout=timeout_ms)
-    page.wait_for_timeout(6000)
+    # URL 变化 != 内容就绪；等可见 canvas / 大尺寸图片渲染完成再返回
+    wait_canvas_ready(page, timeout=30000, settle_ms=300)
 
 
 @pytest.fixture(scope="session")
 def predeploy_context(playwright, base_url):
-    """会话级预部署登录上下文（复用登录态）。"""
+    """会话级测试服登录上下文（复用登录态）。"""
     browser = playwright.chromium.launch(headless=True)
     context = browser.new_context(
         viewport={"width": 1920, "height": 1080},
@@ -253,7 +266,9 @@ class TestL6DetectionUiSmoke:
 
         with allure.step("上传 test_images/有人脸.JPG"):
             upload_file(page, page.get_by_text("Try Image to Image AI Now").first, IMG_FACE)
-            page.wait_for_timeout(3000)
+            # 上传受理生效信号：分析结果区出现（替代固定 3s）
+            poll_until(page, lambda: page.locator("h3:has-text('Analysis Result')").count() > 0,
+                       timeout=30000, interval=300)
 
         with allure.step("等待分析结果成功"):
             wait_analysis_success(page, timeout_ms=150000)
@@ -318,7 +333,9 @@ class TestL6DetectionUiSmoke:
 
         with allure.step("上传 test_images/有人脸.JPG"):
             upload_file(page, page.get_by_text("Try Image to Image AI Now").first, IMG_FACE)
-            page.wait_for_timeout(3000)
+            # 上传受理生效信号：分析结果区出现（替代固定 3s）
+            poll_until(page, lambda: page.locator("h3:has-text('Analysis Result')").count() > 0,
+                       timeout=30000, interval=300)
 
         with allure.step("等待分析结果成功"):
             wait_analysis_success(page, timeout_ms=150000)

@@ -1,0 +1,124 @@
+Total messages: 70 (Errors: 0, Warnings: 1)
+Returning 117 messages for level "info"
+
+[LOG] sendGaEvent 退出登录弹窗出现 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] 当前环境不启用 Firebase Analytics @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleOneTap][idle-setup-scheduled] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/create, online: true, timeoutMs: 12000} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 用户设备信息 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: (missing) @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent en_create页面_进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] Create page mounted, refreshing user benefit info @ http://10.17.1.66:3001/_nuxt/Dnefvvt0.js:0
+[LOG] sendGaEvent create页_进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [GoogleOneTap][idle-setup-start] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/create, online: true} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][load-script-start] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/create, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, src: https://accounts.google.com/gsi/client?hl=en} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 购买界面进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent create页自动出现购买弹窗 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 促销入口3_出现 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [GoogleIdentity][load-script-timeout] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/create, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, src: https://accounts.google.com/gsi/client?hl=en} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][ensure-load-failed] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/create, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, error: Error: Timed out loading https://accounts.google.com/gsi/client?hl=en
+    at http://10.17.1.66:3001…} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][one-tap-setup-skip] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/create, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, reason: google_identity_api_unavailable} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://accounts.google.com/gsi/client?hl=en:0
+[LOG] [GoogleIdentity][load-script-error] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/create, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, src: https://accounts.google.com/gsi/client?hl=en} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] sendGaEvent create页Start_from_a_Photo功能点击 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 上传成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent en_agent页面_进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: (missing) @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布使用引导_首次气泡展示 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布Enhance_Standard Mode点击 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页点数用完触发注册 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页画质增强通用功能点数用完触发注册 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页画质增强2K-通用模型点数用完触发注册 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 注册弹窗_出现 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: (missing) @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [GoogleIdentity][load-script-timeout] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/agent?pid=821ead31-c70c-40d0-a442-6412880336d0#, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, src: https://accounts.google.com/gsi/client?hl=en} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][ensure-load-failed] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/agent?pid=821ead31-c70c-40d0-a442-6412880336d0#, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, error: Error: Timed out loading https://accounts.google.com/gsi/client?hl=en
+    at http://10.17.1.66:3001…} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][button-display-failed] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/agent?pid=821ead31-c70c-40d0-a442-6412880336d0#, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, reason: google_identity_api_unavailable} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[WARNING] [GoogleLogin][gis-button-render-failed] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/agent?pid=821ead31-c70c-40d0-a442-6412880336d0#, online: true, gaPageType: none, isLogin: false} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] authToken is empty, url: http://hxxservice.ad.com/gateway/pokecut/api/9968163fcd32c00f79283c5de267e89d/5o7Wx53qK19of985 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] authToken is empty, url: http://hxxservice.ad.com/gateway/pokecut/api/9968163fcd32c00f79283c5de267e89d/5o7Wx53qK19of985 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: (missing) @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] authToken is empty, url: http://hxxservice.ad.com/gateway/pokecut/api/9968163fcd32c00f79283c5de267e89d/3xbRcP3y44hE35iC @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [GoogleIdentity][cancel-one-tap-start] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/agent?pid=821ead31-c70c-40d0-a442-6412880336d0#, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, hasCancelApi: false} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][cancel-one-tap-finish] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/agent?pid=821ead31-c70c-40d0-a442-6412880336d0#, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleOneTap][cancelled] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/agent?pid=821ead31-c70c-40d0-a442-6412880336d0#, online: true, reason: login_success, idleSetupPending: false} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] sendGaEvent 注册弹窗_注册成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 登录成功_邮箱登录方式 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页点数用完触发注册成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页画质增强通用功能点数用完触发注册成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页画质增强2K-通用模型点数用完触发注册成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: UserD99F4AF461 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 购买界面进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页画质增强2K-通用模型点数用完触发购买 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 促销入口3_出现 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] 当前环境不启用 Firebase Analytics @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[WARNING] [Vue warn]: Hydration text content mismatch on JSHandle@node 
+  - rendered on server: Offerta  in scadenza23:50:44
+  - expected on client: Offerta  in scadenza23:50:43 @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[ERROR] Hydration completed but contains mismatches. @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleOneTap][mounted-skip] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/it/ai-replace, online: true, reason: already_logged_in} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: UserD99F4AF461 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent it_ai-replace页面_进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] 当前环境不启用 Firebase Analytics @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleOneTap][mounted-skip] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/it/ai-replace, online: true, reason: already_logged_in} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: UserD99F4AF461 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent it_ai-replace页面_进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 上传成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [SEO_TO_CANVAS][prepare] Proxy(Object) @ http://10.17.1.66:3001/_nuxt/Q99s1j9I.js:1
+[LOG] sendGaEvent it_agent页面_进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: UserD99F4AF461 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [SEO_TO_CANVAS][enter_canvas] {entryType: aiReplace, routePath: /it/ai-replace, locale: it, funcType: aiReplace, clientDevice: Proxy(Object)} @ http://10.17.1.66:3001/_nuxt/8iqaWlVA.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [SEO_TO_CANVAS][aiReplace][open_panel] {addedElementId: el-1790765113100-ftepmyx, aiReplaceFuncType: aiReplace, initialSelection: Object} @ http://10.17.1.66:3001/_nuxt/8iqaWlVA.js:1
+[LOG] sendGaEvent 无限画布使用引导_首次气泡展示 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[INFO] [CreditShortageCollectTrace] {traceId: ai-replace-collect-1790765991208-rx3vc5, stage: purchase-guard-entered, timestamp: 2026-09-30T10:59:51.208Z, routePath: /it/agent?pid=07e1a2c5-b058-4e78-94c6-ee271afaa57a, hasAuth: true} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [内购弹窗] needShowPurchaseDialog: 非会员需购会员/卡 {needBuyVip: false, needBuyCard: true, functionTypes: Array(1)} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[INFO] [CreditShortageCollectTrace] {traceId: ai-replace-collect-1790765991208-rx3vc5, stage: collect-guide-eligibility-evaluated, timestamp: 2026-09-30T10:59:51.210Z, routePath: /it/agent?pid=07e1a2c5-b058-4e78-94c6-ee271afaa57a, hasAuth: true} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[INFO] [CreditShortageCollectTrace] {traceId: ai-replace-collect-1790765991208-rx3vc5, stage: collect-guide-intent-created, timestamp: 2026-09-30T10:59:51.210Z, intentId: 1, intentPhase: waiting-purchase-close} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[INFO] [CreditShortageCollectTrace] {traceId: ai-replace-collect-1790765991208-rx3vc5, stage: legacy-purchase-opening, timestamp: 2026-09-30T10:59:51.211Z, routePath: /it/agent?pid=07e1a2c5-b058-4e78-94c6-ee271afaa57a, hasAuth: true} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 新画布改图购买出现it_ai-replace @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 购买界面进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页点数用完触发购买 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页AI改图功能点数用完触发购买 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 促销入口3_出现 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[INFO] [CreditShortageCollectTrace] {traceId: ai-replace-collect-1790765991208-rx3vc5, intentId: 1, intentPhase: waiting-purchase-close, intentActive: true, intentRouteFullPath: /it/agent?pid=07e1a2c5-b058-4e78-94c6-ee271afaa57a} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[WARNING] You may test your Stripe.js integration over HTTP. However, live Stripe.js integrations must use HTTPS. @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [postForm] NONCE encryption result {identityType: account, NONCE: GEqgzSYL3PyX7FiOr/WQMPng4gdgSDGucoX2t45OzCI=} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[INFO] [payment] account risk level received {riskLevel: LOW, expiresAtMs: null, verificationRequired: false, verificationReason: null, verifiedUntilMs: null} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] sendGaEvent 总_支付弹窗出现 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: UserD99F4AF461 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[INFO] [CreditShortageCollectTrace] {traceId: ai-replace-collect-1790765991208-rx3vc5, stage: collect-guide-intent-cleared, timestamp: 2026-09-30T11:28:56.914Z, intentId: 1, intentPhase: waiting-purchase-close} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 新画布改图年ultra购买成功it_ai-replace @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 总_年ultra订阅购买成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页点数用完触发购买年ultra成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 无限画布页AI改图功能点数用完触发购买年ultra成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 促销入口3_购买成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[INFO] [CreditShortageCollectTrace] {traceId: ai-replace-collect-1790765991208-rx3vc5, stage: legacy-purchase-visibility-closed, timestamp: 2026-09-30T11:28:56.919Z, routePath: /it/agent?pid=07e1a2c5-b058-4e78-94c6-ee271afaa57a, hasAuth: true} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[INFO] [CreditShortageCollectTrace] {traceId: ai-replace-collect-1790765991208-rx3vc5, intentId: null, intentPhase: null, intentActive: false, intentRouteFullPath: null} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[INFO] [CreditShortageCollectTrace] {traceId: ai-replace-collect-1790765991208-rx3vc5, intentId: null, intentPhase: null, intentActive: false, intentRouteFullPath: null} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: UserD99F4AF461 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: UserD99F4AF461 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: UserD99F4AF461 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1

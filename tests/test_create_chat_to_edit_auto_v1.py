@@ -18,6 +18,8 @@ import yaml
 from helpers_create_entry import dismiss_create_promo
 from playwright.sync_api import Page, expect
 
+from helpers.waiting import poll_until, settle, wait_canvas_ready, wait_ready
+
 def _repo_root() -> Path:
     """逐级上溯仓库根，兼容 tests/ 与 archive/<module>/ 两种位置。"""
     current = Path(__file__).resolve()
@@ -60,19 +62,33 @@ def shot(page: Page, name: str) -> Path:
 def goto_create(page: Page, base_url: str) -> None:
     """进入 /create 并处理促销弹窗。"""
     page.goto(base_url.rstrip("/") + DATA["entry_path"], wait_until="domcontentloaded", timeout=120000)
-    page.wait_for_timeout(DATA["waits"]["page_load_ms"])
+    # 就绪信号：Chat to Edit 标题 + prompt + 上传 + Model 均挂载（替代固定 7s）
+    wait_ready(
+        page,
+        lambda: page.get_by_role("heading", name="Chat to Edit").count() > 0
+        and page.locator("textarea[placeholder='What do you want to design today?']").count() > 0
+        and page.locator("div[title='Upload reference images']").count() > 0
+        and page.locator("div[title='Model']").count() > 0,
+        timeout=30000,
+        settle_ms=0,
+    )
     dismiss_create_promo(page)
-    page.wait_for_timeout(500)
+    # 弹窗关闭后等遮罩/促销节点消失
+    poll_until(
+        page,
+        lambda: page.locator("img[src*='colos_pop_btn_close']").count() == 0,
+        timeout=5000,
+        interval=300,
+    )
 
 
 def select_auto_model(page: Page) -> None:
     """选择 Auto 模型。"""
     page.locator("div[title='Model']").click(timeout=20000)
-    page.wait_for_timeout(800)
     auto = page.locator("div.cursor-pointer:has(img[src*='model_icon_auto.svg'])").first
     expect(auto).to_be_visible(timeout=10000)
     auto.click(timeout=20000)
-    page.wait_for_timeout(800)
+    # 等触发器回显 Auto（选择生效的可观察信号）
     expect(page.locator("div[title='Model']")).to_contain_text("Auto", timeout=10000)
 
 
@@ -84,7 +100,18 @@ def upload_reference(page: Page) -> None:
         upload.click(timeout=20000)
     image_path = ROOT / DATA["reference_image"]
     chooser_info.value.set_files(str(image_path))
-    page.wait_for_timeout(DATA["waits"]["action_settle_ms"])
+    # 上传完成信号：参考图缩略图挂载（无稳定 DOM 时退回有界 settle）
+    uploaded = wait_ready(
+        page,
+        lambda: page.evaluate("""() => [...document.querySelectorAll('img')].some(i => {
+            const r = i.getBoundingClientRect();
+            return r.width > 40 && r.width < 160 && (i.src || '').startsWith('blob:');
+        })"""),
+        timeout=15000,
+        settle_ms=300,
+    )
+    if not uploaded:
+        settle(page, DATA["waits"]["action_settle_ms"])
 
 
 def fill_prompt(page: Page, prompt: str) -> None:
@@ -92,7 +119,7 @@ def fill_prompt(page: Page, prompt: str) -> None:
     prompt_box = page.locator("textarea[placeholder='What do you want to design today?']").first
     expect(prompt_box).to_be_visible(timeout=10000)
     prompt_box.fill(prompt)
-    page.wait_for_timeout(500)
+    wait_ready(page, lambda: prompt_box.input_value() == prompt, timeout=5000, settle_ms=0)
 
 
 def submit_task(page: Page) -> None:
@@ -101,7 +128,8 @@ def submit_task(page: Page) -> None:
     expect(submit).to_be_visible(timeout=10000)
     submit.click(timeout=20000)
     page.wait_for_url(re.compile(r"/agent\?pid="), timeout=DATA["waits"]["submit_timeout_ms"])
-    page.wait_for_timeout(1500)
+    # 2026-11-05: URL 到位 != 画布就绪；等可见 canvas/大图真正渲染
+    assert wait_canvas_ready(page, timeout=30000), "画布未在超时内渲染完成"
 
 
 def extract_evidence(logs: list[str]) -> dict[str, Any]:
@@ -123,13 +151,18 @@ def wait_for_task_evidence(page: Page, logs: list[str], expected_style_id: str |
     """等待 taskId / styleId 证据出现。"""
     deadline = time.time() + DATA["waits"]["result_timeout_ms"] / 1000
     last: dict[str, Any] = {}
-    while time.time() < deadline:
+    interval = DATA["waits"]["poll_interval_ms"]
+
+    def _collected() -> bool:
+        nonlocal last
         last = extract_evidence(logs)
         if last["task_id"] and (expected_style_id is None or last["style_id"] == expected_style_id):
-            return last
+            return True
         if any(marker in last["raw"] for marker in ["task fail", "AutoCanvasSuccess hasError: true", "gpuErrorCode:"]):
-            break
-        page.wait_for_timeout(DATA["waits"]["poll_interval_ms"])
+            return True
+        return False
+
+    poll_until(page, _collected, timeout=DATA["waits"]["result_timeout_ms"], interval=interval)
     assert last.get("task_id"), f"未捕获 taskId: {last.get('raw', '')[-2000:]}"
     if expected_style_id:
         assert last.get("style_id") == expected_style_id, (
@@ -141,14 +174,17 @@ def wait_for_task_evidence(page: Page, logs: list[str], expected_style_id: str |
 def wait_for_resolution(page: Page, width: int, height: int) -> None:
     """等待画布结果分辨率文本出现。"""
     expected = f"{width} x {height}"
-    deadline = time.time() + DATA["waits"]["result_timeout_ms"] / 1000
-    last_text = ""
-    while time.time() < deadline:
-        last_text = page.locator("body").inner_text(timeout=10000)
-        if expected in last_text:
-            return
-        page.wait_for_timeout(DATA["waits"]["poll_interval_ms"])
-    raise AssertionError(f"未在超时内看到结果分辨率 {expected}; body={last_text[-1200:]}")
+    last_text = {"value": ""}
+
+    def _shown() -> bool:
+        last_text["value"] = page.locator("body").inner_text(timeout=10000)
+        return expected in last_text["value"]
+
+    if not poll_until(page, _shown, timeout=DATA["waits"]["result_timeout_ms"],
+                      interval=DATA["waits"]["poll_interval_ms"]):
+        raise AssertionError(
+            f"未在超时内看到结果分辨率 {expected}; body={last_text['value'][-1200:]}"
+        )
 
 
 @allure.feature("Create Chat to Edit Auto")

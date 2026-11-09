@@ -1,0 +1,17 @@
+.........F..........F.................                                   [100%]
+================================== FAILURES ===================================
+_________ TestL2Interactions.test_l2_008_id_photo_anonymous[chromium] _________
+tests\test_mobile_home.py:339: in test_l2_008_id_photo_anonymous
+    assert ("Get Free Credits" in body) or ("Get Up to" in body)
+E   AssertionError: assert ('Get Free Credits' in '8\\nAll-in-One AI Photo Editor & Generator\\nStart Creating for Free\\nNano Banana 2 Lite\\nGenerate\\nRemove Background\\n...Terms\\nCompany\\nAbout us\\n\\nCopyright \xa9 2026 Pokecut All Rights Reserved.\\n\\nHome\\nAll Tools\\nGenerate\\nPricing\\nDEBUG' or 'Get Up to' in '8\\nAll-in-One AI Photo Editor & Generator\\nStart Creating for Free\\nNano Banana 2 Lite\\nGenerate\\nRemove Background\\n...Terms\\nCompany\\nAbout us\\n\\nCopyright \xa9 2026 Pokecut All Rights Reserved.\\n\\nHome\\nAll Tools\\nGenerate\\nPricing\\nDEBUG')
+___________ TestL3Exceptions.test_l3_004_id_photo_success[chromium] ___________
+tests\test_mobile_home.py:579: in test_l3_004_id_photo_success
+    assert "/tools/id-photo-edit?pid=" in page.url, f"δ����֤���ջ���: url={page.url}"
+E   AssertionError: δ����֤���ջ���: url=http://10.17.1.66:3001/
+E   assert '/tools/id-photo-edit?pid=' in 'http://10.17.1.66:3001/'
+E    +  where 'http://10.17.1.66:3001/' = <Page url='http://10.17.1.66:3001/'>.url
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_mobile_home.py::TestL2Interactions::test_l2_008_id_photo_anonymous[chromium]
+FAILED tests/test_mobile_home.py::TestL3Exceptions::test_l3_004_id_photo_success[chromium]
+2 failed, 36 passed in 463.27s (0:07:43)

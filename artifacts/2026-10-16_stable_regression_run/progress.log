@@ -1,0 +1,12 @@
+2026-10-16T15:54:47 start stable regression against 10.17.1.66:3102
+2026-10-16T19:01:23 9/18 done, running old_canvas_sticker_panel_v1
+2026-10-19T11:11:05 12 enhance_v4 FAILED 6/6 (entry drift: Start from a Photo -> Start with Photos)
+2026-10-19T11:41:47 13 seo_desktop 19 passed / 5 failed
+2026-10-19T11:57:11 14 seo_mobile 23 passed / 1 xfailed
+2026-10-19T13:01:14 15 chat_to_edit 9 passed / 2 failed
+2026-10-19T14:03:14 16 canvas_stats 33 passed / 1 failed / 2 skipped / 4 xfailed
+2026-10-19T14:30:41 17 ai_tools 6 errors (setup: template->canvas failed, hardcoded :3001)
+2026-10-19T14:33:45 all 17 tasks done; report generated
+2026-10-19T15:57:17 fix ai_tools base_url override; smoke test_p_ait_05 passed; running full suite
+2026-10-19T16:03:33 ai_tools full run #2 start (verify entry flakiness)
+2026-10-19T16:39:17 ai_tools FIXED base_url override; full rerun 6 passed in 2123s

@@ -1,0 +1,18 @@
+....F............x......                                                 [100%]
+================================== FAILURES ===================================
+________________ TestMobileSeoMainUpload.test_l2_005[chromium] ________________
+tests\mobile\test_seo_main_upload_mobile_v1.py:431: in _test
+    _run_case(seo_mobile_session_page, base_url, case)
+tests\mobile\test_seo_main_upload_mobile_v1.py:411: in _run_case
+    _wait_for_stable_state(page, case)
+tests\mobile\test_seo_main_upload_mobile_v1.py:311: in _wait_for_stable_state
+    expect(page).to_have_url(re.compile(URL_PATTERNS[route]), timeout=timeout)
+E   AssertionError: Page URL expected to be 're.compile('/tools/id-photo-edit\\?pid=[0-9a-f\\-]+#?$')'
+E   Actual value: http://10.17.1.66:3001/tools/cv-photo-editor 
+E   Call log:
+E     - Expect "to_have_url" with timeout 120000ms
+E       122 �� unexpected value "http://10.17.1.66:3001/tools/cv-photo-editor"
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/mobile/test_seo_main_upload_mobile_v1.py::TestMobileSeoMainUpload::test_l2_005[chromium]
+1 failed, 22 passed, 1 xfailed in 370.34s (0:06:10)

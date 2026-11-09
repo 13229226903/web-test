@@ -1,0 +1,54 @@
+..F...F......FFF.s                                                       [100%]
+================================== FAILURES ===================================
+___________ test_text_l2_result_non_enhance_no_resolution[chromium] ___________
+tests\test_ai_image_text_enhancer_experiment.py:431: in test_text_l2_result_non_enhance_no_resolution
+    expect(page.locator('button:has-text("Log in")').first).not_to_be_visible(timeout=10000)
+E   AssertionError: Locator expected not to be visible
+E   Actual value: visible 
+E   Call log:
+E     - Expect "to_be_visible" with timeout 10000ms
+E     - waiting for locator("button:has-text(\"Log in\")").first
+E       13 �� locator resolved to <button type="button" data-v-762d956a="" class="transition-[background-color,color,transform] duration-[180ms] ease-out hover:-translate-y-px hover:bg-[#f3f4f7] active:translate-y-0 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-[#3338ee38] motion-reduce:transform-none motion-reduce:transition-none mr-[2rem] flex h-[2.75rem] min-w-[4.5rem] items-center justify-center rounded-r3 px-[1rem] 2xl:mr-[2.5rem] 2xl:min-w-[6.25rem]">��</button>
+E          - unexpected value "visible"
+______________ test_text_l4_member_free_icon_and_cost[chromium] _______________
+tests\test_ai_image_text_enhancer_experiment.py:529: in test_text_l4_member_free_icon_and_cost
+    expect(page.locator('button:has-text("Log in")').first).not_to_be_visible(timeout=10000)
+E   AssertionError: Locator expected not to be visible
+E   Actual value: visible 
+E   Call log:
+E     - Expect "to_be_visible" with timeout 10000ms
+E     - waiting for locator("button:has-text(\"Log in\")").first
+E       13 �� locator resolved to <button type="button" data-v-762d956a="" class="transition-[background-color,color,transform] duration-[180ms] ease-out hover:-translate-y-px hover:bg-[#f3f4f7] active:translate-y-0 active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-[#3338ee38] motion-reduce:transform-none motion-reduce:transition-none mr-[2rem] flex h-[2.75rem] min-w-[4.5rem] items-center justify-center rounded-r3 px-[1rem] 2xl:mr-[2.5rem] 2xl:min-w-[6.25rem]">��</button>
+E          - unexpected value "visible"
+______ test_text_l3_free_account_purchase_intercept_predeploy[chromium] _______
+tests\test_ai_image_text_enhancer_experiment.py:659: in test_text_l3_free_account_purchase_intercept_predeploy
+    _wait_purchase_modal(page, "TC-TEXT-L3-002-Ԥ�����򵯴�")
+tests\test_ai_image_text_enhancer_experiment.py:305: in _wait_purchase_modal
+    expect(modal).to_be_visible(timeout=45000)
+E   AssertionError: Locator expected to be visible
+E   Actual value: None
+E   Error: element(s) not found 
+E   Call log:
+E     - Expect "to_be_visible" with timeout 45000ms
+E     - waiting for locator(".purchase-gift-modal, [role=\"dialog\"]").filter(has_text=re.compile(r"(Unlock Pokecut VIP|Get Started for \$1 USD|Upgrade to Premium|Premium)", re.IGNORECASE)).first
+_ test_text_l6_default_enhance_2k_generation_download_and_continue[chromium] __
+tests\test_ai_image_text_enhancer_experiment.py:680: in test_text_l6_default_enhance_2k_generation_download_and_continue
+    _wait_generation_result(page)
+tests\test_ai_image_text_enhancer_experiment.py:361: in _wait_generation_result
+    pytest.fail("�ȴ����ɽ��̬��ʱ")
+E   Failed: �ȴ����ɽ��̬��ʱ
+_______ test_text_l2_result_edit_more_enters_editor_or_route[chromium] ________
+tests\test_ai_image_text_enhancer_experiment.py:712: in test_text_l2_result_edit_more_enters_editor_or_route
+    _wait_generation_result(page)
+tests\test_ai_image_text_enhancer_experiment.py:361: in _wait_generation_result
+    pytest.fail("�ȴ����ɽ��̬��ʱ")
+E   Failed: �ȴ����ɽ��̬��ʱ
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_result_non_enhance_no_resolution[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_member_free_icon_and_cost[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l3_free_account_purchase_intercept_predeploy[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l6_default_enhance_2k_generation_download_and_continue[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_result_edit_more_enters_editor_or_route[chromium]
+5 failed, 12 passed, 1 skipped in 1082.72s (0:18:02)
+

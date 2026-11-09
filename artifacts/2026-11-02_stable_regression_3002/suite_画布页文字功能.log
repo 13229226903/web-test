@@ -1,0 +1,38 @@
+.F....                                                                   [100%]
+================================== FAILURES ===================================
+______________ test_text_002_select_reopen_tabs_basic[chromium] _______________
+tests\test_infinite_canvas_text_layer_v2.py:276: in test_text_002_select_reopen_tabs_basic
+    assert page.locator("button", has_text="Basic").count() == 0
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/agent?pid=de748bed-4805-4a3c-9432-5e0328114ec4'> selector='button >> internal:has-text="Basic"i'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/agent?pid=de748bed-4805-4a3c-9432-5e0328114ec4'> selector='button >> internal:has-text="Basic"i'> = locator('button', has_text='Basic')
+E    +        where locator = <Page url='http://10.17.1.66:3002/agent?pid=de748bed-4805-4a3c-9432-5e0328114ec4'>.locator
+============================== warnings summary ===============================
+tests/test_infinite_canvas_text_layer_v2.py::test_text_004_reflection[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:355: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero = sum(1 for p in diff.getdata() if p != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_005_background[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:413: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero_mode = sum(1 for px in diff_mode.getdata() if px != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_005_background[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:434: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero_applied = sum(1 for px in diff_applied.getdata() if px != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:457: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero = sum(1 for p in diff.getdata() if p != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]
+tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:204: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for px in diff.getdata() if px != (0, 0, 0))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_infinite_canvas_text_layer_v2.py::test_text_002_select_reopen_tabs_basic[chromium]
+1 failed, 5 passed, 6 warnings in 289.29s (0:04:49)
+

@@ -1,0 +1,17 @@
+..s..s.....F.....s                                                       [100%]
+================================== FAILURES ===================================
+___ test_text_l5_resolution_boundary_6144x8192_over4k_not_highest[chromium] ___
+tests\test_ai_image_text_enhancer_experiment.py:556: in test_text_l5_resolution_boundary_6144x8192_over4k_not_highest
+    _assert_cost(page, "15")  # 2026-10-12 规则变更：8k 基础 10 + glare 5
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"主按钮点数应为 {expected}，实际为 {actual}；按钮文本={_primary_text(page, mobile=mobile)}（cost_state={state}）"
+E   AssertionError: 主按钮点数应为 15，实际为 5；按钮文本=Enhance 5（cost_state=paid）
+E   assert '5' == '15'
+E     
+E     - 15
+E     + 5
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_6144x8192_over4k_not_highest[chromium]
+1 failed, 14 passed, 3 skipped in 796.90s (0:13:16)

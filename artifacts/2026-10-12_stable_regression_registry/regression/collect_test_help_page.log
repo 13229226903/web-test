@@ -1,0 +1,14 @@
+tests/test_help_page.py::TestL1PageStructure::test_l1_001_layout_and_hero[chromium]
+tests/test_help_page.py::TestL2Interactions::test_l2_001_popular_tag[chromium]
+tests/test_help_page.py::TestL2Interactions::test_l2_002_category_switch[chromium]
+tests/test_help_page.py::TestL2Interactions::test_l2_003_faq_accordion[chromium]
+tests/test_help_page.py::TestL2Interactions::test_l2_004_search_results_and_scroll[chromium]
+tests/test_help_page.py::TestL2Interactions::test_l2_005_search_empty[chromium]
+tests/test_help_page.py::TestL2Interactions::test_l2_006_top_contact_deeplink[chromium]
+tests/test_help_page.py::TestL2Interactions::test_l2_007_bottom_contact_dialog[chromium]
+tests/test_help_page.py::TestL3Compat::test_l3_001_mobile_layout_and_search[chromium]
+tests/test_help_page.py::TestL5Boundary::test_l5_001_search_count_boundary[chromium]
+tests/test_help_page.py::TestL6Smoke::test_l6_001_smoke[chromium]
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+11 tests collected in 0.10s

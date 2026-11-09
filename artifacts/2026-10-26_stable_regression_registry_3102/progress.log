@@ -1,0 +1,73 @@
+[2026-10-26 10:29:22] orchestrator start: registry stable_regression on http://10.17.1.66:3102/
+[2026-10-26 10:29:22] orchestrator preflight: target HTTP 200; registry parsed 17 stable + 1 pending_fix
+[2026-10-26 10:30:56] test-writing round 1 start: tests/test_pokecut_portrait_detector.py
+[2026-10-26 10:53:04] test-writing round 1 done: tests/test_pokecut_portrait_detector.py exit=1 duration=1328s log=artifacts\2026-10-26_stable_regression_registry_3102\logs\01_test_pokecut_portrait_detector.log
+[2026-10-26 10:53:04] test-writing round 2 start: tests/test_ai_image_text_enhancer_experiment.py
+[2026-10-26 11:01:46] user_notice: backend unavailable on test server; skip scripts requiring task submission/generation/AI processing
+[2026-10-26 11:01:46] test-writing batch interrupted during round 2 by user notice
+[2026-10-26 11:03:30] test-writing safe-round 1 start: help_page_all; reason=no task submission; help content/navigation/local modal only; args=tests/test_help_page.py
+[2026-10-26 11:06:40] test-writing safe-round 1 done: help_page_all exit=0 duration=190.2s log=artifacts\2026-10-26_stable_regression_registry_3102\logs2\01_help_page_all.log
+[2026-10-26 11:06:40] test-writing safe-round 2 start: pc_home_safe; reason=exclude upload/generate/popular-card upload task paths; args=tests/test_pokecut_pc_home_v6.py -k not l1_005 and not l2_006 and not l2_007 and not l2_011
+[2026-10-26 11:09:33] test-writing safe-round 2 done: pc_home_safe exit=0 duration=173.2s log=artifacts\2026-10-26_stable_regression_registry_3102\logs2\02_pc_home_safe.log
+[2026-10-26 11:09:33] test-writing safe-round 3 start: mobile_home_safe; reason=exclude upload/generate/ID-photo task paths; args=tests/test_mobile_home.py -k not upload and not l2_002 and not l2_006 and not l2_007 and not l2_008 and not l2_010 and not l2_014 and not l2_020 and not l2_022 and not l3_004
+[2026-10-26 11:12:27] test-writing safe-round 3 done: mobile_home_safe exit=0 duration=173.9s log=artifacts\2026-10-26_stable_regression_registry_3102\logs2\03_mobile_home_safe.log
+[2026-10-26 11:12:27] test-writing safe-round 4 start: old_canvas_text_local_safe; reason=local text-layer editing after session entry; entry setup only; args=tests/test_old_canvas_text_panel_v1.py -k not template_entry_to_canvas
+[2026-10-26 11:17:46] test-writing safe-round 4 done: old_canvas_text_local_safe exit=1 duration=318.6s log=artifacts\2026-10-26_stable_regression_registry_3102\logs2\04_old_canvas_text_local_safe.log
+[2026-10-26 11:17:46] test-writing safe-round 5 start: old_canvas_sticker_local_safe; reason=local sticker editing after session entry; entry setup only; args=tests/test_old_canvas_sticker_panel_v1.py -k not template_entry_to_canvas
+[2026-10-26 11:22:12] test-writing local-round 1 start: infinite_canvas_text_layer_local; args=tests/test_infinite_canvas_text_layer_v2.py
+[2026-10-26 11:26:59] test-writing local-round 1 done: infinite_canvas_text_layer_local exit=1 duration=287.3s log=artifacts\2026-10-26_stable_regression_registry_3102\logs3\01_infinite_canvas_text_layer_local.log
+[2026-10-26 11:26:59] test-writing local-round 2 start: old_canvas_insert_local; args=tests/test_old_canvas_insert_panel_v3.py
+[2026-10-26 11:33:56] test-writing local-round 2 done: old_canvas_insert_local exit=1 duration=417.5s log=artifacts\2026-10-26_stable_regression_registry_3102\logs3\02_old_canvas_insert_local.log
+[2026-10-26 11:33:56] test-writing local-round 3 start: old_canvas_text_local; args=tests/test_old_canvas_text_panel_v1.py
+[2026-10-26 11:39:12] test-writing local-round 3 done: old_canvas_text_local exit=1 duration=316s log=artifacts\2026-10-26_stable_regression_registry_3102\logs3\03_old_canvas_text_local.log
+[2026-10-26 11:39:12] test-writing local-round 4 start: old_canvas_sticker_local; args=tests/test_old_canvas_sticker_panel_v1.py
+[2026-10-26 11:46:05] test-writing local-round 4 done: old_canvas_sticker_local exit=1 duration=412.8s log=artifacts\2026-10-26_stable_regression_registry_3102\logs3\04_old_canvas_sticker_local.log
+[2026-10-26 11:46:05] test-writing local-round 5 start: infinite_canvas_sticker_local; args=tests/test_infinite_canvas_sticker_v1.py
+[2026-10-26 11:48:10] test-writing local-round 5 done: infinite_canvas_sticker_local exit=1 duration=125s log=artifacts\2026-10-26_stable_regression_registry_3102\logs3\05_infinite_canvas_sticker_local.log
+[2026-10-26 11:48:10] test-writing local subset finished
+[2026-10-26 11:49:47] orchestrator wrote regression_report.md; effective passed=51 valid_failures=2; backend-blocked/skipped task-submission scripts remain
+[2026-10-26 11:50:57] orchestrator done: report written; backend unavailable so task-submission scripts skipped/blocked
+[2026-10-26 16:00:08] resume: user reports backend recovered; HTTP 200 confirmed; run remaining registry stable scripts
+[2026-10-26 16:00:36] test-writing resume-round 1 start: ai_image_text_enhancer; args=tests/test_ai_image_text_enhancer_experiment.py
+[2026-10-26 16:13:45] test-writing resume-round 1 done: ai_image_text_enhancer exit=1 duration=789.1s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\01_ai_image_text_enhancer.log
+[2026-10-26 16:13:45] test-writing resume-round 2 start: detection_ui_seo_l6; args=tests/test_detection_ui_seo_l6.py
+[2026-10-26 16:16:13] test-writing resume-round 2 done: detection_ui_seo_l6 exit=0 duration=148.1s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\02_detection_ui_seo_l6.log
+[2026-10-26 16:16:13] test-writing resume-round 3 start: pc_batch_v1; args=tests/test_pokecut_pc_batch_v1.py
+[2026-10-26 16:21:45] test-writing resume-round 3 done: pc_batch_v1 exit=1 duration=331.8s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\03_pc_batch_v1.log
+[2026-10-26 16:21:45] test-writing resume-round 4 start: old_canvas_insert_panel_v3; args=tests/test_old_canvas_insert_panel_v3.py
+[2026-10-26 16:31:37] test-writing resume-round 4 done: old_canvas_insert_panel_v3 exit=0 duration=592.3s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\04_old_canvas_insert_panel_v3.log
+[2026-10-26 16:31:37] test-writing resume-round 5 start: old_canvas_text_panel_v1; args=tests/test_old_canvas_text_panel_v1.py
+[2026-10-26 16:38:07] test-writing resume-round 5 done: old_canvas_text_panel_v1 exit=0 duration=389.8s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\05_old_canvas_text_panel_v1.log
+[2026-10-26 16:38:07] test-writing resume-round 6 start: old_canvas_sticker_panel_v1; args=tests/test_old_canvas_sticker_panel_v1.py
+[2026-10-26 16:41:31] test-writing resume-round 6 done: old_canvas_sticker_panel_v1 exit=0 duration=204s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\06_old_canvas_sticker_panel_v1.log
+[2026-10-26 16:41:31] test-writing resume-round 7 start: seo_main_upload_interactions_v1; args=tests/test_seo_main_upload_interactions_v1.py
+[2026-10-26 16:49:13] test-writing resume-round 7 done: seo_main_upload_interactions_v1 exit=0 duration=462.3s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\07_seo_main_upload_interactions_v1.log
+[2026-10-26 16:49:13] test-writing resume-round 8 start: mobile_seo_main_upload_mobile_v1; args=tests/mobile/test_seo_main_upload_mobile_v1.py
+[2026-10-26 16:53:45] test-writing resume-round 8 done: mobile_seo_main_upload_mobile_v1 exit=0 duration=271.6s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\08_mobile_seo_main_upload_mobile_v1.log
+[2026-10-26 16:53:45] test-writing resume-round 9 start: create_chat_to_edit_auto_v1; args=tests/test_create_chat_to_edit_auto_v1.py
+[2026-10-26 17:00:42] test-writing resume-round 9 done: create_chat_to_edit_auto_v1 exit=0 duration=417s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\09_create_chat_to_edit_auto_v1.log
+[2026-10-26 17:00:42] test-writing resume-round 10 start: canvas_stats_all; args=tests/test_canvas_stats_all.py
+[2026-10-26 18:00:34] test-writing resume-round 10 done: canvas_stats_all exit=1 duration=3592.3s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\10_canvas_stats_all.log
+[2026-10-26 18:00:34] test-writing resume-round 11 start: old_canvas_ai_tools_all; args=tests/test_old_canvas_ai_tools_all.py
+[2026-10-26 18:12:45] test-writing resume-round 11 done: old_canvas_ai_tools_all exit=1 duration=731.1s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\11_old_canvas_ai_tools_all.log
+[2026-10-26 18:12:45] test-writing resume-round 12 start: infinite_canvas_sticker_v1; args=tests/test_infinite_canvas_sticker_v1.py
+[2026-10-26 18:14:52] test-writing resume-round 12 done: infinite_canvas_sticker_v1 exit=0 duration=126s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\12_infinite_canvas_sticker_v1.log
+[2026-10-26 18:14:52] test-writing resume-round 13 start: infinite_canvas_text_layer_v2; args=tests/test_infinite_canvas_text_layer_v2.py
+[2026-10-26 18:19:45] test-writing resume-round 13 done: infinite_canvas_text_layer_v2 exit=0 duration=293.7s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\13_infinite_canvas_text_layer_v2.log
+[2026-10-26 18:19:45] test-writing resume-round 14 start: portrait_detector; args=tests/test_pokecut_portrait_detector.py
+[2026-10-26 18:38:31] test-writing resume-round 14 done: portrait_detector exit=1 duration=1126.1s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-resume\14_portrait_detector.log
+[2026-10-26 18:38:31] test-writing resume subset finished
+[2026-10-26 19:01:48] orchestrator wrote final regression_report.md and final Allure report
+[2026-10-26 19:04:15] orchestrator wrote bug report: evidence/bug_report_regression_20261026.md
+[2026-10-26 19:57:15] retest group 1 start: ai_image_text_enhancer; nodes=3
+[2026-10-26 19:58:56] retest group 1 done: ai_image_text_enhancer exit=1 duration=100.8s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-retest\01_ai_image_text_enhancer.log
+[2026-10-26 19:58:56] retest group 2 start: pc_batch_v1; nodes=3
+[2026-10-26 20:01:05] retest group 2 done: pc_batch_v1 exit=1 duration=129.1s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-retest\02_pc_batch_v1.log
+[2026-10-26 20:01:05] retest group 3 start: canvas_stats_all; nodes=7
+[2026-10-26 20:13:59] retest group 3 done: canvas_stats_all exit=1 duration=774.2s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-retest\03_canvas_stats_all.log
+[2026-10-26 20:13:59] retest group 4 start: old_canvas_ai_tools_all; nodes=2
+[2026-10-26 20:30:18] retest group 4 done: old_canvas_ai_tools_all exit=1 duration=978.7s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-retest\04_old_canvas_ai_tools_all.log
+[2026-10-26 20:30:18] retest group 5 start: portrait_detector; nodes=9
+[2026-10-26 20:48:17] retest group 5 done: portrait_detector exit=1 duration=1079.8s log=artifacts\2026-10-26_stable_regression_registry_3102\logs-retest\05_portrait_detector.log
+[2026-10-26 20:48:17] retest groups finished
+[2026-10-26 20:49:11] retest finished; report=retest_report.md; allure=D:\Test\web-test\artifacts\2026-10-26_stable_regression_registry_3102\allure-report-retest-20261026-204828

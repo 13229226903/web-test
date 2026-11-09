@@ -1,0 +1,80 @@
+# 版本说明: v3.3 部分功能购买逻辑优化-免费结果保存额度 PC 代表性探索首版。
+page: Purchase Save Limit / Free Result Save Quota
+url: /tools/hair-removal-photo-editor , /tools/remove-tattoo-from-photo , /create , /agent?pid=<uuid>
+platform: desktop
+viewport: 1920x1080
+viewport_guard: passed
+collected_at: '2026-10-22'
+scope_note: 本轮仅覆盖文档 AC-01~AC-08 的代表性链路和 AC-09 局部核验；不代表全部 SEO 子路径已覆盖。
+account_states:
+  anonymous_free: 未登录匿名，可通过 DEBUG 修改 free credits
+  logged_in_restricted: autotest202610221854@qq.com（随机免费账号，非订阅且无历史成功购买）
+  subscription: 0203010100@qq.com（年度会员 ultra，保存额度显示不限次数）
+  historical_buyer: 0320163406504@qq.com（免费用户但 buy credits > 0，保存额度显示不限次数）
+entry:
+  seo_ai_eraser:
+    examples:
+      - /tools/hair-removal-photo-editor
+      - /tools/remove-tattoo-from-photo
+    upload_button: "button:has-text('Upload Image')"
+    flow: SEO landing -> file upload -> /agent?pid=<uuid>
+  non_seo_canvas:
+    example: /create
+    upload_button: "button:has-text('Start with Photos')"
+    flow: /create -> file upload -> /agent?pid=<uuid>
+debug_panel:
+  open_button: "button:has-text('DEBUG')"
+  save_quota_section_heading: "重置功能保存额度"
+  function_select: "select.inline-select"
+  function_options:
+    - idphoto
+    - ai_eraser
+    - remove_bg
+    - detect
+    - vintage_filter
+    - ai_filter
+  quota_text_regex: "剩余保存额度:\s*(1 次|0 次|不限次数)"
+  reset_button: "button:has-text('重置所选功能保存额度')"
+  refresh_button: "button:has-text('刷新额度')"
+  user_benefit_heading: "用户权益信息"
+  edit_benefit_button: "button:has-text('编辑')"
+  save_benefit_button: "button:has-text('保存')"
+  reset_scope_note: 未登录重置当前 IP；已登录同时重置当前账号和 IP；仅影响所选功能，可重复重置。
+states:
+  seo_ai_eraser_canvas_ready:
+    landmark: heading "Erase"
+    buttons:
+      remove: "button:has-text('Remove')"
+      smart_auto_mode: "button:has-text('Smart Auto Mode')"
+      close_panel: "button:has-text('text.canvasToolPanelClose')"
+    note: 从 SEO 入口上传后进入画布，Erase 面板默认打开；free credits 不足时会出现处理前购买弹窗。
+  ai_eraser_result_ready:
+    landmark: title contains "Image Ready" or layer text contains "Erased"
+    buttons:
+      download: "button:has(img[src*='toolbar_download@3x.png'])"
+      canvas_download: "button.group/download-left"
+    note: 页面存在多个下载入口；本轮曾误点顶部工具栏单图下载，不触发本需求保存额度校验。正确验证应点击会进入保存额度校验/内购弹窗的下载入口。临时 ref 不可沉淀。
+  processing_purchase_modal:
+    landmark: "Premium Plan" + "Credits Purchase"
+    close: "img[src*='colos_pop_btn_close'], .purchase-dialog__close"
+    note: credits 不足时点击处理会出现；归属处理前拦截，不是本需求保存拦截。
+  limited_offer_modal:
+    landmark: "You get a limited-time offer: Unlock Pokecut VIP for just $1 USD"
+    close: "img[src*='colos_pop_btn_close']"
+    note: 非本需求保存拦截；会遮挡画布操作。
+  survey_overlay:
+    landmark: "Share Your Feedback, Earn Free Credits"
+    close: "button:has-text('Maybe later') / button:has-text('Close')"
+    note: 下载后可能出现的反馈弹层。
+  bookmark_credit_modal:
+    landmark: "Follow These Steps to Earn 30 Credits."
+    close: "button:has-text('Maybe Later')"
+    note: 非保存拦截；可能遮挡画布操作。
+selectors_notes:
+  - 本轮 MCP 输出中的 aria-ref 仅作为临时观察，不写入自动化 selector。
+  - 禁止把顶部 toolbar_download 单图下载入口当作本需求保存额度拦截入口。后续以会弹出内购弹窗的下载入口为准。
+  - DEBUG 功能额度下拉可出现多个 select，必须用“重置功能保存额度”区块作用域定位。
+known_observations:
+  - 用户确认：保存额度会被消耗，保存付费拦截表现为点击正确下载入口时弹出内购弹窗。
+  - 本任务原 AC-03/04/08 bug_candidate 已撤回：此前点击 toolbar_download 单图下载，验证路径错误。
+  - remove_bg 在 ai_eraser=0 时仍显示剩余保存额度=1 次，说明功能维度额度显示存在；完整消费链路待按正确下载入口复测。

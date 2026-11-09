@@ -1,0 +1,261 @@
+# 版本说明: 本文件为 batch_v3.yaml 的下一版（2026-11-03 PC Batch 改版全量复探），历史版本保留不覆盖。
+page: PokecutBatch
+url: /batch
+landmark:
+  selector: button:has-text('Upload Images')
+  description: 批量编辑新落地页主上传按钮；登录后同路径可见账号态、credits 与 7 个 Try Now 卡片
+entry:
+  from: Direct
+  trigger: 直接访问 /batch；主上传按钮或 7 个 Try Now 卡片均可触发同一 file input(#file-upload)
+  selector: body
+  note: 匿名可访问落地页；上传 >=2 张图片后进入 /agent?pid=* 并自动展开 Batch Edit 弹窗。上传 <2 张图停留 /batch 并提示 batchUploadMinImagesToast
+elements:
+  upload_images:
+    selector: button:has-text('Upload Images')
+    text: Upload Images
+    description: 落地页主上传入口，触发系统文件选择器；支持多图，产品口径上限 50 张；默认 tab=remove-bg
+  file_input:
+    selector: '#file-upload'
+    description: 隐藏 file input（class=sr-only），accept=image/jpeg,image/png,image/webp,image/bmp；主按钮与全部卡片共用
+  upload_area_hint:
+    selector: text=Or drop image here, paste image
+    text: Or drop image here, paste image
+    description: 拖拽/粘贴上传提示区
+  supported_formats:
+    selector: text=Supported formats
+    text: 'Supported formats: JPEG, JPG, PNG, WebP, BMP'
+    description: 支持格式说明；单文件 <=50MB
+  try_now_list:
+    selector: text=Try Now
+    text: Try Now
+    description: 7 个功能卡片列表容器
+  card_remove_bg:
+    selector: li:has-text('Batch Remove Backgrounds')
+    text: Batch Remove Backgrounds
+    description: 卡片 -> tab='remove-bg' -> agent Batch Edit 默认 Remove BG
+  card_resizer:
+    selector: li:has-text('Batch Resizer')
+    text: Batch Resizer
+    description: 卡片 -> tab='crop' -> agent Batch Edit 选中 Crop
+  card_change_bg:
+    selector: li:has-text('Batch Change Backgrounds')
+    text: Batch Change Backgrounds
+    description: 卡片 -> tab='change-bg' -> agent Batch Edit 选中 Change BG
+  card_enhancer:
+    selector: li:has-text('Batch Enhancer')
+    text: Batch Enhancer
+    description: 卡片 -> tab='enhance' -> agent Batch Edit 选中 Enhance
+  card_erase:
+    selector: li:has-text('Batch Erase')
+    text: Batch Erase
+    description: 卡片 -> tab='erase' -> agent Batch Edit 选中 Erase
+  card_change_clothes:
+    selector: li:has-text('Batch Change Clothes')
+    text: Batch Change Clothes
+    description: 卡片 -> tab='clothes-changer' -> agent Batch Edit 选中 Clothes Changer
+  card_watermark:
+    selector: li:has-text('Batch Watermarking')
+    text: Batch Watermarking
+    description: 卡片 -> tab='watermark' -> agent Batch Edit 选中 Watermark
+modals:
+  agent_batch_edit:
+    description: /agent?pid=* 上自动展开的 Batch Edit 弹窗；标题 Batch Edit；含 7 个 tab
+    trigger: 从 /batch 上传 >=2 张图片（主按钮或任一卡片）
+    title_selector: '[role=dialog] h2:has-text("Batch Edit")'
+    close: button:has-text('text.batchEditClose')
+    tabs:
+    - Enhance
+    - Remove BG
+    - Change BG
+    - Erase
+    - Crop
+    - Clothes Changer
+    - Watermark
+states:
+  landing_default:
+    description: /batch 默认落地页；主上传按钮 + Try Now 7 卡片
+    trigger: 直接访问 /batch
+    url_or_state_key: /batch
+    buttons:
+      upload_images:
+        selector: button:has-text('Upload Images')
+        role_or_text: button / Upload Images
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开系统文件选择器；选择 >=2 张图片后跳转 /agent?pid=* 并展开 Batch Edit（默认 Remove BG）
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后出现 file chooser；上传 >=2 张后 URL 变为 /agent?pid=*
+        notes: ''
+  card_entry:
+    description: Try Now 卡片入口态
+    trigger: 点击任一 Try Now 卡片
+    url_or_state_key: /batch
+    buttons:
+      card_remove_bg:
+        selector: li:has-text('Batch Remove Backgrounds')
+        role_or_text: listitem / Batch Remove Backgrounds
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开文件选择器；选择 >=2 张后进入 /agent?pid=*，Batch Edit 选中 Remove BG
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: '"selected tab text" == "Remove BG"'
+        notes: ''
+      card_resizer:
+        selector: li:has-text('Batch Resizer')
+        role_or_text: listitem / Batch Resizer
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开文件选择器；选择 >=2 张后进入 /agent?pid=*，Batch Edit 选中 Crop
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: '"selected tab text" == "Crop"'
+        notes: ''
+      card_change_bg:
+        selector: li:has-text('Batch Change Backgrounds')
+        role_or_text: listitem / Batch Change Backgrounds
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开文件选择器；选择 >=2 张后进入 /agent?pid=*，Batch Edit 选中 Change BG
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: '"selected tab text" == "Change BG"'
+        notes: ''
+      card_enhancer:
+        selector: li:has-text('Batch Enhancer')
+        role_or_text: listitem / Batch Enhancer
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开文件选择器；选择 >=2 张后进入 /agent?pid=*，Batch Edit 选中 Enhance
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: '"selected tab text" == "Enhance"'
+        notes: ''
+      card_erase:
+        selector: li:has-text('Batch Erase')
+        role_or_text: listitem / Batch Erase
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开文件选择器；选择 >=2 张后进入 /agent?pid=*，Batch Edit 选中 Erase
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: '"selected tab text" == "Erase"'
+        notes: ''
+      card_change_clothes:
+        selector: li:has-text('Batch Change Clothes')
+        role_or_text: listitem / Batch Change Clothes
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开文件选择器；选择 >=2 张后进入 /agent?pid=*，Batch Edit 选中 Clothes Changer
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: '"selected tab text" == "Clothes Changer"'
+        notes: ''
+      card_watermark:
+        selector: li:has-text('Batch Watermarking')
+        role_or_text: listitem / Batch Watermarking
+        visible_condition: always
+        enabled_condition: always
+        action_result: 打开文件选择器；选择 >=2 张后进入 /agent?pid=*，Batch Edit 选中 Watermark
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: '"selected tab text" == "Watermark"'
+        notes: ''
+  agent_batch_edit:
+    description: /agent 页自动展开的 Batch Edit 弹窗
+    trigger: 从 /batch 上传 >=2 张图片
+    url_or_state_key: /agent?pid=*
+    buttons:
+      tab_enhance:
+        selector: '[role=tab]:has-text("Enhance")'
+        role_or_text: tab / Enhance
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Enhance 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      tab_remove_bg:
+        selector: '[role=tab]:has-text("Remove BG")'
+        role_or_text: tab / Remove BG
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Remove BG 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true；主上传按钮默认选中
+        notes: ''
+      tab_change_bg:
+        selector: '[role=tab]:has-text("Change BG")'
+        role_or_text: tab / Change BG
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Change BG 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      tab_erase:
+        selector: '[role=tab]:has-text("Erase")'
+        role_or_text: tab / Erase
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Erase 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      tab_crop:
+        selector: '[role=tab]:has-text("Crop")'
+        role_or_text: tab / Crop
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Crop 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      tab_clothes_changer:
+        selector: '[role=tab]:has-text("Clothes Changer")'
+        role_or_text: tab / Clothes Changer
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Clothes Changer 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      tab_watermark:
+        selector: '[role=tab]:has-text("Watermark")'
+        role_or_text: tab / Watermark
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Watermark 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+  empty_or_single_upload:
+    description: 上传 <2 张图时停留 /batch 并弹提示
+    trigger: 上传 0 或 1 张有效图片
+    url_or_state_key: /batch
+    buttons: {}
+    notes: toast 文案 key = text.batchUploadMinImagesToast；不进入 /agent
+

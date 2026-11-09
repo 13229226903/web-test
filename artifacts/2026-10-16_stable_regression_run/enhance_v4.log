@@ -1,0 +1,35 @@
+FFFFFF                                                                   [100%]
+================================== FAILURES ===================================
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+    Call log:
+      - waiting for locator("div.cursor-pointer:has(p:text-is('Start from a Photo'))").first
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+    Call log:
+      - waiting for get_by_text("HD Photo Converter", exact=True).first
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+    Call log:
+      - waiting for locator("div.cursor-pointer:has(p:text-is('Start from a Photo'))").first
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+    Call log:
+      - waiting for locator("div.cursor-pointer:has(p:text-is('Start from a Photo'))").first
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+    Call log:
+      - waiting for locator("div.cursor-pointer:has(p:text-is('Start from a Photo'))").first
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+    Call log:
+      - waiting for locator("div.cursor-pointer:has(p:text-is('Start from a Photo'))").first
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: playwright._impl._errors.TimeoutError: Locator.click: Timeout 20000ms exceeded.
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL1EnhanceStructure::test_l1_001_panel_structure_and_default_state
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL1EnhanceStructure::test_l1_002_hd_photo_converter_auto_open
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL5ResolutionBoundaries::test_l5_001_resolution_default_matrix_and_8k_uncompressed
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL6EnhanceWorkflow::test_l6_001_ultra_2k_4k_e2e
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL6EnhanceWorkflow::test_l6_002_standard_portrait_text_matrix
+FAILED tests/test_infinite_canvas_enhance_v4.py::TestL6EnhanceWorkflow::test_l6_003_8k_routes
+6 failed in 201.06s (0:03:21)

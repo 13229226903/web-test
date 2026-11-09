@@ -1,0 +1,52 @@
+[2026-11-02 19:01:50] RUN  START: 人像检测三入口页  tests/test_pokecut_portrait_detector.py
+[2026-11-02 19:06:41] RUN  DONE : 人像检测三入口页  rc=0  290.4s
+[2026-11-02 19:06:41]      tail: ..............                                                           [100%] | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | 14 passed in 286.03s (0:04:46)
+[2026-11-02 19:06:41] RUN  START: AI Image Text Enhancer  tests/test_ai_image_text_enhancer_experiment.py
+[2026-11-02 19:17:42] RUN  DONE : AI Image Text Enhancer  rc=0  661.5s
+[2026-11-02 19:17:42]      tail: .............s...s                                                       [100%] | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | 16 passed, 2 skipped in 659.72s (0:10:59)
+[2026-11-02 19:17:42] RUN  START: 画布页文字功能  tests/test_infinite_canvas_text_layer_v2.py
+[2026-11-02 19:22:39] RUN  DONE : 画布页文字功能  rc=0  296.7s
+[2026-11-02 19:22:39]      tail: tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium] |   D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:204: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead. |     return sum(1 for px in diff.getdata() if px != (0, 0, 0)) | -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | 6 passed, 6 warnings in 294.95s (0:04:54)
+[2026-11-02 19:22:39] RUN  START: Mobile Home v3  tests/test_mobile_home.py
+[2026-11-02 19:30:30] RUN  DONE : Mobile Home v3  rc=1  471.2s
+[2026-11-02 19:30:30]      tail:     assert ("Get Free Credits" in body) or ("Get Up to" in body) | E   AssertionError: assert ('Get Free Credits' in '0\nAll-in-One AI Photo Editor & Generator\nStart Creating for Free\nNano Banana 2 Lite\nGenerate\nRemove Background\n...n\nHD Download\n\nNo Watermark\n\nUnlimited Cloud Storage\n\nGet Started for $1 USD\nEnds in:\n23\n:\n59\n:\n47\nDEBUG' or 'Get Up to' in '0\nAll-in-One AI Photo Editor & Generator\nStart Creating for Free\nNano Banana 2 Lite\nGenerate\nRemove Background\n...n\nHD Download\n\nNo Watermark\n\nUnlimited Cloud Storage\n\nGet Started for $1 USD\nEnds in:\n23\n:\n59\n:\n47\nDEBUG') | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | =========================== short test summary info =========================== | FAILED tests/test_mobile_home.py::TestL2Interactions::test_l2_008_id_photo_anonymous[chromium] | 1 failed, 37 passed in 469.52s (0:07:49)
+[2026-11-02 19:30:30] RUN  START: 帮助中心  tests/test_help_page.py
+[2026-11-02 19:33:40] RUN  DONE : 帮助中心  rc=0  190.1s
+[2026-11-02 19:33:40]      tail: ...........                                                              [100%] | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | 11 passed in 188.47s (0:03:08)
+[2026-11-02 19:33:40] RUN  START: 检测类功能适配 UI  tests/test_detection_ui_seo_l6.py
+[2026-11-02 19:36:49] RUN  DONE : 检测类功能适配 UI  rc=0  188.6s
+[2026-11-02 19:36:49]      tail: ..                                                                       [100%] | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | 2 passed in 187.01s (0:03:07)
+[2026-11-02 19:36:49] RUN  START: PC 首页 Home v6  tests/test_pokecut_pc_home_v6.py
+[2026-11-02 19:41:33] RUN  DONE : PC 首页 Home v6  rc=1  284.4s
+[2026-11-02 19:41:33]      tail:     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None | E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 45000ms exceeded. | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | =========================== short test summary info =========================== | FAILED tests/test_pokecut_pc_home_v6.py::TestL1PageStructure::test_l1_005_portrait_batch_enhance[chromium] | 1 failed, 16 passed in 282.56s (0:04:42)
+[2026-11-02 19:41:33] RUN  START: PC 批量编辑 Batch v1  tests/test_pokecut_pc_batch_v1.py
+[2026-11-02 19:54:08] RUN  DONE : PC 批量编辑 Batch v1  rc=1  754.4s
+[2026-11-02 19:54:08]      tail: FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_010_undo_redo[chromium] | FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_011_delete_flow[chromium] | FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_012_download_flow[chromium] | FAILED tests/test_pokecut_pc_batch_v1.py::TestL6BatchSmoke::test_l6_001_smoke_removebg_download[chromium] | FAILED tests/test_pokecut_pc_batch_v1.py::TestL6BatchSmoke::test_l6_002_smoke_enhance_resize_download[chromium] | 15 failed, 1 passed in 752.84s (0:12:32)
+[2026-11-02 19:54:08] RUN  START: 旧画布 Insert 面板  tests/test_old_canvas_insert_panel_v3.py
+[2026-11-02 20:04:07] RUN  DONE : 旧画布 Insert 面板  rc=0  599.1s
+[2026-11-02 20:04:07]      tail: tests/test_old_canvas_insert_panel_v3.py: 22 warnings |   D:\Test\web-test\tests\test_old_canvas_insert_panel_v3.py:185: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead. |     pts = sum(1 for px in diff.getdata() if sum(px) > 12) | -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | 24 passed, 22 warnings in 597.33s (0:09:57)
+[2026-11-02 20:04:07] RUN  START: 旧画布文字 Text 面板  tests/test_old_canvas_text_panel_v1.py
+[2026-11-02 20:10:37] RUN  DONE : 旧画布文字 Text 面板  rc=0  389.8s
+[2026-11-02 20:10:37]      tail: tests/test_old_canvas_text_panel_v1.py: 18 warnings |   D:\Test\web-test\tests\test_old_canvas_text_panel_v1.py:204: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead. |     px = list(ImageChops.difference(ia, ib).convert("L").getdata()) | -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | 13 passed, 18 warnings in 388.06s (0:06:28)
+[2026-11-02 20:10:37] RUN  START: 旧画布贴纸调参面板  tests/test_old_canvas_sticker_panel_v1.py
+[2026-11-02 20:14:12] RUN  DONE : 旧画布贴纸调参面板  rc=0  214.8s
+[2026-11-02 20:14:12]      tail: .........                                                                [100%] | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | 9 passed in 213.09s (0:03:33)
+[2026-11-02 20:14:12] RUN  START: SEO 主上传交互（PC）  tests/test_seo_main_upload_interactions_v1.py
+[2026-11-02 20:30:14] RUN  DONE : SEO 主上传交互（PC）  rc=1  962.8s
+[2026-11-02 20:30:14]      tail: E   " | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | =========================== short test summary info =========================== | FAILED tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_008[chromium] | FAILED tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_011[chromium] | 2 failed, 22 passed in 961.19s (0:16:01)
+[2026-11-02 20:30:14] RUN  START: SEO 主上传交互（移动端）  tests/mobile/test_seo_main_upload_mobile_v1.py
+[2026-11-02 20:35:17] RUN  DONE : SEO 主上传交互（移动端）  rc=0  302.9s
+[2026-11-02 20:35:17]      tail: .................x......                                                 [100%] | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | 23 passed, 1 xfailed in 301.26s (0:05:01)
+[2026-11-02 20:35:17] RUN  START: Create/Chat Auto 意图识别  tests/test_create_chat_to_edit_auto_v1.py
+[2026-11-02 20:42:18] RUN  DONE : Create/Chat Auto 意图识别  rc=0  420.9s
+[2026-11-02 20:42:18]      tail: ...........                                                              [100%] | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | 11 passed in 419.29s (0:06:59)
+[2026-11-02 20:42:18] RUN  START: 画布统计优化 40 条  tests/test_canvas_stats_all.py
+[2026-11-02 21:42:55] RUN  DONE : 画布统计优化 40 条  rc=1  3637.1s
+[2026-11-02 21:42:55]      tail: =========================== short test summary info =========================== | FAILED tests/test_canvas_stats_all.py::test_m_core_01[chromium] - AssertionEr... | FAILED tests/test_canvas_stats_all.py::test_m_core_02[chromium] - AssertionEr... | FAILED tests/test_canvas_stats_all.py::test_m_core_05[chromium] - AssertionEr... | FAILED tests/test_canvas_stats_all.py::test_m_new_14[chromium] - [XPASS(stric... | 4 failed, 32 passed, 2 skipped, 2 xfailed in 3635.18s (1:00:35)
+[2026-11-02 21:42:55] RUN  START: 旧画布 AI Tools  tests/test_old_canvas_ai_tools_all.py
+[2026-11-02 22:15:42] RUN  DONE : 旧画布 AI Tools  rc=1  1966.8s
+[2026-11-02 22:15:42]      tail: ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | =========================== short test summary info =========================== | FAILED tests/test_old_canvas_ai_tools_all.py::test_p_ait_04_mask_required - A... | FAILED tests/test_old_canvas_ai_tools_all.py::test_p_ait_01_preset_select_group | FAILED tests/test_old_canvas_ai_tools_all.py::test_p_ait_02_mode_and_category_group | 3 failed, 3 passed in 1964.72s (0:32:44)
+[2026-11-02 22:15:42] RUN  START: 无限画布贴纸调整  tests/test_infinite_canvas_sticker_v1.py
+[2026-11-02 22:17:40] RUN  DONE : 无限画布贴纸调整  rc=1  117.9s
+[2026-11-02 22:17:40]      tail: E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3001/agent?pid=afcb969b-d1c6-461c-97b8-21ceeaae6d2f#'> selector="img[alt='sticker_valentine1']"> = locator("img[alt='sticker_valentine1']") | E    +        where locator = <Page url='http://10.17.1.66:3001/agent?pid=afcb969b-d1c6-461c-97b8-21ceeaae6d2f#'>.locator | ----- Generated html report: file:///D:/Test/web-test/reports/report.html ----- | =========================== short test summary info =========================== | FAILED tests/test_infinite_canvas_sticker_v1.py::test_p_stk_01_entry_add_sticker_open_adjust[chromium] | 1 failed, 4 passed in 116.38s (0:01:56)
+[2026-11-02 22:17:40] ALL DONE in 11749.7s

@@ -1,0 +1,94 @@
+# Pokecut v3.4 批量SEO入口 / 无限画布 batch - page map v1
+# 采集环境: 测试服 http://10.17.1.66:3102，PC 1920x1080，desktop UA / no-touch
+# 采集时间: 2026-10-28
+page: v3.4 批量SEO入口改为进无限画布
+version: v1
+url: /batch
+landmark:
+  selector: "text=Try Now"
+  description: /batch 页面 Try Now 批量功能卡片区
+entry:
+  from: http://10.17.1.66:3102/batch
+  trigger: 点击 Batch Erase / Batch Change Clothes / Batch Watermarking 卡片后选择文件
+  selector: "text=Batch Erase"
+  file_chooser: true
+elements:
+  create_left_nav_batch:
+    selector: "a[href='/batch']"
+    description: create 页左侧栏 Batch 入口
+  batch_card_erase:
+    selector: "text=Batch Erase"
+    description: 批量消除卡片
+  batch_card_clothes:
+    selector: "text=Batch Change Clothes"
+    description: 批量换装卡片
+  batch_card_watermark:
+    selector: "text=Batch Watermarking"
+    description: 批量加水印卡片
+  batch_thumb_erase:
+    selector: "img[alt='Batch Erase']"
+    description: batcherase.webp 560x420
+  batch_thumb_clothes:
+    selector: "img[alt='Batch Change Clothes']"
+    description: batchchangeclothes.webp 560x420
+  batch_thumb_watermark:
+    selector: "img[alt='Batch Watermarking']"
+    description: batchwatermark.webp 560x420
+  canvas_batch_edit_dialog:
+    selector: "[role=dialog]:has-text('Batch Edit')"
+    description: 无限画布 Batch Edit 弹窗
+states:
+  batch_landing:
+    description: /batch 批量工具落地页，含上传区与 Try Now 卡片
+    trigger: 打开 /batch
+    url_or_state_key: /batch
+    buttons:
+      upload_images:
+        selector: "button:has-text('Upload Images')"
+        role_or_text: Upload Images
+        visible_condition: /batch 已渲染
+        action_result: 1 张 -> toast Please select at least 2 images.；2 张 -> /agent?pid=*
+        reversible: true
+        explore_status: covered
+        dependencies: [test_images/有人脸.JPG, test_images/无人脸.jpg]
+        assertions_hint: 单张停留 /batch 且 toast；2 张跳 /agent?pid=*
+      batch_card_erase:
+        selector: "text=Batch Erase"
+        action_result: 2 张后 /agent?pid=* 弹 Batch Edit 且 Erase tab 选中
+        explore_status: covered
+      batch_card_clothes:
+        selector: "text=Batch Change Clothes"
+        action_result: 2 张后 /agent?pid=* 弹 Batch Edit 且 Clothes Changer tab 选中
+        explore_status: covered
+      batch_card_watermark:
+        selector: "text=Batch Watermarking"
+        action_result: 2 张后 /agent?pid=* 弹 Batch Edit 且 Watermark tab 选中
+        explore_status: covered
+  canvas_batch_edit:
+    description: 无限画布 Batch Edit 弹窗，顶部 tab 对应来源批量功能
+    trigger: 批量卡片上传 2 张以上
+    url_or_state_key: /agent?pid=<uuid>
+    tabs:
+      erase: {selector: "[role=tab]:has-text('Erase')", selected_when: 来自 Batch Erase}
+      clothes_changer: {selector: "[role=tab]:has-text('Clothes Changer')", selected_when: 来自 Batch Change Clothes}
+      watermark: {selector: "[role=tab]:has-text('Watermark')", selected_when: 来自 Batch Watermarking}
+  infinite_canvas_nsfw_input_fail:
+    description: 无限画布输入图鉴黄失败态，失败 UI 展示于结果图占位
+    trigger: 选中违规图图层 -> Remove BG -> 主提交
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      remove_bg_toolbar:
+        selector: "button[aria-label='Remove BG']"
+        action_result: 打开 Remove Background 面板
+        explore_status: covered
+      remove_background_submit:
+        selector: "button:has-text('Remove Background')"
+        action_result: 违规图 -> 输入图鉴黄失败；合规图 -> 结果占位 loading 后出结果
+        explore_status: covered
+        notes: 需要登录且有积分账号，否则先弹 VIP 促销。
+    expected_texts:
+      input_fail: "The image you uploaded contains sensitive content. Please change the photo and upload it again. No credits deducted."
+entry_redirects:
+  batch_edit_landing: {from: /batch-edit, result: 保留 /batch-edit 介绍页}
+  batch_edit_edit: {from: /batch-edit/edit, result: /agent?pid=<new> 空白画布}
+  batch_edit_edit_with_pid: {from: /batch-edit/edit?pid=<old>, result: /agent?pid=<new> 空白画布，不带入旧工程}

@@ -1,0 +1,11 @@
+.........F............................                                   [100%]
+================================== FAILURES ===================================
+_________ TestL2Interactions.test_l2_008_id_photo_anonymous[chromium] _________
+tests\test_mobile_home.py:340: in test_l2_008_id_photo_anonymous
+    assert ("Get Free Credits" in body) or ("Get Up to" in body)
+E   AssertionError: assert ('Get Free Credits' in '0\nAll-in-One AI Photo Editor & Generator\nStart Creating for Free\nNano Banana 2 Lite\nGenerate\nRemove Background\n...n\nHD Download\n\nNo Watermark\n\nUnlimited Cloud Storage\n\nGet Started for $1 USD\nEnds in:\n23\n:\n59\n:\n47\nDEBUG' or 'Get Up to' in '0\nAll-in-One AI Photo Editor & Generator\nStart Creating for Free\nNano Banana 2 Lite\nGenerate\nRemove Background\n...n\nHD Download\n\nNo Watermark\n\nUnlimited Cloud Storage\n\nGet Started for $1 USD\nEnds in:\n23\n:\n59\n:\n47\nDEBUG')
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_mobile_home.py::TestL2Interactions::test_l2_008_id_photo_anonymous[chromium]
+1 failed, 37 passed in 469.52s (0:07:49)
+

@@ -1,0 +1,356 @@
+# Pokecut Infinite Canvas Batch Edit - page map v1
+# 采集环境: 测试服 http://10.17.1.66:3001，PC 1440x900，desktop UA / pointer fine
+# 入口: /create -> Start from a Photo -> /agent?pid=<uuid> -> 框选2张及以上图片 -> Batch Edit
+# 采集时间: 2026-09-24
+page: Infinite Canvas Batch Edit
+version: v1
+url: /agent?pid=<uuid>
+landmark:
+  selector: "section:has-text('Batch Edit'):has-text('Watermark')"
+  description: Batch Edit 右侧弹窗；包含 Enhance / Remove BG / Change BG / Erase / Crop / Clothes Changer / Watermark
+entry:
+  from: /create
+  trigger: 点击 Start from a Photo 上传首图；在画布复制/添加第二张图后用鼠标框选图片
+  selector: "button:has-text('Start from a Photo'), button[aria-label='Upload Image']"
+  file_chooser: true
+elements:
+  canvas_stage:
+    selector: "div.absolute.inset-0.overflow-visible"
+    description: 无限画布主区域
+  canvas_layer:
+    selector: "div[data-element-id]"
+    description: 可编辑图层；图片层包含 img[alt='图片 N']，文本/图形层为 canvas 或渲染节点
+  selected_layer_border:
+    selector: "div[data-element-id] .border-2"
+    description: 选中图层的虚线边框
+  batch_edit_modal:
+    selector: "section:has-text('Batch Edit'):has-text('Watermark')"
+    description: Batch Edit 弹窗右侧 section
+  batch_tabs_scroller:
+    selector: "section:has-text('Batch Edit') button[aria-label='text.batchEditPreviousTabs'], section:has-text('Batch Edit') button[aria-label='text.batchEditNextTabs']"
+    description: tab 左右滚动按钮
+states:
+  canvas_multi_image_selected:
+    description: 框选 2 张及以上图片图层后工具栏出现 Batch Edit
+    trigger: 画布中存在至少 2 张图片并框选
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      batch_edit_entry:
+        selector: "button:has-text('Batch Edit')"
+        role_or_text: Batch Edit
+        visible_condition: 选中集中包含至少 2 张图片图层
+        enabled_condition: 可编辑画布
+        action_result: 打开 Batch Edit 弹窗；Console 上报 画布批量_入口点击
+        reversible: true
+        explore_status: covered
+        dependencies: [canvas_multi_select]
+        assertions_hint: 弹窗默认 Enhance / Standard Mode
+        notes: 混合选择图片+文本时仍显示；弹窗只处理图片层。
+      upload_image:
+        selector: "button[aria-label='Upload Image']"
+        role_or_text: Upload Image
+        visible_condition: 画布已加载
+        enabled_condition: 始终可点击
+        action_result: 多选文件时最多加入 20 张；超出显示 You can upload up to 20 files at a time
+        reversible: true
+        explore_status: covered
+        dependencies: [test_images/*]
+        assertions_hint: 21 文件 → 只新增 20 层 + toast
+        notes: 单次 Start from a Photo 的 chooser 为单文件；批量上传入口在画布左栏。
+  batch_edit_enhance:
+    description: Batch Edit > Enhance；默认 Standard Mode
+    trigger: 打开 Batch Edit 或点击 Enhance tab
+    url_or_state_key: /agent?pid=<uuid>#batch-edit-enhance
+    buttons:
+      standard_mode:
+        selector: "section:has-text('Batch Edit') button:has-text('Standard Mode')"
+        role_or_text: Standard Mode
+        visible_condition: Enhance tab
+        enabled_condition: 已选中图片
+        action_result: 2 张图片费用 10；提交后原地替换图片层并保留层数
+        reversible: true
+        explore_status: covered
+        dependencies: [2 images]
+        assertions_hint: taskId 示例 gzy_picenhance_PokeCutWeb_1790225102518_0631OV_cross
+      old_photo_mode:
+        selector: "section:has-text('Batch Edit') button:has-text('Old Photo Mode')"
+        role_or_text: Old Photo Mode
+        visible_condition: Enhance tab
+        enabled_condition: 已选中图片
+        action_result: 展开 Fix blur / Restore old photo color / Remove scratches 三项 checkbox
+        reversible: true
+        explore_status: covered
+        dependencies: [2 images]
+        assertions_hint: 三项可同时 aria-checked=true；2 张费用 4
+      portrait_mode:
+        selector: "section:has-text('Batch Edit') button:has-text('Portrait Mode')"
+        role_or_text: Portrait Mode
+        visible_condition: Enhance tab
+        enabled_condition: 已选中图片
+        action_result: 切换 Portrait Mode
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      ultra_hd_mode:
+        selector: "section:has-text('Batch Edit') button:has-text('Ultra HD Mode')"
+        role_or_text: Ultra HD Mode
+        visible_condition: Enhance tab
+        enabled_condition: 已选中图片
+        action_result: 切换 Ultra HD Mode
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      text_mode:
+        selector: "section:has-text('Batch Edit') button:has-text('Text Mode')"
+        role_or_text: Text Mode
+        visible_condition: Enhance tab
+        enabled_condition: 已选中图片
+        action_result: 切换 Text Mode
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      confirm:
+        selector: "section:has-text('Batch Edit') button:has-text('Enhance')"
+        role_or_text: Enhance
+        visible_condition: Enhance tab
+        enabled_condition: 免费用户最多 5 张；credits 足够或允许弹购买
+        action_result: 提交批量 Enhance；结果替换原图片层
+        reversible: false
+        explore_status: covered
+        dependencies: [logged_in/PRO or credits, 2 images]
+        assertions_hint: PRO 账号 credits 11121 提交前后不减少；图层数保持 2
+  batch_edit_remove_bg:
+    description: Batch Edit > Remove BG
+    trigger: 点击 Remove BG tab
+    url_or_state_key: /agent?pid=<uuid>#batch-edit-remove-bg
+    buttons:
+      general:
+        selector: "section:has-text('Batch Edit') button:has-text('General')"
+        role_or_text: General
+        visible_condition: Remove BG tab
+        enabled_condition: 已选中图片
+        action_result: 选中 General；默认态
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 2 张费用 2
+      head_face:
+        selector: "section:has-text('Batch Edit') button:has-text('Head&Face')"
+        role_or_text: Head&Face
+        visible_condition: Remove BG tab
+        enabled_condition: 已选中图片
+        action_result: 切换 Head&Face
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      text:
+        selector: "section:has-text('Batch Edit') button:has-text('Text')"
+        role_or_text: Text
+        visible_condition: Remove BG tab
+        enabled_condition: 已选中图片
+        action_result: 切换 Text
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      confirm:
+        selector: "section:has-text('Batch Edit') button:has-text('Confirm')"
+        role_or_text: Confirm
+        visible_condition: Remove BG tab
+        enabled_condition: 免费用户限制/credits 校验通过
+        action_result: 提交 Remove BG；结果替换原图片层
+        reversible: false
+        explore_status: covered
+        dependencies: [2 images]
+        assertions_hint: taskIds gzy_removebg_PokeCutWeb_1790225206957_F6D2v_cross / gzy_removebg_PokeCutWeb_1790225206988_1qZ8YMd_cross
+  batch_edit_change_bg:
+    description: Batch Edit > Change BG
+    trigger: 点击 Change BG tab
+    url_or_state_key: /agent?pid=<uuid>#batch-edit-change-bg
+    buttons:
+      color:
+        selector: "section:has-text('Batch Edit') button:has-text('Color')"
+        role_or_text: Color
+        visible_condition: Change BG tab
+        enabled_condition: 已选中图片
+        action_result: 展示颜色预设；未抠图图片点击后提示先 Remove BG，不提交任务
+        reversible: true
+        explore_status: covered
+        dependencies: [images]
+        assertions_hint: toast Before changing the background, please use the background removal feature to remove the image background.
+      images:
+        selector: "section:has-text('Batch Edit') button:has-text('Images')"
+        role_or_text: Images
+        visible_condition: Change BG tab
+        enabled_condition: 已选中图片
+        action_result: 展示 Upload 和图片背景资源
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+  batch_edit_erase:
+    description: Batch Edit > Erase
+    trigger: 点击 Erase tab
+    url_or_state_key: /agent?pid=<uuid>#batch-edit-erase
+    buttons:
+      face_category:
+        selector: "section:has-text('Batch Edit') button:has-text('Face')"
+        role_or_text: Face
+        visible_condition: Erase tab
+        enabled_condition: 已选中图片
+        action_result: 展示 Remove Acne / Whiten Teeth / No Eye bags / Remove Lip Wrinkles / No Beard / Red-eye Removal
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 默认第一个分类第一个模型
+      confirm:
+        selector: "section:has-text('Batch Edit') button:has-text('Confirm')"
+        role_or_text: Confirm
+        visible_condition: Erase tab
+        enabled_condition: 免费用户限制/credits 校验通过
+        action_result: 尚未提交实测
+        reversible: false
+        explore_status: blocked_by_dependency
+        dependencies: [未执行生成]
+        assertions_hint: ''
+  batch_edit_crop:
+    description: Batch Edit > Crop
+    trigger: 点击 Crop tab
+    url_or_state_key: /agent?pid=<uuid>#batch-edit-crop
+    buttons:
+      amazon_template:
+        selector: "section:has-text('Batch Edit') button:has-text('Amazon')"
+        role_or_text: Amazon 2000x2000px
+        visible_condition: Crop tab
+        enabled_condition: 已选中图片
+        action_result: Width/Height 立即更新为 2000/2000
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 默认 Width=1200 / Height=1600；input min=1 max=4096
+      confirm:
+        selector: "section:has-text('Batch Edit') button:has-text('Confirm')"
+        role_or_text: Confirm
+        visible_condition: Crop tab
+        enabled_condition: 已选中图片
+        action_result: 批量裁剪；2 张图片层替换为 2000x2000，文本层保留
+        reversible: false
+        explore_status: covered
+        dependencies: [2 images + 1 text layer]
+        assertions_hint: 图层总数保持 3，Console 上报 Crop 开始/成功率/完成
+  batch_edit_clothes_changer:
+    description: Batch Edit > Clothes Changer
+    trigger: 点击 Clothes Changer tab
+    url_or_state_key: /agent?pid=<uuid>#batch-edit-clothes-changer
+    buttons:
+      formal_wear:
+        selector: "section:has-text('Batch Edit') button:has-text('Formal Wear')"
+        role_or_text: Formal Wear
+        visible_condition: Clothes Changer tab
+        enabled_condition: 已选中图片
+        action_result: 默认选中第一个分类
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 第一个模板未自动选中；见 bug_candidate
+      upload:
+        selector: "section:has-text('Batch Edit') button:has-text('Upload')"
+        role_or_text: Upload
+        visible_condition: Clothes Changer tab
+        enabled_condition: 已选中图片
+        action_result: 打开参考图裁剪弹窗，含 Cancel / Confirm
+        reversible: true
+        explore_status: covered
+        dependencies: [test_images/有人脸.JPG]
+        assertions_hint: Cancel 可关闭
+      generate:
+        selector: "section:has-text('Batch Edit') button:has-text('Generate')"
+        role_or_text: Generate
+        visible_condition: Clothes Changer tab
+        enabled_condition: 选中模板或上传参考图后
+        action_result: 未提交实测
+        reversible: false
+        explore_status: blocked_by_dependency
+        dependencies: [未执行生成]
+        assertions_hint: 初始 disabled；点击第一个预设模板后 enabled
+  batch_edit_watermark:
+    description: Batch Edit > Watermark
+    trigger: 点击 Watermark tab
+    url_or_state_key: /agent?pid=<uuid>#batch-edit-watermark
+    buttons:
+      upload_watermark:
+        selector: "section:has-text('Batch Edit') button:has-text('Upload Your Watermark')"
+        role_or_text: Upload Your Watermark
+        visible_condition: Watermark tab 且未上传水印
+        enabled_condition: 已选中图片
+        action_result: 上传后自动抠图，显示 Change / Refine / Size；默认 20%，Apply 可点击
+        reversible: false
+        explore_status: covered
+        dependencies: [watermark image]
+        assertions_hint: 上传单文件 input；完成后有 watermark-cutout.png 缩略图
+      size_plus:
+        selector: "section:has-text('Batch Edit') button[aria-label='Size +1%']"
+        role_or_text: +
+        visible_condition: 水印已上传
+        enabled_condition: size < 50
+        action_result: 20% -> 21%
+        reversible: true
+        explore_status: covered
+        dependencies: [watermark uploaded]
+        assertions_hint: range min=5 max=50 step=1
+      size_minus:
+        selector: "section:has-text('Batch Edit') button[aria-label='Size −1%']"
+        role_or_text: −
+        visible_condition: 水印已上传
+        enabled_condition: size > 5
+        action_result: 21% -> 20%
+        reversible: true
+        explore_status: covered
+        dependencies: [watermark uploaded]
+        assertions_hint: ''
+      refine:
+        selector: "section:has-text('Batch Edit') button:has-text('Refine')"
+        role_or_text: Refine
+        visible_condition: 水印已上传
+        enabled_condition: 始终
+        action_result: 打开 Refine；含 Keep / Eraser / Brush Size / Cancel / Confirm
+        reversible: true
+        explore_status: covered
+        dependencies: [watermark uploaded]
+        assertions_hint: Brush Size range 0..100，默认 12
+      apply:
+        selector: "section:has-text('Batch Edit') button:has-text('Apply')"
+        role_or_text: Apply
+        visible_condition: 水印已上传
+        enabled_condition: 水印已上传
+        action_result: 应用到所有选中图片，结果替换原图片层
+        reversible: false
+        explore_status: covered
+        dependencies: [watermark uploaded]
+        assertions_hint: 2 张图片后图层数保持 2
+modals:
+  batch_guide:
+    description: Batch Edit 标题右侧引导弹层
+    trigger: 点击 button[aria-label*='Apply the same edit']
+    close: Escape
+    evidence: shots/batch_guide_opened.png
+  clothes_crop:
+    description: Clothes Changer 参考图裁剪弹窗
+    trigger: 点击 Upload 并选择参考图
+    confirm: button:has-text('Confirm')
+    cancel: button:has-text('Cancel')
+    evidence: shots/clothes_changer_upload_crop_modal.png
+  watermark_refine:
+    description: Watermark Refine 弹窗
+    trigger: 点击 Refine
+    confirm: button:has-text('Confirm')
+    cancel: button:has-text('Cancel')
+    evidence: shots/watermark_refine_modal.png
+notes:
+  - 1440x900 下若选中框靠右，Batch Edit 弹窗会超出视口，右上角关闭按钮不可达；见 sync bug_candidate。
+  - 免费账号 6 张时 Confirm disabled、费用按 5 张计，但未出现第 6 张锁定图标或 Upgrade 文案；见 sync bug_candidate。
+  - Clothes Changer 的第一个模板不会默认选中，Generate 初始 disabled；点击首个模板后才启用。

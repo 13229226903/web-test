@@ -81,13 +81,15 @@ cases:
   title: PC 新画布消除购买出现与成功
   entry: /tools/magic-eraser-with-ai-detection
   actions:
-  - click: AI Delete
-  - click: All
-  - click: Remove
+  - click_exact: All
   expected:
   - 新画布消除购买出现en_magic-eraser-with-ai-detection
   - 新画布消除年ultra购买成功en_magic-eraser-with-ai-detection
   screenshot: pc_new_03_magic_eraser.png
+  actions_note: 2026-10-12：原 actions [AI Delete, All, Remove] 失效——页面无 AI Delete 按钮；'All'
+    与 'Remove' 经 click_text 子串兜底分别点不到目标（'Remove' 会命中工具栏 'Remove BG'）。实测正确流程：上传后 AI
+    消除面板自动打开并完成自动检测，需点 Quick Select 的 'All' 缩略图按钮（button 文本恰为 All）全选检测结果，主提交 button.btn-bg-gradient1（Remove
+    5）才会启用；提交后发出 新画布消除购买出现 事件。故 actions 改为精确点击 All。
 - id: P-NEW-04
   layer: L2
   priority: P0
@@ -578,3 +580,18 @@ cases:
   - 新画布换背购买出现en_background-changer
   - 新画布换背月SE试用购买成功en_background-changer
   screenshot: mobile_new_14_background_changer.png
+  known_bug:
+    id: BUG-2026-1012-01
+    status: open
+    summary: 新画布 /tools/background-changer 走自动弹窗路径时不发送「新画布换背购买出现en_background-changer」事件
+    requirement_expected: 新画布换背购买出现en_background-changer（该用例期望事件）
+    actual: PC/移动端上传进入画布后，因 0 credits + 自动执行「换背使用」，购买弹窗在进入画布时即自动弹出；actions 为空（无点击动作），画布内不存在主提交按钮
+      button.btn-bg-gradient1；实际发送的事件为：无限画布页换背使用 → 购买界面进入 → 无限画布页点数用完触发购买 → 无限画布页背景更改功能点数用完触发购买；期望的「新画布换背购买出现en_background-changer」未出现。
+    reproduce: PC 与移动端两组独立会话均可复现（非偶发）
+    evidence:
+    - artifacts/2026-10-12_stable_regression_registry/regression/recheck_p_new_16.log
+    - artifacts/2026-10-12_stable_regression_registry/shots/pn16_debug.png
+    - artifacts/2026-10-12_stable_regression_registry/shots/pn16_debug2.png
+    - artifacts/2026-10-12_stable_regression_registry/sync.md#13-第四轮核实
+    reported_by: user
+

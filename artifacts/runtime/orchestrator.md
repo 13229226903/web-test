@@ -19,7 +19,7 @@
 - 探索阶段固定补充两个 sidecar：`artifacts/<task_id>/exploration_report.md`（人审摘要）和 `artifacts/<task_id>/evidence/automation_handoff.yaml`（机器交接契约）；它们不替代 `sync.md`。
 - 补充材料可以另存为 evidence / appendix，但 `state.md` 的接力指针必须指向标准产物和这两个 sidecar。
 - 写产物前若仓库已有同类 artifact，应优先对齐同类历史格式；不确定时先查看同类历史产物，而不是自创结构。
-- 执行前应在 `state.md` 固化关键字段，至少包含：`task_type`、`execution_mode`、`target_url`、`artifacts.sync`、`artifacts.exploration_report`、`artifacts.automation_handoff`、`next_step`；如有特定探索驱动，再记录对应 driver 字段。
+- 执行前应在 `state.md` 固化关键字段，至少包含：`task_type`、`execution_mode`、`target_url`、`artifacts.sync`、`artifacts.exploration_report`、`artifacts.automation_handoff`、`next_step`；如有特定探索驱动，再记录对应 driver 字段。PC 端任务还必须记录 `device_context`（viewport / UA / hasTouch / DPR）和 `viewport_guard_status`（passed / failed / not_applicable）；只有 guard 通过后才能进入 PC 页面探索。
 
 ## 执行模式自动选择
 
@@ -51,7 +51,10 @@
   - `test_code`：Python、fixture、Allure、数据格式、断言实现 → test-writing 本地修复；
   - `runtime_environment`：网络、服务排队、环境偶发 → 按环境探针 / 重试规则处理；
   - `page_behavior_unknown`：入口、状态、selector、ready 条件、账号行为与 handoff 不一致 → 停止代码猜测，回退 page-map-sync，并在当前会话重新做 MCP preflight 后复探；
-  - `product_bug`：页面实际与需求 expected 不一致 → 保留断言，使用 MCP 复核证据并记录 bug_candidate，不改绿灯。
+  - `product_bug`：页面实际与需求 expected 不一致 → 保留断言，使用 MCP 复核证据并记录 bug_candidate，不改绿灯；
+  - `flaky`：跨轮结果不稳定（pass/fail 交替或需重试才过）→ 用 `scripts/flaky_report.py` 判定，
+    用 `scripts/quarantine.py add` 登记隔离并追根因；禁止靠调大 retries / timeout 收尾。
+- 批量失败（一轮 ≥3 条）先跑 `python scripts/flaky_report.py` 做跨轮归因，再按上述分类坍缩，不得逐条重跑试探。
 - test-writing 不得为了排查代码失败而偷偷把本地 Playwright、CDP 或 CUA 结果伪装成 MCP 探索证据；如果需要重新确认页面事实，必须回到 page-map-sync。
 - handoff 中声明的 `driver`（如 touch / dispatchEvent / 坐标点击）是**自动化实现驱动**，不等于探索驱动；它必须有探索证据和实现理由，不能在代码阶段临时发明。
 
@@ -93,10 +96,10 @@ page-map-sync
   → test-writing
 ```
 
-- `exploration_report.md` 是人审入口：只展示范围、入口、覆盖、gap、bug、skipped、风险和需要决策的事项；详细证据仍在 `sync.md` / evidence。
+- `exploration_report.md` 是人审入口：除范围、入口、覆盖、gap、bug、skipped、风险和需要决策外，必须按用例名列出已执行用例（covered / bug_candidate）与未执行用例（gap / skipped），并在 Bug Candidate 明细中提供对应 AC / 用例名、步骤、实际、期望和可折叠展开的证据截图；格式以 `artifacts/runtime/templates/exploration_report.md` 为准。
 - `automation_handoff.yaml` 是角色间唯一的自动化实现交接：每个 case 必须有入口、账号、环境、状态链、动作、ready/exit 条件、特殊 driver、事件采集边界和证据。
 - page_map、sync、cases 任一版本或范围变化，都使 handoff 回退为 `ready_for_case_design`；未重新校验不得进入 test-writing。
-- 使用校验：`python scripts/validate_automation_handoff.py --handoff <path> --sync <path> --cases <path>`。
+- 使用校验：`python scripts/validate_automation_handoff.py --handoff <path> [--cases <path>]`。
 
 ## 路由
 
@@ -238,13 +241,29 @@ Allure 报告: http://localhost:8123/index.html
 - 失败用例必须带一句话失败原因，不得只给数字。
 - case_id / Layer / 策略与 `cases.md` 一致。
 
+## 稳定回归执行入口（2026-11-04）
+
+- 固定入口：`python scripts/regression_runner.py --base-url <url> --label <3001|3002>`。
+- 默认单次重试（`--reruns 1`）；禁用重试用 `--no-reruns`。
+- runner 为每个 run 生成稳定 `run_id`，并写出：`reports/regression-<label>/<run_id>/suite_results.json`、`regression_summary.json`、`regression_summary.md`。
+- attempt 级事实写入 `reports/attempts/<run_id>.jsonl`；这是区分 `clean_pass` / `retry_pass` 的唯一依据。
+- 汇总门禁默认 `allow-retry`，即 `retry_pass` 不阻断 suite 退出码，但必须在报告中显式可见；发布门禁需按 R1/R2 口径另判。
+- Allure 仍是明细证据层；禁止仅凭 Allure 最终绿色判定发布通过。
+- 禁止删除 `xfail` / `skipped` / `broken` 结果来制造全绿；`scripts/cleanup_xfailed.py` 只允许删除“被独立脚本明确替代”的重复结果。
+- 并行执行暂不在本阶段启用；必须先完成账号态与数据隔离标记。
+
 ## 稳定回归报告输出
 
 稳定回归跑完 registry 登记脚本后，orchestrator 必须：
 
-1. `allure generate reports/allure-results -o reports/allure-report-regression --clean`（结果目录名用 `-regression`，与完整流程的 `-matrix` 区分）。
+1. 生成前先清理旧报告：`python scripts/allure_cleanup.py --keep allure-results --keep allure-report-regression`（默认清掉所有旧报告，仅保留 `--keep` 指定目录；`--protect-archived` 可保护归档引用目录，`--dry-run` 可预览）；再 `allure generate reports/allure-results -o reports/allure-report-regression --clean`（结果目录名用 `-regression`，与完整流程的 `-matrix` 区分）。
 2. 启动本地 HTTP 服务器（如 `python -m http.server 8123 --directory reports/allure-report-regression`），并在浏览器打开 `http://localhost:8123/index.html`。
 3. 在对话里打印「简易回归报告」，按 registry 任务逐行展示，格式如下：
+
+> **硬门禁（2026-11-02 新增）**：第 2 步与第 3 步任一未完成，**不得**把任务标为 completed、**不得**向用户报「回归完成」。
+> 只跑 `allure generate` 就收尾属于未完成——它只产出静态目录，静态 HTML 用 `file://` 直接打开会因 fetch 受限而白屏 / 打不开，必须经本地 HTTP 服务器访问。
+>
+> 固定启动命令见 `README.md`「查看 Allure 报告」小节。
 
 ```text
 【回归测试报告】<YYYY-MM-DD HH:MM>
@@ -268,12 +287,18 @@ Allure 报告: http://localhost:8123/index.html
 ## 接力与 Gate
 
 1. artifact `pending_review/failed/blocked` 不接力。
-2. `sync.md pending_review`：必须同时生成 `exploration_report.md` 和 `automation_handoff.yaml(status=pending_review)`；对话只打印报告摘要和路径，通知用户审核探索报告。停止。用户确认后，orchestrator 将 sync 改 `confirmed`、handoff 改 `ready_for_case_design`；阻塞 bug / gap 不得伪装成 covered。
+2. `sync.md pending_review`：必须同时生成符合模板的 `exploration_report.md` 和 `automation_handoff.yaml(status=pending_review)`；报告须含 §8 已执行用例（按用例名）、§9 Bug Candidate 明细（步骤/预期/折叠截图）、§10 未执行用例（按用例名），并通过 `validate_automation_handoff.py` 校验。对话只打印报告摘要和路径，通知用户审核探索报告。停止。用户确认后，orchestrator 将 sync 改 `confirmed`、handoff 改 `ready_for_case_design`；阻塞 bug / gap 不得伪装成 covered。
 3. `cases.md pending_review`：通知用户审核用例矩阵；停止。用户确认后，先以 `ready_for_case_design` 执行 `validate_automation_handoff.py --cases`；校验通过后由 orchestrator 将 handoff 改为 `implementation_ready` 并再次校验。只有第二次校验通过且 page_map 版本、case_id、状态链和证据全部一致，才能进入 test-writing。
 4. `impl.md completed` 且自跑失败为 0：先 review；review fail 回 test-writing 或 blocked。视觉需求再 visual-review。
 5. review / visual-review 通过后：先执行 `test-writing` 的 report-output 子步骤，生成并检查按用例矩阵输出的 `allure-results-matrix/` 与 `allure-report-matrix/`，确认 case_id / 参数化 id / title / epic / feature 与 `cases.md` 一致，且报告用例总数 = `cases.md` 的 `case_count`，且每条矩阵用例至少有 1 个截图步骤或已记录的例外说明后，启动本地 HTTP 服务器（如 `python -m http.server 8123 --directory reports/allure-report-matrix`），并在浏览器打开 `http://localhost:8123/index.html` 供用户查看（不得直接打开静态 HTML 文件），同时在对话里打印「简易测试报告」（格式见下方「简易测试报告输出」节）；用户确认后才进入 regression-archive gate。不得直接 completed。
 6. 进入 regression-archive gate 时：orchestrator 汇总本次任务的候选沉淀项（同一坑出现 ≥2 次或 1 次但高成本），向用户询问「是否需要沉淀」；用户确认后按 `artifacts/runtime/common.md`「知识沉淀规则」写落点，并记录到 progress / journal。
-7. 用户确认归档：先执行 archive-cleanup——生成删除清单，清理本次任务中未被 `sync.md` / `cases.md` / `impl.md` / `archive.md` / Allure 报告引用的截图、snapshot、临时下载等中间产物；被引用证据必须保留，清理结果写入独立 manifest / result 并记录 progress / journal。然后只做复制、registry 更新、archive.md；归档脚本复跑要另外生成 `allure-results-archive/` 与 `allure-report-archive/`。暂不归档：写 archive.md `skipped_by_user`，可 completed；未引用中间产物仍按本条清理。
+7. **回归门禁（硬规则，2026-11-05）**：进入 regression-archive gate 前，必须存在本轮 `regression_summary.json` 且 `gate.status = passed`。
+   - `gate.status != passed` 时：不得标记 `completed`、不得向用户报「回归完成」、不得进入归档。
+   - 对话里的回归结果必须同时给出三项：`clean_pass_rate`、`retry_pass`、`quarantined`；三者缺一视为门禁证据不合规。
+   - `quarantined` 用例可见但不计入通过；`retry_pass` 不得表述为 clean pass。
+   - 两条执行路径都必须产出汇总：`scripts/regression_runner.py`（registry）与 `scripts/run_full_regression.py`（-m regression）。
+   - 只跑 Allure / 只看 pytest 退出码、没有 `regression_summary.json` 的，不得作为归档依据。
+8. 用户确认归档：先执行 archive-cleanup——生成删除清单，清理本次任务中未被 `sync.md` / `cases.md` / `impl.md` / `archive.md` / Allure 报告引用的截图、snapshot、临时下载等中间产物；被引用证据必须保留，清理结果写入独立 manifest / result 并记录 progress / journal。然后只做复制、registry 更新、archive.md；归档脚本复跑要另外生成 `allure-results-archive/` 与 `allure-report-archive/`。暂不归档：写 archive.md `skipped_by_user`，可 completed；未引用中间产物仍按本条清理。
    - **归档副本可独立复跑校验**（复制脚本到 `archive/` 时必做）：核对脚本引用的公共模块是否在仓库根、路径常量（`test_images/`、`data/`、`page_map/`）是否逐级上溯仓库根；不满足则先整改再归档，否则归档副本会在下轮回归里假失败（2026-09-14 实测：7 个副本素材路径报错，误判整轮失败）。
 
 ## 上下文控制
@@ -348,3 +373,6 @@ knowledge:
 python scripts/knowledge.py validate
 python scripts/knowledge.py rebuild-index
 ```
+
+
+

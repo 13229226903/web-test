@@ -1,0 +1,17 @@
+tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_001_dimension_switch
+tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_002_thumbnail
+tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_003_ethnicity_result
+tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_004_body_result
+tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_005_face_result
+tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_006_download_questionnaire
+tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_007_unsaved_report
+tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_008_try_my_photo
+tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_001_anonymous_auth[chromium]
+tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_002_face_toast
+tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_003_body_no_photo_continue
+tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_004_noface
+tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_005_multiface
+tests/test_pokecut_portrait_detector.py::TestL5Boundary::test_l5_001_measurements_full
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+14 tests collected in 0.15s

@@ -16,6 +16,8 @@ import yaml
 from PIL import Image, ImageChops, ImageStat
 from playwright.sync_api import Page, expect as pw_expect
 
+from helpers.waiting import poll_until, settle
+
 
 def case_meta(case_id: str, layer: str, priority: str):
     """给每条 Allure 用例写入可检索的 case_id / layer / priority label。"""
@@ -40,6 +42,11 @@ def _repo_root() -> Path:
 
 BASE_DIR = _repo_root()
 DATA = yaml.safe_load((BASE_DIR / "data" / "pokecut_old_canvas_sticker_panel_v1.yaml").read_text(encoding="utf-8"))
+
+
+def resolve_base_url(base_url=None) -> str:
+    import os as _os
+    return (base_url or _os.environ.get("POKECUT_BASE_URL") or DATA["base_url"]).rstrip("/")
 BASE_URL = os.environ.get("POKECUT_BASE_URL", DATA["base_url"])
 EMAIL = os.environ.get("POKECUT_TEST_EMAIL", DATA["accounts"]["vip"]["email"])
 CODE = os.environ.get("POKECUT_TEST_CODE", str(DATA["accounts"]["vip"]["code"]))
@@ -150,7 +157,7 @@ def open_section(page: Page, label: str, require_switch: bool = False):
         box = section_label_box(page, label, require_switch)
         assert box, f"右侧面板未找到分区 {label}"
         page.mouse.click(box["x"] + box["w"] // 2, box["y"] + box["h"] // 2)
-        page.wait_for_timeout(1000)
+        poll_until(page, lambda: section_is_open(page, label, require_switch), timeout=8000, interval=500)
     assert section_is_open(page, label, require_switch), f"分区 {label} 未展开"
 
 
@@ -161,7 +168,7 @@ def set_switch(page: Page, label: str, enabled: bool):
         box = switch_box(page, label)
         assert box, f"右侧面板未找到 {label} 开关交互点"
         page.mouse.click(box["x"] + box["w"] // 2, box["y"] + box["h"] // 2)
-        page.wait_for_timeout(1100)
+        poll_until(page, lambda: switch_checked(page, label) is enabled, timeout=8000, interval=500)
     if enabled:
         open_section(page, label, require_switch=True)
     assert switch_checked(page, label) is enabled, f"{label} 开关未达到预期状态 {enabled}"
@@ -177,7 +184,7 @@ def click_section_text(page: Page, section: str, text: str, require_switch: bool
         "return {x:Math.round(b.x),y:Math.round(b.y),w:Math.round(b.width),h:Math.round(b.height)};"))
     assert box, f"{section} 区未找到文本 {text}"
     page.mouse.click(box["x"] + box["w"] // 2, box["y"] + box["h"] // 2)
-    page.wait_for_timeout(900)
+    settle(page, 900)
 
 
 def click_swatch(page: Page, section: str, color: str):
@@ -186,7 +193,8 @@ def click_swatch(page: Page, section: str, color: str):
         "&&getComputedStyle(e).backgroundColor===" + repr(color) + "); if(!es.length) return false;"
         "const e=es[0].closest('.cursor-pointer')||es[0]; e.scrollIntoView({block:'center'}); e.click(); return true;"))
     assert clicked, f"{section} 区未找到颜色 {color}"
-    page.wait_for_timeout(1000)
+    # 颜色应用由调用方的画布像素差异断言校验。
+    settle(page, 1000)
 
 
 def click_type(page: Page, section: str, index: int):
@@ -197,7 +205,8 @@ def click_type(page: Page, section: str, index: int):
         "return {x:Math.round(b.x),y:Math.round(b.y),w:Math.round(b.width),h:Math.round(b.height),count:es.length};"))
     assert box, f"{section} 区第 {index} 个类型不存在"
     page.mouse.click(box["x"] + box["w"] // 2, box["y"] + box["h"] // 2)
-    page.wait_for_timeout(1000)
+    # 类型应用由调用方的画布像素差异断言校验。
+    settle(page, 1000)
     return box["count"]
 
 
@@ -211,7 +220,8 @@ def click_named_card(page: Page, section: str, name: str):
         "return {x:Math.round(b.x),y:Math.round(b.y),w:Math.round(b.width),h:Math.round(b.height)};"))
     assert box, f"{section} 区未找到卡片 {name}"
     page.mouse.click(box["x"] + box["w"] // 2, box["y"] + box["h"] // 2)
-    page.wait_for_timeout(1200)
+    # 卡片应用由调用方的画布像素差异断言校验。
+    settle(page, 1200)
 
 def shot(page: Page, name: str):
     path = SHOT_DIR / f"{name}.png"
@@ -247,7 +257,8 @@ def assert_mean_changed(page: Page, tag: str, note: str = "", before_tag: str | 
         if value > MEAN_ANY:
             allure.attach(f"canvas mean RGB diff={value} {note}", name=f"{tag}_diff", attachment_type=allure.attachment_type.TEXT)
             return value
-        page.wait_for_timeout(400)
+        # 像素差异未达阈值时给渲染留一个额外窗口再采样。
+        settle(page, 400)
     allure.attach(f"canvas mean RGB diff={value} {note}", name=f"{tag}_diff", attachment_type=allure.attachment_type.TEXT)
     assert value > MEAN_ANY, f"{tag}: 画布 mean RGB 差异 {value} 未超过 {MEAN_ANY} {note}"
     return value
@@ -265,44 +276,60 @@ def assert_mean_unchanged(page: Page, tag: str, note: str = "", before_tag: str 
 
 def wait_canvas_ready(page: Page, timeout_s: int = WAIT_READY) -> bool:
     overlay_gone = False
-    for _ in range(int(timeout_s / 1.5)):
+
+    def _ready() -> bool:
+        nonlocal overlay_gone
         if not overlay_gone and page.evaluate(READY_JS) == 0:
             overlay_gone = True
-        if overlay_gone and page.evaluate(NAV_JS) >= 8:
-            page.wait_for_timeout(1000)
-            return True
-        page.wait_for_timeout(1500)
-    return False
+        return overlay_gone and page.evaluate(NAV_JS) >= 8
+
+    return poll_until(page, _ready, timeout=int(timeout_s * 1000), interval=1500)
 
 
-def login(page: Page):
+def login(page: Page, base_url: str = None):
     last_state = None
     for attempt in range(3):
-        page.goto(BASE_URL + DATA["entry_path"], wait_until="domcontentloaded", timeout=120000)
-        page.wait_for_timeout(4500)
+        page.goto(resolve_base_url(base_url) + DATA["entry_path"], wait_until="domcontentloaded", timeout=120000)
+        poll_until(
+            page,
+            lambda: page.locator('button:has-text("登录"):not(:has-text("退出登录"))').count() > 0
+            or page.evaluate(NAV_JS) >= 8,
+            timeout=30000,
+            interval=1000,
+        )
         btn = page.locator('button:has-text("登录"):not(:has-text("退出登录"))')
         if btn.count() and btn.first.is_visible():
-            btn.first.click()
-            page.wait_for_timeout(1500)
-            page.locator('input[data-testid="auth-email-input"], input[type="email"]').first.fill(EMAIL)
+            email_input = page.locator('input[data-testid="auth-email-input"], input[type="email"]')
+            # 按钮可见可能早于 Vue 绑定点击事件；点完等弹层，未出现则重试点击。
+            for _ in range(5):
+                btn.first.click()
+                if poll_until(page, lambda: email_input.count() > 0, timeout=3000, interval=300):
+                    break
+            assert email_input.count() > 0, "登录入口点击后未出现邮箱输入框"
+            email_input.first.fill(EMAIL)
             page.locator('input[data-testid="auth-code-input"], input[placeholder*="验证码"], input[placeholder*="Verification"]').first.fill(CODE)
             page.locator('[data-testid="auth-submit"]').first.click()
-            page.wait_for_timeout(8500)
+            poll_until(
+                page,
+                lambda: page.locator('button:has-text("登录"):not(:has-text("退出登录"))').count() == 0,
+                timeout=40000,
+                interval=1000,
+            )
         state = page.evaluate("""() => { try { const a=window.useNuxtApp();
             return {vip:a.__basicAccountState?.userBenefit?.value?.vipType}; } catch(e) { return {vip:null}; } }""")
         last_state = state
         if state.get("vip") == DATA["accounts"]["vip"]["vip_type"]:
             return state
-        page.wait_for_timeout(2500)
+        # 重试间隔：等登录态结算。
+        settle(page, 2500)
     raise AssertionError(f"VIP 登录失败: {last_state}")
 
 
-def enter_canvas_via_template(page: Page, attempts: int = 4):
+def enter_canvas_via_template(page: Page, base_url: str = None, attempts: int = 4):
     last_err = None
     for attempt in range(1, attempts + 1):
         try:
-            page.goto(BASE_URL + DATA["entry_path"], wait_until="domcontentloaded", timeout=120000)
-            page.wait_for_timeout(4500)
+            page.goto(resolve_base_url(base_url) + DATA["entry_path"], wait_until="domcontentloaded", timeout=120000)
             heading = page.get_by_role("heading", name=DATA["assets"]["template_group"], exact=True).first
             pw_expect(heading).to_be_visible(timeout=30000)
             section = heading.locator("xpath=..").locator("xpath=..")
@@ -312,25 +339,29 @@ def enter_canvas_via_template(page: Page, attempts: int = 4):
             with page.expect_file_chooser(timeout=30000) as fc:
                 overlay.click()
             fc.value.set_files(IMG_1K)
-            for _ in range(90):
-                page.wait_for_timeout(1000)
-                if DATA["canvas_path_pattern"] in page.url:
-                    break
-            else:
+            entered = poll_until(
+                page,
+                lambda: DATA["canvas_path_pattern"] in page.url,
+                timeout=90000,
+                interval=1000,
+            )
+            if not entered:
                 raise AssertionError(f"模板上传后未进入画布，当前 URL: {page.url}")
-            page.wait_for_timeout(WAIT_SETTLE)
+            wait_canvas_ready(page)
             return page.url
         except Exception as exc:  # noqa: BLE001
             last_err = exc
             if attempt == attempts:
                 break
-            page.wait_for_timeout(2500)
+            # 重试间隔：等上一条失败请求释放连接。
+            settle(page, 2500)
     raise AssertionError(f"模板入口进入旧画布失败（重试 {attempts} 次）: {last_err}")
 
 
 def open_layer_panel(page: Page):
     page.locator(LAYER_NAV).first.click()
-    page.wait_for_timeout(1200)
+    # 图层行异步挂载，且空列表返回 []；无图层时不存在正向可观察信号，保留有界 settle。
+    settle(page, 1500)
 
 
 def sticker_layer_rows(page: Page):
@@ -352,14 +383,19 @@ def open_sticker_panel(page: Page):
     loc = page.locator(STICKER_TAB).first
     pw_expect(loc).to_be_visible(timeout=30000)
     loc.click()
-    page.wait_for_timeout(SETTLE_ACTION)
+    poll_until(page, lambda: page.locator(STICKER_FIRST).first.is_visible(), timeout=10000, interval=500)
     assert page.locator(STICKER_FIRST).first.is_visible(), "Sticker 面板未展开或首张贴纸不可见"
 
 
 def add_first_sticker(page: Page):
     open_sticker_panel(page)
     page.locator(STICKER_FIRST).first.click()
-    page.wait_for_timeout(2400)
+    poll_until(
+        page,
+        lambda: section_label_box(page, "不透明度", require_switch=False) is not None,
+        timeout=15000,
+        interval=500,
+    )
     assert section_label_box(page, "不透明度", require_switch=False), "贴纸添加后右侧属性面板未出现"
 
 
@@ -371,7 +407,12 @@ def select_single_sticker(page: Page):
     else:
         row = rows[0]
         page.mouse.click(row["x"] + 45, row["y"] + row["h"] // 2)
-        page.wait_for_timeout(1200)
+        poll_until(
+            page,
+            lambda: section_label_box(page, "不透明度", require_switch=False) is not None,
+            timeout=10000,
+            interval=500,
+        )
     assert section_label_box(page, "不透明度", require_switch=False), "贴纸未选中，右侧属性面板不可用"
 
 
@@ -396,16 +437,17 @@ def reset_sticker_state(page: Page):
     open_section(page, "调整")
     for i in range(len(DATA["right_panel"]["adjust"]["labels"])):
         set_section_range(page, "调整", i, 0)
-    page.wait_for_timeout(700)
+    # 多个滑杆复位后等画布合成稳定；无单一可观察信号。
+    settle(page, 700)
 
 
 @pytest.fixture(scope="session")
-def canvas_session(playwright):
+def canvas_session(playwright, base_url):
     browser = playwright.chromium.launch(headless=True)
     context = browser.new_context(viewport={"width": 1920, "height": 1080}, locale="zh-CN")
     page = context.new_page()
-    login(page)
-    canvas_url = enter_canvas_via_template(page)
+    login(page, base_url)
+    canvas_url = enter_canvas_via_template(page, base_url)
     assert DATA["canvas_path_pattern"] in canvas_url, f"会话入口未进入旧画布: {canvas_url}"
     page.close()
     yield {"context": context, "url": canvas_url}
@@ -417,7 +459,6 @@ def canvas_session(playwright):
 def canvas_page(canvas_session):
     page = canvas_session["context"].new_page()
     page.goto(canvas_session["url"], wait_until="domcontentloaded", timeout=120000)
-    page.wait_for_timeout(5000)
     assert wait_canvas_ready(page), "画布未在超时内加载完成"
     yield page
     page.close()
@@ -509,18 +550,18 @@ class TestL2StickerOpacity:
             assert ranges and ranges[0]["min"] == "0" and ranges[0]["max"] == "100"
         with allure.step("记录 100 基线"):
             assert set_section_range(page, "不透明度", 0, 100) == "100"
-            page.wait_for_timeout(700)
+            settle(page, 700)
             canvas_crop(page, "l2_002_opacity_100_before")
             shot(page, "l2_002_opacity_100")
         with allure.step("改为 35 并断言画布变化"):
             assert set_section_range(page, "不透明度", 0, 35) == "35"
-            page.wait_for_timeout(800)
+            settle(page, 800)
             assert_mean_changed(page, "l2_002_opacity_35", "opacity=35", before_tag="l2_002_opacity_100")
             shot(page, "l2_002_opacity_35")
         with allure.step("改为 0 并断言画布变化"):
             canvas_crop(page, "l2_002_opacity_0_before")
             assert set_section_range(page, "不透明度", 0, 0) == "0"
-            page.wait_for_timeout(800)
+            settle(page, 800)
             assert_mean_changed(page, "l2_002_opacity_0", "opacity=0", before_tag="l2_002_opacity_100")
             shot(page, "l2_002_opacity_0")
         with allure.step("恢复不透明度 100"):
@@ -557,10 +598,10 @@ class TestL2StickerAdjust:
             with allure.step(f"调整 {label} 为 {value} 并断言变化"):
                 for j in range(13):
                     set_section_range(page, "调整", j, 0)
-                page.wait_for_timeout(500)
+                settle(page, 500)
                 canvas_crop(page, f"l2_003_adjust_{i:02d}_before")
                 assert set_section_range(page, "调整", i, value) == str(value)
-                page.wait_for_timeout(700)
+                settle(page, 700)
                 assert_mean_changed(page, f"l2_003_adjust_{i:02d}", f"{label}={value}")
                 shot(page, f"l2_003_adjust_{i:02d}")
                 set_section_range(page, "调整", i, 0)
@@ -596,7 +637,7 @@ class TestL2StickerShadow:
             zero_count = len(range_items(page, "阴影", require_switch=True))
             for i in range(zero_count):
                 set_section_range(page, "阴影", i, cfg["zero"][i] if i < len(cfg["zero"]) else 0, require_switch=True)
-            page.wait_for_timeout(700)
+            settle(page, 700)
             canvas_crop(page, "l2_004_shadow_zeroed_before")
             assert_mean_unchanged(page, "l2_004_shadow_zeroed", "shadow zero values", before_tag="l2_004_shadow_off")
             shot(page, "l2_004_shadow_zeroed")
@@ -604,7 +645,7 @@ class TestL2StickerShadow:
             effect_count = len(range_items(page, "阴影", require_switch=True))
             for i, value in enumerate(cfg["effect"][:effect_count]):
                 set_section_range(page, "阴影", i, value, require_switch=True)
-            page.wait_for_timeout(900)
+            settle(page, 900)
             assert_mean_changed(page, "l2_004_shadow_effect", "shadow effect", before_tag="l2_004_shadow_zeroed")
             shot(page, "l2_004_shadow_effect")
         with allure.step("修改距离/旋转（位置类参数）并断言变化"):
@@ -617,13 +658,13 @@ class TestL2StickerShadow:
                 click_section_text(page, "阴影", "位置", require_switch=True)
                 for offset, value in enumerate(cfg["position"]):
                     set_section_range(page, "阴影", offset, value, require_switch=True)
-            page.wait_for_timeout(900)
+            settle(page, 900)
             assert_mean_changed(page, "l2_004_shadow_position", "shadow position")
             shot(page, "l2_004_shadow_position")
         with allure.step("修改颜色并断言变化"):
             click_section_text(page, "阴影", "颜色", require_switch=True)
             click_swatch(page, "阴影", "rgb(0, 0, 0)")
-            page.wait_for_timeout(700)
+            settle(page, 700)
             shot(page, "l2_004_shadow_color_black")
             canvas_crop(page, "l2_004_shadow_color_before")
             click_swatch(page, "阴影", cfg["color"])
@@ -664,7 +705,7 @@ class TestL2StickerOutline:
             canvas_crop(page, "l2_005_outline_sliders_before")
             for i, value in enumerate(cfg["sliders"]):
                 set_section_range(page, "轮廓", i, value, require_switch=True)
-            page.wait_for_timeout(900)
+            settle(page, 900)
             assert_mean_changed(page, "l2_005_outline_sliders", "outline sliders")
             shot(page, "l2_005_outline_sliders")
         with allure.step("切换第 4 个轮廓类型并断言变化"):
@@ -705,13 +746,13 @@ class TestL2StickerReflection:
             set_switch(page, "反射", True)
             for i, value in enumerate(cfg["defaults"]):
                 set_section_range(page, "反射", i, value, require_switch=True)
-            page.wait_for_timeout(800)
+            settle(page, 800)
             canvas_crop(page, "l2_006_reflection_default_before")
             shot(page, "l2_006_reflection_default")
         with allure.step("修改 4 个反射参数并断言变化"):
             for i, value in enumerate(cfg["changed"]):
                 set_section_range(page, "反射", i, value, require_switch=True)
-            page.wait_for_timeout(900)
+            settle(page, 900)
             assert_mean_changed(page, "l2_006_reflection_changed", "reflection changed", before_tag="l2_006_reflection_default")
             shot(page, "l2_006_reflection_changed")
 
@@ -742,6 +783,13 @@ class TestL2StickerFilter:
             set_switch(page, "滤镜", False)
         with allure.step("开启滤镜并断言分类与缩略图"):
             set_switch(page, "滤镜", True)
+            # 开关命中后滤镜分类/滑杆仍异步渲染，等 Strength 滑杆出现。
+            poll_until(
+                page,
+                lambda: len(range_items(page, "滤镜", require_switch=True)) > 0,
+                timeout=10000,
+                interval=500,
+            )
             text = panel_text(page)
             assert "复古" in text and "PR02" in text
             assert page.locator('img[src*="/source/filter/thumb/"]').count() >= 20
@@ -757,16 +805,16 @@ class TestL2StickerFilter:
             values = cfg["strengths"]
             canvas_crop(page, "l2_007_filter_strength0_before")
             assert set_section_range(page, "滤镜", 0, values[0], require_switch=True) == "0"
-            page.wait_for_timeout(700)
+            settle(page, 700)
             shot(page, "l2_007_filter_strength0")
             canvas_crop(page, "l2_007_filter_strength50_before")
             assert set_section_range(page, "滤镜", 0, values[1], require_switch=True) == "50"
-            page.wait_for_timeout(700)
+            settle(page, 700)
             assert_mean_changed(page, "l2_007_filter_strength50", "filter strength 50")
             shot(page, "l2_007_filter_strength50")
             canvas_crop(page, "l2_007_filter_strength100_before")
             assert set_section_range(page, "滤镜", 0, values[2], require_switch=True) == "100"
-            page.wait_for_timeout(700)
+            settle(page, 700)
             assert_mean_changed(page, "l2_007_filter_strength100", "filter strength 100")
             shot(page, "l2_007_filter_strength100")
 
@@ -808,6 +856,6 @@ class TestL2StickerBlend:
             assert ranges and ranges[0]["min"] == "0" and ranges[0]["max"] == "100"
             canvas_crop(page, "l2_008_blend_strength80_before")
             assert set_section_range(page, "混合", 0, cfg["strength"], require_switch=True) == "80"
-            page.wait_for_timeout(800)
+            settle(page, 800)
             assert_mean_changed(page, "l2_008_blend_strength80", "blend strength=80")
             shot(page, "l2_008_blend_strength80")

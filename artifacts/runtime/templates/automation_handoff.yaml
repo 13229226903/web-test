@@ -8,8 +8,19 @@ created_at: "<datetime>"
 updated_at: "<datetime>"
 blocking_items: []
 unresolved_conflicts: []
+# locator/稳定性契约（新增，可选但推荐）：
+#   locator.stability: high（role/data-testid/aria）| medium（稳定属性+作用域）| low（顺序/坐标/无属性结构）
+#   locator.fallback: 主定位失效时的候选，按顺序尝试；low/medium 强烈建议提供
+#   not_visible_when: 该状态/动作下应「不存在」的可执行谓词（如 Strength 在前四滤镜时应缺失）
+#   failure_routing: 该用例失败时的归因与回退路径
 contracts:
   - case_id: "<case_id or provisional coverage id>"
+    confidence: "<high | medium | low>"
+    risk_notes: []
+    failure_routing:
+      - symptom: "<locator_not_found | state_not_reached | value_set_but_unchanged>"
+        suspect: "<selector_drift | ready_when_insufficient | driver_wrong | product_bug>"
+        action: "<patch_selector | route_back:page-map-sync | route_back:test-case-design | block>"
     source_case: "<cases.md anchor or AC/coverage id>"
     source_evidence:
       - "<evidence path>"
@@ -36,6 +47,11 @@ contracts:
           - "<observable predicate>"
     actions:
       - action_id: "<id>"
+        locator:
+          primary: {by: "<role | css | text | testid>", value: "<selector>", name: null}
+          fallback: []
+          stability: "<high | medium | low>"
+          reason: "<why this locator / why it is fragile>"
         button_ref: "states.<state>.buttons.<button_id>"
         action: "<click | fill | upload | touch | dispatch>"
         value: null
@@ -44,6 +60,7 @@ contracts:
           - "<observable predicate>"
         result:
           - "<state / DOM / URL / event result>"
+        not_visible_when: []
         fallback: null
     event_capture:
       enabled: true
@@ -60,4 +77,5 @@ contracts:
       console: []
       dom: []
     implementation_status: "ready"  # ready | pending | blocked
+
 

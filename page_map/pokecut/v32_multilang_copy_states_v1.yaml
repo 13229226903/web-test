@@ -1,0 +1,32 @@
+version: v1
+name: v32_multilang_copy_states
+url: /{lang}/create | /{lang}/agent?pid=<uuid>
+description: v3.2 新增文案多语言可见性与溢出检查状态
+languages: [zh, zh-tw, fr, id, de, vi, tr, it, pt, es, ru, ja, th]
+selectors:
+  create_tool: "[data-tool-id]"
+  create_model_entry: "text=Nano Banana 2 Lite"
+  batch_entry: "canvas toolbar button before Download"
+  batch_tabs: "Batch Edit panel tabs"
+  mobile_model_entry: "text=Nano Banana 2 Lite"
+states:
+  create_models:
+    page: /{lang}/create
+    trigger: open model selector
+    notes: Check ChatGPT Image 2.5-flare / sunbrust / Image 2.0 description translation and overflow.
+  batch_edit_tabs:
+    page: /{lang}/agent?pid=<uuid>
+    trigger: upload two images, select both, open Batch Edit, switch seven tabs
+    notes: Check Batch Edit labels, model options, upload/location/action labels and truncation.
+  mobile_create:
+    page: /{lang}/create
+    trigger: mobile context 390x844 iPhone UA
+    notes: Check visible create/home tool labels and truncation.
+  mobile_model_modal:
+    page: /{lang}/agent?pid=<uuid>
+    trigger: mobile canvas, click Nano Banana 2 Lite
+    notes: Mobile model modal exposes model names; description copy not visible in tested modal.
+notes:
+  verified_at: 2026-09-30
+  driver: playwright_mcp_headless
+  copy_scope: translation_presence_and_visual_fit_only; key correctness intentionally not validated

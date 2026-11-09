@@ -1,2 +1,46 @@
-schema_version: "1.0"
+schema_version: '1.0'
 candidates: []
+promoted_candidates:
+- candidate_id: KC-20260922-0001
+  subject_key: purchase.checkout.promo_modal_before_iap_modal
+  knowledge_type: business_rule
+  promoted_to: KB-RULE-0006
+  promoted_at: '2026-09-22T11:05:00+08:00'
+  confirmed_by: user
+- candidate_id: KC-20260922-0002
+  subject_key: auth.signup.feature_level_success_event_attribution
+  knowledge_type: business_rule
+  promoted_to: KB-RULE-0007
+  promoted_at: '2026-09-22T11:05:00+08:00'
+  confirmed_by: user
+- candidate_id: KC-20260922-0003
+  subject_key: magic_eraser.quick_select.no_object_detected_is_normal
+  knowledge_type: data_constraint
+  promoted_to: KB-RULE-0008
+  promoted_at: '2026-09-22T11:05:00+08:00'
+  confirmed_by: user
+- candidate_id: KC-20260922-0004
+  subject_key: canvas.feature_panel.primary_submit_required
+  knowledge_type: business_rule
+  promoted_to: KB-RULE-0009
+  promoted_at: '2026-09-22T11:05:00+08:00'
+  confirmed_by: user
+- candidate_id: KC-20260922-0005
+  subject_key: debug_overlay.result_download.must_move_before_click
+  knowledge_type: technical_test_rule
+  promoted_to: KB-PITFALL-0010
+  promoted_at: '2026-09-22T11:05:00+08:00'
+  confirmed_by: user
+- candidate_id: KC-20261014-0001
+  subject_key: canvas.aigc_panel.generating_state_detection
+  knowledge_type: technical_test_rule
+  promoted_to: KB-RULE-0011
+  promoted_at: '2026-10-14T15:30:00+08:00'
+  confirmed_by: user
+- candidate_id: KC-20261014-0002
+  subject_key: canvas.aigc_panel.taskid_console_capture
+  knowledge_type: technical_test_rule
+  promoted_to: KB-RULE-0012
+  promoted_at: '2026-10-14T15:30:00+08:00'
+  confirmed_by: user
+

@@ -1,0 +1,49 @@
+.FsF.sFF.........s                                                       [100%]
+================================== FAILURES ===================================
+__________ test_text_l2_resolution_visibility_and_disabled[chromium] __________
+tests\test_ai_image_text_enhancer_experiment.py:352: in test_text_l2_resolution_visibility_and_disabled
+    _assert_cost(page, expected)
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"����ť����ӦΪ {expected}��ʵ��Ϊ {actual}����ť�ı�={_primary_text(page, mobile=mobile)}��cost_state={state}��"
+E   AssertionError: ����ť����ӦΪ 5��ʵ��Ϊ 10����ť�ı�=Enhance 10��cost_state=paid��
+E   assert '10' == '5'
+E     
+E     - 5
+E     + 10
+________________ test_text_l4_cost_refresh_and_rules[chromium] ________________
+tests\test_ai_image_text_enhancer_experiment.py:402: in test_text_l4_cost_refresh_and_rules
+    _assert_cost(page, "25")
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"����ť����ӦΪ {expected}��ʵ��Ϊ {actual}����ť�ı�={_primary_text(page, mobile=mobile)}��cost_state={state}��"
+E   AssertionError: ����ť����ӦΪ 25��ʵ��Ϊ 30����ť�ı�=Enhance 30��cost_state=paid��
+E   assert '30' == '25'
+E     
+E     - 25
+E     + 30
+______________ test_text_l4_member_free_icon_and_cost[chromium] _______________
+tests\test_ai_image_text_enhancer_experiment.py:473: in test_text_l4_member_free_icon_and_cost
+    _assert_cost(page, "25")
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"����ť����ӦΪ {expected}��ʵ��Ϊ {actual}����ť�ı�={_primary_text(page, mobile=mobile)}��cost_state={state}��"
+E   AssertionError: ����ť����ӦΪ 25��ʵ��Ϊ 30����ť�ı�=Enhance 30��cost_state=paid��
+E   assert '30' == '25'
+E     
+E     - 25
+E     + 30
+______________ test_text_l4_single_purchase_cost_rules[chromium] ______________
+tests\test_ai_image_text_enhancer_experiment.py:491: in test_text_l4_single_purchase_cost_rules
+    _assert_cost(page, "25")
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"����ť����ӦΪ {expected}��ʵ��Ϊ {actual}����ť�ı�={_primary_text(page, mobile=mobile)}��cost_state={state}��"
+E   AssertionError: ����ť����ӦΪ 25��ʵ��Ϊ 30����ť�ı�=Enhance 30��cost_state=paid��
+E   assert '30' == '25'
+E     
+E     - 25
+E     + 30
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_resolution_visibility_and_disabled[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_cost_refresh_and_rules[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_member_free_icon_and_cost[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_single_purchase_cost_rules[chromium]
+4 failed, 11 passed, 3 skipped in 783.16s (0:13:03)

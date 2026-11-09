@@ -16,6 +16,9 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 STATUSES = {"pending_review", "ready_for_case_design", "implementation_ready", "blocked"}
+# Contract 级实现状态：ready=可直接实现；known_bug=按需求期望断言但当前存在埋点缺陷；
+# blocked_by_dependency=入口/依赖缺失，暂不可实现。
+CONTRACT_STATUSES = {"ready", "known_bug", "blocked_by_dependency"}
 IMPLEMENTATION_REQUIRED = {
     "case_id", "source_case", "source_evidence", "platform", "viewport", "environment",
     "account", "data", "entry", "state_chain", "actions", "event_capture", "evidence",
@@ -68,7 +71,38 @@ def add_error(errors: list[str], message: str) -> None:
     errors.append(message)
 
 
-def validate_contract(contract: dict[str, Any], index: int, errors: list[str]) -> None:
+def add_warning(warnings: list[str], message: str) -> None:
+    warnings.append(message)
+
+
+LOW_STABILITY_HINTS = (
+    "nth-child", "nth-of-type", "position", "coordinate", "index=",
+)
+
+
+def check_locator_warnings(action: dict[str, Any], prefix: str, case_id: str, warnings: list[str]) -> None:
+    """Non-blocking stability checks for action.locator."""
+    locator = action.get("locator")
+    aid = action.get("action_id")
+    if not isinstance(locator, dict):
+        if action.get("driver") in ("dispatchEvent", "JS") or action.get("action") == "set_value":
+            add_warning(warnings, prefix + " " + case_id + ": action " + str(aid) + " has no locator block")
+        return
+    stability = str(locator.get("stability") or "").lower()
+    if stability not in {"high", "medium", "low"}:
+        add_warning(warnings, prefix + " " + case_id + ": action " + str(aid) + " locator.stability invalid: " + repr(locator.get("stability")))
+        return
+    if stability in {"low", "medium"} and not locator.get("fallback"):
+        add_warning(warnings, prefix + " " + case_id + ": action " + str(aid) + " stability=" + stability + " but no fallback")
+    primary = locator.get("primary")
+    if isinstance(primary, dict):
+        value = str(primary.get("value") or "")
+        if any(hint in value for hint in LOW_STABILITY_HINTS) and stability != "low":
+            add_warning(warnings, prefix + " " + case_id + ": action " + str(aid) + " primary locator looks order/position based but stability=" + stability)
+
+
+
+def validate_contract(contract: dict[str, Any], index: int, errors: list[str], warnings: list[str]) -> None:
     prefix = f"contracts[{index}]"
     missing = sorted(IMPLEMENTATION_REQUIRED - contract.keys())
     if missing:
@@ -88,13 +122,17 @@ def validate_contract(contract: dict[str, Any], index: int, errors: list[str]) -
         for key in ("state", "isolation", "reuse_allowed", "reset_strategy"):
             if key not in account or account.get(key) in (None, ""):
                 add_error(errors, f"{prefix} {case_id}: account.{key} is required")
+    implementation_status = contract.get("implementation_status")
+    blocked_by_dependency = implementation_status == "blocked_by_dependency"
     entry = contract.get("entry")
-    if not isinstance(entry, dict) or not entry.get("url"):
+    entry_url = entry.get("url") if isinstance(entry, dict) else None
+    dependency_entry = isinstance(entry_url, str) and entry_url.startswith("dependency:")
+    if not isinstance(entry, dict) or not entry_url:
         add_error(errors, f"{prefix} {case_id}: entry.url is required")
-    elif not as_list(entry.get("flow")):
+    elif not as_list(entry.get("flow")) and not dependency_entry:
         add_error(errors, f"{prefix} {case_id}: entry.flow must be non-empty")
     state_chain = as_list(contract.get("state_chain"))
-    if not state_chain:
+    if not state_chain and not blocked_by_dependency:
         add_error(errors, f"{prefix} {case_id}: state_chain must be non-empty")
     for state_index, state in enumerate(state_chain):
         if not isinstance(state, dict) or not state.get("state"):
@@ -102,7 +140,7 @@ def validate_contract(contract: dict[str, Any], index: int, errors: list[str]) -
         elif not as_list(state.get("ready_when")):
             add_error(errors, f"{prefix} {case_id}: state_chain[{state_index}] missing ready_when")
     actions = as_list(contract.get("actions"))
-    if not actions:
+    if not actions and not blocked_by_dependency:
         add_error(errors, f"{prefix} {case_id}: actions must be non-empty")
     for action_index, action in enumerate(actions):
         if not isinstance(action, dict):
@@ -115,6 +153,16 @@ def validate_contract(contract: dict[str, Any], index: int, errors: list[str]) -
             add_error(errors, f"{prefix} {case_id}: actions[{action_index}] needs button_ref")
         if not action.get("driver"):
             add_error(errors, f"{prefix} {case_id}: actions[{action_index}] needs driver")
+        check_locator_warnings(action, prefix, case_id, warnings)
+    confidence = contract.get("confidence")
+    if confidence not in ("high", "medium", "low"):
+        add_warning(warnings, prefix + " " + str(case_id) + ": contract.confidence missing or invalid")
+    if any(isinstance(a, dict) and a.get("action") == "set_value" for a in actions):
+        if not contract.get("not_visible_when") and not any(isinstance(a, dict) and a.get("not_visible_when") for a in actions):
+            add_warning(warnings, prefix + " " + str(case_id) + ": has set_value actions but no not_visible_when / absent-state rule")
+    if not contract.get("failure_routing"):
+        add_warning(warnings, prefix + " " + str(case_id) + ": contract.failure_routing missing")
+
     capture = contract.get("event_capture")
     if not isinstance(capture, dict):
         add_error(errors, f"{prefix} {case_id}: event_capture must be a mapping")
@@ -137,16 +185,39 @@ def validate_contract(contract: dict[str, Any], index: int, errors: list[str]) -
         for evidence_ref in evidence_refs:
             if not ref_exists(evidence_ref):
                 add_error(errors, f"{prefix} {case_id}: evidence reference does not exist: {evidence_ref}")
-    if contract.get("implementation_status") != "ready":
-        add_error(errors, f"{prefix} {case_id}: implementation_status must be ready")
+    if implementation_status not in CONTRACT_STATUSES:
+        add_error(
+            errors,
+            f"{prefix} {case_id}: implementation_status={implementation_status!r} "
+            f"not in {sorted(CONTRACT_STATUSES)}",
+        )
+    elif implementation_status == "known_bug":
+        bug = contract.get("known_bug")
+        if not isinstance(bug, dict):
+            add_error(errors, f"{prefix} {case_id}: known_bug must be a mapping when implementation_status=known_bug")
+        else:
+            for key in ("id", "expected_event", "actual_event", "evidence"):
+                if not bug.get(key):
+                    add_error(errors, f"{prefix} {case_id}: known_bug.{key} is required")
+    elif implementation_status == "blocked_by_dependency":
+        dependency = contract.get("dependency")
+        if not isinstance(dependency, dict):
+            add_error(
+                errors,
+                f"{prefix} {case_id}: dependency must be a mapping when implementation_status=blocked_by_dependency",
+            )
+        else:
+            for key in ("id", "reason", "owner"):
+                if not dependency.get(key):
+                    add_error(errors, f"{prefix} {case_id}: dependency.{key} is required")
 
 
 def validate(args: argparse.Namespace) -> int:
     handoff_path = resolve_repo_path(args.handoff)
     errors: list[str] = []
+    warnings: list[str] = []
     if not handoff_path.exists():
         print(f"handoff not found: {handoff_path}", file=sys.stderr)
-        return 2
     handoff = load_yaml(handoff_path)
     if not isinstance(handoff, dict):
         errors.append("handoff must be a mapping")
@@ -165,15 +236,60 @@ def validate(args: argparse.Namespace) -> int:
         if ref and not resolve_repo_path(str(ref)).exists():
             errors.append(f"handoff.{ref_key} does not exist: {ref}")
     report_ref = handoff.get("exploration_report_ref")
+    report_text = ""
     if report_ref and resolve_repo_path(str(report_ref)).exists():
         report_text = resolve_repo_path(str(report_ref)).read_text(encoding="utf-8")
-        for heading in ("## 1. 任务概览", "## 2. 探索范围与覆盖", "## 3. 关键入口与状态", "## 4. Bug Candidate", "## 5. Gap / Skipped / Pending", "## 6. 自动化准备度", "## 7. 需要用户确认"):
+        required_report_headings = (
+            "## 1. 任务概览",
+            "## 2. 探索范围与覆盖",
+            "## 3. 关键入口与状态",
+            "## 4. Bug Candidate",
+            "## 5. Gap / Skipped / Pending",
+            "## 6. 自动化准备度",
+            "## 7. 需要用户确认",
+            "## 8. 已执行用例（按用例名标注）",
+            "## 9. Bug Candidate 明细（可展开查看截图）",
+            "## 10. 未执行用例（按用例名标注）",
+        )
+        for heading in required_report_headings:
             if heading not in report_text:
                 errors.append(f"exploration_report missing heading: {heading}")
+        if "![" in report_text:
+            errors.append("exploration_report must not use Markdown image syntax; put screenshots in collapsed HTML <details><img> blocks")
+        executed_parts = report_text.split("## 8. 已执行用例（按用例名标注）", 1)
+        executed_text = ""
+        if len(executed_parts) == 2:
+            executed_text = executed_parts[1].split("## 9. Bug Candidate 明细（可展开查看截图）", 1)[0]
+        if "AC-" not in executed_text and "无" not in executed_text:
+            errors.append("exploration_report section 8 must list executed cases by AC/name")
+        unexecuted_parts = report_text.split("## 10. 未执行用例（按用例名标注）", 1)
+        unexecuted_text = unexecuted_parts[1] if len(unexecuted_parts) == 2 else ""
+        if "### 10.1 Gap" not in unexecuted_text or "### 10.2 Skipped" not in unexecuted_text:
+            errors.append("exploration_report section 10 must split Gap and Skipped subheadings")
+        if "AC-" not in unexecuted_text and "无" not in unexecuted_text:
+            errors.append("exploration_report section 10 must list unexecuted cases by AC/name")
     contracts = handoff.get("contracts")
     if not isinstance(contracts, list) or not contracts:
         errors.append("handoff.contracts must be a non-empty list")
         contracts = []
+    known_bug_contracts = [
+        contract for contract in contracts
+        if isinstance(contract, dict) and contract.get("implementation_status") == "known_bug"
+    ]
+    if known_bug_contracts and report_text:
+        bug_section = report_text.split("## 9. Bug Candidate 明细（可展开查看截图）", 1)
+        bug_section_text = bug_section[1] if len(bug_section) == 2 else ""
+        if not bug_section_text:
+            errors.append("exploration_report is missing Bug Candidate details section content")
+        for contract in known_bug_contracts:
+            case_id = contract.get("case_id", "<unknown>")
+            if case_id not in executed_text:
+                errors.append(f"exploration_report section 8 missing executed bug case: {case_id}")
+            if case_id not in bug_section_text:
+                errors.append(f"exploration_report Bug Candidate details missing {case_id}")
+            if "<details>" not in bug_section_text or "<img src=" not in bug_section_text:
+                errors.append("exploration_report Bug Candidate details must use collapsed HTML <details><img> screenshot blocks")
+                break
     seen: set[str] = set()
     for index, contract in enumerate(contracts, start=1):
         if not isinstance(contract, dict):
@@ -183,7 +299,7 @@ def validate(args: argparse.Namespace) -> int:
         if case_id in seen:
             errors.append(f"duplicate contract case_id: {case_id}")
         seen.add(case_id)
-        validate_contract(contract, index, errors)
+        validate_contract(contract, index, errors, warnings)
     if status == "ready_for_case_design" and handoff.get("blocking_items"):
         errors.append("ready_for_case_design cannot have blocking_items")
     if args.cases:
@@ -223,8 +339,16 @@ def validate(args: argparse.Namespace) -> int:
         print("Automation handoff validation failed:")
         for error in errors:
             print(f"- {error}")
+        for warning in warnings:
+            print(f"WARN: {warning}")
         return 1
-    print(f"Automation handoff validation passed: status={status}, contracts={len(contracts)}")
+    if warnings:
+        for warning in warnings:
+            print(f"WARN: {warning}")
+    if warnings and getattr(args, "strict", False):
+        print(f"Automation handoff validation failed (strict): {len(warnings)} warning(s)")
+        return 1
+    print(f"Automation handoff validation passed: status={status}, contracts={len(contracts)}, warnings={len(warnings)}")
     return 0
 
 
@@ -232,6 +356,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="validate exploration-to-code handoff")
     parser.add_argument("--handoff", required=True)
     parser.add_argument("--cases")
+    parser.add_argument("--strict", action="store_true", help="treat warnings as failures")
     args = parser.parse_args()
     for stream in (sys.stdout, sys.stderr):
         reconfigure = getattr(stream, "reconfigure", None)
@@ -242,4 +367,8 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+
+
 

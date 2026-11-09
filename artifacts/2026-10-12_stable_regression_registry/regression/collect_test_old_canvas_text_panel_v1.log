@@ -1,0 +1,16 @@
+tests/test_old_canvas_text_panel_v1.py::TestL1OldCanvasTextPanelStructure::test_l1_001_text_panel_and_layer_structure
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEntry::test_l2_001_template_entry_to_canvas
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelAddLayer::test_l2_002_add_text_layer
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelLeftStyle::test_l2_003_alignment_toggle
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelLeftStyle::test_l2_004_font_and_fill
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelLeftStyle::test_l2_005_style_preset_and_section_shrink
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelSliders::test_l2_006_sliders_and_accordion
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEffects::test_l2_007_shadow
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEffects::test_l2_008_outline
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEffects::test_l2_009_reflection
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEffects::test_l2_010_background
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEffects::test_l2_011_blend
+tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelContentEdit::test_l2_012_content_edit
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+13 tests collected in 0.27s

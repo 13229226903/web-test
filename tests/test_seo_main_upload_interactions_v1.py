@@ -14,6 +14,8 @@ import pytest
 import yaml
 from playwright.sync_api import expect, Page
 
+from helpers.waiting import poll_until, settle
+
 def _repo_root() -> Path:
     """按 test_images/ 上溯仓库根：兼容 tests/ 与 archive/<dir>/ 两种位置。"""
     here = Path(__file__).resolve()
@@ -29,6 +31,10 @@ SCREENSHOT_DIR = ROOT / "data/screenshots"
 _DATA = yaml.safe_load(DATA_FILE.read_text(encoding="utf-8"))
 CASES = {case["id"]: case for case in _DATA["cases"]}
 TEST_IMAGE = (ROOT / _DATA["image"]).resolve()
+
+def _test_image(case: dict):
+    """用例级素材覆盖；默认沿用全局 image。"""
+    return (ROOT / (case.get("image") or _DATA["image"])).resolve()
 
 def _wait_networkidle(page: Page, timeout: int = 5000) -> None:
     try:
@@ -67,11 +73,7 @@ def _wait_processing_done(page: Page, timeout_ms: int) -> None:
 
 def _wait_editor_ready(page: Page, timeout_ms: int) -> None:
     """在 timeout_ms 内轮询编辑器画布；超时后由断言失败给出明确证据。"""
-    deadline = page.evaluate("() => Date.now()") + timeout_ms
-    while page.evaluate("() => Date.now()") < deadline:
-        if _has_visible_canvas(page):
-            return
-        page.wait_for_timeout(1000)
+    poll_until(page, lambda: _has_visible_canvas(page), timeout=timeout_ms, interval=1000)
 
 def _has_right_panel(page: Page) -> bool:
     return page.evaluate("""() => {
@@ -85,10 +87,11 @@ def _has_right_panel(page: Page) -> bool:
 
 def _wait_editor_settled(page: Page, timeout_ms: int) -> None:
     """旧画布 /create/edit 编辑器异步加载：画布尺寸连续两次不变且图片图层已渲染。"""
-    deadline = page.evaluate("() => Date.now()") + timeout_ms
     prev = None
-    while page.evaluate("() => Date.now()") < deadline:
-        page.wait_for_timeout(1200)
+    stable = False
+
+    def _settled() -> bool:
+        nonlocal prev, stable
         cur = page.evaluate("""() => {
             const big = [...document.querySelectorAll("canvas")]
                 .map(c => { const r = c.getBoundingClientRect();
@@ -98,9 +101,11 @@ def _wait_editor_settled(page: Page, timeout_ms: int) -> None:
                 .filter(im => { const r = im.getBoundingClientRect(); return r.width > 200 && r.height > 200; }).length;
             return { big, imgs };
         }""")
-        if prev is not None and cur["big"] == prev and cur["imgs"] > 0 and cur["big"]:
-            return
+        stable = prev is not None and cur["big"] == prev and cur["imgs"] > 0 and cur["big"]
         prev = cur["big"]
+        return stable
+
+    poll_until(page, _settled, timeout=timeout_ms, interval=1200)
 
 def _blue_pixel_ratio(page: Page, box: dict, region: str = "top") -> float:
     """截图采样，统计目标蓝色 rgb(47,156,238) 的像素占比（背景是整片纯色，容差 ±18）。"""
@@ -127,22 +132,44 @@ def _blue_pixel_ratio(page: Page, box: dict, region: str = "top") -> float:
 
 def _assert_blue_background(page: Page) -> None:
     """蓝色背景已应用：优先画布叠加层 fill 标记；缺失时用截图采样验证背景确为蓝色。"""
-    applied = page.evaluate("""() => {
-        const marks = ['rgba(47,156,238,1.000)', 'rgba(47, 156, 238, 1)', 'rgba(47,156,238,1)'];
-        return [...document.querySelectorAll('svg')].some(s => {
-            const h = s.outerHTML || '';
+    marks = ['rgba(47,156,238,1.000)', 'rgba(47, 156, 238, 1)', 'rgba(47,156,238,1)']
+    applied = page.evaluate(
+        """(marks) => {
+        // 2026-10-19: 产品把蓝色背景渲染成 <img src="data:image/svg+xml,...">，
+        // 不只是内联 <svg>；两种形态都要认。
+        const els = [...document.querySelectorAll('svg, img')];
+        return els.some(s => {
+            const h = s.outerHTML || s.getAttribute('src') || '';
             return marks.some(m => h.includes(m));
         });
-    }""")
+    }""",
+        marks,
+    )
     if applied:
         return
-    box = _right_result_region(page)
+    # 等待右侧结果图渲染（左右各一张大图）后再采样，避免在处理中间态只采到左侧原图
+    box = None
+    def _result_ready() -> bool:
+        nonlocal box
+        box = _right_result_region(page)
+        if box is None:
+            return False
+        imgs = page.evaluate(
+            """() => [...document.querySelectorAll('img')].filter(im => {
+                const r = im.getBoundingClientRect();
+                return r.width > 300 && r.height > 300 && r.y > 40;
+            }).length"""
+        )
+        return imgs >= 2
+
+    poll_until(page, _result_ready, timeout=24000, interval=2000)
     assert box is not None, "L2-002 上传后应出现可采样的画布区域"
-    for attempt in range(4):
+    for _ in range(6):
         ratio = _blue_pixel_ratio(page, box)
         if ratio >= 0.35:
             return
-        page.wait_for_timeout(1500)
+        # 已在等到结果图出现后采样；背景色是服务端渲染结果，无更细的可观察条件。
+        settle(page, 2500)
     assert ratio >= 0.35, (
         f"L2-002 上传后画布背景应为蓝色 rgb(47,156,238)（顶部 10% 区域蓝色占比>=35%），"
         f"实测 ratio={ratio:.3f} region={box}"
@@ -196,7 +223,11 @@ def _assert_cutout_result(page: Page) -> None:
         "() => !/Denke nach|Thinking\\.\\.\\./.test(document.body.innerText || '')",
         timeout=90000,
     )
-    page.wait_for_timeout(1200)
+    # 处理态文案消失后画布重绘还需要一个渲染帧；用可采样结果区作为就绪条件。
+    def _redrawn() -> bool:
+        return _right_result_region(page) is not None
+
+    poll_until(page, _redrawn, timeout=12000, interval=1200)
     box = _right_result_region(page)
     assert box is not None, "L2-021 头部抠图完成后应在画布区显示结果图层"
     ratio = _checkerboard_ratio(page, box)
@@ -215,7 +246,8 @@ def _capture(page: Page, case: dict, name_suffix: str = "final") -> Path:
 def _open_target(page: Page, base_url: str, case: dict) -> None:
     page.goto(f"{base_url}{case['page_path']}", timeout=60000, wait_until="domcontentloaded")
     _wait_networkidle(page)
-    page.wait_for_timeout(1800)
+    # 首屏上传入口挂载时间随页面而异，等到主 selector 可交互（可见可见性由后续点击兜底）。
+    poll_until(page, lambda: page.locator(case["main_selector"]).count() > 0, timeout=20000, interval=500)
 
 def _start_upload(page: Page, case: dict) -> None:
     mode = case["upload_mode"]
@@ -225,14 +257,82 @@ def _start_upload(page: Page, case: dict) -> None:
         return
     with page.expect_file_chooser(timeout=15000) as chooser:
         page.locator(case["main_selector"]).click()
-    chooser.value.set_files(str(TEST_IMAGE))
+    chooser.value.set_files(str(_test_image(case)))
 
 def _select_file(page: Page, case: dict) -> None:
     if case["upload_mode"] != "cv_guide":
         return
     with page.expect_file_chooser(timeout=15000) as chooser:
         page.locator(case["guide_selector"]).click()
-    chooser.value.set_files(str(TEST_IMAGE))
+    chooser.value.set_files(str(_test_image(case)))
+
+def _panel_first_line(page: Page) -> str | None:
+    """返回画布工具面板(.canvas-tool-panel)的首行文本（即面板标题，如 Erase / Enhance）。"""
+    return page.evaluate("""() => {
+        const p = document.querySelector('.canvas-tool-panel');
+        if (!p) return null;
+        const s = getComputedStyle(p);
+        if (s.display === 'none' || s.visibility === 'hidden' || p.getBoundingClientRect().width === 0) return null;
+        const t = (p.innerText || '').split(String.fromCharCode(10)).map(x => x.trim()).filter(Boolean);
+        return t.length ? t[0] : null;
+    }""")
+
+
+def _active_category(page: Page, categories) -> str | None:
+    """返回当前高亮激活的分类 tab 文案（bg-c-theme 为产品选中态样式）。"""
+    return page.evaluate("""(cats) => {
+        for (const c of cats) {
+            const el = [...document.querySelectorAll('*')]
+                .find(e => e.children.length === 0 && (e.innerText || '').trim() === c);
+            if (!el) continue;
+            const btn = el.closest('button') || el.parentElement;
+            if (!btn) continue;
+            if (String(btn.className).includes('bg-c-theme')) return c;
+        }
+        return null;
+    }""", list(categories))
+
+
+def _selected_presets(page: Page) -> list:
+    """返回带选中角标(selected.svg)的预设卡片文案列表。"""
+    return page.evaluate("""() => [...document.querySelectorAll('img[src*="selected.svg"]')]
+        .map(i => i.closest('div[class*=cursor-pointer]') || i.parentElement)
+        .filter(Boolean)
+        .map(c => (c.innerText || '').trim())
+        .filter(Boolean)""")
+
+
+def _assert_uploaded_panel(page: Page, case: dict) -> None:
+    """上传后默认面板/分类/预设的强断言（按 YAML 契约字段驱动）。
+
+    仅当 case 声明了 assert_panel_title 时启用，避免影响其他用例。
+    """
+    title = case.get("assert_panel_title")
+    if not title:
+        return
+    mode = case.get("assert_panel_mode")
+    category = case.get("assert_active_category")
+    preset = case.get("assert_selected_preset")
+
+    panel = page.locator(".canvas-tool-panel")
+    expect(panel).to_be_visible(timeout=case["timeout_ms"])
+    actual_title = _panel_first_line(page)
+    assert actual_title == title, (
+        f"{case['id']} 上传后默认面板应为 {title!r}，实际 {actual_title!r}"
+    )
+    if mode:
+        expect(panel).to_contain_text(mode, timeout=10000)
+    if category:
+        actual_cat = _active_category(page, ["Face", "Body", "Mark", "Object", "Other"])
+        assert actual_cat == category, (
+            f"{case['id']} 激活分类应为 {category!r}，实际 {actual_cat!r}"
+        )
+    if preset:
+        selected = _selected_presets(page)
+        assert any(preset in x for x in selected), (
+            f"{case['id']} 默认选中预设应包含 {preset!r}，实际选中 {selected!r}"
+        )
+
 
 def _wait_for_stable_state(page: Page, case: dict) -> None:
     timeout = case["timeout_ms"]
@@ -248,7 +348,7 @@ def _wait_for_stable_state(page: Page, case: dict) -> None:
     panel_ready = False
     while page.evaluate("() => Date.now()") < deadline:
         # 先给处理态出现的时间窗，再等其结束，避免抢在指示器挂载前判定
-        page.wait_for_timeout(2500)
+        settle(page, 2500)
         _wait_processing_done(page, 120000)
         if case.get("processing_text_gone"):
             try:
@@ -291,6 +391,7 @@ def _wait_for_stable_state(page: Page, case: dict) -> None:
     _wait_networkidle(page, timeout=3000)
     _wait_editor_ready(page, timeout)
     assert _has_visible_canvas(page), f"{case['id']} 应出现可见画布"
+    _assert_uploaded_panel(page, case)
     if case.get("assert_no_right_panel"):
         assert not _has_right_panel(page), f"{case['id']} 不应自动展开右侧属性面板"
 
@@ -385,11 +486,11 @@ class TestL2SeoMainUploadInteractions:
     @allure.feature("SEO 主上传交互")
     @allure.story("L2 交互行为")
     @allure.severity(allure.severity_level.NORMAL)
-    @allure.title("/tools/ai-beard-remover 上传 1K.jpg 后到达 Enhance 顶部面板（Manual Mode / Smart Auto Mode）")
+    @allure.title("/tools/ai-beard-remover 上传 1K.jpg 后到达 Erase 面板（No Beard 默认选中）")
     @allure.label("case_id", "L2-007")
     @allure.label("layer", "L2")
     def test_l2_007(self, session_page, base_url):
-        """PRD引用: cases.md L2-007\n覆盖层级: L2\n前置条件: 测试服 VIP 已登录，素材 test_images/1K.jpg\n测试步骤:\n1. 登录测试服 VIP 账号。\n2. 打开目标 SEO 页。\n3. 点击主上传按钮。\n4. 在 file chooser 选择 `test_images/1K.jpg`。\n5. 等待上传后稳定状态。\n等待策略: 等待画布 URL 与默认面板出现；最多 60s\n预期结果: URL 匹配 `/*/agent?pid=<uuid># 或 /agent?pid=<uuid>#`；画布可见；文本 `AI Enhancer` 作为默认面板/激活内容可见。\n用例标题: /tools/ai-beard-remover 上传 1K.jpg 后到达 AI Enhancer\n截图点: `L2-007_final.png`"""
+        """PRD引用: cases.md L2-007\n覆盖层级: L2\n前置条件: 测试服 VIP 已登录，素材 test_images/1K.jpg\n测试步骤:\n1. 登录测试服 VIP 账号。\n2. 打开目标 SEO 页。\n3. 点击主上传按钮。\n4. 在 file chooser 选择 `test_images/1K.jpg`。\n5. 等待上传后稳定状态。\n等待策略: 等待画布 URL 与默认面板出现；最多 60s\n预期结果: URL 匹配 `/*/agent?pid=<uuid># 或 /agent?pid=<uuid>#`；画布可见；默认面板为 `Erase`（Manual Mode / Smart Auto Mode），激活分类 `Face`，`No Beard` 预设默认选中。\n2026-11-05 修正: 原记录误写为 Enhance / AI Enhancer（原证据截图停在 91% Thinking，误读工具栏按钮）。\n用例标题: /tools/ai-beard-remover 上传 1K.jpg 后到达 Erase 面板（No Beard 默认选中）\n截图点: `L2-007_final.png`"""
         _run_case(session_page, base_url, CASES["L2-007"])
     @pytest.mark.login_required
     @pytest.mark.full

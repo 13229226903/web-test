@@ -1,0 +1,77 @@
+EEEEEEEEE                                                                [100%]
+=================================== ERRORS ====================================
+_ ERROR at setup of TestL2OldCanvasStickerEntry.test_l2_001_template_entry_to_canvas _
+tests\test_old_canvas_sticker_panel_v1.py:408: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_sticker_panel_v1.py:328: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ����� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ����� 4 �Σ�: ģ���ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/zh/template
+_ ERROR at setup of TestL1OldCanvasStickerStructure.test_l1_001_sticker_structure _
+tests\test_old_canvas_sticker_panel_v1.py:408: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_sticker_panel_v1.py:328: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ����� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ����� 4 �Σ�: ģ���ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/zh/template
+_________ ERROR at setup of TestL2StickerOpacity.test_l2_002_opacity __________
+tests\test_old_canvas_sticker_panel_v1.py:408: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_sticker_panel_v1.py:328: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ����� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ����� 4 �Σ�: ģ���ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/zh/template
+__________ ERROR at setup of TestL2StickerAdjust.test_l2_003_adjust ___________
+tests\test_old_canvas_sticker_panel_v1.py:408: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_sticker_panel_v1.py:328: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ����� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ����� 4 �Σ�: ģ���ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/zh/template
+__________ ERROR at setup of TestL2StickerShadow.test_l2_004_shadow ___________
+tests\test_old_canvas_sticker_panel_v1.py:408: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_sticker_panel_v1.py:328: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ����� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ����� 4 �Σ�: ģ���ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/zh/template
+_________ ERROR at setup of TestL2StickerOutline.test_l2_005_outline __________
+tests\test_old_canvas_sticker_panel_v1.py:408: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_sticker_panel_v1.py:328: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ����� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ����� 4 �Σ�: ģ���ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/zh/template
+______ ERROR at setup of TestL2StickerReflection.test_l2_006_reflection _______
+tests\test_old_canvas_sticker_panel_v1.py:408: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_sticker_panel_v1.py:328: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ����� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ����� 4 �Σ�: ģ���ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/zh/template
+__________ ERROR at setup of TestL2StickerFilter.test_l2_007_filter ___________
+tests\test_old_canvas_sticker_panel_v1.py:408: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_sticker_panel_v1.py:328: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ����� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ����� 4 �Σ�: ģ���ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/zh/template
+___________ ERROR at setup of TestL2StickerBlend.test_l2_008_blend ____________
+tests\test_old_canvas_sticker_panel_v1.py:408: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_sticker_panel_v1.py:328: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ����� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ����� 4 �Σ�: ģ���ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/zh/template
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+ERROR tests/test_old_canvas_sticker_panel_v1.py::TestL2OldCanvasStickerEntry::test_l2_001_template_entry_to_canvas
+ERROR tests/test_old_canvas_sticker_panel_v1.py::TestL1OldCanvasStickerStructure::test_l1_001_sticker_structure
+ERROR tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerOpacity::test_l2_002_opacity
+ERROR tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerAdjust::test_l2_003_adjust
+ERROR tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerShadow::test_l2_004_shadow
+ERROR tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerOutline::test_l2_005_outline
+ERROR tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerReflection::test_l2_006_reflection
+ERROR tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerFilter::test_l2_007_filter
+ERROR tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerBlend::test_l2_008_blend
+9 errors in 411.08s (0:06:51)

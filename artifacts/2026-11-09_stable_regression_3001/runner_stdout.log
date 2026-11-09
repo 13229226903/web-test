@@ -1,0 +1,88 @@
+[2026-11-09 10:08:37] START run_id=reg-20261109-100837-2442f8 base_url=http://10.17.1.66:3001 reruns=1 resume=False suites=19
+[2026-11-09 10:08:37] RUN START: 人像检测三入口页 tests/test_pokecut_portrait_detector.py
+[2026-11-09 10:11:16] RUN DONE: 人像检测三入口页 rc=0 159.4s
+[2026-11-09 10:11:16]   VERDICT [ok] 人像检测三入口页: clean_pass=13 retry_pass=1
+[2026-11-09 10:11:16] RUN START: AI Image Text Enhancer tests/test_ai_image_text_enhancer_experiment.py
+[2026-11-09 10:20:32] RUN DONE: AI Image Text Enhancer rc=0 555.3s
+[2026-11-09 10:20:32]   VERDICT [ok] AI Image Text Enhancer: clean_pass=15 skipped=3
+[2026-11-09 10:20:32] RUN START: 画布页文字功能 tests/test_infinite_canvas_text_layer_v2.py
+[2026-11-09 10:23:04] RUN DONE: 画布页文字功能 rc=0 152.2s
+[2026-11-09 10:23:04]   VERDICT [ok] 画布页文字功能: clean_pass=5 retry_pass=1
+[2026-11-09 10:23:04] RUN START: Mobile Home v3 tests/test_mobile_home.py
+[2026-11-09 10:27:14]   FLAKY-RECHECK: re-running 1 failing case(s) once ...
+[2026-11-09 10:27:39]   FLAKY-RECHECK done rc=1
+[2026-11-09 10:27:39] RUN DONE: Mobile Home v3 rc=1 250.3s（1 条失败复跑仍有失败 → 存在稳定失败）
+[2026-11-09 10:27:39]   VERDICT [BLOCKING] Mobile Home v3: clean_pass=37 failed=1
+[2026-11-09 10:27:39]     - L2-008: ID Photo Maker 匿名态上传有效图弹注册弹层 [failed]     assert ("Get Free Credits" in body) or ("Get Up to" in body) E   AssertionError: assert ('Get Free Credits' in '0\nA
+[2026-11-09 10:27:39] RUN START: 帮助中心 tests/test_help_page.py
+[2026-11-09 10:28:59] RUN DONE: 帮助中心 rc=0 79.7s
+[2026-11-09 10:28:59]   VERDICT [ok] 帮助中心: clean_pass=11
+[2026-11-09 10:28:59] RUN START: 检测类功能适配 UI tests/test_detection_ui_seo_l6.py
+[2026-11-09 10:30:29] RUN DONE: 检测类功能适配 UI rc=0 90.0s
+[2026-11-09 10:30:29]   VERDICT [ok] 检测类功能适配 UI: clean_pass=2
+[2026-11-09 10:30:29] RUN START: PC 首页 Home v6 tests/test_pokecut_pc_home_v6.py
+[2026-11-09 10:33:02] RUN DONE: PC 首页 Home v6 rc=0 153.2s
+[2026-11-09 10:33:02]   VERDICT [ok] PC 首页 Home v6: clean_pass=17
+[2026-11-09 10:33:02] RUN START: PC 批量编辑 Batch v1 tests/test_pokecut_pc_batch_v1.py
+[2026-11-09 10:33:58] RUN DONE: PC 批量编辑 Batch v1 rc=0 55.9s
+[2026-11-09 10:33:58]   VERDICT [ok] PC 批量编辑 Batch v1: clean_pass=10
+[2026-11-09 10:33:58] RUN START: 旧画布 Insert 面板 tests/test_old_canvas_insert_panel_v3.py
+[2026-11-09 10:45:15] RUN DONE: 旧画布 Insert 面板 rc=0 676.9s
+[2026-11-09 10:45:15]   VERDICT [ok] 旧画布 Insert 面板: clean_pass=24
+[2026-11-09 10:45:15] RUN START: 旧画布文字 Text 面板 tests/test_old_canvas_text_panel_v1.py
+[2026-11-09 10:47:47] RUN DONE: 旧画布文字 Text 面板 rc=0 152.1s
+[2026-11-09 10:47:47]   VERDICT [ok] 旧画布文字 Text 面板: clean_pass=13
+[2026-11-09 10:47:47] RUN START: 旧画布贴纸调参面板 tests/test_old_canvas_sticker_panel_v1.py
+[2026-11-09 10:51:04] RUN DONE: 旧画布贴纸调参面板 rc=0 197.1s
+[2026-11-09 10:51:04]   VERDICT [ok] 旧画布贴纸调参面板: clean_pass=9
+[2026-11-09 10:51:04] RUN START: SEO 主上传交互（PC） tests/test_seo_main_upload_interactions_v1.py
+[2026-11-09 10:58:34] RUN DONE: SEO 主上传交互（PC） rc=0 450.1s
+[2026-11-09 10:58:34]   VERDICT [ok] SEO 主上传交互（PC）: clean_pass=24
+[2026-11-09 10:58:34] RUN START: SEO 主上传交互（移动端） tests/mobile/test_seo_main_upload_mobile_v1.py
+[2026-11-09 11:02:22] RUN DONE: SEO 主上传交互（移动端） rc=0 227.6s
+[2026-11-09 11:02:22]   VERDICT [ok] SEO 主上传交互（移动端）: clean_pass=23 xfail=1
+[2026-11-09 11:02:22] RUN START: Create/Chat Auto 意图识别 tests/test_create_chat_to_edit_auto_v1.py
+[2026-11-09 11:38:36]   FLAKY-RECHECK: re-running 4 failing case(s) once ...
+[2026-11-09 11:48:34]   FLAKY-RECHECK done rc=1
+[2026-11-09 11:48:34] RUN DONE: Create/Chat Auto 意图识别 rc=1 2173.7s（4 条失败复跑仍有失败 → 存在稳定失败）
+[2026-11-09 11:48:34]   VERDICT [BLOCKING] Create/Chat Auto 意图识别: clean_pass=7 failed=4
+[2026-11-09 11:48:34]     - test_auto_intent_prompt[chromium-L6-001] [failed] E    E   关闭
+[2026-11-09 11:48:34]     - test_auto_intent_prompt[chromium-L6-003] [failed] E    E   关闭
+[2026-11-09 11:48:34]     - test_auto_intent_prompt[chromium-L6-004] [failed] E    E   关闭
+[2026-11-09 11:48:34]     - test_auto_intent_prompt[chromium-L6-006] [failed] E    E   关闭
+[2026-11-09 11:48:34] RUN START: 画布统计优化 40 条 tests/test_canvas_stats_all.py
+[2026-11-09 12:45:26]   FLAKY-RECHECK: re-running 7 failing case(s) once ...
+[2026-11-09 12:58:26]   FLAKY-RECHECK done rc=1
+[2026-11-09 12:58:26] RUN DONE: 画布统计优化 40 条 rc=1 3411.3s（7 条失败复跑仍有失败 → 存在稳定失败）
+[2026-11-09 12:58:26]   VERDICT [BLOCKING] 画布统计优化 40 条: clean_pass=28 failed=7 retry_pass=1 skipped=2 xfail=2
+[2026-11-09 12:58:26]     - P-INF-02: PC 无限画布点数用完触发购买成功 [failed] E   assert False E    +  where False = wait_purchase_modal(<Page url='http://10.17.1.66:3001/agent?pid=9add5ca2-8202-4bc
+[2026-11-09 12:58:26]     - M-CORE-01: 移动端画布点数用完触发注册与注册成功 [failed] E   AssertionError: 「移动端画布点数用完触发注册」sendGaEvent 次数应为 1，实际 0（0=漏报，>=2=多报）；最近 sendGaEvent: 上传成功 | en_edit页面_进入 | 移动端画布页_进入 
+[2026-11-09 12:58:26]     - M-CORE-02: 移动端 xx 功能点数用完触发注册与注册成功 [failed] E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3001/create/edit?pid=49b459f4-a7f6-44b3-8718-20f7b5
+[2026-11-09 12:58:26]     - M-CORE-05: 移动端画布页 xx 弹窗出现 [failed] E   AssertionError: 「移动端画布页_AI消除弹窗出现」sendGaEvent 次数应为 1，实际 0（0=漏报，>=2=多报）；最近 sendGaEvent: 用户设备信息 | 网站首页_进入 | 网站首页_进入_en语
+[2026-11-09 12:58:26]     - M-CORE-06: 移动端画布页 xx 弹窗确认 [failed] E       - scrolling into view if needed E     - element was detached from the DOM, retrying
+[2026-11-09 12:58:26] RUN START: 旧画布 AI Tools tests/test_old_canvas_ai_tools_all.py
+[2026-11-09 13:43:20] RUN DONE: 旧画布 AI Tools rc=0 2693.7s
+[2026-11-09 13:43:20]   VERDICT [ok] 旧画布 AI Tools: clean_pass=5 retry_pass=1
+[2026-11-09 13:43:20] RUN START: 无限画布贴纸调整 tests/test_infinite_canvas_sticker_v1.py
+[2026-11-09 13:43:53]   FLAKY-RECHECK: re-running 1 failing case(s) once ...
+[2026-11-09 13:43:57]   FLAKY-RECHECK done rc=1
+[2026-11-09 13:43:57] RUN DONE: 无限画布贴纸调整 rc=1 33.0s（1 条失败复跑仍有失败 → 存在稳定失败）
+[2026-11-09 13:43:57]   VERDICT [BLOCKING] 无限画布贴纸调整: clean_pass=4 failed=1
+[2026-11-09 13:43:57]     - L2-001: 无限画布贴纸入口 + 添加贴纸 + 打开调整菜单 [failed] E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3001/agent?pid=2baa56e9-b055-48e8-aed7-e09aafe63d4b
+[2026-11-09 13:43:57] RUN START: Batch Edit 面板（/agent） tests/test_agent_batch_edit_panel.py
+[2026-11-09 13:48:05] RUN DONE: Batch Edit 面板（/agent） rc=0 248.0s
+[2026-11-09 13:48:05]   VERDICT [ok] Batch Edit 面板（/agent）: clean_pass=15
+[2026-11-09 13:48:05] RUN START: Create 模型矩阵 tests/test_create_chat_to_edit_model_matrix_v1.py
+[2026-11-09 14:06:18]   FLAKY-RECHECK: re-running 5 failing case(s) once ...
+[2026-11-09 14:10:05]   FLAKY-RECHECK done rc=1
+[2026-11-09 14:10:05] RUN DONE: Create 模型矩阵 rc=1 1093.7s（5 条失败复跑仍有失败 → 存在稳定失败）
+[2026-11-09 14:10:05]   VERDICT [BLOCKING] Create 模型矩阵: clean_pass=11 failed=5 retry_pass=5
+[2026-11-09 14:10:05]     - test_model_matrix_submit[chromium-P-MX-L2-001] [failed] E   sendGaEvent 生成成功 E   统计：生成成功
+[2026-11-09 14:10:05]     - test_model_matrix_submit[chromium-P-MX-L2-009] [failed] E   GPU处理结束 {resultCode: -112, msg: 未完成, success: false} E   [aigc-task-poll] wait next query {flowJobId: 50a47374-12c7-
+[2026-11-09 14:10:05]     - test_model_matrix_submit[chromium-P-MX-L2-010] [failed] E   GPU处理结束 {resultCode: -112, msg: 未完成, success: false} E   [aigc-task-poll] wait next query {flowJobId: 49af34bc-03ee-
+[2026-11-09 14:10:05]     - test_model_matrix_submit[chromium-P-MX-L2-018] [failed] E   GPU处理结束 {resultCode: -112, msg: 未完成, success: false} E   [aigc-task-poll] wait next query {flowJobId: 10a420a5-f316-
+[2026-11-09 14:10:05]     - test_model_matrix_submit[chromium-P-MX-L2-019] [failed] E   sendGaEvent 图生图NanoBanana2Lite模型处理成功_前端显示 E   统计：图生图NanoBanana2Lite模型处理成功_前端显示
+[2026-11-09 14:10:10] SUMMARY rc=1 [regression_summary] D:\Test\web-test\reports\regression-3001\reg-20261109-100837-2442f8\regression_summary.json
+[regression_summary] D:\Test\web-test\reports\regression-3001\reg-20261109-100837-2442f8\regression_summary.md
+[regression_summary] total=308 clean=273 retry=9 quarantined=0 failed=18 broken=0 skipped=5 gate=failed
+[2026-11-09 14:10:10] ALL DONE in 14493.3s

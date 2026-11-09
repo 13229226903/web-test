@@ -1,0 +1,104 @@
+.FsF.sFFFFFF....Fs                                                       [100%]
+================================== FAILURES ===================================
+__________ test_text_l2_resolution_visibility_and_disabled[chromium] __________
+tests\test_ai_image_text_enhancer_experiment.py:351: in test_text_l2_resolution_visibility_and_disabled
+    _assert_cost(page, expected)
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"主按钮点数应为 {expected}，实际为 {actual}；按钮文本={_primary_text(page, mobile=mobile)}（cost_state={state}）"
+E   AssertionError: 主按钮点数应为 2，实际为 5；按钮文本=Enhance 5（cost_state=paid）
+E   assert '5' == '2'
+E     
+E     - 2
+E     + 5
+________________ test_text_l4_cost_refresh_and_rules[chromium] ________________
+tests\test_ai_image_text_enhancer_experiment.py:393: in test_text_l4_cost_refresh_and_rules
+    _assert_cost(page, "2")
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"主按钮点数应为 {expected}，实际为 {actual}；按钮文本={_primary_text(page, mobile=mobile)}（cost_state={state}）"
+E   AssertionError: 主按钮点数应为 2，实际为 5；按钮文本=Enhance 5（cost_state=paid）
+E   assert '5' == '2'
+E     
+E     - 2
+E     + 5
+______________ test_text_l4_member_free_icon_and_cost[chromium] _______________
+tests\test_ai_image_text_enhancer_experiment.py:467: in test_text_l4_member_free_icon_and_cost
+    _assert_cost(page, "4")
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"主按钮点数应为 {expected}，实际为 {actual}；按钮文本={_primary_text(page, mobile=mobile)}（cost_state={state}）"
+E   AssertionError: 主按钮点数应为 4，实际为 10；按钮文本=Enhance 10（cost_state=paid）
+E   assert '10' == '4'
+E     
+E     - 4
+E     + 10
+______________ test_text_l4_single_purchase_cost_rules[chromium] ______________
+tests\test_ai_image_text_enhancer_experiment.py:480: in test_text_l4_single_purchase_cost_rules
+    _assert_cost(page, "2")
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"主按钮点数应为 {expected}，实际为 {actual}；按钮文本={_primary_text(page, mobile=mobile)}（cost_state={state}）"
+E   AssertionError: 主按钮点数应为 2，实际为 5；按钮文本=Enhance 5（cost_state=paid）
+E   assert '5' == '2'
+E     
+E     - 2
+E     + 5
+________ test_text_l5_resolution_boundary_1k_defaults_to_2k[chromium] _________
+tests\test_ai_image_text_enhancer_experiment.py:505: in test_text_l5_resolution_boundary_1k_defaults_to_2k
+    _assert_cost(page, "2")
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"主按钮点数应为 {expected}，实际为 {actual}；按钮文本={_primary_text(page, mobile=mobile)}（cost_state={state}）"
+E   AssertionError: 主按钮点数应为 2，实际为 5；按钮文本=Enhance 5（cost_state=paid）
+E   assert '5' == '2'
+E     
+E     - 2
+E     + 5
+_________ test_text_l5_resolution_boundary_2730x4096_over2k[chromium] _________
+tests\test_ai_image_text_enhancer_experiment.py:520: in test_text_l5_resolution_boundary_2730x4096_over2k
+    _assert_cost(page, "2")
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"主按钮点数应为 {expected}，实际为 {actual}；按钮文本={_primary_text(page, mobile=mobile)}（cost_state={state}）"
+E   AssertionError: 主按钮点数应为 2，实际为 5；按钮文本=Enhance 5（cost_state=paid）
+E   assert '5' == '2'
+E     
+E     - 2
+E     + 5
+_________ test_text_l5_resolution_boundary_4500x3000_over4k[chromium] _________
+tests\test_ai_image_text_enhancer_experiment.py:535: in test_text_l5_resolution_boundary_4500x3000_over4k
+    _assert_cost(page, "6")
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"主按钮点数应为 {expected}，实际为 {actual}；按钮文本={_primary_text(page, mobile=mobile)}（cost_state={state}）"
+E   AssertionError: 主按钮点数应为 6，实际为 10；按钮文本=Enhance 10（cost_state=paid）
+E   assert '10' == '6'
+E     
+E     - 6
+E     + 10
+___ test_text_l5_resolution_boundary_6144x8192_over4k_not_highest[chromium] ___
+tests\test_ai_image_text_enhancer_experiment.py:548: in test_text_l5_resolution_boundary_6144x8192_over4k_not_highest
+    _assert_cost(page, "6")
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"主按钮点数应为 {expected}，实际为 {actual}；按钮文本={_primary_text(page, mobile=mobile)}（cost_state={state}）"
+E   AssertionError: 主按钮点数应为 6，实际为 10；按钮文本=Enhance 10（cost_state=paid）
+E   assert '10' == '6'
+E     
+E     - 6
+E     + 10
+_____________ test_text_l4_mobile_upload_modes_and_cost[chromium] _____________
+tests\test_ai_image_text_enhancer_experiment.py:668: in test_text_l4_mobile_upload_modes_and_cost
+    _assert_cost(page, "2", mobile=True)
+tests\test_ai_image_text_enhancer_experiment.py:165: in _assert_cost
+    assert actual == expected, f"主按钮点数应为 {expected}，实际为 {actual}；按钮文本={_primary_text(page, mobile=mobile)}（cost_state={state}）"
+E   AssertionError: 主按钮点数应为 2，实际为 5；按钮文本=Enhance 5（cost_state=paid）
+E   assert '5' == '2'
+E     
+E     - 2
+E     + 5
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_resolution_visibility_and_disabled[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_cost_refresh_and_rules[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_member_free_icon_and_cost[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_single_purchase_cost_rules[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_1k_defaults_to_2k[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_2730x4096_over2k[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_4500x3000_over4k[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l5_resolution_boundary_6144x8192_over4k_not_highest[chromium]
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l4_mobile_upload_modes_and_cost[chromium]
+9 failed, 6 passed, 3 skipped in 768.96s (0:12:48)

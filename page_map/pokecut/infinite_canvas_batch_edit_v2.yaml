@@ -1,0 +1,552 @@
+# 版本说明: 本文件为 infinite_canvas_batch_edit_v1.yaml 的下一版（2026-11-03 重基线）。
+# 入口变更：旧 /batch-edit/edit 已废弃，改由 /batch 上传 >=2 张进入 /agent?pid=* 并自动展开 Batch Edit。
+page: InfiniteCanvasBatchEditPanel
+url: /agent?pid=*
+landmark:
+  selector: '[role=dialog] h2:has-text("Batch Edit")'
+  description: 无限画布上的 Batch Edit 弹窗；从 /batch 上传 >=2 张图片后自动展开
+entry:
+  from: http://10.17.1.66:3001/batch
+  trigger: 点击 Try Now 卡片或 Upload Images 上传 >=2 张图片
+  selector: '#file-upload'
+  note: 主按钮默认 Remove BG；Try Now 卡片决定进入后选中的 tab；上传 <2 张停留 /batch
+elements:
+  batch_edit_entry:
+    selector: button:has-text('Batch Edit')
+    text: Batch Edit
+    description: 画布工具栏上的 Batch Edit 入口；从 /batch 进入时弹窗已自动展开
+  close:
+    selector: button:has-text('text.batchEditClose')
+    description: Batch Edit 弹窗右上角关闭按钮
+  help:
+    selector: 'button:has-text("Apply the same edit to multiple photos at once")'
+    description: Batch Edit 标题右侧帮助按钮，弹层内含引导视频
+  submit_remove_bg:
+    selector: 'button:has-text("Remove Background")'
+    text: Remove Background
+    description: Remove BG 提交按钮
+  submit_enhance:
+    selector: 'button:has-text("Enhance")'
+    text: Enhance
+    description: Enhance 提交按钮（tab 与提交按钮同名，需取 dialog 内最后一个）
+  submit_erase:
+    selector: 'button:has-text("Remove")'
+    text: Remove
+    description: Erase 提交按钮
+  submit_crop:
+    selector: 'button:has-text("Apply")'
+    text: Apply
+    description: Crop 提交按钮
+  submit_clothes:
+    selector: 'button:has-text("Generate")'
+    text: Generate
+    description: Clothes Changer 生成按钮；未选模板时 disabled
+  submit_watermark:
+    selector: 'button:has-text("Apply")'
+    text: Apply
+    description: Watermark 应用按钮；未上传水印时 disabled
+  watermark_upload:
+    selector: 'button:has-text("Upload Your Watermark")'
+    text: Upload Your Watermark
+    description: Watermark tab 上传水印入口
+tabs:
+  main:
+    - Enhance
+    - Remove BG
+    - Change BG
+    - Erase
+    - Crop
+    - Clothes Changer
+    - Watermark
+  change_bg_sub:
+    - Colors
+    - Images
+  erase_sub:
+    - Face
+    - Body
+    - Mark
+    - Object
+    - Other
+  clothes_categories:
+    - Dresses
+    - Casual Wear
+    - Bikinis
+    - Formal Wear
+    - Lingerie
+    - Festive
+    - Tops
+    - Kids Wear
+    - Outerwear
+    - Wedding Dress
+    - Men's Wear
+    - Winter
+states:
+  batch_edit_enhance:
+    description: Enhance tab；默认 Standard Mode
+    trigger: 打开 Batch Edit 默认或点击 Enhance tab
+    url_or_state_key: /agent?pid=*
+    buttons:
+      tab_enhance:
+        selector: '[role=tab]:has-text("Enhance")'
+        role_or_text: tab / Enhance
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Enhance 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      mode_standard:
+        selector: 'button:has-text("Standard Mode")'
+        role_or_text: button / Standard Mode
+        visible_condition: Enhance tab
+        enabled_condition: always
+        action_result: 选中 Standard Mode（默认）
+        reversible: true
+        explore_status: covered
+        dependencies: [Enhance tab]
+        assertions_hint: aria-pressed=true
+        notes: ''
+      mode_portrait:
+        selector: 'button:has-text("Portrait Mode")'
+        role_or_text: button / Portrait Mode
+        visible_condition: Enhance tab
+        enabled_condition: always
+        action_result: 选中 Portrait Mode
+        reversible: true
+        explore_status: covered
+        dependencies: [Enhance tab]
+        assertions_hint: aria-pressed=true
+        notes: ''
+      mode_ultra_hd:
+        selector: 'button:has-text("Ultra HD Mode")'
+        role_or_text: button / Ultra HD Mode
+        visible_condition: Enhance tab
+        enabled_condition: always
+        action_result: 选中 Ultra HD Mode
+        reversible: true
+        explore_status: covered
+        dependencies: [Enhance tab]
+        assertions_hint: aria-pressed=true
+        notes: ''
+      mode_old_photo:
+        selector: 'button:has-text("Old Photo Mode")'
+        role_or_text: button / Old Photo Mode
+        visible_condition: Enhance tab
+        enabled_condition: always
+        action_result: 选中 Old Photo Mode
+        reversible: true
+        explore_status: covered
+        dependencies: [Enhance tab]
+        assertions_hint: aria-pressed=true
+        notes: 旧照片模式含 Fix blur / Restore old photo color / Remove scratches（checkbox）
+      mode_text:
+        selector: 'button:has-text("Text Mode")'
+        role_or_text: button / Text Mode
+        visible_condition: Enhance tab
+        enabled_condition: always
+        action_result: 选中 Text Mode
+        reversible: true
+        explore_status: covered
+        dependencies: [Enhance tab]
+        assertions_hint: aria-pressed=true
+        notes: ''
+      submit:
+        selector: 'button:has-text("Enhance")'
+        role_or_text: button / Enhance
+        visible_condition: Enhance tab
+        enabled_condition: 有图片图层
+        action_result: 提交 Enhance 任务
+        reversible: false
+        explore_status: covered
+        dependencies: [Enhance tab, image layers]
+        assertions_hint: 提交后进入处理态，完成后图层替换
+        notes: ''
+  batch_edit_remove_bg:
+    description: Remove BG tab；默认 General
+    trigger: 点击 Remove BG tab（或主按钮上传默认）
+    url_or_state_key: /agent?pid=*
+    buttons:
+      tab_remove_bg:
+        selector: '[role=tab]:has-text("Remove BG")'
+        role_or_text: tab / Remove BG
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Remove BG 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      mode_general:
+        selector: 'button:has-text("General")'
+        role_or_text: button / General
+        visible_condition: Remove BG tab
+        enabled_condition: always
+        action_result: 选中 General（默认）
+        reversible: true
+        explore_status: covered
+        dependencies: [Remove BG tab]
+        assertions_hint: aria-pressed=true
+        notes: ''
+      mode_head_face:
+        selector: 'button:has-text("Head&Face")'
+        role_or_text: button / Head&Face
+        visible_condition: Remove BG tab
+        enabled_condition: always
+        action_result: 选中 Head&Face
+        reversible: true
+        explore_status: covered
+        dependencies: [Remove BG tab]
+        assertions_hint: aria-pressed=true
+        notes: ''
+      mode_text:
+        selector: 'button:has-text("Text")'
+        role_or_text: button / Text
+        visible_condition: Remove BG tab
+        enabled_condition: always
+        action_result: 选中 Text
+        reversible: true
+        explore_status: covered
+        dependencies: [Remove BG tab]
+        assertions_hint: aria-pressed=true
+        notes: ''
+      submit:
+        selector: 'button:has-text("Remove Background")'
+        role_or_text: button / Remove Background
+        visible_condition: Remove BG tab
+        enabled_condition: 有图片图层
+        action_result: 提交 Remove Background
+        reversible: false
+        explore_status: covered
+        dependencies: [Remove BG tab, image layers]
+        assertions_hint: 提交后自动切 Change BG
+        notes: ''
+  batch_edit_change_bg:
+    description: Change BG tab；Colors / Images 两个子 tab
+    trigger: 点击 Change BG tab
+    url_or_state_key: /agent?pid=*
+    buttons:
+      tab_change_bg:
+        selector: '[role=tab]:has-text("Change BG")'
+        role_or_text: tab / Change BG
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Change BG 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      subtab_colors:
+        selector: '[role=tab]:has-text("Colors")'
+        role_or_text: tab / Colors
+        visible_condition: Change BG tab
+        enabled_condition: always
+        action_result: 选中 Colors（默认）
+        reversible: true
+        explore_status: covered
+        dependencies: [Change BG tab]
+        assertions_hint: aria-selected=true
+        notes: ''
+      subtab_images:
+        selector: '[role=tab]:has-text("Images")'
+        role_or_text: tab / Images
+        visible_condition: Change BG tab
+        enabled_condition: always
+        action_result: 切换到 Images 预设背景
+        reversible: true
+        explore_status: covered
+        dependencies: [Change BG tab]
+        assertions_hint: aria-selected=true
+        notes: ''
+      color_transparent:
+        selector: 'button:has-text("#FFFFFF00")'
+        role_or_text: button / #FFFFFF00
+        visible_condition: Change BG > Colors
+        enabled_condition: always
+        action_result: 选中透明色（默认）
+        reversible: true
+        explore_status: covered
+        dependencies: [Change BG Colors]
+        assertions_hint: aria-pressed=true
+        notes: ''
+      palette:
+        selector: 'button:has-text("Palette")'
+        role_or_text: button / Palette
+        visible_condition: Change BG > Colors
+        enabled_condition: always
+        action_result: 打开自定义选色面板
+        reversible: true
+        explore_status: covered
+        dependencies: [Change BG Colors]
+        assertions_hint: 选色面板可见
+        notes: ''
+  batch_edit_erase:
+    description: Erase tab；Face/Body/Mark/Object/Other 五类
+    trigger: 点击 Erase tab
+    url_or_state_key: /agent?pid=*
+    buttons:
+      tab_erase:
+        selector: '[role=tab]:has-text("Erase")'
+        role_or_text: tab / Erase
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Erase 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      subtab_face:
+        selector: '[role=tab]:has-text("Face")'
+        role_or_text: tab / Face
+        visible_condition: Erase tab
+        enabled_condition: always
+        action_result: 选中 Face（默认）
+        reversible: true
+        explore_status: covered
+        dependencies: [Erase tab]
+        assertions_hint: aria-selected=true
+        notes: ''
+      item_remove_acne:
+        selector: 'button:has-text("Remove Acne")'
+        role_or_text: button / Remove Acne
+        visible_condition: Erase > Face
+        enabled_condition: always
+        action_result: 选中 Remove Acne（默认）
+        reversible: true
+        explore_status: covered
+        dependencies: [Erase Face]
+        assertions_hint: aria-pressed=true
+        notes: ''
+      submit:
+        selector: 'button:has-text("Remove")'
+        role_or_text: button / Remove
+        visible_condition: Erase tab
+        enabled_condition: 有图片图层
+        action_result: 提交 Erase
+        reversible: false
+        explore_status: covered
+        dependencies: [Erase tab, image layers]
+        assertions_hint: 提交后处理
+        notes: ''
+  batch_edit_crop:
+    description: Crop tab；Custom Size + Template
+    trigger: 点击 Crop tab
+    url_or_state_key: /agent?pid=*
+    buttons:
+      tab_crop:
+        selector: '[role=tab]:has-text("Crop")'
+        role_or_text: tab / Crop
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Crop 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      width:
+        selector: 'spinbutton[name="Width px"]'
+        role_or_text: spinbutton / Width px
+        visible_condition: Crop tab
+        enabled_condition: always
+        action_result: 输入自定义宽度
+        reversible: true
+        explore_status: covered
+        dependencies: [Crop tab]
+        assertions_hint: 默认 1200
+        notes: ''
+      height:
+        selector: 'spinbutton[name="Height px"]'
+        role_or_text: spinbutton / Height px
+        visible_condition: Crop tab
+        enabled_condition: always
+        action_result: 输入自定义高度
+        reversible: true
+        explore_status: covered
+        dependencies: [Crop tab]
+        assertions_hint: 默认 1600
+        notes: ''
+      template_amazon:
+        selector: 'button:has-text("Amazon 2000x2000px")'
+        role_or_text: button / Amazon 2000x2000px
+        visible_condition: Crop tab
+        enabled_condition: always
+        action_result: 应用 Amazon 模板，宽高变 2000x2000
+        reversible: true
+        explore_status: covered
+        dependencies: [Crop tab]
+        assertions_hint: 宽高输入变 2000
+        notes: ''
+      submit:
+        selector: 'button:has-text("Apply")'
+        role_or_text: button / Apply
+        visible_condition: Crop tab
+        enabled_condition: 有图片图层
+        action_result: 应用裁剪
+        reversible: false
+        explore_status: covered
+        dependencies: [Crop tab, image layers]
+        assertions_hint: 应用后图片尺寸变化
+        notes: ''
+  batch_edit_clothes:
+    description: Clothes Changer tab；12 个分类
+    trigger: 点击 Clothes Changer tab
+    url_or_state_key: /agent?pid=*
+    buttons:
+      tab_clothes:
+        selector: '[role=tab]:has-text("Clothes Changer")'
+        role_or_text: tab / Clothes Changer
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Clothes Changer 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      category_dresses:
+        selector: '[role=tab]:has-text("Dresses")'
+        role_or_text: tab / Dresses
+        visible_condition: Clothes Changer tab
+        enabled_condition: always
+        action_result: 选中 Dresses（默认），首个模板默认选中
+        reversible: true
+        explore_status: covered
+        dependencies: [Clothes Changer tab]
+        assertions_hint: aria-selected=true
+        notes: ''
+      submit:
+        selector: 'button:has-text("Generate")'
+        role_or_text: button / Generate
+        visible_condition: Clothes Changer tab
+        enabled_condition: 选中模板后可用
+        action_result: 生成换装结果
+        reversible: false
+        explore_status: covered
+        dependencies: [Clothes Changer tab, template selected]
+        assertions_hint: 未选模板时 disabled；选中后 enabled
+        notes: ''
+  batch_edit_watermark:
+    description: Watermark tab；Location + 上传水印
+    trigger: 点击 Watermark tab
+    url_or_state_key: /agent?pid=*
+    buttons:
+      tab_watermark:
+        selector: '[role=tab]:has-text("Watermark")'
+        role_or_text: tab / Watermark
+        visible_condition: batch edit dialog
+        enabled_condition: always
+        action_result: 切换到 Watermark 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [batch edit dialog]
+        assertions_hint: aria-selected=true
+        notes: ''
+      upload_watermark:
+        selector: 'button:has-text("Upload Your Watermark")'
+        role_or_text: button / Upload Your Watermark
+        visible_condition: Watermark tab
+        enabled_condition: always
+        action_result: 打开水印上传
+        reversible: true
+        explore_status: covered
+        dependencies: [Watermark tab]
+        assertions_hint: 上传入口可见
+        notes: ''
+      location_top_left:
+        selector: 'button:has-text("Top Left")'
+        role_or_text: button / Top Left
+        visible_condition: Watermark tab
+        enabled_condition: always
+        action_result: 选中 Top Left（默认）
+        reversible: true
+        explore_status: covered
+        dependencies: [Watermark tab]
+        assertions_hint: aria-pressed=true
+        notes: ''
+      submit:
+        selector: 'button:has-text("Apply")'
+        role_or_text: button / Apply
+        visible_condition: Watermark tab
+        enabled_condition: 已上传水印
+        action_result: 应用水印
+        reversible: false
+        explore_status: covered
+        dependencies: [Watermark tab, watermark image]
+        assertions_hint: 未上传时 disabled
+        notes: ''
+modals:
+  help_tutorial:
+    description: Batch Edit 标题右侧帮助按钮打开的引导弹层，含 video
+    trigger: 点击 Batch Edit 标题右侧帮助按钮
+    close: 关闭按钮
+
+# ── 2026-11-03 第二轮：提交任务与结束态（VIP 实测）──
+submit_flows:
+  account: VIP 450832596@qq.com (User8JY)
+  environment: test http://10.17.1.66:3001
+  note: 多模式 tab 只选一种、多预设 tab 只选一个预设提交；每次提交后轮询到 taskflow complete
+  remove_bg:
+    input: 2 张图片图层
+    selection: General（默认一种模式）
+    submit: button.canvas-batch-submit / Remove Background
+    task_id_pattern: gzy_removebg_PokeCutWeb_<ts>_<rand>_cross
+    consumed_credits: 0（VIP）
+    result: 生成成功；处理完成后图层替换为抠图结果，画布尺寸不变
+    stats_events: [画布批量_Remove BG功能开始处理, 画布批量_Remove BG功能处理成功率95_100, 画布批量_Remove BG功能处理完成]
+  enhance:
+    input: 2 张图片图层
+    selection: Standard Mode（默认一种模式）
+    submit: button.canvas-batch-submit / Enhance
+    task_id_pattern: gzy_picenhance_PokeCutWeb_<ts>_<rand>_dev_cross
+    consumed_credits: 0（VIP）
+    result: 生成成功；画布尺寸从 3970x4096 -> 5162x4096（分辨率提升）
+    stats_events: [画布批量_Enhance功能处理成功率95_100, 画布批量_Enhance功能处理完成]
+  change_bg:
+    input: 2 张图片图层（需先抠图）
+    selection: Colors 子 tab 选择 #000000（一种预设色）
+    submit: 无独立提交按钮，选色即时应用并触发后端处理
+    result: 生成成功；画布尺寸不变
+    stats_events: [画布批量_Change BG功能处理完成]
+  erase:
+    input: 2 张图片图层
+    selection: Face > Remove Acne（默认一种）
+    submit: button.canvas-batch-submit / Remove
+    task_id_pattern: gzy_comfytextart_PokeCutWeb_<ts>_<rand>_cross
+    consumed_credits: 0（VIP）
+    result: 生成成功；画布尺寸不变
+    stats_events: [画布批量_Erase功能处理成功率95_100, 画布批量_Erase功能处理完成]
+  crop:
+    input: 2 张图片图层
+    selection: Template > Amazon 2000x2000px（一个预设）
+    submit: button.canvas-batch-submit / Apply
+    result: 无后端任务；即时应用；画布尺寸 4032x2000
+    stats_events: []
+  clothes_changer:
+    input: 2 张图片图层
+    selection: Dresses（默认分类）首个模板（一个预设）
+    submit: button.canvas-batch-submit / Generate
+    task_id_pattern: gzy_comfytextart_PokeCutWeb_<ts>_<rand>_cross
+    consumed_credits: 0（VIP）
+    result: 首次提交返回 Network error（环境波动，非用例目标）；按要求不覆盖失败态，仅验证重试后正向生成成功
+    stats_events: [画布批量_Clothes Changer功能处理成功率30_60, 画布批量_Clothes Changer功能处理完成]
+  watermark:
+    input: 2 张图片图层 + 上传水印 test_images/低分辨率.JPG
+    selection: 默认 Location Top Left（一个位置）
+    submit: button.canvas-batch-submit / Apply
+    result: 上传水印后自动抠图（taskId gzy_removebg_...），Apply 生成成功；画布尺寸不变
+    stats_events: [画布批量_Watermark功能开始处理, 画布批量_Watermark功能处理成功率95_100, 画布批量_Watermark功能处理完成]
+states_extra:
+  agent_batch_processing:
+    description: 提交后处理中状态
+    trigger: 点击任一提交按钮
+    url_or_state_key: /agent?pid=*
+    observable:
+    - 画布出现 "Thinking..." 进度占位
+    - 队列日志 [CanvasBatch][Queue] occupiedSlots 0->1
+    - 轮询 aigc-task-poll
+    exit_when: [taskflow-result-file stage=complete status=success, CanvasBatch Queue occupiedSlots 1->0]

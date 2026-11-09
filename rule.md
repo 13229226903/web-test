@@ -128,6 +128,12 @@
   收集数量变化按"覆盖缺口"处理（实测 `335 → 468`，是 import 期异常导致收集中途停止、静默少收用例，不是噪声）。
   来源：同上；验证：修复后 archive 228/0、整仓 468/0（均 exit 0）。
 
+- **脚本禁止从 `data/*.yaml` 读死 `base_url` 覆盖 `--base-url`**：`--base-url` / `PYTEST_BASE_URL` / `POKECUT_BASE_URL` > YAML 默认值，优先级不可倒置。
+  实测形态：脚本写 `page.goto(DATA["base_url"] + "/create")`，运行命令传 `--base-url=http://10.17.1.66:3002` 后仍访问 YAML 里的 `:3001`，导致交叉环境误判（伪失败 / 伪通过）。
+  正确写法：`base_url = (base_url or os.environ.get("POKECUT_BASE_URL") or DATA["base_url"]).rstrip("/")`，或直接使用 pytest 的 `base_url` fixture；YAML 只作兜底默认值。
+  该坑已在 `2026-10-16_stable_regression_run` 记录并修过一次（旧画布 AI Tools），`2026-11-02_stable_regression_3002` 再次复现（无限画布贴纸 `test_infinite_canvas_sticker_v1.py`、旧画布文字/贴纸面板、旧画布 AI Tools 的 YAML 仍写死 :3001）——属复发坑，新增 / 复用脚本必须逐个核对该常量。
+  来源：`2026-10-16_stable_regression_run`（首次）、`2026-11-02_stable_regression_3002`（复现）；验证：2026-11-02 回归中 `suite_无限画布贴纸调整.log` 失败栈 URL 为 `:3001`，与传入 `--base-url=:3002` 不一致。
+
 ## 环境异常与代码回归的区分（有稳定资产背书）
 
 - **同形态成组失败 + 本轮耗时明显异常 → 先怀疑环境，不要先改代码**。
@@ -193,6 +199,17 @@
 - `session_page` 会话级登录复用（当前登记资产用自定义 fixture / 自建登录，或匿名可用）。
 - `pytest.xfail("独立脚本已验证通过")` 绕过 pytest 环境限制（当前登记资产未使用）。
 
+## Playwright MCP 后台静默（Windows，有稳定资产背书）
+
+- **目标**：MCP 浏览器窗口不得置于用户桌面前台、不得抢焦点/置顶。用户明确要求过"浏览器进程不要置顶在桌面上，后台静默进行"。
+- **禁用**：不得调用 `bringToFront()` 或任何会激活窗口的接口；需要键盘事件时优先在页面内派发 `KeyboardEvent`。
+- **CDP 负坐标会被钳制**：`Browser.setWindowBounds(left=-10000)` 在 Windows 上会被系统钳制回 `(0,0)`，`left=30000` 同样被丢弃 → **改用 Win32 `SetWindowPos` 且带 `SWP_NOACTIVATE|SWP_NOSIZE` 把窗口移到屏幕外 `(-32000,-32000)`**，Windows 不会钳制该偏移。
+- **只操作 MCP 自己的窗口**：先按命令行 `--user-data-dir=<...>/mcp-profile`（或 `--remote-debugging`/`--headless`）筛出 MCP Chrome 进程树，只对该进程树的 HWND 调用 `SetWindowPos`；**严禁移动/最小化用户自己打开的 Chrome 窗口**（本轮实测同一 `chrome.exe` 下有用户窗口和 MCP 窗口共存）。
+- **`windowState=minimized` 不稳定**：MCP 在 `goto`、真实 `locator.click`、系统 file chooser 等操作后会重新激活/还原窗口；屏幕外 `SetWindowPos` 可复现稳定（本轮实测真实点击后前台窗口仍是用户自己的 Chrome）。
+- **不激活窗口的上传路径**：`点击"开始免费创作"（可 DOM 派发）→ 给弹出的 `input[type=file]` 直接 `setInputFiles()``，全程不触发系统文件选择器、不激活窗口；`goto` 后补一次屏幕外 `SetWindowPos`。
+- **交互优先次序**：页面内 `evaluate` / DOM 事件 / `setInputFiles` > CDP `Input.dispatchMouseEvent` > 真实 `locator.click`；只有前两者不可行时才用真实输入，并在操作后复查窗口是否仍在屏幕外。
+- 来源：`2026-10-30_v34_nsfw_mobile_test`；验证：MCP 窗口移到 -32000 后真实点击仍不置顶，前台窗口保持用户 Chrome（HWND 32051264）。
 ## 业务知识库边界
 
 `rule.md` 继续作为稳定测试执行规则和技术红线的权威来源，不被业务知识库替代。页面旧入口、业务校验、账号权限和历史业务坑点可以在 `knowledge/` 建立检索切片，但必须通过 `source_refs` 引用本文件、`PROJECT.md`、`page_map/` 或 confirmed artifact；迁移前不得删除本文件中的硬规则。
+

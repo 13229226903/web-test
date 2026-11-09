@@ -1,0 +1,47 @@
+x..........s.......FF..F.....x....s....F                                 [100%]
+================================== FAILURES ===================================
+__________________________ test_m_core_01[chromium] ___________________________
+tests\test_canvas_stats_all.py:1462: in _test
+    _run_case(browser, playwright, base_url, case)
+tests\test_canvas_stats_all.py:1449: in _run_case
+    FLOWS[case["flow"]](page, base, case, rec)
+tests\test_canvas_stats_all.py:1137: in flow_mobile_register_pair
+    assert_event_pair(rec, case["expected"][0])
+tests\test_canvas_stats_all.py:95: in assert_event_pair
+    assert send == 1, (
+E   AssertionError: ���ƶ��˻����������괥��ע�᡹sendGaEvent ����ӦΪ 1��ʵ�� 0��0=©����>=2=�౨������� sendGaEvent: �ϴ��ɹ� | en_editҳ��_���� | �ƶ��˻���ҳ_���� | AITools_Photo | �ƶ��˻���ҳ_������ǿ�������� | ע�Ṻ��ʵ��_C���ڹ��������� | ���������� | �ƶ��˻����������괥������ | �ƶ��˻���������ǿͨ�ù��ܵ������괥������ | ������ǿ���credits���괥��������� | ����ҳ_������ǿͨ��ģ��_���򵯴� | �������3_����
+E   assert 0 == 1
+__________________________ test_m_core_02[chromium] ___________________________
+tests\test_canvas_stats_all.py:1462: in _test
+    _run_case(browser, playwright, base_url, case)
+tests\test_canvas_stats_all.py:1432: in _run_case
+    mobile_feature_register_session(page, base, feature, rec)
+tests\test_canvas_stats_all.py:1179: in mobile_feature_register_session
+    assert page.locator("input[type=email]").count() > 0, f"{feature} δ����ע�ᵯ��"
+E   AssertionError: enhance δ����ע�ᵯ��
+E   assert 0 > 0
+E    +  where 0 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3001/create/edit?pid=6d27cf58-b5e3-4830-a7bc-75a2e2318a78'> selector='input[type=email]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3001/create/edit?pid=6d27cf58-b5e3-4830-a7bc-75a2e2318a78'> selector='input[type=email]'> = locator('input[type=email]')
+E    +        where locator = <Page url='http://10.17.1.66:3001/create/edit?pid=6d27cf58-b5e3-4830-a7bc-75a2e2318a78'>.locator
+__________________________ test_m_core_05[chromium] ___________________________
+tests\test_canvas_stats_all.py:1462: in _test
+    _run_case(browser, playwright, base_url, case)
+tests\test_canvas_stats_all.py:1449: in _run_case
+    FLOWS[case["flow"]](page, base, case, rec)
+tests\test_canvas_stats_all.py:1267: in flow_mobile_modal_appear
+    assert_event_pair(rec, case["expected"][1])
+tests\test_canvas_stats_all.py:95: in assert_event_pair
+    assert send == 1, (
+E   AssertionError: ���ƶ��˻���ҳ_AI�����������֡�sendGaEvent ����ӦΪ 1��ʵ�� 0��0=©����>=2=�౨������� sendGaEvent: �û��豸��Ϣ | ��վ��ҳ_���� | ��վ��ҳ_����_en���԰� | �ƶ���_�ײ���upload��� | �ϴ��ɹ� | en_editҳ��_���� | �ƶ��˻���ҳ_���� | AITools_Photo | �ƶ��˻���ҳ_������ǿ��������
+E   assert 0 == 1
+___________________________ test_m_new_14[chromium] ___________________________
+[XPASS(strict)] BUG-2026-1012-01 �»��� /tools/background-changer ���Զ�����·��ʱ�����͡��»��������������en_background-changer���¼�������Ԥ�ڣ��»��������������en_background-changer�������������¼�����
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_canvas_stats_all.py::test_m_core_01[chromium] - AssertionEr...
+FAILED tests/test_canvas_stats_all.py::test_m_core_02[chromium] - AssertionEr...
+FAILED tests/test_canvas_stats_all.py::test_m_core_05[chromium] - AssertionEr...
+FAILED tests/test_canvas_stats_all.py::test_m_new_14[chromium] - [XPASS(stric...
+4 failed, 32 passed, 2 skipped, 2 xfailed in 3635.18s (1:00:35)
+

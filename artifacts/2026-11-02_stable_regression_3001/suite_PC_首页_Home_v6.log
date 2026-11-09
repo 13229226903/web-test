@@ -1,0 +1,24 @@
+....F............                                                        [100%]
+================================== FAILURES ===================================
+______ TestL1PageStructure.test_l1_005_portrait_batch_enhance[chromium] _______
+tests\test_pokecut_pc_home_v6.py:307: in test_l1_005_portrait_batch_enhance
+    wait_for_pid_path(page, ["/batch-edit/edit"])
+tests\test_pokecut_pc_home_v6.py:107: in wait_for_pid_path
+    page.wait_for_function(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 45000ms exceeded.
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_pokecut_pc_home_v6.py::TestL1PageStructure::test_l1_005_portrait_batch_enhance[chromium]
+1 failed, 16 passed in 282.56s (0:04:42)
+

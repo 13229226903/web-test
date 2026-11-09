@@ -14,6 +14,8 @@ import pytest
 import yaml
 from playwright.sync_api import expect, Page
 
+from helpers.waiting import poll_until, settle
+
 
 def _repo_root() -> Path:
     here = Path(__file__).resolve()
@@ -29,6 +31,10 @@ SCREENSHOT_DIR = ROOT / "data/screenshots"
 _DATA = yaml.safe_load(DATA_FILE.read_text(encoding="utf-8"))
 CASES = {c["id"]: c for c in _DATA["cases"]}
 TEST_IMAGE = (ROOT / _DATA["image"]).resolve()
+
+def _test_image(case: dict):
+    """用例级素材覆盖；默认沿用全局 image。"""
+    return (ROOT / (case.get("image") or _DATA["image"])).resolve()
 
 BUSY_RE = re.compile(r"Thinking\.\.\.|Denke nach|Optimizing image|AI model is processing")
 # 测试服偶发网关错误（非业务态）：命中则重试一次打开页面
@@ -55,10 +61,20 @@ def _open_target(page: Page, base_url: str, case: dict) -> None:
     for attempt in range(2):
         page.goto(f"{base_url}{case['page_path']}", timeout=60000, wait_until="domcontentloaded")
         _wait_networkidle(page)
-        page.wait_for_timeout(1800)
+        # 首屏上传入口挂载时间随页面而异；用可观察的 selector 出现替代固定 1.8s。
+        poll_until(
+            page,
+            lambda: bool(page.evaluate(
+                "() => !!document.querySelector('button.seo-first-screen-upload-button')"
+                " || !!document.querySelector('input[type=file]')"
+            )),
+            timeout=1800,
+            interval=500,
+        )
         body = page.evaluate("() => (document.body && document.body.innerText) || ''")[:4000]
         if GATEWAY_ERROR_RE.search(body):
-            page.wait_for_timeout(3000)
+            # 网关错误是明确的失败页面，重试前让上一条请求释放连接；无更细可观察条件。
+            settle(page, 3000)
             continue
         try:
             page.wait_for_function(
@@ -68,7 +84,8 @@ def _open_target(page: Page, base_url: str, case: dict) -> None:
             )
             return
         except Exception:
-            page.wait_for_timeout(1500)
+            # 入口未挂载，短暂退避后重开一次；这是重试间隔，无正向条件可等。
+            settle(page, 1500)
     # 两次都未就绪：交给 _start_upload 的定位失败给出明确报错
 
 
@@ -89,7 +106,7 @@ def _start_upload(page: Page, case: dict) -> None:
                 primary.scroll_into_view_if_needed(timeout=5000)
                 with page.expect_file_chooser(timeout=15000) as chooser:
                     primary.click()
-                chooser.value.set_files(str(TEST_IMAGE))
+                chooser.value.set_files(str(_test_image(case)))
                 return
         except Exception:
             pass
@@ -109,7 +126,7 @@ def _start_upload(page: Page, case: dict) -> None:
             loc.scroll_into_view_if_needed(timeout=5000)
             with page.expect_file_chooser(timeout=10000) as chooser:
                 loc.click()
-            chooser.value.set_files(str(TEST_IMAGE))
+            chooser.value.set_files(str(_test_image(case)))
             return
         except Exception:
             continue
@@ -194,13 +211,14 @@ def _selected_layer_state(page: Page) -> dict:
 
 def _wait_for_selected_layer(page: Page, timeout_ms: int) -> dict:
     """轮询等待图层选中态渲染完成（选中框 + 四角手柄同时可见）。"""
-    deadline = page.evaluate("() => Date.now()") + timeout_ms
     state = {}
-    while page.evaluate("() => Date.now()") < deadline:
+
+    def _selected() -> bool:
+        nonlocal state
         state = _selected_layer_state(page)
-        if state.get("frame") and len(state.get("handles") or []) >= 4:
-            return state
-        page.wait_for_timeout(500)
+        return bool(state.get("frame") and len(state.get("handles") or []) >= 4)
+
+    poll_until(page, _selected, timeout=timeout_ms, interval=500)
     return state
 
 
@@ -225,25 +243,27 @@ def _function_panel_state(page: Page) -> dict:
 
 def _wait_for_function_panel(page: Page, title: str, timeout_ms: int) -> dict:
     """轮询等待工具功能面板出现并带上预期标题。"""
-    deadline = page.evaluate("() => Date.now()") + timeout_ms
     state = {}
-    while page.evaluate("() => Date.now()") < deadline:
+
+    def _panel_ready() -> bool:
+        nonlocal state
         state = _function_panel_state(page)
-        if state.get("wsVisible") and title in (state.get("wsText") or ""):
-            return state
-        page.wait_for_timeout(500)
+        return bool(state.get("wsVisible") and title in (state.get("wsText") or ""))
+
+    poll_until(page, _panel_ready, timeout=timeout_ms, interval=500)
     return state
 
 
 def _wait_for_crop_state(page: Page, timeout_ms: int) -> dict:
     """轮询等待裁剪态（可见 Crop 按钮）。"""
-    deadline = page.evaluate("() => Date.now()") + timeout_ms
     state = {}
-    while page.evaluate("() => Date.now()") < deadline:
+
+    def _crop_ready() -> bool:
+        nonlocal state
         state = _function_panel_state(page)
-        if state.get("cropButtonCount", 0) >= 1:
-            return state
-        page.wait_for_timeout(500)
+        return state.get("cropButtonCount", 0) >= 1
+
+    poll_until(page, _crop_ready, timeout=timeout_ms, interval=500)
     return state
 
 
@@ -274,13 +294,14 @@ def _assert_function_panel(page: Page, case: dict) -> None:
 
 def _wait_for_drawn(page: Page, timeout_ms: int) -> list:
     """轮询等待编辑器真正渲染：可见 canvas 或 >200x200 图层图片（移动端存在无文案 spinner 阶段）。"""
-    deadline = page.evaluate("() => Date.now()") + timeout_ms
     drawn = []
-    while page.evaluate("() => Date.now()") < deadline:
+
+    def _has_drawn() -> bool:
+        nonlocal drawn
         drawn = _drawn_sizes(page)
-        if drawn:
-            return drawn
-        page.wait_for_timeout(1000)
+        return bool(drawn)
+
+    poll_until(page, _has_drawn, timeout=timeout_ms, interval=1000)
     return drawn
 
 
@@ -381,15 +402,20 @@ def _wait_for_layout_stable(page: Page, timeout_ms: int = 20000, quiet_ms: int =
     两者同时可见的过渡帧会让同一张照片在视口里出现两次（L2-008 截图曾如此），
     因此截图前必须等布局指纹稳定。
     """
-    deadline = page.evaluate("() => Date.now()") + timeout_ms
     prev = None
-    while page.evaluate("() => Date.now()") < deadline:
+    stable = {}
+
+    def _layout_stable() -> bool:
+        nonlocal prev, stable
         cur = _layout_signature(page)
         if prev is not None and cur == prev:
-            return cur
+            stable = cur
+            return True
         prev = cur
-        page.wait_for_timeout(quiet_ms)
-    return prev or {}
+        return False
+
+    poll_until(page, _layout_stable, timeout=timeout_ms, interval=quiet_ms)
+    return stable or prev or {}
 
 
 def _capture(page: Page, case: dict, name_suffix: str = "final") -> Path:

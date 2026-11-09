@@ -1,0 +1,162 @@
+EEEEEEEE.EEEEE                                                           [100%]
+=================================== ERRORS ====================================
+______ ERROR at setup of TestL2Interaction.test_l2_001_dimension_switch _______
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+__________ ERROR at setup of TestL2Interaction.test_l2_002_thumbnail __________
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+______ ERROR at setup of TestL2Interaction.test_l2_003_ethnicity_result _______
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+_________ ERROR at setup of TestL2Interaction.test_l2_004_body_result _________
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+_________ ERROR at setup of TestL2Interaction.test_l2_005_face_result _________
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+___ ERROR at setup of TestL2Interaction.test_l2_006_download_questionnaire ____
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+_______ ERROR at setup of TestL2Interaction.test_l2_007_unsaved_report ________
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+________ ERROR at setup of TestL2Interaction.test_l2_008_try_my_photo _________
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+__________ ERROR at setup of TestL3Exception.test_l3_002_face_toast ___________
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+____ ERROR at setup of TestL3Exception.test_l3_003_body_no_photo_continue _____
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+____________ ERROR at setup of TestL3Exception.test_l3_004_noface _____________
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+___________ ERROR at setup of TestL3Exception.test_l3_005_multiface ___________
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+_______ ERROR at setup of TestL5Boundary.test_l5_001_measurements_full ________
+tests\test_pokecut_portrait_detector.py:108: in predeploy_context
+    login_predeploy(page, base_url)
+tests\test_pokecut_portrait_detector.py:94: in login_predeploy
+    assert page.locator('[data-testid="auth-dialog"]').count() == 0, "Ԥ�����¼δ��ɣ�auth ����δ�ر�"
+E   AssertionError: Ԥ�����¼δ��ɣ�auth ����δ�ر�
+E   assert 1 == 0
+E    +  where 1 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3002/tools/ethnicity-guesser-ai'>.locator
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+ERROR tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_001_dimension_switch
+ERROR tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_002_thumbnail
+ERROR tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_003_ethnicity_result
+ERROR tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_004_body_result
+ERROR tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_005_face_result
+ERROR tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_006_download_questionnaire
+ERROR tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_007_unsaved_report
+ERROR tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_008_try_my_photo
+ERROR tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_002_face_toast
+ERROR tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_003_body_no_photo_continue
+ERROR tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_004_noface
+ERROR tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_005_multiface
+ERROR tests/test_pokecut_portrait_detector.py::TestL5Boundary::test_l5_001_measurements_full
+1 passed, 13 errors in 100.65s (0:01:40)
+

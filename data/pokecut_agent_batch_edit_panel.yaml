@@ -1,0 +1,69 @@
+site: Pokecut
+feature: 无限画布 Batch Edit 面板（/agent）
+entry_url_path: /batch
+account:
+  email: "450832596@qq.com"
+  code: "123456"
+entry:
+  card: "Batch Remove Backgrounds"
+
+images:
+  upload:
+    - "test_images/1K.jpg"
+    - "test_images/4K.jpg"
+  watermark: "test_images/低分辨率.JPG"
+batch_edit:
+  title: "Batch Edit"
+  submit_selector: "[role=dialog] button.canvas-batch-submit"
+  tabs:
+    - "Enhance"
+    - "Remove BG"
+    - "Change BG"
+    - "Erase"
+    - "Crop"
+    - "Clothes Changer"
+    - "Watermark"
+  enhance_modes:
+    - "Standard Mode"
+    - "Portrait Mode"
+    - "Ultra HD Mode"
+    - "Old Photo Mode"
+    - "Text Mode"
+  remove_bg_modes:
+    - "General"
+    - "Head&Face"
+    - "Text"
+  erase_categories:
+    - "Face"
+    - "Body"
+    - "Mark"
+    - "Object"
+    - "Other"
+  clothes_categories:
+    - "Dresses"
+    - "Casual Wear"
+    - "Bikinis"
+    - "Formal Wear"
+    - "Lingerie"
+    - "Festive"
+    - "Tops"
+    - "Kids Wear"
+    - "Outerwear"
+    - "Wedding Dress"
+    - "Men's Wear"
+    - "Winter"
+  watermark_locations:
+    - "Top Left"
+    - "Top Right"
+    - "Center"
+    - "Bottom Left"
+    - "Bottom Right"
+  crop_default_width: "1200"
+  crop_default_height: "1600"
+  crop_template_amazon: "Amazon"
+  crop_template_amazon_size: "2000x2000"
+  change_bg_black: "#000000"
+  enhance_min_canvas_w: 5000
+submit:
+  timeout_s: 180
+  poll_interval_ms: 1000

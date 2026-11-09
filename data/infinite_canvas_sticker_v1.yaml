@@ -1,0 +1,45 @@
+# 无限画布贴纸功能 —— 测试数据（task 2026-10-15_infinite_canvas_sticker_exploration）
+task_id: 2026-10-15_infinite_canvas_sticker_exploration
+base_url: http://10.17.1.66:3001
+material: test_images/1K.jpg
+
+# 用户确认粒度：Filter 取代表分类（Vintage/Brighten）；Outline Types 取一个；Adjust 14 滑杆逐个改值
+filter:
+  categories:
+    - {name: Vintage, tile: "90s"}
+    - {name: Brighten, tile: "CL02"}
+  strength_default: 100
+  strength_range: [0, 100, 1]
+
+reflection:
+  sliders:
+    - {label: Opacity,  default: 50, target: 30, min: 0,  max: 100}
+    - {label: Scope,    default: 50, target: 80, min: 0,  max: 100}
+    - {label: Distance, default: 0,  target: 40, min: 0,  max: 100}
+    - {label: Angle,    default: 180, target: 90, min: 0, max: 360}
+
+outline:
+  type_index: 0
+  color_index: 3
+  sliders:
+    - {label: Size,     default: 20, target: 50, min: 0, max: 100}
+    - {label: Distance, default: 0,  target: 30, min: 0, max: 100}
+    - {label: Blur,     default: 0,  target: 20, min: 0, max: 100}
+    - {label: Smooth,   default: 0,  target: 25, min: 0, max: 100}
+
+adjust:
+  sliders:
+    - {label: Opacity,     default: 100, target: 30,  min: 0,   max: 100}
+    - {label: Brightness,  default: 0,   target: 50,  min: -100, max: 100}
+    - {label: Contrast,    default: 0,   target: -50, min: -100, max: 100}
+    - {label: Vibrance,    default: 0,   target: 50,  min: -100, max: 100}
+    - {label: Saturation,  default: 0,   target: -50, min: -100, max: 100}
+    - {label: Exposure,    default: 0,   target: 30,  min: -100, max: 100}
+    - {label: Highlight,   default: 0,   target: 20,  min: -100, max: 100}
+    - {label: Shadow,      default: 0,   target: -30, min: -100, max: 100}
+    - {label: Clarity,     default: 0,   target: 40,  min: 0,    max: 100}
+    - {label: Sharpen,     default: 0,   target: 25,  min: 0,    max: 100}
+    - {label: Temperature, default: 0,   target: -20, min: -100, max: 100}
+    - {label: Tint,        default: 0,   target: 15,  min: -100, max: 100}
+    - {label: Grain,       default: 0,   target: 35,  min: 0,    max: 100}
+    - {label: Vignette,    default: 0,   target: -25, min: -100, max: 100}

@@ -14,16 +14,15 @@ import pytest
 from playwright.sync_api import Page, expect
 
 from conftest import visual_assert
-
-
+from helpers.waiting import poll_until, wait_canvas_ready, wait_network_quiet
 
 def _repo_root():
-    """归档副本位于 archive/<dir>/，需按 test_images/ 上溯仓库根（原 parents[1] 解析到 archive/ 会找不到素材）。"""
+    """按 test_images/ 上溯仓库根：兼容 tests/ 与 archive/<dir>/ 两种位置。"""
     here = Path(__file__).resolve()
-    for c in [here.parent, *here.parents]:
-        if (c / "test_images").is_dir():
-            return c
-    return Path(__file__).resolve().parents[1]
+    for candidate in [here.parent, *here.parents]:
+        if (candidate / "test_images").is_dir():
+            return candidate
+    return here.parent.parent
 
 
 ROOT = _repo_root()
@@ -64,8 +63,16 @@ def _shot(page: Page, name: str) -> None:
 def _goto(page: Page, base_url: str) -> None:
     """进入文字增强 SEO 页并等待 Vue/CSR 稳定。"""
     page.goto(f"{base_url}{URL_PATH}", timeout=120000, wait_until="domcontentloaded")
-    page.wait_for_timeout(7000)
+    # 页面就绪信号：H1 可见
     expect(page.locator('h1:has-text("Enhance Text in Image to 8K Online Free")')).to_be_visible(timeout=30000)
+    # 可交互就绪信号：上传 input 已挂载 + 网络静默（Vue 事件绑定完成）。
+    # 2026-11-07 修复：仅等 H1 不够——实测 H1 在 t=0s 即可见，而 DEBUG 按钮 t=0.35s 才挂载、
+    # 上传 input 的 Vue 事件绑定更晚。前置在挂载前访问会误判（曾致 free_trial_ready fixture
+    # 报「未能打开 DEBUG 面板」4 条 + 上传后 data-effect 找不到 2 条）。此处恢复原固定 7s 的
+    # 兜底语义，但改为可观察条件而非盲等。
+    poll_until(page, lambda: page.locator("#singleUploadInput, #file-upload").count() > 0,
+               timeout=20000, interval=200)
+    wait_network_quiet(page, timeout=4000, idle_ms=400)
 
 
 def _body_text(page: Page) -> str:
@@ -74,15 +81,28 @@ def _body_text(page: Page) -> str:
 
 
 def _upload(page: Page, image: Path) -> None:
-    """通过稳定 input 上传指定 test_images 图片，并等待处理区出现。"""
+    """通过稳定 input 上传指定 test_images 图片，并等待处理区**完全**就绪。
+
+    就绪判据（按顺序）：
+      1. 处理区出现（data-effect 可见）；
+      2. 原图尺寸已解析——分辨率文案里不再出现 "NaN"。
+    2026-11-07 修复：原先只等 (1)，而尺寸解析晚于 (1)（实测 8K 图约 0.5s 出现处理区、
+    约 1.5s 才解除 NaN）。用例随后断言 "8192 * 6144 px" / "over 4K" 文案时仍处于
+    "NaN * 2048 px" 过渡态，导致断言误失败（曾致 test_text_l5_..._6144x8192 等失败）。
+    """
     assert image.exists(), f"测试图片不存在: {image}"
     last_error = None
     for _ in range(2):
         try:
             page.set_input_files("#singleUploadInput", str(image), timeout=25000)
-            page.wait_for_timeout(15000)
+            # (1) 处理区出现
+            poll_until(page, lambda: page.locator('[data-effect="enhance_text"]').count() > 0,
+                       timeout=30000, interval=300)
             if page.locator('[data-effect="enhance_text"]').count() > 0:
                 expect(page.locator('[data-effect="enhance_text"]').first).to_be_visible(timeout=15000)
+                # (2) 原图尺寸已解析（分辨率行不再含 NaN）
+                poll_until(page, lambda: "NaN" not in page.locator("body").inner_text(timeout=5000),
+                           timeout=15000, interval=300)
                 return
         except Exception as exc:
             last_error = exc
@@ -95,7 +115,8 @@ def _upload_mobile(page: Page, image: Path) -> None:
     """移动端上传入口，并等待移动处理区出现。"""
     assert image.exists(), f"测试图片不存在: {image}"
     page.set_input_files("#file-upload", str(image), timeout=25000)
-    page.wait_for_timeout(15000)
+    # 上传受理生效信号：处理区出现（替代固定 15s）
+    poll_until(page, lambda: page.locator('[data-effect="enhance_text"]').count() > 0, timeout=30000, interval=300)
     expect(page.locator('[data-effect="enhance_text"]').first).to_be_visible(timeout=15000)
 
 
@@ -115,14 +136,17 @@ def _set_effects(page: Page, desired: set[str]) -> None:
             if _effect_pressed(page, effect) == want:
                 break
             _effect(page, effect).click(timeout=10000)
-            page.wait_for_timeout(800)
+            # 切换生效信号：aria-pressed 变为期望值（替代固定 800ms）
+            poll_until(page, lambda: _effect_pressed(page, effect) == want, timeout=5000, interval=200)
         assert _effect_pressed(page, effect) == want, f"{effect} 未切到期望状态 {want}"
 
 
 def _select_scale(page: Page, scale: str) -> None:
     """点击处理区分辨率。当前 DOM 缺少 data-scale，只能按文案定位。"""
     page.locator(f'p:text-is("{scale}")').first.click(timeout=10000)
-    page.wait_for_timeout(1000)
+    # 切换生效信号：主按钮消耗文案刷新（由后续 _assert_cost 校验）
+    poll_until(page, lambda: _primary(page).locator("[data-text-enhance-total-cost]").count() > 0,
+               timeout=5000, interval=200)
 
 
 def _primary(page: Page):
@@ -192,7 +216,8 @@ def _login(page: Page, base_url: str, email: str) -> None:
             page.locator('button:has-text("Log in")').first.click(timeout=10000)
         except Exception:
             page.get_by_text("Log in", exact=True).first.click(timeout=10000)
-        page.wait_for_timeout(1500)
+        # 登录弹窗就绪信号：email 输入框出现（替代固定 1.5s）
+        poll_until(page, lambda: page.locator('input[type="email"]').count() > 0, timeout=15000, interval=300)
     page.locator('input[type="email"]').first.fill(email, timeout=10000)
     page.locator('input[placeholder="Verification Code"]').first.fill(CODE, timeout=10000)
     page.evaluate(
@@ -208,11 +233,17 @@ def _login(page: Page, base_url: str, email: str) -> None:
             return false;
         }"""
     )
-    page.wait_for_timeout(9000)
+    # 登录成功信号：登录入口消失 / 离开登录态（替代固定 9s）
+    poll_until(page, lambda: page.locator('button:has-text("Log in")').count() == 0
+               or "/create" in page.url, timeout=40000, interval=500)
     if "/create" in page.url:
         _goto(page, base_url)
     page.keyboard.press("Escape")
-    page.wait_for_timeout(500)
+    # Escape 后遮罩移除生效信号：不存在半透明 fixed 遮罩
+    poll_until(page, lambda: page.evaluate("""() => ![...document.querySelectorAll('div[class*=\"fixed\"]')].some(o => {
+      const bg = window.getComputedStyle(o).backgroundColor || '';
+      return bg.includes('0.3') || bg.includes('0.5');
+    })"""), timeout=4000, interval=200)
     # 登录后可能残留 VIP 定价 / 欢迎遮罩，会拦截处理区点击，JS 强制移除
     page.evaluate("""() => {
         document.querySelectorAll('div[class*="fixed"]').forEach(o => {
@@ -222,15 +253,85 @@ def _login(page: Page, base_url: str, email: str) -> None:
             }
         });
     }""")
-    page.wait_for_timeout(500)
+    poll_until(page, lambda: page.evaluate("""() => ![...document.querySelectorAll('div[class*=\"fixed\"]')].some(o => {
+      const bg = window.getComputedStyle(o).backgroundColor || '';
+      return bg.includes('0.3') || bg.includes('0.5');
+    })"""), timeout=4000, interval=200)
+
+
+def _open_debug_panel(page: Page) -> bool:
+    """打开 DEBUG 浮层面板。"""
+    if page.locator(".debug-panel").count() and page.locator(".debug-panel").first.is_visible():
+        return True
+    # DEBUG 按钮挂载晚于 H1（实测约 +0.35s）：有界轮询等待，避免一次性 count()==0 误判。
+    # 2026-11-07 修复：原先的一次性 count() 检查会在按钮挂载前直接返回 False。
+    if not poll_until(page, lambda: page.get_by_role("button", name=re.compile(r"^DEBUG$", re.I)).count() > 0,
+                      timeout=10000, interval=200):
+        return False
+    btn = page.get_by_role("button", name=re.compile(r"^DEBUG$", re.I)).last
+    try:
+        btn.click(timeout=8000)
+    except Exception:
+        btn.click(timeout=8000, force=True)
+    page.locator(".debug-panel").first.wait_for(state="visible", timeout=8000)
+    # 面板就绪信号：内部按钮可交互（可见即可，去掉固定 600ms）
+    poll_until(page, lambda: page.locator(".debug-panel").first.locator("button").count() > 0,
+               timeout=4000, interval=200)
+    return True
+
+
+def _close_debug_panel(page: Page) -> None:
+    try:
+        panel = page.locator(".debug-panel").first
+        if panel.count() and panel.is_visible():
+            close_btn = panel.locator("button.close-btn").first
+            if close_btn.count():
+                close_btn.click(timeout=6000)
+            else:
+                page.keyboard.press("Escape")
+            # 关闭生效信号：debug-panel 变为不可见
+            poll_until(page, lambda: not page.locator(".debug-panel").first.is_visible(), timeout=4000, interval=200)
+    except Exception:
+        pass
+
+
+def reset_text_enhance_free_trial(page: Page, base_url: str) -> None:
+    """在 DEBUG 面板重置「画质增强实验」的免费次数。
+
+    2026-10-28：历史 IP 消耗会把「文字增强免费次数(IP)」压到 0，
+    导致点数规则从 5/10/25 变为 10/30，和用例期望不符。
+    该 fixture 前置在测试服重置为可用状态，保证点数用例可复现。
+    """
+    _goto(page, base_url)
+    assert _open_debug_panel(page), "未能打开 DEBUG 面板"
+    panel = page.locator(".debug-panel").first
+    for label in ("重置文字增强免费次数", "重置Ultra免费次数", "重置Text免费次数"):
+        btn = panel.get_by_role("button", name=label).first
+        if btn.count():
+            try:
+                btn.click(timeout=8000)
+            except Exception:
+                btn.click(timeout=8000, force=True)
+            # 重置生效信号：按钮回到可再次点击/文案刷新（无独立断言，短轮询稳定态）
+            poll_until(page, lambda: btn.count() > 0, timeout=4000, interval=200)
+    _close_debug_panel(page)
+
+
+@pytest.fixture
+def free_trial_ready(page: Page, base_url: str):
+    """用例前置：确保画质增强实验免费次数处于可用状态。"""
+    reset_text_enhance_free_trial(page, base_url)
+    return page
 
 
 def _switch_predeploy(page: Page) -> None:
     """通过 DEBUG 浮标切换到预部署。"""
     page.click(".debug-float-btn", timeout=10000)
-    page.wait_for_timeout(800)
+    # 环境菜单就绪信号：预部署按钮可见（替代固定 800ms）
+    page.locator(".environment-options .action-btn", has_text="预部署").first.wait_for(state="visible", timeout=10000)
     page.locator(".environment-options .action-btn", has_text="预部署").click(timeout=10000)
-    page.wait_for_timeout(7000)
+    # 切换生效信号：页面重新渲染（等待 H1 复现）（替代固定 7s）
+    page.locator('h1:has-text("Enhance Text in Image to 8K Online Free")').first.wait_for(state="visible", timeout=30000)
 
 
 def _unique_free_email() -> str:
@@ -251,7 +352,8 @@ def _wait_purchase_modal(page: Page, screenshot_name: str) -> None:
         assert re.search(r"(\$1 USD|Premium|VIP|Get Started|Upgrade)", modal_text, re.I), f"购买弹窗文案不明确: {modal_text}"
         box = modal.bounding_box(timeout=5000)
         assert box and box["width"] >= 240 and box["height"] >= 120, f"购买弹窗尺寸异常: {box}"
-        page.wait_for_timeout(800)
+        # 弹窗内容稳定信号：弹窗内 CTA 文本可读（替代固定 800ms）
+        poll_until(page, lambda: len(modal.inner_text(timeout=2000)) > 0, timeout=4000, interval=200)
         _shot(page, screenshot_name)
     except Exception:
         _shot(page, f"{screenshot_name}-未出现稳定购买弹窗")
@@ -278,7 +380,8 @@ def _wait_corrupt_upload_error(page: Page, screenshot_name: str) -> None:
     )
     try:
         expect(error_candidates.first).to_be_visible(timeout=20000)
-        page.wait_for_timeout(500)
+        # toast 文案稳定信号：可读到非空文本（替代固定 500ms）
+        poll_until(page, lambda: bool(error_candidates.first.inner_text(timeout=2000).strip()), timeout=4000, interval=200)
         _shot(page, screenshot_name)
         text = error_candidates.first.inner_text(timeout=3000)
         assert re.search(error_text, text), f"异常提示文案不明确: {text}"
@@ -293,6 +396,7 @@ def _wait_generation_result(page: Page, timeout_seconds: int = 220) -> None:
     deadline = time.time() + timeout_seconds
     saw_progress = False
     while time.time() < deadline:
+        # 生成结果轮询间隔（本函数自带有界 deadline，属显式轮询）
         page.wait_for_timeout(5000)
         body = _body_text(page)
         if re.search(r"\b\d{1,3}%\b", body):
@@ -337,12 +441,18 @@ def test_text_l2_upload_in_page_and_default_state(page: Page, base_url: str):
     for effect in ["remove_glare", "remove_moire", "document_scanner"]:
         assert _effect_pressed(page, effect) is False
     _assert_upscale_visible(page, True)
+    # 成本元素（data-text-enhance-total-cost）由前端异步拉取点数后渲染：
+    # 2026-11-07 修复——_goto 缩减了固定 slack 后，此处可能早于元素渲染而误报 0。
+    # 改为有界等待「成本元素出现」这一可观察条件（不改变断言语义）。
+    poll_until(page, lambda: _primary(page).locator("[data-text-enhance-total-cost]").count() == 1,
+               timeout=10000, interval=250)
     assert _primary(page).locator("[data-text-enhance-total-cost]").count() == 1
     _shot(page, "TC-TEXT-L2-001-页内处理与默认态")
 
 
 @allure.epic("文字画质增强实验")
 @allure.feature("L2 — 交互行为")
+@pytest.mark.usefixtures("free_trial_ready")
 def test_text_l2_resolution_visibility_and_disabled(page: Page, base_url: str):
     allure.dynamic.title("TC-TEXT-L2-005｜分辨率区显隐与无效果置灰（选择态）")
     _goto(page, base_url)
@@ -356,7 +466,8 @@ def test_text_l2_resolution_visibility_and_disabled(page: Page, base_url: str):
     _assert_upscale_visible(page, False)
     _shot(page, "TC-TEXT-L2-002-无效果置灰")
     # 仅非增强模式：隐藏分辨率区
-    for effect, expected in [("remove_glare", "2"), ("remove_moire", "2"), ("document_scanner", "4")]:
+    # 2026-10-12 点数规则变更（用户确认属预期）：非增强单效果统一 5
+    for effect, expected in [("remove_glare", "5"), ("remove_moire", "5"), ("document_scanner", "5")]:
         _set_effects(page, {effect})
         _assert_upscale_visible(page, False)
         _assert_cost(page, expected)
@@ -365,10 +476,9 @@ def test_text_l2_resolution_visibility_and_disabled(page: Page, base_url: str):
 
 @allure.epic("文字画质增强实验")
 @allure.feature("L2 — 交互行为")
-def test_text_l2_result_non_enhance_no_resolution(page: Page, base_url: str):
-    allure.dynamic.title("TC-TEXT-L2-002｜结果态：非 Enhance Text 结果不展示分辨率信息（before/after）")
+def test_text_l2_result_non_enhance_resolution_and_no_compare(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L2-002｜结果态：非 Enhance Text 展示分辨率区、不出 Before/Now 对比文案")
     _goto(page, base_url)
-    _switch_predeploy(page)
     _login(page, base_url, MEMBER_EMAIL)
     expect(page.locator('button:has-text("Log in")').first).not_to_be_visible(timeout=10000)
     _upload(page, IMG_TEXT_SAMPLE)
@@ -378,6 +488,7 @@ def test_text_l2_result_non_enhance_no_resolution(page: Page, base_url: str):
     deadline = time.time() + 180
     reached = False
     while time.time() < deadline:
+        # 结果轮询间隔（本循环自带有界 deadline，属显式轮询）
         page.wait_for_timeout(5000)
         body = _body_text(page)
         if all(t in body for t in ["Continue Enhancing", "Edit More", "Download"]):
@@ -389,34 +500,41 @@ def test_text_l2_result_non_enhance_no_resolution(page: Page, base_url: str):
         _shot(page, "TC-TEXT-L2-002-非增强生成超时")
         pytest.skip("非 Enhance Text（remove_glare）生成超过 180s 未出结果，无法验证结果态分辨率隐藏；需后端确认非增强工作流")
     body = _body_text(page)
-    assert "Before" in body and "Now" in body
-    assert not re.search(r"\b(2k|4k|8k)\b", body, re.I), "非 Enhance Text 结果不应展示分辨率信息"
-    _shot(page, "TC-TEXT-L2-002-结果态无分辨率")
+    # 2026-11-02 设计确认：分辨率区（Upscale to）对所有结果均展示；
+    # "Before"/"Now" 对比文案仅在“Enhance Text”模式生成时出现，非增强模式不应出现。
+    assert "Upscale to" in body, "结果态应展示分辨率区（Upscale to）"
+    assert "Before" not in body and "Now" not in body, "非 Enhance Text 结果不应出现 Before/Now 对比文案"
+    _shot(page, "TC-TEXT-L2-002-结果态分辨率区")
 
 
 @allure.epic("文字画质增强实验")
 @allure.feature("L4 — PRD 验收标准")
 @pytest.mark.regression
+@pytest.mark.usefixtures("free_trial_ready")
 def test_text_l4_cost_refresh_and_rules(page: Page, base_url: str):
     allure.dynamic.title("TC-TEXT-L4-001｜多选组合点数实时刷新与普通账号点数规则")
     _goto(page, base_url)
     _upload(page, IMG_TEXT_SAMPLE)
-    _assert_cost(page, "2")
+    # 2026-10-12 点数规则变更（用户确认属预期）：
+    # Enhance Text 基础价 2k=5 / 4k=5 / 8k=10，每个附加效果各 +5。
+    _assert_cost(page, "5")
     _select_scale(page, "4k")
-    _assert_cost(page, "2")
+    _assert_cost(page, "5")
     _select_scale(page, "8k")
-    _assert_cost(page, "6")
+    _assert_cost(page, "10")
     _set_effects(page, set(EFFECTS))
-    _assert_cost(page, "14")
+    _assert_cost(page, "25")
     _shot(page, "TC-TEXT-L4-001-all-effects-8k")
     _effect(page, "remove_glare").click()
-    page.wait_for_timeout(800)
+    # 切换生效信号：aria-pressed 变 false（替代固定 800ms）
+    poll_until(page, lambda: _effect_pressed(page, "remove_glare") is False, timeout=5000, interval=200)
     assert _effect_pressed(page, "remove_glare") is False
-    _assert_cost(page, "12")
+    _assert_cost(page, "20")
     _effect(page, "remove_glare").click()
-    page.wait_for_timeout(800)
+    # 切换生效信号：aria-pressed 变 true（替代固定 800ms）
+    poll_until(page, lambda: _effect_pressed(page, "remove_glare") is True, timeout=5000, interval=200)
     assert _effect_pressed(page, "remove_glare") is True
-    _assert_cost(page, "14")
+    _assert_cost(page, "25")
     _shot(page, "TC-TEXT-L4-001-点数刷新")
 
 
@@ -434,7 +552,8 @@ def test_text_l2_effect_tooltips(page: Page, base_url: str):
     }
     for effect, tooltip in expected.items():
         _effect(page, effect).locator("[data-effect-help-icon]").first.hover(timeout=10000)
-        page.wait_for_timeout(700)
+        # tooltip 生效信号：正文出现期望文案（替代固定 700ms）
+        poll_until(page, lambda: tooltip in _body_text(page), timeout=6000, interval=200)
         assert tooltip in _body_text(page), f"{effect} tooltip 文案不匹配"
         _shot(page, f"TC-TEXT-L2-003-{effect}-tooltip")
 
@@ -459,10 +578,10 @@ def test_text_l4_free_trial_display_free(page: Page, base_url: str):
 @allure.epic("文字画质增强实验")
 @allure.feature("L4 — PRD 验收标准")
 @pytest.mark.regression
+@pytest.mark.usefixtures("free_trial_ready")
 def test_text_l4_member_free_icon_and_cost(page: Page, base_url: str):
     allure.dynamic.title("TC-TEXT-L4-003｜会员账号 Free icon 与点数规则")
     _goto(page, base_url)
-    _switch_predeploy(page)
     _login(page, base_url, MEMBER_EMAIL)
     expect(page.locator('button:has-text("Log in")').first).not_to_be_visible(timeout=10000)
     _upload(page, IMG_TEXT_SAMPLE)
@@ -475,26 +594,29 @@ def test_text_l4_member_free_icon_and_cost(page: Page, base_url: str):
     assert _cost_state(page) == "free"
     _assert_cost(page, "Free")
     _select_scale(page, "8k")
-    _assert_cost(page, "4")
+    # 2026-10-28 扣积分需求变更（用户确认）：会员 8k 基础价 10，四个效果各 +5，全选 = 30
+    _assert_cost(page, "10")
     _set_effects(page, set(EFFECTS))
-    _assert_cost(page, "12")
+    _assert_cost(page, "30")
     _shot(page, "TC-TEXT-L4-003-会员点数")
 
 
 @allure.epic("文字画质增强实验")
 @allure.feature("L4 — PRD 验收标准")
 @pytest.mark.regression
+@pytest.mark.usefixtures("free_trial_ready")
 def test_text_l4_single_purchase_cost_rules(page: Page, base_url: str):
     allure.dynamic.title("TC-TEXT-L4-004｜单项购买账号点数规则")
     _login(page, base_url, SINGLE_PURCHASE_EMAIL)
     _upload(page, IMG_TEXT_SAMPLE)
-    _assert_cost(page, "2")
+    # 2026-10-12 点数规则变更（用户确认属预期）
+    _assert_cost(page, "5")
     _select_scale(page, "4k")
-    _assert_cost(page, "2")
+    _assert_cost(page, "5")
     _select_scale(page, "8k")
-    _assert_cost(page, "6")
+    _assert_cost(page, "10")
     _set_effects(page, set(EFFECTS))
-    _assert_cost(page, "14")
+    _assert_cost(page, "25")
     assert _cost_state(page) in ("paid", "free"), f"单项购买 cost_state 异常: {_cost_state(page)}"
     _shot(page, "TC-TEXT-L4-004-单项购买点数")
 
@@ -513,7 +635,7 @@ def test_text_l5_resolution_boundary_1k_defaults_to_2k(page: Page, base_url: str
     body = _body_text(page)
     assert "1536 * 2048 px" in body
     assert "2k" in body and "4k" in body and "8k" in body
-    _assert_cost(page, "2")
+    _assert_cost(page, "5")  # 2026-10-12 规则变更：2k 基础价 5
     _shot(page, "TC-TEXT-L5-001-1K默认2k")
 
 
@@ -528,7 +650,7 @@ def test_text_l5_resolution_boundary_2730x4096_over2k(page: Page, base_url: str)
     assert "2730 * 4096 px" in body
     _select_scale(page, "2k")
     assert "1536 * 2048 px" not in _primary_text(page), "点击灰显 2k 不应改变主按钮为 2k 结果"
-    _assert_cost(page, "2")
+    _assert_cost(page, "5")  # 2026-10-12 规则变更：2k 基础价 5
     _shot(page, "TC-TEXT-L5-002-over2K")
 
 
@@ -543,7 +665,7 @@ def test_text_l5_resolution_boundary_4500x3000_over4k(page: Page, base_url: str)
     assert "8192 * 5461 px" in body
     _select_scale(page, "2k")
     _select_scale(page, "4k")
-    _assert_cost(page, "6")
+    _assert_cost(page, "10")  # 2026-10-12 规则变更：该图 4k 档实测 10
     _shot(page, "TC-TEXT-L5-003-over4K")
 
 
@@ -556,10 +678,10 @@ def test_text_l5_resolution_boundary_6144x8192_over4k_not_highest(page: Page, ba
     body = _body_text(page)
     assert "The image is already at the highest clarity." not in body
     assert "The resolution of the image is over 4K. Only larger options can be selected." in body
-    _assert_cost(page, "6")
+    _assert_cost(page, "10")  # 2026-10-12 规则变更：8k 基础价 10
     _set_effects(page, {"remove_glare"})
     _assert_upscale_visible(page, False)
-    _assert_cost(page, "2")
+    _assert_cost(page, "5")  # 2026-10-12 规则变更：仅 Remove Glare（未选 Enhance Text）时为非增强单效果价 5
     _shot(page, "TC-TEXT-L5-004-8K当前实现")
 
 
@@ -582,16 +704,15 @@ def test_text_l3_corrupt_image_upload_does_not_crash(page: Page, base_url: str):
 
 @allure.epic("文字画质增强实验")
 @allure.feature("L3 — 异常 / 权限 / 兼容流程")
-def test_text_l3_free_account_purchase_intercept_predeploy(page: Page, base_url: str):
-    allure.dynamic.title("TC-TEXT-L3-002｜免费账号购买拦截：预部署")
+def test_text_l3_free_account_purchase_intercept(page: Page, base_url: str):
+    allure.dynamic.title("TC-TEXT-L3-002｜免费账号购买拦截")
     _goto(page, base_url)
-    _switch_predeploy(page)
     _login(page, base_url, _unique_free_email())
     _upload(page, IMG_TEXT_SAMPLE)
     if _free_quota_active(page):
         pytest.skip("当前 IP 仍有免费额度，免费账号点击生成会走真实生成而非购买拦截，无法验证拦截态")
     _primary(page).click(timeout=10000)
-    _wait_purchase_modal(page, "TC-TEXT-L3-002-预部署购买弹窗")
+    _wait_purchase_modal(page, "TC-TEXT-L3-002-购买弹窗")
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -605,12 +726,13 @@ def test_text_l3_free_account_purchase_intercept_predeploy(page: Page, base_url:
 def test_text_l6_default_enhance_2k_generation_download_and_continue(page: Page, base_url: str):
     allure.dynamic.title("TC-TEXT-L6-001｜默认 Enhance Text 2k 生成到结果态 + 下载 + 继续增强")
     _goto(page, base_url)
-    _switch_predeploy(page)
     _login(page, base_url, MEMBER_EMAIL)
     _upload(page, IMG_TEXT_SAMPLE)
     _shot(page, "TC-TEXT-L6-001-点击生成前")
     _primary(page).click(timeout=10000)
-    page.wait_for_timeout(1500)
+    # 生成中态截图：进入 loading 无独立可观察句柄，保留最小有界停等
+    poll_until(page, lambda: re.search(r"\b\d{1,3}%\b|Generating|Processing", _body_text(page)) is not None,
+               timeout=15000, interval=300)
     _shot(page, "TC-TEXT-L6-001-生成中")
     _wait_generation_result(page)
     body = _body_text(page)
@@ -627,7 +749,8 @@ def test_text_l6_default_enhance_2k_generation_download_and_continue(page: Page,
     assert download.url, "下载 URL 不应为空"
     _shot(page, "TC-TEXT-L6-001-下载后")
     page.get_by_text("Continue Enhancing", exact=True).first.click(timeout=10000)
-    page.wait_for_timeout(5000)
+    # 返回编辑态信号：Choose the Effect 出现（替代固定 5s）
+    poll_until(page, lambda: "Choose the Effect" in _body_text(page), timeout=20000, interval=300)
     body = _body_text(page)
     assert "Choose the Effect" in body
     for effect in EFFECTS:
@@ -640,7 +763,6 @@ def test_text_l6_default_enhance_2k_generation_download_and_continue(page: Page,
 def test_text_l2_result_edit_more_enters_editor_or_route(page: Page, base_url: str):
     allure.dynamic.title("TC-TEXT-L2-004｜结果态 Edit More 进入编辑链路")
     _goto(page, base_url)
-    _switch_predeploy(page)
     _login(page, base_url, MEMBER_EMAIL)
     _upload(page, IMG_TEXT_SAMPLE)
     _primary(page).click(timeout=10000)
@@ -648,7 +770,9 @@ def test_text_l2_result_edit_more_enters_editor_or_route(page: Page, base_url: s
     before_url = page.url
     _shot(page, "TC-TEXT-L2-004-点击前结果态")
     page.get_by_text("Edit More", exact=True).first.click(timeout=10000)
-    page.wait_for_timeout(8000)
+    # 编辑链路就绪信号：URL 变化，或页面出现编辑/Draw 关键词（替代固定 8s）
+    poll_until(page, lambda: page.url != before_url or any(
+        text in _body_text(page) for text in ["Canvas", "Edit", "Adjust", "Download"]), timeout=30000, interval=500)
     body = _body_text(page)
     assert page.url != before_url or any(text in body for text in ["Canvas", "Edit", "Adjust", "Download"]), "Edit More 点击后未进入可识别编辑链路"
     _shot(page, "TC-TEXT-L2-004-编辑链路")
@@ -669,17 +793,19 @@ def test_text_l4_mobile_upload_modes_and_cost(browser, playwright, base_url: str
     page = context.new_page()
     try:
         page.goto(f"{base_url}{URL_PATH}", timeout=120000, wait_until="domcontentloaded")
-        page.wait_for_timeout(7000)
+        # 移动端就绪信号：主上传入口可见（替代固定 7s）
+        expect(page.locator("#file-upload")).to_be_attached(timeout=30000)
         _shot(page, "TC-TEXT-L4-005-移动端首屏")
         _upload_mobile(page, IMG_TEXT_SAMPLE)
         assert _effect_pressed(page, "enhance_text") is True
         for effect in EFFECTS:
             expect(_effect(page, effect)).to_be_visible()
         assert _mobile_primary(page).is_visible()
-        _assert_cost(page, "2", mobile=True)
+        _assert_cost(page, "5", mobile=True)  # 2026-10-12 规则变更：移动端基础价 5
         _effect(page, "remove_glare").click(timeout=10000)
-        page.wait_for_timeout(1000)
-        _assert_cost(page, "4", mobile=True)
+        # 切换生效信号：aria-pressed 变 true（替代固定 1s）
+        poll_until(page, lambda: _effect_pressed(page, "remove_glare") is True, timeout=5000, interval=200)
+        _assert_cost(page, "10", mobile=True)  # 基础 5 + glare 5
         _shot(page, "TC-TEXT-L4-005-移动端上传后")
         result = visual_assert("TC-TEXT-L4-005-移动端首屏", "TC-TEXT-L4-005-移动端上传后", "移动端横向模式布局不遮挡、不换行错乱，主按钮点数在按钮区域")
         assert result.get("verdict") != "fail", f"AI 视觉审查失败: {result}"

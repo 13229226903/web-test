@@ -1,0 +1,121 @@
+[
+  {
+    "suite": "人像检测三入口页",
+    "path": "tests/test_pokecut_portrait_detector.py",
+    "returncode": 0,
+    "duration_s": 290.4,
+    "tail": "..............                                                           [100%]\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n14 passed in 286.03s (0:04:46)"
+  },
+  {
+    "suite": "AI Image Text Enhancer",
+    "path": "tests/test_ai_image_text_enhancer_experiment.py",
+    "returncode": 0,
+    "duration_s": 661.5,
+    "tail": ".............s...s                                                       [100%]\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n16 passed, 2 skipped in 659.72s (0:10:59)"
+  },
+  {
+    "suite": "画布页文字功能",
+    "path": "tests/test_infinite_canvas_text_layer_v2.py",
+    "returncode": 0,
+    "duration_s": 296.7,
+    "tail": "tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]\n  D:\\Test\\web-test\\tests\\test_infinite_canvas_text_layer_v2.py:204: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.\n    return sum(1 for px in diff.getdata() if px != (0, 0, 0))\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n6 passed, 6 warnings in 294.95s (0:04:54)"
+  },
+  {
+    "suite": "Mobile Home v3",
+    "path": "tests/test_mobile_home.py",
+    "returncode": 1,
+    "duration_s": 471.2,
+    "tail": "    assert (\"Get Free Credits\" in body) or (\"Get Up to\" in body)\nE   AssertionError: assert ('Get Free Credits' in '0\\nAll-in-One AI Photo Editor & Generator\\nStart Creating for Free\\nNano Banana 2 Lite\\nGenerate\\nRemove Background\\n...n\\nHD Download\\n\\nNo Watermark\\n\\nUnlimited Cloud Storage\\n\\nGet Started for $1 USD\\nEnds in:\\n23\\n:\\n59\\n:\\n47\\nDEBUG' or 'Get Up to' in '0\\nAll-in-One AI Photo Editor & Generator\\nStart Creating for Free\\nNano Banana 2 Lite\\nGenerate\\nRemove Background\\n...n\\nHD Download\\n\\nNo Watermark\\n\\nUnlimited Cloud Storage\\n\\nGet Started for $1 USD\\nEnds in:\\n23\\n:\\n59\\n:\\n47\\nDEBUG')\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n=========================== short test summary info ===========================\nFAILED tests/test_mobile_home.py::TestL2Interactions::test_l2_008_id_photo_anonymous[chromium]\n1 failed, 37 passed in 469.52s (0:07:49)"
+  },
+  {
+    "suite": "帮助中心",
+    "path": "tests/test_help_page.py",
+    "returncode": 0,
+    "duration_s": 190.1,
+    "tail": "...........                                                              [100%]\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n11 passed in 188.47s (0:03:08)"
+  },
+  {
+    "suite": "检测类功能适配 UI",
+    "path": "tests/test_detection_ui_seo_l6.py",
+    "returncode": 0,
+    "duration_s": 188.6,
+    "tail": "..                                                                       [100%]\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n2 passed in 187.01s (0:03:07)"
+  },
+  {
+    "suite": "PC 首页 Home v6",
+    "path": "tests/test_pokecut_pc_home_v6.py",
+    "returncode": 1,
+    "duration_s": 284.4,
+    "tail": "    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nE   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 45000ms exceeded.\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n=========================== short test summary info ===========================\nFAILED tests/test_pokecut_pc_home_v6.py::TestL1PageStructure::test_l1_005_portrait_batch_enhance[chromium]\n1 failed, 16 passed in 282.56s (0:04:42)"
+  },
+  {
+    "suite": "PC 批量编辑 Batch v1",
+    "path": "tests/test_pokecut_pc_batch_v1.py",
+    "returncode": 1,
+    "duration_s": 754.4,
+    "tail": "FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_010_undo_redo[chromium]\nFAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_011_delete_flow[chromium]\nFAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_012_download_flow[chromium]\nFAILED tests/test_pokecut_pc_batch_v1.py::TestL6BatchSmoke::test_l6_001_smoke_removebg_download[chromium]\nFAILED tests/test_pokecut_pc_batch_v1.py::TestL6BatchSmoke::test_l6_002_smoke_enhance_resize_download[chromium]\n15 failed, 1 passed in 752.84s (0:12:32)"
+  },
+  {
+    "suite": "旧画布 Insert 面板",
+    "path": "tests/test_old_canvas_insert_panel_v3.py",
+    "returncode": 0,
+    "duration_s": 599.1,
+    "tail": "tests/test_old_canvas_insert_panel_v3.py: 22 warnings\n  D:\\Test\\web-test\\tests\\test_old_canvas_insert_panel_v3.py:185: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.\n    pts = sum(1 for px in diff.getdata() if sum(px) > 12)\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n24 passed, 22 warnings in 597.33s (0:09:57)"
+  },
+  {
+    "suite": "旧画布文字 Text 面板",
+    "path": "tests/test_old_canvas_text_panel_v1.py",
+    "returncode": 0,
+    "duration_s": 389.8,
+    "tail": "tests/test_old_canvas_text_panel_v1.py: 18 warnings\n  D:\\Test\\web-test\\tests\\test_old_canvas_text_panel_v1.py:204: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.\n    px = list(ImageChops.difference(ia, ib).convert(\"L\").getdata())\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n13 passed, 18 warnings in 388.06s (0:06:28)"
+  },
+  {
+    "suite": "旧画布贴纸调参面板",
+    "path": "tests/test_old_canvas_sticker_panel_v1.py",
+    "returncode": 0,
+    "duration_s": 214.8,
+    "tail": ".........                                                                [100%]\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n9 passed in 213.09s (0:03:33)"
+  },
+  {
+    "suite": "SEO 主上传交互（PC）",
+    "path": "tests/test_seo_main_upload_interactions_v1.py",
+    "returncode": 1,
+    "duration_s": 962.8,
+    "tail": "E   \"\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n=========================== short test summary info ===========================\nFAILED tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_008[chromium]\nFAILED tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_011[chromium]\n2 failed, 22 passed in 961.19s (0:16:01)"
+  },
+  {
+    "suite": "SEO 主上传交互（移动端）",
+    "path": "tests/mobile/test_seo_main_upload_mobile_v1.py",
+    "returncode": 0,
+    "duration_s": 302.9,
+    "tail": ".................x......                                                 [100%]\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n23 passed, 1 xfailed in 301.26s (0:05:01)"
+  },
+  {
+    "suite": "Create/Chat Auto 意图识别",
+    "path": "tests/test_create_chat_to_edit_auto_v1.py",
+    "returncode": 0,
+    "duration_s": 420.9,
+    "tail": "...........                                                              [100%]\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n11 passed in 419.29s (0:06:59)"
+  },
+  {
+    "suite": "画布统计优化 40 条",
+    "path": "tests/test_canvas_stats_all.py",
+    "returncode": 1,
+    "duration_s": 3637.1,
+    "tail": "=========================== short test summary info ===========================\nFAILED tests/test_canvas_stats_all.py::test_m_core_01[chromium] - AssertionEr...\nFAILED tests/test_canvas_stats_all.py::test_m_core_02[chromium] - AssertionEr...\nFAILED tests/test_canvas_stats_all.py::test_m_core_05[chromium] - AssertionEr...\nFAILED tests/test_canvas_stats_all.py::test_m_new_14[chromium] - [XPASS(stric...\n4 failed, 32 passed, 2 skipped, 2 xfailed in 3635.18s (1:00:35)"
+  },
+  {
+    "suite": "旧画布 AI Tools",
+    "path": "tests/test_old_canvas_ai_tools_all.py",
+    "returncode": 1,
+    "duration_s": 1966.8,
+    "tail": "----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n=========================== short test summary info ===========================\nFAILED tests/test_old_canvas_ai_tools_all.py::test_p_ait_04_mask_required - A...\nFAILED tests/test_old_canvas_ai_tools_all.py::test_p_ait_01_preset_select_group\nFAILED tests/test_old_canvas_ai_tools_all.py::test_p_ait_02_mode_and_category_group\n3 failed, 3 passed in 1964.72s (0:32:44)"
+  },
+  {
+    "suite": "无限画布贴纸调整",
+    "path": "tests/test_infinite_canvas_sticker_v1.py",
+    "returncode": 1,
+    "duration_s": 117.9,
+    "tail": "E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3001/agent?pid=afcb969b-d1c6-461c-97b8-21ceeaae6d2f#'> selector=\"img[alt='sticker_valentine1']\"> = locator(\"img[alt='sticker_valentine1']\")\nE    +        where locator = <Page url='http://10.17.1.66:3001/agent?pid=afcb969b-d1c6-461c-97b8-21ceeaae6d2f#'>.locator\n----- Generated html report: file:///D:/Test/web-test/reports/report.html -----\n=========================== short test summary info ===========================\nFAILED tests/test_infinite_canvas_sticker_v1.py::test_p_stk_01_entry_add_sticker_open_adjust[chromium]\n1 failed, 4 passed in 116.38s (0:01:56)"
+  }
+]

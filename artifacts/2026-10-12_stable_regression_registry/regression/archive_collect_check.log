@@ -1,0 +1,48 @@
+=== archive/portrait_detector/test_pokecut_portrait_detector.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+14 tests collected in 0.10s
+=== archive/tool_pages/test_ai_image_text_enhancer_experiment.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+18 tests collected in 0.17s
+=== archive/infinite_canvas/test_infinite_canvas_text_layer_v2.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+6 tests collected in 0.17s
+=== archive/mobile_home/test_mobile_home.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+38 tests collected in 0.15s
+=== archive/help_center/test_help_page.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+11 tests collected in 0.08s
+=== archive/infinite_canvas_insert_panel/test_old_canvas_insert_panel_v3.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+24 tests collected in 0.16s
+=== archive/infinite_canvas_text_panel/test_old_canvas_text_panel_v1.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+13 tests collected in 0.15s
+=== archive/infinite_canvas_sticker_panel/test_old_canvas_sticker_panel_v1.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+9 tests collected in 0.18s
+=== archive/seo_upload_interactions/test_seo_main_upload_interactions_v1.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+24 tests collected in 0.23s
+=== archive/seo_upload_mobile/test_seo_main_upload_mobile_v1.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+24 tests collected in 0.17s
+=== archive/create_auto_intent_recognition/test_create_chat_to_edit_auto_v1.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+11 tests collected in 0.18s
+=== archive/canvas_stats/test_canvas_stats_all.py
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+40 tests collected in 0.21s

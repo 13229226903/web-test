@@ -1,0 +1,55 @@
+# Pokecut 移动端鉴黄（v3.4）page map v1
+# 采集环境: 测试服 http://10.17.1.66:3001，iPhone 390x844 / dpr3 / hasTouch / iOS17 UA
+# 采集时间: 2026-10-30
+page: v3.4 移动端鉴黄功能补充
+version: v1
+url: /zh/create/edit?pid=*
+viewport: {width: 390, height: 844, dpr: 3, is_mobile: true, has_touch: true}
+landmark:
+  selector: "li.mobile-primary-panel__tab:has-text('热门工具')"
+  description: 移动端画布底部一级功能栏
+entry:
+  from: "/zh 首页"
+  trigger: "点击 开始免费创作 并选择图片"
+  selector: "text=开始免费创作"
+  file_chooser: true
+  landing: "/zh/create/edit?pid=*"
+elements:
+  credits_pill: {selector: "[aria-label='积分'], .credits-entry__pill", description: 顶部积分胶囊}
+  primary_tabs: {selector: "li.mobile-primary-panel__tab", items: ["热门工具", "AI生图", "背景", "调整", "插入"]}
+  ai_generate_button: {selector: "button.mobile-ai-generate-button", description: 各功能面板主提交按钮}
+  tool_close_icon: {selector: "img[src*='nav_btn_pop_close2']", description: AI 功能面板关闭按钮}
+states:
+  mobile_canvas_ai_image:
+    description: 移动端画布 AI生图面板（对话编辑/AI图像），含 prompt textarea 与生成按钮
+    trigger: 进入画布后点击一级栏 AI生图
+    url_or_state_key: "/zh/create/edit?pid=*"
+    elements:
+      prompt_textarea: {selector: "textarea", placeholder: "今天想设计点什么？"}
+    buttons:
+      generate:
+        selector: "button:has-text('生成')"
+        role_or_text: 生成 10
+        action_result: 提交 prompt；违规 prompt 出现“敏感内容”弹窗
+        explore_status: covered
+  mobile_canvas_remove_bg:
+    description: 移动端画布 背景移除 面板
+    trigger: 点击一级栏 背景 -> 背景移除
+    buttons:
+      open_remove_bg: {selector: "text=背景移除", action_result: 打开 去除背景 面板, explore_status: covered}
+      submit: {selector: "button.mobile-ai-generate-button", action_result: 违规图 -> 全屏“上传失败”蒙层, explore_status: covered}
+nsfw:
+  input_fail_dialog:
+    trigger: 违规图 + 背景移除 主提交
+    title: 上传失败
+    message: 上传的图片包含敏感内容，请更换图片后重新上传。未扣除积分。
+    buttons: [好]
+    style: 全屏蒙层（旧画布/移动端样式）
+    evidence: shots/mobile_input_nsfw_fail.png
+  prompt_fail_dialog:
+    trigger: prompt 输入“裸体” + 生成
+    title: 敏感内容
+    message: 检测到你输入的描述包含色情、暴力等敏感内容，请修改后再试
+    buttons: [继续, 更改描述]
+    behavior_changedesc: 关闭弹窗并保留 prompt 文本，未扣积分
+    evidence: shots/mobile_prompt_nsfw_fail.png

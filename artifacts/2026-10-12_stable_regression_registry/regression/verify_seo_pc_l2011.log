@@ -1,0 +1,53 @@
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\unraisableexception.py:67: PytestUnraisableExceptionWarning: Exception ignored in: <function BaseEventLoop.__del__ at 0x00000113321804A0>
+
+Traceback (most recent call last):
+  File "C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 732, in __del__
+    self.close()
+  File "C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 697, in close
+    self._close_self_pipe()
+  File "C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 779, in _close_self_pipe
+    self._ssock.close()
+    ^^^^^^^^^^^
+AttributeError: 'ProactorEventLoop' object has no attribute '_ssock'
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnraisableExceptionWarning(msg))
+E                                                                        [100%]
+=================================== ERRORS ====================================
+___ ERROR at setup of TestL2SeoMainUploadInteractions.test_l2_011[chromium] ___
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_context_manager.py:42: in __enter__
+    self._loop = asyncio.get_running_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\pytest_playwright\pytest_playwright.py:285: in playwright
+    pw = sync_playwright().start()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_context_manager.py:84: in start
+    return self.__enter__()
+           ^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_context_manager.py:44: in __enter__
+    self._loop = asyncio.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py:823: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py:720: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py:316: in __init__
+    super().__init__(proactor)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py:640: in __init__
+    self._make_self_pipe()
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py:787: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\socket.py:642: in _fallback_socketpair
+    raise ConnectionError("Unexpected peer connection")
+E   ConnectionError: Unexpected peer connection
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+ERROR tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_011[chromium]
+23 deselected, 1 error in 0.39s

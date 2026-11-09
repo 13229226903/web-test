@@ -33,24 +33,36 @@ expected:
     default_res: 2k
     target: [1365, 2048]
     controls: {2k: false, 4k: false, 8k: false}
+  face:
+    width: 1080
+    height: 1443
+    default_res: 2k
+    target: [1533, 2048]
+    controls: {2k: false, 4k: false, 8k: false}
+  text:
+    width: 1080
+    height: 1440
+    default_res: 2k
+    target: [1536, 2048]
+    controls: {2k: false, 4k: false, 8k: false}
   four_k_jpg:
     width: 2730
     height: 4096
     default_res: 8k
     target: [5460, 8192]
-    controls: {2k: true, 4k: true, 8k: false}
+    controls: {2k: false, 4k: false, 8k: false}
   four_k_png:
     width: 4500
     height: 3000
     default_res: 8k
     target: [8192, 5461]
-    controls: {2k: true, 4k: true, 8k: false}
+    controls: {2k: false, 4k: false, 8k: false}
   eight_k:
     width: 8000
     height: 6000
     default_res: 8k
     target: [8192, 6144]
-    controls: {2k: true, 4k: true, 8k: false}
+    controls: {2k: false, 4k: false, 8k: false}
 routes:
   standard_2k:
     mode: Standard Mode
@@ -108,7 +120,8 @@ ultra:
     resource_code: picenhance_ultra_2k
     style_id: pkweb_comfyui_enhance_natural
     long_edge: 2048
-    credits: 4
+    # 2026-10-19 用户确认的预期变更：Ultra 2k 由 4 点改为 10 点（按钮显示 Enhance 10）
+    credits: 10
   ultra_4k:
     mode: Ultra HD Mode
     res: 4k
@@ -116,7 +129,8 @@ ultra:
     resource_code: picenhance_ultra_4k
     style_id: pkweb_comfyui_enhance_natural
     long_edge: 4096
-    credits: 4
+    # 2026-11-08 产品调整：Ultra 4k 由 4 点改为 10 点（实测主按钮显示 Enhance 10）
+    credits: 10
 eight_k_routes:
   standard_8k:
     mode: Standard Mode
@@ -125,7 +139,8 @@ eight_k_routes:
     style_id: pkweb_chain_comfyui_enhance_normal
     resource_code: picenhance_normal_8k
     long_edge: 8192
-    credits: 2
+    # 2026-11-08 产品调整：Standard 8k 由 2 点改为 10 点（实测 Enhance 10）
+    credits: 10
   portrait_8k:
     mode: Portrait Mode
     res: 8k
@@ -133,7 +148,8 @@ eight_k_routes:
     style_id: pkweb_chain_comfyui_enhance_portrait
     resource_code: picenhance_portrait_8k
     long_edge: 8192
-    credits: 2
+    # 2026-11-08 产品调整：Portrait 8k 由 2 点改为 10 点（实测 Enhance 10）
+    credits: 10
   text_8k:
     mode: Text Mode
     res: 8k
@@ -141,7 +157,8 @@ eight_k_routes:
     style_id: pkweb_chain_comfyui_enhance_text
     resource_code: picenhance_text_8k
     long_edge: 8192
-    credits: 4
+    # 2026-11-08 产品调整：Text 8k 由 4 点改为 10 点（实测 Enhance 10）
+    credits: 10
   ultra_8k:
     mode: Ultra HD Mode
     res: 8k
@@ -149,7 +166,8 @@ eight_k_routes:
     style_id: pkweb_chain_comfyui_enhance_ultra
     resource_code: picenhance_ultra_8k
     long_edge: 8192
-    credits: 6
+    # 2026-11-08 产品调整：Ultra 8k 由 6 点改为 15 点（实测 Enhance 15）
+    credits: 15
   ultra_8k_from_4k:
     mode: Ultra HD Mode
     res: 8k
@@ -157,4 +175,5 @@ eight_k_routes:
     style_id: pkweb_realesrgan
     resource_code: picenhance_ultra_8k
     long_edge: 8192
-    credits: 6
+    # 2026-11-08 产品调整：Ultra 8k（4K图 direct realesrgan）由 6 点改为 15 点
+    credits: 15

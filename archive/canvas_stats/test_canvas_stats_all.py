@@ -20,6 +20,8 @@ import allure
 import pytest
 import yaml
 
+from helpers.waiting import poll_until, settle, wait_canvas_ready, wait_visible
+
 def _repo_root() -> Path:
     """解析仓库根：live(tests/) 与 archive(<module>/) 副本都能定位到仓库根。
 
@@ -126,7 +128,8 @@ def safe_goto(page, url: str, timeout: int = 90000) -> None:
         page.goto(url, timeout=timeout, wait_until="domcontentloaded")
     except Exception:
         pass
-    page.wait_for_timeout(2500)
+    # 页面就绪信号：DOM 可用（domcontentloaded 已同步）；仅保留极短有界停等兜底
+    settle(page, 1200)
 
 
 def click_text(page, text: str, timeout: int = 15000, last: bool = False) -> bool:
@@ -176,6 +179,20 @@ def click_text(page, text: str, timeout: int = 15000, last: bool = False) -> boo
 
 
 def upload_on_page(page, timeout: int = 15000) -> bool:
+    # 2026-10-12 漂移修复：/create 入口卡由 div.cursor-pointer + "Start from a Photo"
+    # 变为 button[data-tool-id='start-photo']（文案 "Start with Photos"）。
+    # 旧代码会 fallback 到 input[type=file].first（提示框参考图上传），
+    # 上传后仍停留在 /create 被误判为成功；这里改为优先点入口卡真正进入画布。
+    try:
+        entry = page.locator("button[data-tool-id='start-photo']").first
+        if entry.count() and entry.is_visible():
+            with page.expect_file_chooser(timeout=timeout) as fc:
+                entry.click(timeout=timeout)
+            fc.value.set_files(str(IMAGE))
+            # 上传受理信号：画布/编辑区出现（由后续 wait_canvas 轮询）
+            return True
+    except Exception:
+        pass
     # SEO 首屏上传必须走真实按钮，保留 picenhance/aiReplace/aiextend 工具上下文。
     try:
         seo_btn = page.locator("button.seo-first-screen-upload-button").first
@@ -183,7 +200,7 @@ def upload_on_page(page, timeout: int = 15000) -> bool:
             with page.expect_file_chooser(timeout=timeout) as fc:
                 seo_btn.click(timeout=timeout)
             fc.value.set_files(str(IMAGE))
-            page.wait_for_timeout(3000)
+            # 上传受理信号：由后续 wait_canvas 轮询 URL/渲染
             return True
     except Exception:
         pass
@@ -203,7 +220,7 @@ def upload_on_page(page, timeout: int = 15000) -> bool:
             with page.expect_file_chooser(timeout=timeout) as fc:
                 btn.click(timeout=timeout)
             fc.value.set_files(str(IMAGE))
-            page.wait_for_timeout(2500)
+            # 上传受理信号：由后续 wait_canvas 轮询
             return True
         except Exception:
             continue
@@ -214,13 +231,13 @@ def upload_on_page(page, timeout: int = 15000) -> bool:
         with page.expect_file_chooser(timeout=timeout) as fc:
             target.click(timeout=timeout)
         fc.value.set_files(str(IMAGE))
-        page.wait_for_timeout(2500)
+        # 上传受理信号：由后续 wait_canvas 轮询
         return True
     except Exception:
         pass
     try:
         page.locator("input[type=file]").first.set_input_files(str(IMAGE), timeout=timeout)
-        page.wait_for_timeout(2500)
+        # 上传受理信号：由后续 wait_canvas 轮询
         return True
     except Exception:
         return False
@@ -236,7 +253,8 @@ def wait_canvas(page, platform: str, timeout: int = 120000) -> None:
         page.wait_for_load_state("domcontentloaded", timeout=timeout)
     except Exception:
         pass
-    page.wait_for_timeout(4000)
+    # 2026-11-05: URL 到位 != 画布就绪；等可见 canvas/大图真正渲染
+    wait_canvas_ready(page, timeout=60000)
 
 
 def register_or_login(page, mobile: bool = False, pro: bool = False, email: str | None = None) -> str:
@@ -247,40 +265,66 @@ def register_or_login(page, mobile: bool = False, pro: bool = False, email: str 
             email = fresh_email()
     code = os.environ.get("POKECUT_TEST_CODE", CODE) if pro else CODE
     if mobile:
-        try:
-            email_box = page.get_by_role("textbox", name="Email").first
-            if email_box.count() == 0 or not email_box.is_visible():
-                page.get_by_role("button", name="Sign up").first.click(timeout=15000)
-                page.wait_for_timeout(1500)
-            page.get_by_role("textbox", name="Email").fill(email)
-            page.get_by_role("textbox", name="Verification Code").fill(code)
-            page.wait_for_timeout(900)
-            submit = page.locator("[data-testid='auth-submit']").last
-            if submit.count():
-                submit.click(timeout=15000)
+        # 2026-10-12 漂移修复：移动端首页 header 已无独立 Sign up 按钮，
+        # 注册入口迁移到 credits 胶囊面板（.credits-entry__panel）内的
+        # button.credits-entry__signup（文案 "Sign up to get more"）。
+        email_box = page.get_by_role("textbox", name="Email").first
+        if email_box.count() == 0 or not email_box.is_visible():
+            pill = page.locator(".credits-entry__pill").first
+            if pill.count():
+                pill.click(timeout=15000)
+                # 胶囊面板就绪信号：注册入口可见（替代固定 1.5s）
+                poll_until(page, lambda: page.locator("button.credits-entry__signup").count() > 0, timeout=6000, interval=300)
+            entry = page.locator("button.credits-entry__signup").first
+            if entry.count():
+                entry.click(timeout=15000)
             else:
-                page.get_by_role("button", name=re.compile(r"^Sign up$", re.I)).last.click(timeout=15000)
-            page.wait_for_timeout(8000)
-        except Exception:
-            pass
+                page.get_by_role("button", name=re.compile(r"^Sign up$", re.I)).first.click(timeout=15000)
+            # 注册弹窗就绪信号：email 输入框出现（替代固定 2.5s）
+            poll_until(page, lambda: page.locator('input[type="email"]').count() > 0, timeout=15000, interval=300)
+        # 注册/登录弹窗必须真正出现，否则后续断言会以“未出现购买弹窗”的假象失败。
+        # 这里禁止再静默吞异常（历史缺陷：入口漂移导致注册静默失败，16 条用例被误判）。
+        assert page.locator('input[type="email"]').count() > 0, (
+            f"移动端注册弹窗未出现，注册/登录未发起（email={email}）"
+        )
+        page.get_by_role("textbox", name="Email").fill(email)
+        page.get_by_role("textbox", name="Verification Code").fill(code)
+        # 输入回填生效信号：email 值已写入（替代固定 900ms）
+        poll_until(page, lambda: bool(page.locator('input[type="email"]').first.input_value().strip()), timeout=4000, interval=200)
+        submit = page.locator("[data-testid='auth-submit']").last
+        if submit.count():
+            submit.click(timeout=15000)
+        else:
+            page.get_by_role("button", name=re.compile(r"^Sign up$", re.I)).last.click(timeout=15000)
+        # 提交后弹窗关闭作为注册/登录成功的判据
+        poll_until(page, lambda: page.locator('input[type="email"]').count() == 0, timeout=20000, interval=500)
+        assert page.locator('input[type="email"]').count() == 0, (
+            f"移动端注册/登录未完成，auth 弹窗未关闭（email={email}）"
+        )
+        # 注册成功后 UI 就绪：等待登录入口/用户菜单出现（替代固定 2s）
+        poll_until(page, lambda: page.locator("input[type=email]").count() == 0, timeout=6000, interval=500)
         return email
     try:
         entry = page.get_by_text("Log in", exact=True)
         if entry.count() == 0:
             entry = page.get_by_role("button", name=re.compile(r"Sign up|Log in", re.I))
         entry.first.click(timeout=15000)
-        page.wait_for_timeout(1800)
+        # 弹窗就绪信号：email 输入框出现（替代固定 1.8s）
+        poll_until(page, lambda: page.locator('input[type="email"]').count() > 0, timeout=15000, interval=300)
         login_text = page.get_by_text("Log in", exact=True)
         if login_text.count() and (pro or page.get_by_text("Already have an account?").count()):
             try:
                 login_text.last.click(timeout=5000)
-                page.wait_for_timeout(800)
+                # 切到登录态生效信号：Verification 输入框可见
+                poll_until(page, lambda: page.locator('input[placeholder="Verification Code"]').count() > 0,
+                           timeout=6000, interval=300)
             except Exception:
                 pass
         page.locator('input[type="email"]').first.fill(email)
         page.locator('input[placeholder="Verification Code"]').first.fill(code)
         page.get_by_role("button", name=re.compile(r"Log in|Sign up", re.I)).last.click(timeout=15000)
-        page.wait_for_timeout(8000)
+        # 登录成功信号：弹窗关闭（替代固定 8s）
+        poll_until(page, lambda: page.locator('input[type="email"]').count() == 0, timeout=40000, interval=1000)
     except Exception:
         pass
     return email
@@ -335,7 +379,6 @@ def close_promo_modal(page) -> bool:
                             && !m.querySelector('li.purchase-pro-plan__card'))""",
             timeout=15000,
         )
-        page.wait_for_timeout(900)
         return True
     except Exception:
         return False
@@ -405,12 +448,14 @@ def dismiss_auto_purchase_overlay(page) -> None:
             target = page.locator(sel).last
             if target.count():
                 target.click(timeout=5000, force=True)
-                page.wait_for_timeout(1200)
+                # 关闭生效信号：弹窗节点消失
+                poll_until(page, lambda: page.locator(".purchase-gift-modal").count() == 0, timeout=6000, interval=300)
         except Exception:
             pass
     try:
         page.keyboard.press("Escape")
-        page.wait_for_timeout(600)
+        # Escape 生效信号：弹窗节点消失
+        poll_until(page, lambda: page.locator(".purchase-gift-modal").count() == 0, timeout=4000, interval=300)
     except Exception:
         pass
     # 只移除购买弹窗节点，不能删除任意大容器，否则会破坏 /create 页面主体。
@@ -418,7 +463,8 @@ def dismiss_auto_purchase_overlay(page) -> None:
         page.evaluate("""() => {
             document.querySelectorAll('.purchase-gift-modal').forEach((el) => el.remove());
         }""")
-        page.wait_for_timeout(600)
+        # 移除生效信号：节点数归零
+        poll_until(page, lambda: page.locator(".purchase-gift-modal").count() == 0, timeout=4000, interval=200)
     except Exception:
         pass
 
@@ -453,7 +499,9 @@ def _open_debug_panel(page) -> bool:
         except Exception:
             btn.click(timeout=8000, force=True)
         page.locator('.debug-panel').first.wait_for(state='visible', timeout=8000)
-        page.wait_for_timeout(600)
+        # 面板就绪信号：内部控件可读（去掉固定 600ms）
+        poll_until(page, lambda: page.locator('.debug-panel').first.locator('button, input').count() > 0,
+                   timeout=4000, interval=200)
         return True
     except Exception:
         return False
@@ -474,9 +522,10 @@ def _close_debug_panel(page) -> None:
                     close_btn.click(timeout=6000)
                 except Exception:
                     close_btn.click(timeout=6000, force=True)
-                page.wait_for_timeout(900)
+                # 关闭生效信号：debug-panel 不可见
+                poll_until(page, lambda: not page.locator('.debug-panel').first.is_visible(), timeout=6000, interval=300)
         except Exception:
-            page.wait_for_timeout(600)
+            poll_until(page, lambda: not page.locator('.debug-panel').first.is_visible(), timeout=3000, interval=300)
     # 兜底：DEBUG 浮层再点一次
     try:
         page.evaluate("""() => {
@@ -484,7 +533,8 @@ def _close_debug_panel(page) -> None:
             const btn = btns.find((b) => (b.textContent || '').trim() === 'DEBUG');
             if (btn) btn.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true}));
         }""")
-        page.wait_for_timeout(700)
+        # 关闭生效信号：debug-panel 不可见
+        poll_until(page, lambda: not page.locator('.debug-panel').first.is_visible(), timeout=4000, interval=300)
     except Exception:
         pass
 
@@ -505,7 +555,8 @@ def set_debug_skip_toggle(page, enabled: bool = True) -> bool:
                 switch.click(timeout=8000)
             except Exception:
                 switch.click(timeout=8000, force=True)
-            page.wait_for_timeout(1000)
+            # 开关生效信号：checkbox 状态变为期望值
+            poll_until(page, lambda: bool(checkbox.is_checked()) == enabled, timeout=6000, interval=250)
         current = bool(checkbox.is_checked())
         return current == enabled
     except Exception:
@@ -531,18 +582,22 @@ def click_debug_skip_purchase(page) -> bool:
             pass
         # 优先真实点击：force=True 可能因遮罩导致坐标落到真实支付按钮上。
         btn.click(timeout=8000)
-        page.wait_for_timeout(6000)
+        # 跳过购买受理信号：checkout Debug 按钮消失 / 弹窗关闭
+        poll_until(page, lambda: page.get_by_role("button", name=names).count() == 0
+                   or page.locator(".purchase-gift-modal:visible").count() == 0, timeout=20000, interval=500)
         return True
     except Exception:
         pass
     # 真实点击失败时，直接向目标按钮派发 DOM click，避免坐标命中外层支付按钮。
     if js_click_exact(page, "Debug: 跳过真实购买"):
-        page.wait_for_timeout(6000)
+        poll_until(page, lambda: page.get_by_role("button", name=names).count() == 0
+                   or page.locator(".purchase-gift-modal:visible").count() == 0, timeout=20000, interval=500)
         return True
     try:
         btn = page.get_by_role("button", name=names).first
         btn.click(timeout=8000, force=True)
-        page.wait_for_timeout(6000)
+        poll_until(page, lambda: page.get_by_role("button", name=names).count() == 0
+                   or page.locator(".purchase-gift-modal:visible").count() == 0, timeout=20000, interval=500)
         return True
     except Exception:
         return False
@@ -570,14 +625,16 @@ def select_purchase_plan(page, plan_name: str | None = None, monthly: bool = Fal
             toggle = modal.locator("img[src*='pro_plan_left.svg']").first
             if toggle.count() and toggle.is_visible():
                 toggle.click(timeout=8000)
-                page.wait_for_timeout(1200)
+                # 切换生效信号：月付套餐卡片可见（去掉固定 1.2s）
+                poll_until(page, lambda: modal.locator("li.purchase-pro-plan__card").count() > 0, timeout=6000, interval=300)
         if plan_name:
             card = modal.locator(f"li.purchase-pro-plan__card:has-text('{plan_name}')").first
             if card.count() == 0:
                 return False
             card.click(timeout=8000)
-            page.wait_for_timeout(1000)
-            selected = card.locator("img[src*='purchase_selected_point.svg']").count() > 0
+            # 选中生效信号：selected 标记出现（替代固定 1s）
+            selected = poll_until(page, lambda: card.locator("img[src*='purchase_selected_point.svg']").count() > 0,
+                                  timeout=6000, interval=300)
             return selected
         return True
     except Exception:
@@ -591,7 +648,7 @@ def _click_purchase_get_started(page) -> bool:
             btn = page.locator(sel).first
             if btn.count() and btn.is_visible():
                 btn.click(timeout=10000)
-                page.wait_for_timeout(4500)
+                # 点击受理信号：checkout 打开（由 debug_skip_flow 轮询 Debug 按钮）
                 return True
         except Exception:
             continue
@@ -600,13 +657,13 @@ def _click_purchase_get_started(page) -> bool:
         btn = page.get_by_role("button", name=pattern).last
         if btn.count() and btn.is_visible():
             btn.click(timeout=10000)
-            page.wait_for_timeout(4500)
+            # 点击受理信号：checkout 打开（由 debug_skip_flow 轮询 Debug 按钮）
             return True
     except Exception:
         pass
     for text in ("Get Started", "Get Started for $1 USD", "Get started"):
         if js_click_exact(page, text):
-            page.wait_for_timeout(4500)
+            # 点击受理信号：checkout 打开（由 debug_skip_flow 轮询 Debug 按钮）
             return True
     return False
 
@@ -626,7 +683,8 @@ def debug_skip_flow(page, plan_name: str | None = None, monthly: bool = False) -
 
     # 关闭 Debug 面板后必须确认不再遮挡购买弹窗。
     _close_debug_panel(page)
-    page.wait_for_timeout(800)
+    # 关闭生效信号：Debug 面板不可见（替代固定 800ms）
+    poll_until(page, lambda: not _debug_panel_visible(page), timeout=6000, interval=300)
     panel_visible = _debug_panel_visible(page)
     trace.append(f"Debug 面板关闭后仍可见={panel_visible}")
 
@@ -652,14 +710,16 @@ def debug_skip_flow(page, plan_name: str | None = None, monthly: bool = False) -
 
     trace.append(f"checkout 标记={_checkout_markers(page)}")
     if not debug_button_visible():
-        page.wait_for_timeout(6000)
+        # checkout 就绪信号：Debug 跳过按钮出现（替代固定 6s）
+        poll_until(page, debug_button_visible, timeout=15000, interval=500)
         trace.append(f"等待后 checkout Debug 按钮={debug_button_visible()}; 页面状态={_checkout_markers(page)}")
 
     if not debug_button_visible():
         toggled = set_debug_skip_toggle(page, True)
         trace.append(f"checkout 内重开开关={toggled}")
         if toggled:
-            page.wait_for_timeout(3500)
+            # 重开生效信号：Debug 跳过按钮出现（替代固定 3.5s）
+            poll_until(page, debug_button_visible, timeout=10000, interval=500)
             trace.append(f"重开后 checkout Debug 按钮={debug_button_visible()}")
 
     ok = click_debug_skip_purchase(page)
@@ -681,7 +741,8 @@ def drag_canvas(page) -> None:
         page.mouse.down()
         page.mouse.move(box["x"] + box["width"] * 0.65, box["y"] + box["height"] * 0.65, steps=10)
         page.mouse.up()
-        page.wait_for_timeout(1500)
+        # 拖动后画布重绘稳定即可继续；无独立可观察信号
+        settle(page, 1500)
     except Exception:
         pass
 
@@ -710,10 +771,12 @@ def paint_mask_cdp(page, strokes: int = 3) -> bool:
                     "type": "touchMove",
                     "touchPoints": [{"x": x0 + i * 2.6, "y": y + i * 1.2, "id": 1}],
                 })
+                # 触笔移动间隔：CDP 触摸流需逐步发送（无 DOM 可观察信号）
                 page.wait_for_timeout(30)
             client.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
+            # 每笔涂抹后给画布落笔时间；CDP 触摸事件无 DOM 可观察回调，保留有界停等
             page.wait_for_timeout(800)
-        page.wait_for_timeout(2500)
+        # 提交按钮可用信号：由 submit_remove_after_mask 轮询（去掉固定 2.5s）
         return True
     except Exception:
         return False
@@ -724,13 +787,14 @@ def submit_remove_after_mask(page) -> bool:
     try:
         btn = page.locator(".mobile-ai-generate-button").first
         btn.wait_for(state="visible", timeout=15000)
-        for _ in range(10):
+        def removable() -> bool:
             src = btn.locator("img").first.get_attribute("src") if btn.locator("img").count() else ""
-            if src and "cannot_remove" not in src:
-                break
-            page.wait_for_timeout(1500)
+            return bool(src) and "cannot_remove" not in src
+        # 可提交信号：按钮图标不再是 cannot_remove（替代固定 10×1.5s）
+        poll_until(page, removable, timeout=15000, interval=800)
         btn.click(timeout=10000)
-        page.wait_for_timeout(4000)
+        # 提交受理后无独立可观察信号，保留有界停等
+        settle(page, 2000)
         return True
     except Exception:
         return False
@@ -738,9 +802,22 @@ def submit_remove_after_mask(page) -> bool:
 
 def run_actions(page, actions: list[dict] | None) -> None:
     for action in actions or []:
-        if "click" in action:
+        if "click_exact" in action:
+            # 2026-10-12 新增：按精确按钮名点击。
+            # click_text 的兜底是子串匹配，action 文案一旦与别的控件同前缀就会误点
+            # （实例：P-NEW-03 的 "Remove" 点到工具栏 "Remove BG"，导致误入背景移除面板、
+            #  发出「抠图」购买事件而非「消除」）。
+            target = page.get_by_role(
+                "button", name=re.compile(rf"^{re.escape(action['click_exact'])}$", re.I)
+            ).first
+            target.wait_for(state="visible", timeout=15000)
+            target.click(timeout=15000)
+            # 点击后无独立可观察信号，保留有界停等
+            settle(page, 1500)
+        elif "click" in action:
             click_text(page, action["click"])
-            page.wait_for_timeout(2000)
+            # 点击后无独立可观察信号，保留有界停等
+            settle(page, 1500)
         elif action.get("drag_canvas"):
             drag_canvas(page)
         elif action.get("fill_last_textarea"):
@@ -748,28 +825,31 @@ def run_actions(page, actions: list[dict] | None) -> None:
                 page.locator("textarea").last.fill(action["fill_last_textarea"])
             except Exception:
                 pass
-            page.wait_for_timeout(800)
+            # 输入回填同步生效（去掉固定 800ms）
         elif action.get("fill_first_textarea"):
             try:
                 page.locator("textarea").first.fill(action["fill_first_textarea"])
             except Exception:
                 pass
-            page.wait_for_timeout(800)
+            # 输入回填同步生效（去掉固定 800ms）
         elif action.get("click_vip_sticker"):
             try:
                 # 点击贴纸列表中的第一张 VIP 贴纸按钮，避免点到角标文本。
                 page.locator("button:has-text('VIP')").first.click(timeout=8000)
             except Exception:
                 pass
-            page.wait_for_timeout(1800)
+            # 贴纸点击后无独立可观察信号，保留有界停等
+            settle(page, 1500)
         elif action.get("select_all_layers"):
             try:
                 layer_btn = page.get_by_role("button", name="Layer").first
                 if layer_btn.count():
                     layer_btn.click(timeout=8000)
-                    page.wait_for_timeout(1200)
+                    # Layer 面板展开后无独立可观察信号，保留有界停等
+                    settle(page, 1000)
                 page.keyboard.press("Control+A")
-                page.wait_for_timeout(1500)
+                # 全选生效后无独立可观察信号，保留有界停等
+                settle(page, 1000)
             except Exception:
                 pass
         elif action.get("paint_mask_cdp"):
@@ -784,7 +864,8 @@ def run_actions(page, actions: list[dict] | None) -> None:
                     page.mouse.down()
                     page.mouse.move(box["x"] + box["width"] - 10, box["y"] + box["height"] - 10, steps=12)
                     page.mouse.up()
-                    page.wait_for_timeout(1200)
+                    # 框选完成后无独立可观察信号，保留有界停等
+                    settle(page, 1000)
             except Exception:
                 pass
 
@@ -799,33 +880,53 @@ def close_auth_modal(page) -> bool:
         box = dialog.bounding_box() if dialog.count() else None
         if box:
             page.mouse.click(box["x"] + box["width"] - 22, box["y"] + 22)
-            page.wait_for_timeout(1800)
+            # 关闭生效信号：email 输入框消失（替代固定 1.8s）
+            poll_until(page, lambda: page.locator("input[type=email]").count() == 0, timeout=6000, interval=300)
         if page.locator("input[type=email]").count() == 0:
             return True
         # 兜底：点遮罩顶部空白区域
         page.mouse.click(page.viewport_size["width"] / 2, 8)
-        page.wait_for_timeout(1800)
+        poll_until(page, lambda: page.locator("input[type=email]").count() == 0, timeout=6000, interval=300)
         return page.locator("input[type=email]").count() == 0
     except Exception:
         return False
 
 
 def close_purchase_modal(page) -> None:
-    try:
-        close_icon = page.locator(".purchase-gift-modal img[src*='nav_btn_pop_close.svg']").last
-        if close_icon.count():
-            close_icon.click(timeout=5000, force=True)
-            page.wait_for_timeout(1500)
+    """关闭购买弹窗。
+
+    2026-10-12 修复：新用户 24h 促销弹窗会**先于**内购弹窗出现，两者共用
+    `.purchase-gift-modal` 容器；只关一次会把内购弹窗留在页面上，遮罩吞掉后续
+    所有点击（曾导致 M-CORE-03 在后续 AI Image Extender 面板处失败）。
+    这里改为循环关闭，直到没有可见的购买弹窗为止（最多 3 轮）。
+    """
+    for _ in range(3):
+        if page.locator(".purchase-gift-modal:visible").count() == 0:
             return
-    except Exception:
-        pass
-    for name in ("Close", "×"):
+        closed = False
         try:
-            page.get_by_role("button", name=name).last.click(timeout=5000, force=True)
-            page.wait_for_timeout(1500)
-            return
+            close_icon = page.locator(".purchase-gift-modal img[src*='nav_btn_pop_close.svg']").last
+            if close_icon.count():
+                close_icon.click(timeout=5000, force=True)
+                # 关闭生效信号：可见购买弹窗消失
+                poll_until(page, lambda: page.locator(".purchase-gift-modal:visible").count() == 0,
+                           timeout=6000, interval=300)
+                closed = True
         except Exception:
-            continue
+            closed = False
+        if not closed:
+            for name in ("Close", "×"):
+                try:
+                    page.get_by_role("button", name=name).last.click(timeout=5000, force=True)
+                    # 关闭生效信号：可见购买弹窗消失
+                    poll_until(page, lambda: page.locator(".purchase-gift-modal:visible").count() == 0,
+                               timeout=6000, interval=300)
+                    closed = True
+                    break
+                except Exception:
+                    continue
+        if not closed:
+            return
 
 
 # ─────────────────────────── 业务 flows ───────────────────────────
@@ -842,11 +943,11 @@ def flow_pc_infinite_register(page, base, case, rec):
     click_text(page, "Enhance")
     click_text(page, "Ultra HD Mode")
     click_text(page, "Enhance")
-    page.wait_for_timeout(3000)
+    # 事件上报由 assert_event_pair 轮询等待（去掉固定 3s）
     attach_shot(page, case["screenshot"])
     assert_event_pair(rec, case["expected"][0])
     register_or_login(page, email=ZERO_CREDIT_EMAIL)
-    page.wait_for_timeout(6000)
+    # 注册成功事件由 assert_event_pair 轮询等待（去掉固定 6s）
     assert_event_pair(rec, case["expected"][1])
 
 
@@ -859,7 +960,8 @@ def complete_pc_signup_if_present(page) -> bool:
         email_input.fill(fresh_email())
         page.locator('input[placeholder="Verification Code"]').first.fill(CODE)
         page.get_by_role("button", name=re.compile(r"^Sign up$", re.I)).last.click(timeout=10000)
-        page.wait_for_timeout(8000)
+        # 注册成功信号：email 输入框消失（替代固定 8s）
+        poll_until(page, lambda: page.locator('input[type="email"]').count() == 0, timeout=40000, interval=1000)
         return True
     except Exception:
         return False
@@ -870,23 +972,32 @@ def flow_pc_infinite_purchase(page, base, case, rec):
     safe_goto(page, base + "/en")
     register_or_login(page, email=ZERO_CREDIT_EMAIL)
     safe_goto(page, base + "/create")
-    page.wait_for_timeout(2500)
     dismiss_auto_purchase_overlay(page)
     assert upload_on_page(page), "PC /create 未找到可用的上传入口"
     wait_canvas(page, "pc")
 
-    ultra = page.get_by_role("button", name=re.compile(r"Ultra HD Mode", re.I)).first
-    if ultra.count() == 0 or not ultra.is_visible():
+    # 2026-10-12 改版：PC 画布 Enhance 变为顶部工具栏下拉
+    # （触发按钮 button.enhance-shortcut-trigger），模式项为
+    # button[role=menuitem].enhance-shortcut-row；必须先选中模式，
+    # 才会出现带主提交按钮的 Enhance 面板。
+    ultra = page.locator("button.enhance-shortcut-row:has-text('Ultra HD Mode')").first
+    for _ in range(3):
+        if ultra.count():
+            break
         click_text(page, "Enhance")
-        page.wait_for_timeout(2200)
-    assert ultra.count() > 0 and ultra.is_visible(), "PC Enhance 面板未显示 Ultra HD Mode"
+        # 下拉出现信号：模式项 attached（替代固定 1.8s）
+        poll_until(page, lambda: page.locator("button.enhance-shortcut-row:has-text('Ultra HD Mode')").count() > 0,
+                   timeout=6000, interval=300)
+    assert ultra.count() > 0, "PC Enhance 下拉未显示 Ultra HD Mode 模式项"
     ultra.click(timeout=10000)
-    page.wait_for_timeout(1200)
+    # 模式选中生效信号：主提交按钮可见（替代固定 2.5s）
+    poll_until(page, lambda: page.locator("button.btn-bg-gradient1:has-text('Enhance')").count() > 0,
+               timeout=10000, interval=300)
 
     submit = page.locator("button.btn-bg-gradient1:has-text('Enhance')").first
     assert submit.count() > 0 and submit.is_visible(), "PC Enhance 面板未显示主提交按钮"
     submit.click(timeout=10000)
-    page.wait_for_timeout(3500)
+    # 购买弹窗由 wait_purchase_modal 轮询等待（去掉固定 3.5s）
     assert wait_purchase_modal(page), "未出现无限画布功能级购买弹窗"
     attach_shot(page, case["screenshot"])
     assert debug_skip_flow(page), "未能通过 Debug 跳过真实购买"
@@ -894,7 +1005,7 @@ def flow_pc_infinite_purchase(page, base, case, rec):
 
 
 def flow_pc_infinite_download(page, base, case, rec):
-    # 结果图下载：/create 上传 -> Enhance -> Standard Mode 生成 -> 选中 Enhanced 结果层 -> 下载。
+    # 结果图下载：/create 上传 -> Enhance(Ultra HD Mode) 生成 -> 选中 Enhanced 结果层 -> 下载。
     safe_goto(page, base + "/en")
     register_or_login(page, pro=True)
     safe_goto(page, base + "/create")
@@ -902,9 +1013,23 @@ def flow_pc_infinite_download(page, base, case, rec):
     assert upload_on_page(page), "PC /create 未找到上传入口"
     wait_canvas(page, "pc")
 
-    # 打开 AI Enhancer 面板并点击面板主提交按钮；先前漏点导致没有生成结果。
-    click_text(page, "Enhance")
-    page.wait_for_timeout(2200)
+    # 2026-10-12 改版：先点顶部 Enhance 下拉，再选 Ultra HD Mode，
+    # 才会出现带主提交按钮的 Enhance 面板（面板不再默认常驻）。
+    # 用例期望事件为「画质增强ultra功能图片下载保存」，故必须走 Ultra 档，
+    # 选 Standard Mode 只会产出「画质增强通用功能图片下载保存」。
+    mode_row = page.locator("button.enhance-shortcut-row:has-text('Ultra HD Mode')").first
+    for _ in range(3):
+        if mode_row.count():
+            break
+        click_text(page, "Enhance")
+        # 下拉出现信号：模式项 attached（替代固定 1.8s）
+        poll_until(page, lambda: page.locator("button.enhance-shortcut-row:has-text('Ultra HD Mode')").count() > 0,
+                   timeout=6000, interval=300)
+    assert mode_row.count() > 0, "PC Enhance 下拉未显示 Standard Mode 模式项"
+    mode_row.click(timeout=10000)
+    # 模式选中生效信号：主提交按钮可见（替代固定 2.5s）
+    poll_until(page, lambda: page.locator("button.btn-bg-gradient1:has-text('Enhance')").count() > 0,
+               timeout=10000, interval=300)
     submit = page.locator("button.btn-bg-gradient1:has-text('Enhance')").first
     assert submit.count() > 0 and submit.is_visible(), "AI Enhancer 面板未显示主 Enhance 提交按钮"
     submit.click(timeout=10000)
@@ -917,14 +1042,17 @@ def flow_pc_infinite_download(page, base, case, rec):
             timeout=360000,
         )
     except Exception:
-        page.wait_for_timeout(30000)
+        # 结果图层超时未出：不再盲等 30s，直接进入下载步骤由其断言暴露问题
+        pass
 
     layer_btn = page.locator("button[aria-label='Layer']").first
     if layer_btn.count() == 0 or not layer_btn.is_visible():
         click_text(page, "Layer")
     else:
         layer_btn.click(timeout=8000)
-    page.wait_for_timeout(1500)
+    # 图层结果出现信号：Enhanced 结果项可定位（替代固定 1.5s）
+    poll_until(page, lambda: page.locator("img[alt*='Enhanced']").count() > 0
+               or page.get_by_text("Enhanced", exact=False).count() > 0, timeout=10000, interval=300)
 
     # 选中生成后的 Enhanced 结果图层；不得对原图执行下载。
     result_item = page.locator("img[alt*='Enhanced']").first
@@ -934,12 +1062,13 @@ def flow_pc_infinite_download(page, base, case, rec):
     # 结果图 img 自身 pointer-events:none，点击其可交互父容器完成图层选中。
     result_click = result_item.locator("xpath=..").first
     result_click.click(timeout=10000)
-    page.wait_for_timeout(1200)
+    # 选中生效信号：下载按钮出现（替代固定 1.2s）
+    poll_until(page, lambda: page.locator("button[class*='download-left']").count() > 0, timeout=10000, interval=300)
 
     download_btn = page.locator("button[class*='download-left']").first
     assert download_btn.count() > 0 and download_btn.is_visible(), "未找到结果图下载按钮"
     download_btn.click(timeout=10000)
-    page.wait_for_timeout(5000)
+    # 下载事件上报由 assert_event_pair 轮询等待（去掉固定 5s）
     attach_shot(page, case["screenshot"])
     assert_event_pair(rec, case["expected"][0])
 
@@ -969,7 +1098,7 @@ def click_tool_primary_submit(page) -> bool:
                 if not btn.is_visible():
                     continue
                 btn.click(timeout=10000)
-                page.wait_for_timeout(3500)
+                # 提交受理信号：由调用方（wait_purchase_modal / 事件断言）轮询
                 return True
         except Exception:
             continue
@@ -984,7 +1113,7 @@ def upload_via_create_upload_button(page, timeout: int = 15000) -> bool:
         with page.expect_file_chooser(timeout=timeout) as fc:
             btn.click(timeout=timeout)
         fc.value.set_files(str(IMAGE))
-        page.wait_for_timeout(3000)
+        # 上传受理信号：由后续 click_create_go / wait_canvas 校验（去掉固定 3s）
         return True
     except Exception:
         return False
@@ -996,7 +1125,7 @@ def click_create_go(page, timeout: int = 15000) -> bool:
         btn = page.locator("button:has(img[src*='create_generate_icon_go.svg'])").first
         btn.wait_for(state="visible", timeout=timeout)
         btn.click(timeout=timeout)
-        page.wait_for_timeout(3000)
+        # 生成受理信号：由后续 wait_canvas 校验（去掉固定 3s）
         return True
     except Exception:
         return False
@@ -1015,29 +1144,34 @@ def flow_seo_new_canvas(page, base, case, rec):
         assert click_create_go(page), "AI 文生图首屏未找到 Generate 图标按钮"
     elif entry_action == "upload_then_generate":
         assert upload_via_create_upload_button(page), "图生图首屏未找到上传图标按钮"
-        page.wait_for_timeout(2500)
+        # 上传完成信号：Generate 图标可点（替代固定 2.5s）
+        poll_until(page, lambda: page.locator("button:has(img[src*='create_generate_icon_go.svg'])").count() > 0,
+                   timeout=20000, interval=400)
         assert click_create_go(page), "图生图首屏未找到 Generate 图标按钮"
     else:
         upload_on_page(page)
     wait_canvas(page, case["platform"])
     run_actions(page, case.get("actions"))
-    page.wait_for_timeout(3000)
+    # 面板自动打开/动作生效信号：主提交按钮出现（替代固定 3s）
+    poll_until(page, lambda: page.locator(
+        "button.btn-bg-gradient1:visible, button.mobile-ai-generate-button:visible, "
+        "button.mobile-ai-expand-generate-button:visible").count() > 0
+        or page.locator(".purchase-gift-modal:visible").count() > 0, timeout=15000, interval=400)
 
     # SEO 新画布进入画布后功能面板已自动打开；若尚未弹购买，则点击面板主提交按钮。
     # PC 与移动端的按钮 class 不同（PC: btn-bg-gradient1 / 移动端: mobile-ai-*-generate-button），
     # click_tool_primary_submit 已覆盖两者；依据 page_map v10 与第 4 批失败复核。
     if page.locator(".purchase-gift-modal:visible").count() == 0:
         click_tool_primary_submit(page)
-        page.wait_for_timeout(2500)
+        # 购买弹窗出现信号（替代固定 2.5s）
+        poll_until(page, lambda: page.locator(".purchase-gift-modal:visible").count() > 0, timeout=15000, interval=400)
     # 部分面板需要重试才能稳定提交（移动端面板动画/遮罩未就绪）。
     if page.locator(".purchase-gift-modal:visible").count() == 0:
-        page.wait_for_timeout(2000)
         click_tool_primary_submit(page)
-        page.wait_for_timeout(2500)
+        poll_until(page, lambda: page.locator(".purchase-gift-modal:visible").count() > 0, timeout=15000, interval=400)
 
     # SEO 新画布链路可能先弹促销弹窗；先关闭促销弹窗，再等待真正的内购弹窗。
     close_promo_modal(page)
-    page.wait_for_timeout(1200)
     assert wait_purchase_modal(page), "未出现购买弹窗，无法断言购买出现统计"
     attach_shot(page, case["screenshot"])
     assert_event_pair(rec, case["expected"][0])
@@ -1055,11 +1189,11 @@ def flow_mobile_register_pair(page, base, case, rec):
     wait_canvas(page, "mobile")
     click_text(page, "Photo Enhancer")
     click_text(page, "Enhance")
-    page.wait_for_timeout(2500)
+    # 事件上报由 assert_event_pair 轮询等待（去掉固定 2.5s）
     attach_shot(page, case["screenshot"])
     assert_event_pair(rec, case["expected"][0])
     register_or_login(page, mobile=True)  # 随机新邮箱，触发注册成功统计
-    page.wait_for_timeout(6000)
+    # 注册成功事件由 assert_event_pair 轮询等待（去掉固定 6s）
     assert_event_pair(rec, case["expected"][1])
 
 
@@ -1075,78 +1209,102 @@ def mobile_feature_register_session(page, base: str, feature: str, rec: StatsRec
 
     if feature == "enhance":
         click_text(page, "Photo Enhancer")
-        page.wait_for_timeout(1500)
+        # Ultra HD Mode 档位出现信号（替代固定 1.5s）
+        poll_until(page, lambda: page.get_by_role("button", name=re.compile(r"^Ultra HD Mode$", re.I)).count() > 0,
+                   timeout=10000, interval=300)
+        # 2026-10-12 修复：期望事件为「移动端画布画质增强ultra功能点数用完触发注册」，
+        # 但原流程未选档位，面板默认是标准档 → 实际发出「…画质增强通用功能…」事件。
+        # 移动端 Photo Enhancer 面板档位：Standard Mode / Portrait Mode / Old Photo Enhance /
+        # Text Mode / Ultra HD Mode；必须显式选 Ultra HD Mode（按钮文本恰为该串）。
+        # MCP 实测：选中后主提交文案由 "Enhance 1200px * 1600px → 2400px * …" 变为
+        # "… → 3072px * …"，提交即发出 ultra 事件。
+        ultra = page.get_by_role("button", name=re.compile(r"^Ultra HD Mode$", re.I)).first
+        assert ultra.count() > 0, "移动端 Photo Enhancer 面板未找到 Ultra HD Mode 档位"
+        ultra.click(timeout=10000)
+        # 档位切换生效信号：主提交按钮可见（替代固定 1.5s）
+        poll_until(page, lambda: page.locator("button.mobile-ai-generate-button:visible").count() > 0,
+                   timeout=10000, interval=300)
         assert click_tool_primary_submit(page), "Photo Enhancer 面板未显示主提交按钮"
     elif feature == "extend":
         extender = page.locator("button.tool-card:has-text('AI Image Extender')").first
         assert extender.count() > 0, "Trending Tools 未找到 AI Image Extender 工具卡"
         extender.click(timeout=10000, force=True)
-        page.wait_for_timeout(2500)
+        # 面板打开信号：AI Extend 主提交按钮出现（替代固定 2.5s）
+        poll_until(page, lambda: page.locator("button.mobile-ai-expand-generate-button").count() > 0,
+                   timeout=12000, interval=300)
         submit = page.locator("button.mobile-ai-expand-generate-button").first
         assert submit.count() > 0, "AI Image Extender 面板未显示主提交按钮"
         submit.click(timeout=10000, force=True)
     else:
         raise ValueError(f"未知功能: {feature}")
 
-    page.wait_for_timeout(3500)
+    # 注册弹窗出现信号（替代固定 3.5s）
+    poll_until(page, lambda: page.locator("input[type=email]").count() > 0, timeout=20000, interval=500)
     assert page.locator("input[type=email]").count() > 0, f"{feature} 未出现注册弹窗"
 
 
 def flow_mobile_purchase_appearance(page, base, case, rec):
     canvas_entry_from_home(page, base)
     register_or_login(page, mobile=True, email=ZERO_CREDIT_EMAIL)
-    page.wait_for_timeout(1500)
+    # 登录完成信号：email 输入框消失（替代固定 1.5s）
+    poll_until(page, lambda: page.locator("input[type=email]").count() == 0, timeout=20000, interval=500)
     click_text(page, "Photo Enhancer")
     click_text(page, "Enhance")
-    page.wait_for_timeout(2000)
+    # 购买弹窗由 wait_purchase_modal 轮询等待（去掉固定 2s）
     assert wait_purchase_modal(page), "未出现购买弹窗"
     attach_shot(page, case["screenshot"])
     assert_event_pair(rec, case["expected"][0])
 
     close_purchase_modal(page)
-    page.wait_for_timeout(1800)
+    # 关闭生效信号：可见购买弹窗消失（替代固定 1.8s）
+    poll_until(page, lambda: page.locator(".purchase-gift-modal:visible").count() == 0, timeout=8000, interval=300)
     # 关闭功能面板，回到一级工具列表；英文移动画布按钮为 AI Image Extender + AI Extend。
     try:
         page.get_by_role("button", name="Close").last.click(timeout=5000, force=True)
     except Exception:
         pass
-    page.wait_for_timeout(1200)
     tab = page.locator("li.mobile-primary-panel__tab:has-text('Trending Tools')").first
     if tab.count():
         tab.click(timeout=8000, force=True)
-    page.wait_for_timeout(1800)
+    # Trending Tools 工具卡出现信号（替代固定 1.2s + 1.8s）
+    poll_until(page, lambda: page.locator("button.tool-card:has-text('AI Image Extender')").count() > 0,
+               timeout=12000, interval=400)
 
     extender = page.locator("button.tool-card:has-text('AI Image Extender')").first
     assert extender.count() > 0, "未回到 Trending Tools 的 AI Image Extender 工具卡"
-    ai_extend = page.get_by_role("button", name=re.compile(r"^AI Extend$", re.I)).first
-    if ai_extend.count() == 0:
-        ai_extend = page.locator("button:has-text('AI Extend')").first
+    # 2026-10-12 修复：面板主提交按钮文案已变为 "AI Extend <点数>"（如 "AI Extend 5"），
+    # 旧写法用锚定正则 ^AI Extend$ 精确匹配，永远匹配不上；
+    # 退化为 button:has-text('AI Extend') 又会命中同名工具卡，点击后反而关闭面板。
+    # 改为用稳定 class 定位主提交按钮（与 click_tool_primary_submit 保持一致），并按前缀校验文案。
+    ai_extend = page.locator("button.mobile-ai-expand-generate-button").first
     for _ in range(3):
-        if ai_extend.count() > 0:
+        if ai_extend.count() > 0 and ai_extend.is_visible():
             break
         extender.click(timeout=10000, force=True)
-        # 等待二级面板真正打开，避免点击落在过渡层上。
+        # 等二级面板真正打开，避免点击落在过渡层上。
         try:
             page.wait_for_function(
-                """() => Array.from(document.querySelectorAll('button'))
-                    .some((el) => (el.textContent || '').trim() === 'AI Extend'
-                                 && el.getBoundingClientRect().height > 0)""",
+                """() => Array.from(document.querySelectorAll('button.mobile-ai-expand-generate-button'))
+                    .some((el) => el.getBoundingClientRect().height > 0)""",
                 timeout=12000,
             )
         except Exception:
             pass
-        page.wait_for_timeout(1200)
-        ai_extend = page.get_by_role("button", name=re.compile(r"^AI Extend$", re.I)).first
-        if ai_extend.count() == 0:
-            ai_extend = page.locator("button:has-text('AI Extend')").first
+        # 面板打开信号：主提交按钮可定位（替代固定 1.2s）
+        poll_until(page, lambda: page.locator("button.mobile-ai-expand-generate-button").count() > 0,
+                   timeout=10000, interval=400)
+        ai_extend = page.locator("button.mobile-ai-expand-generate-button").first
     if ai_extend.count() == 0:
-        raise AssertionError("AI Image Extender 面板未显示 AI Extend 按钮")
+        raise AssertionError("AI Image Extender 面板未显示主提交按钮（button.mobile-ai-expand-generate-button）")
+    assert (ai_extend.inner_text() or "").strip().startswith("AI Extend"), (
+        f"AI Image Extender 主提交按钮文案异常: {(ai_extend.inner_text() or '').strip()!r}"
+    )
     try:
         ai_extend.scroll_into_view_if_needed(timeout=5000)
     except Exception:
         pass
     ai_extend.click(timeout=10000, force=True)
-    page.wait_for_timeout(2500)
+    # 购买弹窗由 wait_purchase_modal 轮询等待（去掉固定 2.5s）
     assert wait_purchase_modal(page), "AI 扩图未出现购买弹窗"
     assert_event_pair(rec, case["expected"][1])
 
@@ -1154,10 +1312,11 @@ def flow_mobile_purchase_appearance(page, base, case, rec):
 def flow_mobile_purchase_success(page, base, case, rec):
     canvas_entry_from_home(page, base)
     register_or_login(page, mobile=True, email=ZERO_CREDIT_EMAIL)
-    page.wait_for_timeout(1500)
+    # 登录完成信号：email 输入框消失（替代固定 1.5s）
+    poll_until(page, lambda: page.locator("input[type=email]").count() == 0, timeout=20000, interval=500)
     click_text(page, "AI Image Extender")
     click_text(page, "AI Extend")
-    page.wait_for_timeout(2000)
+    # 购买弹窗由 wait_purchase_modal 轮询等待（去掉固定 2s）
     assert wait_purchase_modal(page), "未出现购买弹窗"
     debug_skip_flow(page)
     attach_shot(page, case["screenshot"])
@@ -1169,11 +1328,11 @@ def flow_mobile_modal_appear(page, base, case, rec):
     canvas_entry_from_home(page, base)
     wait_canvas(page, "mobile")
     click_text(page, "Photo Enhancer")
-    page.wait_for_timeout(1500)
+    # 事件上报由 assert_event_pair 轮询等待（去掉固定 1.5s）
     assert_event_pair(rec, case["expected"][0])
     close_purchase_modal(page)
     click_text(page, "Magic Eraser")
-    page.wait_for_timeout(2000)
+    # 事件上报由 assert_event_pair 轮询等待（去掉固定 2s）
     attach_shot(page, case["screenshot"])
     assert_event_pair(rec, case["expected"][1])
 
@@ -1181,18 +1340,20 @@ def flow_mobile_modal_appear(page, base, case, rec):
 def flow_mobile_modal_confirm(page, base, case, rec):
     canvas_entry_from_home(page, base)
     register_or_login(page, mobile=True, pro=True)
-    page.wait_for_timeout(1500)
+    # 登录完成信号：email 输入框消失（替代固定 1.5s）
+    poll_until(page, lambda: page.locator("input[type=email]").count() == 0, timeout=20000, interval=500)
     click_text(page, "Adjust")
     click_text(page, "Filter")
     click_text(page, "Confirm")
-    page.wait_for_timeout(2000)
+    # 事件上报由 assert_event_pair 轮询等待（去掉固定 2s）
     assert_event_pair(rec, case["expected"][0])
     click_text(page, "Background")
     click_text(page, "Background Remover")
     click_text(page, "Remove Background")
-    page.wait_for_timeout(15000)
+    # 移除背景完成信号：Confirm 可点（替代固定 15s）
+    poll_until(page, lambda: page.get_by_text("Confirm", exact=True).count() > 0, timeout=60000, interval=1000)
     click_text(page, "Confirm")
-    page.wait_for_timeout(2500)
+    # 事件上报由 assert_event_pair 轮询等待（去掉固定 2.5s）
     attach_shot(page, case["screenshot"])
     assert_event_pair(rec, case["expected"][1])
 
@@ -1232,11 +1393,7 @@ def flow_mobile_popup_download(page, base, case, rec):
     register_or_login(page, mobile=True, pro=True)
 
     # 等登录弹窗关闭，避免登录未完成就操作面板
-    for _ in range(20):
-        if page.locator("input[type=email]").count() == 0:
-            break
-        page.wait_for_timeout(1000)
-    page.wait_for_timeout(3000)
+    poll_until(page, lambda: page.locator("input[type=email]").count() == 0, timeout=30000, interval=1000)
 
     # 打开 Photo Enhancer 面板：可能已自动打开，未打开/未稳定时重试点工具卡。
     for _ in range(4):
@@ -1249,7 +1406,9 @@ def flow_mobile_popup_download(page, base, case, rec):
             card.click(timeout=8000)
         except Exception:
             card.click(timeout=8000, force=True)
-        page.wait_for_timeout(3000)
+        # 面板打开信号：主提交按钮可见（替代固定 3s）
+        poll_until(page, lambda: page.locator("button.mobile-ai-generate-button:visible").count() > 0,
+                   timeout=12000, interval=400)
     assert page.locator("button.mobile-ai-generate-button:visible").count() > 0, \
         "Photo Enhancer 面板未打开（未找到主 Enhance 提交按钮）"
     assert click_tool_primary_submit(page), "Photo Enhancer 面板未显示主 Enhance 提交按钮"
@@ -1269,7 +1428,8 @@ def flow_mobile_popup_download(page, base, case, rec):
 
     # 底部下载按钮位于右下角，会被 DEBUG 浮层遮挡；先移开 DEBUG。
     move_debug_button_away(page)
-    page.wait_for_timeout(1000)
+    # 移开生效信号：DEBUG 浮层不再与下载按钮同区（短有界稳定）
+    settle(page, 1000)
 
     clicked = False
     for sel in (
@@ -1300,7 +1460,7 @@ def flow_mobile_popup_download(page, base, case, rec):
         except Exception:
             continue
     assert clicked, "未找到结果弹窗底部下载按钮"
-    page.wait_for_timeout(5000)
+    # 下载事件上报由 assert_event_pair 轮询等待（去掉固定 5s）
     attach_shot(page, case["screenshot"])
     assert_event_pair(rec, case["expected"][0])
 
@@ -1344,7 +1504,7 @@ def _run_case(browser, playwright, base_url, case):
                     assert_event_pair(rec, expected_appear)
                     attach_shot(page, f"mobile_login_02_{feature}_register.png")
                     register_or_login(page, mobile=True)
-                    page.wait_for_timeout(7000)
+                    # 注册成功事件由 assert_event_pair 轮询等待（去掉固定 7s）
                     assert_event_pair(rec, expected_success)
             finally:
                 context.close()
@@ -1386,10 +1546,23 @@ def _build_test(case):
     _test = pytest.mark.regression(_test)
     if case["priority"] == "P0":
         _test = pytest.mark.p0(_test)
-    if case.get("known_bug"):
-        _test = pytest.mark.xfail(
-            strict=True, reason="已知统计埋点缺陷，保留需求期望断言"
-        )(_test)
+    bug = case.get("known_bug")
+    if bug:
+        # 兼容两种写法：known_bug: true（旧）与 known_bug: {id, status, summary, ...}（新，富格式）
+        if isinstance(bug, dict):
+            reason = (
+                f"{bug.get('id')} {bug.get('summary')}"
+                f"（需求预期：{bug.get('requirement_expected')}）"
+            )
+        else:
+            reason = "已知统计埋点缺陷，保留需求期望断言"
+        # strict=True：缺陷修好后用例会变 xpass 并直接失败，提醒摘掉标记
+        _test = pytest.mark.xfail(strict=True, reason=reason)(_test)
+        if isinstance(bug, dict):
+            if bug.get("id"):
+                _test = allure.label("known_bug", bug["id"])(_test)
+            if bug.get("status"):
+                _test = allure.label("bug_status", str(bug["status"]))(_test)
     return _test
 
 

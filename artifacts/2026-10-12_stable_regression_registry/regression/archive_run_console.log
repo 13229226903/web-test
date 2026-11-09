@@ -1,0 +1,9 @@
+
+=== START 1/12 test_pokecut_portrait_detector :: archive/portrait_detector/test_pokecut_portrait_detector.py ===
+=== END test_pokecut_portrait_detector exit=1 seconds=444.48 counts={'passed': 13, 'failed': 1} result=failed ===
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 120000ms exceeded.
+FAILED archive/portrait_detector/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_008_try_my_photo
+1 failed, 13 passed in 443.58s (0:07:23)
+
+=== START 2/12 test_ai_image_text_enhancer_experiment :: archive/tool_pages/test_ai_image_text_enhancer_experiment.py ===

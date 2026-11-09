@@ -1,0 +1,38 @@
+[2026-10-27 15:37:38] orchestrator start: registry stable_regression on http://10.17.1.66:3001/
+[2026-10-27 15:37:38] preflight: HTTP 200, content length 289861
+[2026-10-27 15:37:54] test-writing round 1 start: tests/test_pokecut_portrait_detector.py
+[2026-10-27 15:57:00] test-writing round 1 done: tests/test_pokecut_portrait_detector.py exit=1 duration=1146.2s log=artifacts\2026-10-27_regression_registry_3001\logs\01_test_pokecut_portrait_detector.log
+[2026-10-27 15:57:00] test-writing round 2 start: tests/test_ai_image_text_enhancer_experiment.py
+[2026-10-27 16:10:05] test-writing round 2 done: tests/test_ai_image_text_enhancer_experiment.py exit=1 duration=785.3s log=artifacts\2026-10-27_regression_registry_3001\logs\02_test_ai_image_text_enhancer_experiment.log
+[2026-10-27 16:10:05] test-writing round 3 start: tests/test_infinite_canvas_text_layer_v2.py
+[2026-10-27 16:15:02] test-writing round 3 done: tests/test_infinite_canvas_text_layer_v2.py exit=0 duration=296.6s log=artifacts\2026-10-27_regression_registry_3001\logs\03_test_infinite_canvas_text_layer_v2.log
+[2026-10-27 16:15:02] test-writing round 4 start: tests/test_mobile_home.py
+[2026-10-27 16:22:47] test-writing round 4 done: tests/test_mobile_home.py exit=1 duration=464.9s log=artifacts\2026-10-27_regression_registry_3001\logs\04_test_mobile_home.log
+[2026-10-27 16:22:47] test-writing round 5 start: tests/test_help_page.py
+[2026-10-27 16:25:57] test-writing round 5 done: tests/test_help_page.py exit=0 duration=189.7s log=artifacts\2026-10-27_regression_registry_3001\logs\05_test_help_page.log
+[2026-10-27 16:25:57] test-writing round 6 start: tests/test_detection_ui_seo_l6.py
+[2026-10-27 16:27:49] test-writing round 6 done: tests/test_detection_ui_seo_l6.py exit=0 duration=112.6s log=artifacts\2026-10-27_regression_registry_3001\logs\06_test_detection_ui_seo_l6.log
+[2026-10-27 16:27:49] test-writing round 7 start: tests/test_pokecut_pc_home_v6.py
+[2026-10-27 16:32:47] test-writing round 7 done: tests/test_pokecut_pc_home_v6.py exit=0 duration=297.5s log=artifacts\2026-10-27_regression_registry_3001\logs\07_test_pokecut_pc_home_v6.log
+[2026-10-27 16:32:47] test-writing round 8 start: tests/test_pokecut_pc_batch_v1.py
+[2026-10-27 16:38:11] test-writing round 8 done: tests/test_pokecut_pc_batch_v1.py exit=0 duration=324.2s log=artifacts\2026-10-27_regression_registry_3001\logs\08_test_pokecut_pc_batch_v1.log
+[2026-10-27 16:38:11] test-writing round 9 start: tests/test_old_canvas_insert_panel_v3.py
+[2026-10-27 16:47:59] test-writing round 9 done: tests/test_old_canvas_insert_panel_v3.py exit=0 duration=588s log=artifacts\2026-10-27_regression_registry_3001\logs\09_test_old_canvas_insert_panel_v3.log
+[2026-10-27 16:47:59] test-writing round 10 start: tests/test_old_canvas_text_panel_v1.py
+[2026-10-27 16:54:42] test-writing round 10 done: tests/test_old_canvas_text_panel_v1.py exit=0 duration=403.4s log=artifacts\2026-10-27_regression_registry_3001\logs\10_test_old_canvas_text_panel_v1.log
+[2026-10-27 16:54:42] test-writing round 11 start: tests/test_old_canvas_sticker_panel_v1.py
+[2026-10-27 16:58:10] test-writing round 11 done: tests/test_old_canvas_sticker_panel_v1.py exit=0 duration=207.6s log=artifacts\2026-10-27_regression_registry_3001\logs\11_test_old_canvas_sticker_panel_v1.log
+[2026-10-27 16:58:10] test-writing round 12 start: tests/test_seo_main_upload_interactions_v1.py
+[2026-10-27 17:09:50] test-writing round 12 done: tests/test_seo_main_upload_interactions_v1.py exit=1 duration=699.8s log=artifacts\2026-10-27_regression_registry_3001\logs\12_test_seo_main_upload_interactions_v1.log
+[2026-10-27 17:09:50] test-writing round 13 start: tests/mobile/test_seo_main_upload_mobile_v1.py
+[2026-10-27 17:16:02] test-writing round 13 done: tests/mobile/test_seo_main_upload_mobile_v1.py exit=1 duration=372.5s log=artifacts\2026-10-27_regression_registry_3001\logs\13_mobile_test_seo_main_upload_mobile_v1.log
+[2026-10-27 17:16:02] test-writing round 14 start: tests/test_create_chat_to_edit_auto_v1.py
+[2026-10-27 17:22:05] test-writing round 14 done: tests/test_create_chat_to_edit_auto_v1.py exit=0 duration=362.5s log=artifacts\2026-10-27_regression_registry_3001\logs\14_test_create_chat_to_edit_auto_v1.log
+[2026-10-27 17:22:05] test-writing round 15 start: tests/test_canvas_stats_all.py
+[2026-10-27 18:22:01] test-writing round 15 done: tests/test_canvas_stats_all.py exit=1 duration=3596s log=artifacts\2026-10-27_regression_registry_3001\logs\15_test_canvas_stats_all.log
+[2026-10-27 18:22:01] test-writing round 16 start: tests/test_old_canvas_ai_tools_all.py
+[2026-10-27 18:58:19] test-writing round 16 done: tests/test_old_canvas_ai_tools_all.py exit=1 duration=2177.9s log=artifacts\2026-10-27_regression_registry_3001\logs\16_test_old_canvas_ai_tools_all.log
+[2026-10-27 18:58:19] test-writing round 17 start: tests/test_infinite_canvas_sticker_v1.py
+[2026-10-27 19:00:25] test-writing round 17 done: tests/test_infinite_canvas_sticker_v1.py exit=0 duration=125.7s log=artifacts\2026-10-27_regression_registry_3001\logs\17_test_infinite_canvas_sticker_v1.log
+[2026-10-27 19:00:25] test-writing all registry stable scripts finished
+[2026-10-27 19:01:56] orchestrator wrote regression_report.md

@@ -4,3 +4,4 @@ playwright>=1.40
 pyyaml>=6.0
 allure-pytest>=2.16
 pytest-html>=4.2
+pytest-rerunfailures>=15.0

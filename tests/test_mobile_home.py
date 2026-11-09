@@ -14,6 +14,8 @@ import allure
 from pathlib import Path
 from playwright.sync_api import Page, expect
 
+from helpers.waiting import poll_until, settle, wait_canvas_ready, wait_network_quiet, wait_ready, wait_visible
+
 
 def _repo_root() -> Path:
     """按 test_images/ 上溯仓库根：兼容 tests/ 与 archive/<模块>/ 两种存放位置。"""
@@ -26,6 +28,7 @@ def _repo_root() -> Path:
 
 TEST_IMAGES = _repo_root() / "test_images"
 IMG_VALID = str(TEST_IMAGES / "有人脸.JPG")
+IMG_LOW_RES = str(TEST_IMAGES / "低分辨率.JPG")
 IMG_DAMAGED = str(TEST_IMAGES / "损坏的图.png")
 BASE_PATH = "/"
 
@@ -50,13 +53,18 @@ def mobile_page(browser):
 
 def goto_home(page: Page, base_url: str):
     page.goto(f"{base_url}{BASE_PATH}", wait_until="domcontentloaded", timeout=60000)
-    page.wait_for_timeout(6000)
+    # 移动端首页水合完成的可观察信号：Hero 标题与 Agent 输入框已挂载。
+    wait_visible(page, page.locator("#home-mobile-agent-title"), timeout=20000, settle_ms=0)
+    wait_visible(page, page.locator("textarea[aria-label]").first, timeout=20000, settle_ms=0)
+    # 注意：标题/输入框挂载早于 Vue 事件绑定；若只等元素，卡片点击会偶发不触发
+    # file chooser（实测连续跑 5 条时失败）。因此再等网络静默，确保事件已绑定。
+    wait_network_quiet(page, timeout=15000, idle_ms=300)
 
 
 def scroll_to(locator):
     locator.scroll_into_view_if_needed()
-    page = locator.page
-    page.wait_for_timeout(300)
+    # smooth-scroll 收尾；随后由调用方断言目标状态。
+    settle(locator.page, 300)
 
 
 ACCOUNT_EMAIL = "450832596@qq.com"
@@ -77,27 +85,46 @@ def login_vip(page: Page, base_url: str) -> None:
     登录成功后 header 的 Sign up / Log in 按钮消失。
     """
     goto_home(page, base_url)
-    page.get_by_role("button", name="Sign up").first.click()
-    page.wait_for_timeout(2500)
-    page.get_by_text("Log in", exact=True).last.click()
-    page.wait_for_timeout(1500)
+    # 2026-10-12 漂移修复：移动端首页 header 已无独立 Sign up 按钮，
+    # 注册/登录入口迁移到 credits 胶囊面板（.credits-entry__panel）内的
+    # button.credits-entry__signup（文案 "Sign up to get more"）。
+    pill = page.locator(".credits-entry__pill").first
+    if pill.count() and pill.is_visible():
+        pill.click(timeout=10000)
+        wait_visible(page, page.locator("button.credits-entry__signup").first, timeout=10000, settle_ms=0)
+    signup = page.locator("button.credits-entry__signup").first
+    if signup.count() and signup.is_visible():
+        signup.click(timeout=10000)
+    else:
+        # 兼容旧版页面：仍存在 Sign up 按钮时沿用旧路径
+        page.get_by_role("button", name="Sign up").first.click(timeout=10000)
+    login_tab = page.get_by_text("Log in", exact=True).last
+    wait_visible(page, login_tab, timeout=15000, settle_ms=0)
+    login_tab.click()
+    wait_visible(page, page.locator("input[placeholder='Verification Code']").first, timeout=10000, settle_ms=0)
     page.locator("input[type='email']").first.fill(ACCOUNT_EMAIL)
     page.locator("input[placeholder='Verification Code']").first.fill(ACCOUNT_CODE)
-    page.wait_for_timeout(500)
     # Log in 页签下无 Send 按钮（仅注册页签需要先 Send），存在才点
     send = page.get_by_role("button", name="Send")
     if send.count():
         send.first.click()
-        page.wait_for_timeout(2500)
+        # 发送验证码后到可提交之间无稳定 DOM 信号，保留有界 settle。
+        settle(page, 2500)
     page.get_by_role("button", name="Log in").last.click()
-    page.wait_for_timeout(12000)
+    # 登录成功信号：header 的 Sign up / Log in 入口消失。
+    poll_until(
+        page,
+        lambda: page.get_by_role("button", name="Sign up").count() == 0
+        and page.get_by_role("button", name="Log in").count() == 0,
+        timeout=30000,
+        interval=1000,
+    )
 
 
 def upload_via(page: Page, trigger, file_path: str):
     with page.expect_file_chooser(timeout=8000) as fc:
         trigger.click()
     fc.value.set_files(file_path)
-    page.wait_for_timeout(300)
 
 
 def shot(page: Page, name: str):
@@ -201,7 +228,9 @@ class TestL2Interactions:
             goto_home(page, base_url)
         with allure.step("执行操作"):
             upload_via(page, page.get_by_role("button", name="Start Creating for Free"), IMG_VALID)
-            page.wait_for_timeout(6000)
+            assert wait_ready(page, lambda: "/create/edit?pid=" in page.url, timeout=30000, settle_ms=0)
+            # URL 变化 != 画布就绪；等可见 canvas / 大图真正渲染出来（避免截到空白加载页）
+            assert wait_canvas_ready(page, timeout=30000), "画布未在超时内渲染完成"
             assert "/create/edit?pid=" in page.url
         shot(page, "L2-002_画布")
 
@@ -217,7 +246,11 @@ class TestL2Interactions:
         with allure.step("执行操作"):
             # 2026-09-21 漂移修正：点击实际默认模型入口 Nano Banana 2 Lite，弹层选项断言保持不变
             page.locator("section.mobile-home-agent-hero button").filter(has_text=DEFAULT_MODEL).first.click()
-            page.wait_for_timeout(1200)
+            wait_ready(
+                page,
+                lambda: all(opt in page.inner_text("body") for opt in ["ChatGPT Image 2.0", "Nano Banana", "Nano Banana 2", "Seedream4.0"]),
+                timeout=10000,
+            )
             body = page.inner_text("body")
             for opt in ["ChatGPT Image 2.0", "Nano Banana", "Nano Banana 2", "Seedream4.0"]:
                 assert opt in body, f"缺少模型选项: {opt}"
@@ -237,7 +270,15 @@ class TestL2Interactions:
             expect(page.locator("section.mobile-home-agent-hero button").filter(has_text=DEFAULT_MODEL)).to_be_visible()
             ratio = page.locator("section.mobile-home-agent-hero button:not([aria-label])[class*='size-[2.625rem]']").first
             ratio.click()
-            page.wait_for_timeout(1200)
+            expected_ratios = RATIO_OPTIONS_BY_MODEL[DEFAULT_MODEL]
+            wait_ready(
+                page,
+                lambda: all(
+                    page.locator("button", has_text=r).count() > 0
+                    for r in expected_ratios
+                ),
+                timeout=10000,
+            )
             actual_ratios = []
             for idx in range(page.locator("button").count()):
                 button = page.locator("button").nth(idx)
@@ -264,7 +305,8 @@ class TestL2Interactions:
             expect(gen).to_be_disabled()
             url_before = page.url
             gen.click(force=True)
-            page.wait_for_timeout(1200)
+            # 反向断言「禁用态未跳转」，需要有限观察窗口（无正向条件可等）。
+            settle(page, 1200)
             assert page.url == url_before
         shot(page, "L2-006_Generate禁用态")
 
@@ -281,10 +323,10 @@ class TestL2Interactions:
             gen = page.locator("section.mobile-home-agent-hero button", has_text="Generate").first
             expect(gen).to_be_disabled()
             page.locator("textarea[aria-label]").first.fill("a studio portrait with soft light")
-            page.wait_for_timeout(1200)
-            expect(gen).to_be_enabled()
+            expect(gen).to_be_enabled(timeout=15000)
             gen.click()
-            page.wait_for_timeout(8000)
+            assert wait_ready(page, lambda: "/create/edit?pid=" in page.url, timeout=30000, settle_ms=0)
+            assert wait_canvas_ready(page, timeout=30000), "画布未在超时内渲染完成"
             assert "/create/edit?pid=" in page.url
         shot(page, "L2-022_画布")
 
@@ -305,8 +347,15 @@ class TestL2Interactions:
             goto_home(page, base_url)
         with allure.step("执行操作"):
             upload_via(page, page.get_by_role("button", name=card_name).first, IMG_VALID)
-            page.wait_for_timeout(6000)
+            assert wait_ready(page, lambda: "/create/edit?pid=" in page.url, timeout=30000, settle_ms=0)
+            assert wait_canvas_ready(page, timeout=30000), "画布未在超时内渲染完成"
             assert "/create/edit?pid=" in page.url
+            wait_ready(
+                page,
+                lambda: expected_panel in page.inner_text("body"),
+                timeout=20000,
+                settle_ms=0,
+            )
             assert expected_panel in page.inner_text("body")
         shot(page, f"L2-007_{card_name}_画布面板")
 
@@ -321,7 +370,13 @@ class TestL2Interactions:
             goto_home(page, base_url)
         with allure.step("执行操作"):
             upload_via(page, page.get_by_role("button", name="ID Photo Maker").first, IMG_VALID)
-            page.wait_for_timeout(6000)
+            wait_ready(
+                page,
+                lambda: "Get Free Credits" in page.inner_text("body")
+                or "Get Up to" in page.inner_text("body"),
+                timeout=20000,
+                settle_ms=0,
+            )
             assert page.url.rstrip("/") == f"{base_url}/".rstrip("/")
             body = page.inner_text("body")
             assert ("Get Free Credits" in body) or ("Get Up to" in body)
@@ -338,7 +393,10 @@ class TestL2Interactions:
             goto_home(page, base_url)
         with allure.step("执行操作"):
             page.get_by_role("button", name="More Pokecut Tools").click()
-            page.wait_for_timeout(4000)
+            assert wait_ready(page, lambda: page.url.rstrip("/").endswith("/tools"), timeout=20000, settle_ms=0)
+            # 等工具列表真正渲染（h1 + 工具卡），而非仅 URL 到位
+            wait_visible(page, page.locator("h1").first, timeout=20000, settle_ms=0)
+            wait_ready(page, lambda: page.locator("a[href^='/tools/']").count() >= 5, timeout=20000)
             assert page.url.rstrip("/").endswith("/tools")
         shot(page, "L2-009_tools页")
 
@@ -356,12 +414,11 @@ class TestL2Interactions:
             # 卡片图片 alt 为描述性文案，不能继续用 img[alt=Slim] 定位。
             trigger = page.locator("div[role='button'][aria-label='Slim']").first
             trigger.scroll_into_view_if_needed()
-            page.wait_for_timeout(300)
             with page.expect_file_chooser(timeout=10000) as chooser_info:
                 trigger.click()
             chooser_info.value.set_files(IMG_VALID)
-            page.wait_for_timeout(300)
-            page.wait_for_timeout(6000)
+            assert wait_ready(page, lambda: "/create/edit?pid=" in page.url, timeout=30000, settle_ms=0)
+            assert wait_canvas_ready(page, timeout=30000), "画布未在超时内渲染完成"
             assert "/create/edit?pid=" in page.url
         shot(page, "L2-010_画布")
 
@@ -376,7 +433,14 @@ class TestL2Interactions:
             goto_home(page, base_url)
         with allure.step("执行操作"):
             page.get_by_role("button", name="See More Creations").click()
-            page.wait_for_timeout(4000)
+            assert wait_ready(page, lambda: page.url.rstrip("/").endswith("/create"), timeout=20000, settle_ms=0)
+            # 等创作页入口卡出现（仅 URL 到位会截到空白）
+            wait_ready(
+                page,
+                lambda: page.get_by_role("button", name="Start Creating for Free").count() > 0
+                or page.locator("button[data-tool-id='start-photo']").count() > 0,
+                timeout=20000,
+            )
             assert page.url.rstrip("/").endswith("/create")
         shot(page, "L2-011_create页")
 
@@ -396,7 +460,9 @@ class TestL2Interactions:
             goto_home(page, base_url)
         with allure.step("执行操作"):
             page.get_by_role("link", name=name).first.click()
-            page.wait_for_timeout(4000)
+            assert wait_ready(page, lambda: page.url.rstrip("/").endswith(path), timeout=20000, settle_ms=0)
+            # 等目标页首屏渲染（标题出现），而非仅 URL 到位
+            wait_ready(page, lambda: page.locator("h1, h2").count() > 0, timeout=20000)
             assert page.url.rstrip("/").endswith(path)
         shot(page, f"L2-012_{name}")
 
@@ -413,8 +479,7 @@ class TestL2Interactions:
             loc = page.locator(f"#home-mobile-portrait-tab-{tab.lower()}")
             scroll_to(loc)
             loc.click()
-            page.wait_for_timeout(1200)
-            expect(loc).to_have_attribute("aria-selected", "true")
+            expect(loc).to_have_attribute("aria-selected", "true", timeout=10000)
         shot(page, f"L2-013_{tab}")
 
     @pytest.mark.no_login
@@ -436,11 +501,14 @@ class TestL2Interactions:
             scroll_to(loc)
             if expected == "upload":
                 upload_via(page, loc, IMG_VALID)
-                page.wait_for_timeout(6000)
+                assert wait_ready(page, lambda: "/create/edit?pid=" in page.url, timeout=30000, settle_ms=0)
+                assert wait_canvas_ready(page, timeout=30000), "画布未在超时内渲染完成"
                 assert "/create/edit?pid=" in page.url
             else:
                 loc.click()
-                page.wait_for_timeout(4000)
+                assert wait_ready(page, lambda: expected in page.url, timeout=20000, settle_ms=0)
+                # 等目标工具页首屏渲染（标题出现），而非仅 URL 到位
+                wait_ready(page, lambda: page.locator("h1, h2").count() > 0, timeout=20000)
                 assert expected in page.url
         shot(page, f"L2-014_{name}")
 
@@ -458,7 +526,8 @@ class TestL2Interactions:
             scroll_to(card)
             before = card.get_attribute("class")
             card.click()
-            page.wait_for_timeout(800)
+            after = card.get_attribute("class") or ""
+            wait_ready(page, lambda: (card.get_attribute("class") or "") != before, timeout=5000, settle_ms=0)
             after = card.get_attribute("class")
             assert after != before or "active" in after
         shot(page, "L2-015_数据卡片选中态")
@@ -493,9 +562,14 @@ class TestL2Interactions:
             scroll_to(header)
             assert panel.evaluate("el => el.scrollHeight") > 0
             header.click()
-            page.wait_for_timeout(1200)
+            wait_ready(
+                page,
+                lambda: not page.locator("a[href='/pricing']").first.is_visible(),
+                timeout=10000,
+                settle_ms=0,
+            )
             header.click()
-            page.wait_for_timeout(800)
+            wait_visible(page, page.locator("a[href='/pricing']").first, timeout=10000, settle_ms=0)
             assert page.locator("a[href='/pricing']").first.is_visible()
             assert page.locator("a[href='/term-of-use']").first.is_visible()
             assert page.locator("a[data-submit-ticket='refund']").first.is_visible()
@@ -514,15 +588,15 @@ class TestL2Interactions:
             nav = page.locator("nav.home-mobile-bottom-nav")
             if item == "Upload":
                 upload_via(page, nav.get_by_role("button", name="Upload"), IMG_VALID)
-                page.wait_for_timeout(6000)
+                wait_ready(page, lambda: "/create/edit?pid=" in page.url, timeout=30000, settle_ms=0)
                 assert "/create/edit?pid=" in page.url
             elif item == "Pricing":
                 nav.locator("button[aria-label='Pricing']").evaluate("el => el.click()")
-                page.wait_for_timeout(4000)
+                wait_ready(page, lambda: page.url.rstrip("/").endswith("/pricing"), timeout=20000, settle_ms=0)
                 assert page.url.rstrip("/").endswith("/pricing")
             else:
                 nav.get_by_role("button", name=item).click()
-                page.wait_for_timeout(4000)
+                wait_ready(page, lambda: page.url.rstrip("/") != f"{base_url}".rstrip("/"), timeout=20000, settle_ms=0)
                 if item == "Home":
                     assert page.url.rstrip("/").endswith("/create")
                 elif item == "All Tools":
@@ -531,6 +605,15 @@ class TestL2Interactions:
                     assert "/create/edit?pid=" in page.url
                     if item == "Generate":
                         # 2026-09-21 复探：生图面板实际默认模型为 Nano Banana 2 Lite（以 page_map mobile_home_v3 为准）
+                        wait_ready(
+                            page,
+                            lambda: any(
+                                (page.locator("button").nth(i).inner_text() or "").strip() in MODEL_NAMES
+                                for i in range(page.locator("button").count())
+                            ),
+                            timeout=20000,
+                            settle_ms=0,
+                        )
                         actual_model = None
                         for idx in range(page.locator("button").count()):
                             text = (page.locator("button").nth(idx).inner_text() or "").strip()
@@ -560,8 +643,15 @@ class TestL3Exceptions:
         page = mobile_page
         login_vip(page, base_url)
         with allure.step("ID Photo Maker 上传有人脸图片"):
-            upload_via(page, page.get_by_role("button", name="ID Photo Maker").first, IMG_VALID)
-            page.wait_for_timeout(30000)
+            upload_via(page, page.get_by_role("button", name="ID Photo Maker").first, IMG_LOW_RES)
+            assert wait_ready(
+                page,
+                lambda: "/tools/id-photo-edit?pid=" in page.url,
+                timeout=90000,
+                settle_ms=0,
+            ), "未进入证件照画布路由"
+            # URL 到位不代表画布已渲染；等证件照画布真正出现再断言/截图
+            assert wait_canvas_ready(page, timeout=60000), "证件照画布未在超时内渲染完成"
         with allure.step("断言进入证件照画布"):
             # 2026-09-15 实测：ID Photo Maker 抠图成功后进入 /tools/id-photo-edit?pid=<uuid>（证件照画布）
             assert "/tools/id-photo-edit?pid=" in page.url, f"未进入证件照画布: url={page.url}"

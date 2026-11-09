@@ -1,0 +1,34 @@
+.......F.F.....F                                                         [100%]
+================================== FAILURES ===================================
+________ TestL2BatchInteractions.test_l2_006_changebg_colors[chromium] ________
+tests\test_pokecut_pc_batch_v1.py:509: in test_l2_006_changebg_colors
+    submit_remove_background(session_page)
+tests\test_pokecut_pc_batch_v1.py:205: in submit_remove_background
+    assert is_text_selected(page, "Change BG"), "Remove Background ��ɺ�δ�Զ�ѡ�� Change BG"
+E   AssertionError: Remove Background ��ɺ�δ�Զ�ѡ�� Change BG
+E   assert False
+E    +  where False = is_text_selected(<Page url='http://10.17.1.66:3102/batch-edit/edit?pid=7f70f0ae-7fa2-47c0-8860-e1c2d25bb614#'>, 'Change BG')
+_____ TestL2BatchInteractions.test_l2_008_enhance_modes_submit[chromium] ______
+tests\test_pokecut_pc_batch_v1.py:611: in test_l2_008_enhance_modes_submit
+    assert DATA["enhance"]["before_resolution"] in body
+E   AssertionError: assert '1200px * 1600px' in '10820\nDownload\nBackground\nEnhance\nResize\n\nChoose a model that suits your image\n\nStandard Mode\nPortrait Mode\nText Mode\nUltra HD Mode\nKeep Enhancing\n\nNetwork error\n\nCancel\nTry again\nDEBUG'
+____ TestL6BatchSmoke.test_l6_002_smoke_enhance_resize_download[chromium] _____
+tests\test_pokecut_pc_batch_v1.py:864: in test_l6_002_smoke_enhance_resize_download
+    assert DATA["enhance"]["before_resolution"] in body
+E   AssertionError: assert '1200px * 1600px' in '10820\nDownload\nBackground\nEnhance\nResize\n\nChoose a model that suits your image\n\nStandard Mode\nPortrait Mode\nText Mode\nUltra HD Mode\nKeep Enhancing\n\nNetwork error\n\nCancel\nTry again\nDEBUG'
+============================== warnings summary ===============================
+tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_005_refine_flow[chromium]
+tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_005_refine_flow[chromium]
+tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_007_changebg_images[chromium]
+tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_007_changebg_images[chromium]
+tests/test_pokecut_pc_batch_v1.py::TestL6BatchSmoke::test_l6_001_smoke_removebg_download[chromium]
+  D:\Test\web-test\tests\test_pokecut_pc_batch_v1.py:192: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for p in diff.getdata() if sum(p) > 20)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_006_changebg_colors[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_008_enhance_modes_submit[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL6BatchSmoke::test_l6_002_smoke_enhance_resize_download[chromium]
+3 failed, 13 passed, 5 warnings in 330.25s (0:05:30)

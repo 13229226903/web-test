@@ -1,0 +1,173 @@
+.FFFFFFFFFFFFFFF                                                         [100%]
+================================== FAILURES ===================================
+_________ TestL1BatchStructure.test_l1_007_delete_label_bug[chromium] _________
+tests\test_pokecut_pc_batch_v1.py:310: in test_l1_007_delete_label_bug
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+_________ TestL2BatchInteractions.test_l2_001_single_upload[chromium] _________
+tests\test_pokecut_pc_batch_v1.py:341: in test_l2_001_single_upload
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+_______ TestL2BatchInteractions.test_l2_002_multi_plus_upload[chromium] _______
+tests\test_pokecut_pc_batch_v1.py:364: in test_l2_002_multi_plus_upload
+    upload_from_landing(session_page, DATA["images"]["multi"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/agent?pid=4e1734d5-ee59-442a-a1a3-662d1955256e 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       3 �� unexpected value "http://10.17.1.66:3001/batch"
+E       45 �� unexpected value "http://10.17.1.66:3001/agent?pid=4e1734d5-ee59-442a-a1a3-662d1955256e"
+___ TestL2BatchInteractions.test_l2_003_entry_cards_default_tabs[chromium] ____
+tests\test_pokecut_pc_batch_v1.py:399: in test_l2_003_entry_cards_default_tabs
+    upload_from_card(session_page, card, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:113: in upload_from_card
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+_____ TestL2BatchInteractions.test_l2_004_removebg_modes_submit[chromium] _____
+tests\test_pokecut_pc_batch_v1.py:420: in test_l2_004_removebg_modes_submit
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+__________ TestL2BatchInteractions.test_l2_005_refine_flow[chromium] __________
+tests\test_pokecut_pc_batch_v1.py:447: in test_l2_005_refine_flow
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+________ TestL2BatchInteractions.test_l2_006_changebg_colors[chromium] ________
+tests\test_pokecut_pc_batch_v1.py:508: in test_l2_006_changebg_colors
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+________ TestL2BatchInteractions.test_l2_007_changebg_images[chromium] ________
+tests\test_pokecut_pc_batch_v1.py:557: in test_l2_007_changebg_images
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+_____ TestL2BatchInteractions.test_l2_008_enhance_modes_submit[chromium] ______
+tests\test_pokecut_pc_batch_v1.py:596: in test_l2_008_enhance_modes_submit
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+____ TestL2BatchInteractions.test_l2_009_resize_template_custom[chromium] _____
+tests\test_pokecut_pc_batch_v1.py:628: in test_l2_009_resize_template_custom
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+___________ TestL2BatchInteractions.test_l2_010_undo_redo[chromium] ___________
+tests\test_pokecut_pc_batch_v1.py:666: in test_l2_010_undo_redo
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+__________ TestL2BatchInteractions.test_l2_011_delete_flow[chromium] __________
+tests\test_pokecut_pc_batch_v1.py:708: in test_l2_011_delete_flow
+    upload_from_landing(session_page, DATA["images"]["multi"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/agent?pid=5ce97712-a340-4180-aaa2-c3c3294344d6 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       3 �� unexpected value "http://10.17.1.66:3001/batch"
+E       45 �� unexpected value "http://10.17.1.66:3001/agent?pid=5ce97712-a340-4180-aaa2-c3c3294344d6"
+_________ TestL2BatchInteractions.test_l2_012_download_flow[chromium] _________
+tests\test_pokecut_pc_batch_v1.py:757: in test_l2_012_download_flow
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+_______ TestL6BatchSmoke.test_l6_001_smoke_removebg_download[chromium] ________
+tests\test_pokecut_pc_batch_v1.py:826: in test_l6_001_smoke_removebg_download
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+____ TestL6BatchSmoke.test_l6_002_smoke_enhance_resize_download[chromium] _____
+tests\test_pokecut_pc_batch_v1.py:856: in test_l6_002_smoke_enhance_resize_download
+    upload_from_landing(session_page, DATA["images"]["single"])
+tests\test_pokecut_pc_batch_v1.py:101: in upload_from_landing
+    expect(page).to_have_url(re.compile(r"/batch-edit/edit\?pid="), timeout=45000)
+E   AssertionError: Page URL expected to be 're.compile('/batch-edit/edit\\?pid=')'
+E   Actual value: http://10.17.1.66:3001/batch 
+E   Call log:
+E     - Expect "to_have_url" with timeout 45000ms
+E       48 �� unexpected value "http://10.17.1.66:3001/batch"
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL1BatchStructure::test_l1_007_delete_label_bug[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_001_single_upload[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_002_multi_plus_upload[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_003_entry_cards_default_tabs[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_004_removebg_modes_submit[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_005_refine_flow[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_006_changebg_colors[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_007_changebg_images[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_008_enhance_modes_submit[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_009_resize_template_custom[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_010_undo_redo[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_011_delete_flow[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL2BatchInteractions::test_l2_012_download_flow[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL6BatchSmoke::test_l6_001_smoke_removebg_download[chromium]
+FAILED tests/test_pokecut_pc_batch_v1.py::TestL6BatchSmoke::test_l6_002_smoke_enhance_resize_download[chromium]
+15 failed, 1 passed in 752.84s (0:12:32)
+

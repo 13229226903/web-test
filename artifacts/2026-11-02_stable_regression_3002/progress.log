@@ -1,0 +1,13 @@
+[2026-11-02 10:05:46] orchestrator start 2026-11-02_stable_regression_3001 (stable_regression, codex_single_context)
+[2026-11-02 10:05:46] orchestrator scope: 17 stable_regression suites on http://10.17.1.66:3001; exclude #25 pending_fix
+[2026-11-02 10:23:45] orchestrator switch domain -> http://10.17.1.66:3002/ (user request); reset results and rerun
+[2026-11-02 13:39:00] orchestrator detected runner process exited mid-suite16 (旧画布 AI Tools); completed 14/17 suites; remaining: 旧画布 AI Tools, 无限画布贴纸调整
+[2026-11-02 14:20:58] orchestrator suite17 done: ALL DONE (17/17 suites executed)
+[2026-11-02 14:31:00] orchestrator wrote regression_summary.md; allure generate -> reports/allure-report-regression
+[2026-11-02 14:31:00] orchestrator result: 6/17 suites rc=0; aggregate passed=246 failed=27 broken=4 skipped=6
+[2026-11-02 14:31:00] orchestrator note: suite17(无限画布贴纸调整) 从 data/infinite_canvas_sticker_v1.yaml 读死 base_url=3001，未使用 --base-url，实跑在 3001；suite1 登录失败指向 :3002 账号/登录口径差异
+[2026-11-02 14:40:00] orchestrator start local http server pid=24184 on 8123 --directory reports/allure-report-regression; opened http://localhost:8123/index.html; printed 简易回归报告
+[2026-11-02 15:05:00] orchestrator paused: 3002 down (user request). Rules patched; scripts fixed + archive copies; portrait suite 14/14 passed on 3002 before outage.
+[2026-11-02 15:40:00] orchestrator rerun verification on 3002: AI Image Text Enhancer 1 failed/15 passed/2 skipped (was 5 failed/12 passed/1 skipped); Detection UI L6 2 passed (was 2 failed).
+[2026-11-02 15:42:00] orchestrator cleanup: renamed L3-002 def/title removing stale 'predeploy'; collect-only 18 tests OK
+[2026-11-02 16:12:00] orchestrator L2-002 re-baselined per user design confirmation: non-Enhance-Text result shows Upscale resolution area and must NOT show Before/Now; single-case rerun passed on 3002; tests/ + archive synced.

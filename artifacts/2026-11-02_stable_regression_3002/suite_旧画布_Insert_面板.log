@@ -1,0 +1,19 @@
+..........F.............                                                 [100%]
+================================== FAILURES ===================================
+__________________________ test_l2_020_image_filter ___________________________
+tests\test_old_canvas_insert_panel_v3.py:720: in test_l2_020_image_filter
+    assert pixel_diff_pct(unfiltered, s0_png) <= 1.0, "�˾�ǿ�� 0 δ�ص�δ���˾�״̬"
+E   AssertionError: �˾�ǿ�� 0 δ�ص�δ���˾�״̬
+E   assert 98.808 <= 1.0
+E    +  where 98.808 = pixel_diff_pct('C:\\Users\\liangjinrun\\AppData\\Local\\Temp\\pytest-of-liangjinrun\\pytest-69\\test_l2_020_image_filter0\\_filter_unfiltered.png', 'C:\\Users\\liangjinrun\\AppData\\Local\\Temp\\pytest-of-liangjinrun\\pytest-69\\test_l2_020_image_filter0\\_filter_s0.png')
+============================== warnings summary ===============================
+tests/test_old_canvas_insert_panel_v3.py: 22 warnings
+  D:\Test\web-test\tests\test_old_canvas_insert_panel_v3.py:185: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    pts = sum(1 for px in diff.getdata() if sum(px) > 12)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_old_canvas_insert_panel_v3.py::test_l2_020_image_filter - A...
+1 failed, 23 passed, 22 warnings in 685.68s (0:11:25)
+

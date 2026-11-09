@@ -1,0 +1,5 @@
+tests/test_canvas_stats_all.py::test_m_new_10[chromium]
+tests/test_canvas_stats_all.py::test_m_new_11[chromium]
+tests/test_canvas_stats_all.py::test_m_new_12[chromium]
+tests/test_canvas_stats_all.py::test_m_new_13[chromium]
+tests/test_canvas_stats_all.py::test_m_new_14[chromium]

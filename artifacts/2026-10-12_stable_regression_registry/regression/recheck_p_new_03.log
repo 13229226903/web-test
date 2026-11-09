@@ -1,0 +1,17 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________________________ test_p_new_03[chromium] ___________________________
+tests\test_canvas_stats_all.py:1441: in _test
+    _run_case(browser, playwright, base_url, case)
+tests\test_canvas_stats_all.py:1428: in _run_case
+    FLOWS[case["flow"]](page, base, case, rec)
+tests\test_canvas_stats_all.py:1109: in flow_seo_new_canvas
+    assert_event_pair(rec, case["expected"][0])
+tests\test_canvas_stats_all.py:95: in assert_event_pair
+    assert send == 1, (
+E   AssertionError: 「新画布消除购买出现en_magic-eraser-with-ai-detection」sendGaEvent 次数应为 1，实际 0（0=漏报，>=2=多报）；最近 sendGaEvent: en_magic-eraser-with-ai-detection页面_进入 | en_magic-eraser-with-ai-detectio页_upload | 上传成功 | en_agent页面_进入 | 无限画布页进入 | 无限画布使用引导_首次气泡展示 | 生成成功 | AI消除功能_AI检测成功 | 新画布抠图购买出现en_magic-eraser-with-ai-detection | 购买界面进入 | 无限画布页点数用完触发购买 | 无限画布页背景移除通用功能点数用完触发购买
+E   assert 0 == 1
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_canvas_stats_all.py::test_p_new_03[chromium] - AssertionErr...
+1 failed in 174.68s (0:02:54)

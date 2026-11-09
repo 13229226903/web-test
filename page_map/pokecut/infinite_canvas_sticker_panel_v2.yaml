@@ -1,0 +1,390 @@
+# Pokecut 无限画布 - 贴纸功能与调整菜单（legacy canvas v2）
+# Version: v2
+# Explored: 2026-10-15, http://10.17.1.66:3001/agent?pid=689a9195-714b-4732-91b4-a1e42e7b9565#
+page: Infinite Canvas Sticker Panel
+url: /agent?pid=<uuid>#
+landmark:
+  selector: "div:has-text('Add Sticker')"
+  description: 无限画布左侧工具栏第 3 个按钮（Add Sticker）；悬浮后弹出贴纸面板。
+entry:
+  from: /create
+  trigger: >-
+    关闭定价弹窗 → Trending Tools 分类 → 点击第一个按钮 Start with Photos →
+    文件选择器 → 选 test_images/1K.jpg → /agent?pid=<uuid>#
+  selector: "button:has-text('Start with Photos')"
+  file_chooser: true
+  after_upload: /agent?pid=<uuid>#
+
+elements:
+  left_toolbar:
+    selector: "div:has(button[tooltip='Add Sticker'])"
+    description: 无限画布左侧竖向工具栏；第 3 个为 Add Sticker。
+  add_sticker_button:
+    selector: "button:has-text('Add Sticker')"
+    role_or_text: Add Sticker
+    description: >-
+      左侧第 3 个按钮；hover 展开贴纸面板（含分类 tab 与缩略图网格）。
+      tooltip 文本为 'Add Sticker'。
+  sticker_panel:
+    selector: "div:has-text('Valentine1')"
+    description: >-
+      hover Add Sticker 后弹出的贴纸面板；
+      顶部为分类 tab（Valentine1/Valentine 2/New Year/Basic/Numbers/Cartoon/Indoor/
+      Sea/Newspaper/Vintage/Flower/Leaves/Jewelry/Pink/Shells&Pearls/Y2K Alphabet/
+      Colorful Shine/Bling Bling/Neon Alphabet/Booth/Window/Foundation/Lipstick/Gift/
+      New Sales/Sales/Black Friday/Rating/Likes/Device/Cute Food/Lovely Headgear/
+      Animals/Doll/Cartoon2/Decorative/Bathroom/Kitchen/Fruit/Free Shipping/COD/
+      Fast Delivery/Social Media/Call To Action/Emoji/Facebook likes/Comic decoration/
+      Polaroid/Rainbow Light/Surprise Graffiti/Marker Graffiti/Shape/Shadow/Chat Bubble/
+      Easter/Watercolor Brush/Painting Shape/Curves/Shape Scenery/Christmas/Chrismas 2/
+      Chrismas 3/Halloween/Halloween 2/E-Commerce/ThanksGiving 等 60+ 分类），
+      下方为当前分类缩略图网格。
+  sticker_thumbnail:
+    selector: "img[alt='sticker_valentine1']"
+    role_or_text: Valentine1 分类第一个贴纸
+    description: 点击后在画布新增贴纸图层并自动选中。
+  sticker_layer_toolbar:
+    selector: "div:has(button:has-text('Adjust'))"
+    description: >-
+      贴纸选中时画布上方浮动工具栏：
+      Adjust / Move Up / Move Down / To Top / To Bottom / Flip h / Flip v / Delete
+  adjust_button:
+    selector: "button:has-text('Adjust')"
+    role_or_text: Adjust
+    description: 点击后打开右侧调整菜单（Filter / Reflection / Outline / Adjust 四区）。
+
+modals: {}
+
+states:
+  sticker_panel_hover:
+    description: hover Add Sticker 后的贴纸面板展开态
+    trigger: 鼠标悬浮左侧第 3 个按钮（Add Sticker）
+    url_or_state_key: /agent?pid=<uuid># 且左侧出现分类 tab + 缩略图网格
+    buttons:
+      sticker_category_tab:
+        selector: "button:has-text('Valentine1')"
+        role_or_text: 贴纸分类名
+        visible_condition: 贴纸面板展开
+        enabled_condition: 恒可用
+        action_result: 切换分类；下方网格刷新为该分类缩略图
+        reversible: true
+        explore_status: covered
+        assertions_hint: 分类 tab 高亮态为 bg-[#232323] text-white
+      sticker_first_thumbnail:
+        selector: "img[alt='sticker_valentine1']"
+        role_or_text: sticker_valentine1
+        visible_condition: Valentine1 分类已选中
+        enabled_condition: 恒可用
+        action_result: 点击后在画布新增贴纸图层并自动选中；贴纸浮动工具栏出现
+        reversible: true
+        explore_status: covered
+        dependencies: [已进入无限画布]
+        assertions_hint: 画布出现新贴纸图层；浮动工具栏 8 个按钮可见
+
+  sticker_selected:
+    description: 贴纸选中后的画布 + 浮动工具栏
+    trigger: 点击画布上的贴纸（或添加贴纸后自动选中）
+    url_or_state_key: 画布上方出现 Adjust/Move Up/Move Down/To Top/To Bottom/Flip h/Flip v/Delete
+    buttons:
+      adjust_entry:
+        selector: "button:has-text('Adjust')"
+        role_or_text: Adjust
+        visible_condition: 贴纸已选中
+        enabled_condition: 恒可用
+        action_result: 点击后打开右侧调整菜单（Filter/Reflection/Outline/Adjust 四区）
+        reversible: true
+        explore_status: covered
+        assertions_hint: 右侧面板出现 4 个分区标题
+
+  adjust_menu_open:
+    description: 右侧调整菜单展开态（4 个功能分区）
+    trigger: 点击贴纸浮动工具栏 Adjust
+    url_or_state_key: 右侧出现 Filter/Reflection/Outline/Adjust 四个分区
+    buttons:
+      filter_switch:
+        selector: "div.relative.inline-flex"
+        role_or_text: Filter 开关
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 切换滤镜启用/禁用；ON 时展开分类 tab + 滤镜网格 + Strength 滑杆
+        reversible: true
+        explore_status: covered
+        assertions_hint: ON 背景色 rgb(35,35,35)，OFF rgb(209,213,219)
+      filter_category_tab:
+        selector: "button:has-text('Vintage')"
+        role_or_text: Vintage / Brighten / Portrait 等 17 个分类
+        visible_condition: Filter 开关 ON 且已展开
+        enabled_condition: 恒可用
+        action_result: 切换滤镜分类；网格刷新为该分类下的滤镜缩略图
+        reversible: true
+        explore_status: covered
+        assertions_hint: 分类 tab 选中态 bg-[#232323] text-white
+      filter_tile:
+        selector: "img[alt='90s']"
+        role_or_text: 90s / CCD / Digicam / Y2k / VI03 等
+        visible_condition: 分类已选中
+        enabled_condition: 恒可用
+        action_result: 选中该滤镜；Strength 滑杆出现
+        reversible: true
+        explore_status: covered
+        assertions_hint: 缩略图选中态 border-[#3338EE]
+      filter_strength_slider:
+        selector: "input[type=range]"
+        role_or_text: Strength
+        visible_condition: 滤镜已选中
+        enabled_condition: 恒可用
+        action_result: 调整滤镜强度
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 100
+
+      reflection_switch:
+        selector: "div.relative.inline-flex"
+        role_or_text: Reflection 开关
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: ON 时展开 Opacity/Scope/Distance/Angle 四个滑杆
+        reversible: true
+        explore_status: covered
+        assertions_hint: ON 背景色 rgb(35,35,35)
+      reflection_opacity_slider:
+        selector: "input[type=range]"
+        role_or_text: Opacity
+        visible_condition: Reflection 开关 ON
+        enabled_condition: 恒可用
+        action_result: 调整反射不透明度
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 50
+      reflection_scope_slider:
+        selector: "input[type=range]"
+        role_or_text: Scope
+        visible_condition: Reflection 开关 ON
+        enabled_condition: 恒可用
+        action_result: 调整反射范围
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 50
+      reflection_distance_slider:
+        selector: "input[type=range]"
+        role_or_text: Distance
+        visible_condition: Reflection 开关 ON
+        enabled_condition: 恒可用
+        action_result: 调整反射距离
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 0；实测 0→40 生效
+      reflection_angle_slider:
+        selector: "input[type=range]"
+        role_or_text: Angle
+        visible_condition: Reflection 开关 ON
+        enabled_condition: 恒可用
+        action_result: 调整反射角度
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=360 step=1 默认 180（显示 180°）
+
+      outline_switch:
+        selector: "div.relative.inline-flex"
+        role_or_text: Outline 开关
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: ON 时展开 Types/Color/Size/Distance/Blur/Smooth
+        reversible: true
+        explore_status: covered
+        assertions_hint: ON 背景色 rgb(35,35,35)
+      outline_types_buttons:
+        selector: "button[aria-label*='outline type']"
+        role_or_text: Types 样式按钮组
+        visible_condition: Outline 开关 ON
+        enabled_condition: 恒可用
+        action_result: 切换轮廓样式
+        reversible: true
+        explore_status: covered
+        assertions_hint: 多个样式按钮
+      outline_color_tiles:
+        selector: "div.aspect-square.rounded-\[10px\]"
+        role_or_text: Color 色块（约 27 个）
+        visible_condition: Outline 开关 ON
+        enabled_condition: 恒可用
+        action_result: 切换轮廓颜色
+        reversible: true
+        explore_status: covered
+        assertions_hint: 色块背景色即颜色值；实测点击第 3 号色块生效
+      outline_size_slider:
+        selector: "input[type=range]"
+        role_or_text: Size
+        visible_condition: Outline 开关 ON
+        enabled_condition: 恒可用
+        action_result: 调整轮廓粗细
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 20；实测 20→50 生效
+      outline_distance_slider:
+        selector: "input[type=range]"
+        role_or_text: Distance
+        visible_condition: Outline 开关 ON
+        enabled_condition: 恒可用
+        action_result: 调整轮廓距离
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 0
+      outline_blur_slider:
+        selector: "input[type=range]"
+        role_or_text: Blur
+        visible_condition: Outline 开关 ON
+        enabled_condition: 恒可用
+        action_result: 调整轮廓模糊
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 0
+      outline_smooth_slider:
+        selector: "input[type=range]"
+        role_or_text: Smooth
+        visible_condition: Outline 开关 ON
+        enabled_condition: 恒可用
+        action_result: 调整轮廓平滑
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 0
+
+      adjust_opacity_slider:
+        selector: "input[type=range]"
+        role_or_text: Opacity
+        visible_condition: 调整菜单打开（无开关，直接可见）
+        enabled_condition: 恒可用
+        action_result: 调整贴纸整体不透明度
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 100；实测 100→30 生效
+      adjust_brightness_slider:
+        selector: "input[type=range]"
+        role_or_text: Brightness
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸亮度
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=-100 max=100 step=1 默认 0；实测 0→50 生效
+      adjust_contrast_slider:
+        selector: "input[type=range]"
+        role_or_text: Contrast
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸对比度
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=-100 max=100 step=1 默认 0
+      adjust_vibrance_slider:
+        selector: "input[type=range]"
+        role_or_text: Vibrance
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸鲜艳度
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=-100 max=100 step=1 默认 0
+      adjust_saturation_slider:
+        selector: "input[type=range]"
+        role_or_text: Saturation
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸饱和度
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=-100 max=100 step=1 默认 0
+      adjust_exposure_slider:
+        selector: "input[type=range]"
+        role_or_text: Exposure
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸曝光
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=-100 max=100 step=1 默认 0
+      adjust_highlight_slider:
+        selector: "input[type=range]"
+        role_or_text: Highlight
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸高光
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=-100 max=100 step=1 默认 0
+      adjust_shadow_slider:
+        selector: "input[type=range]"
+        role_or_text: Shadow
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸阴影
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=-100 max=100 step=1 默认 0
+      adjust_clarity_slider:
+        selector: "input[type=range]"
+        role_or_text: Clarity
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸清晰度
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 0
+      adjust_sharpen_slider:
+        selector: "input[type=range]"
+        role_or_text: Sharpen
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸锐化
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 0
+      adjust_temperature_slider:
+        selector: "input[type=range]"
+        role_or_text: Temperature
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸色温
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=-100 max=100 step=1 默认 0
+      adjust_tint_slider:
+        selector: "input[type=range]"
+        role_or_text: Tint
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸色调
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=-100 max=100 step=1 默认 0
+      adjust_grain_slider:
+        selector: "input[type=range]"
+        role_or_text: Grain
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸颗粒
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=0 max=100 step=1 默认 0
+      adjust_vignette_slider:
+        selector: "input[type=range]"
+        role_or_text: Vignette
+        visible_condition: 调整菜单打开
+        enabled_condition: 恒可用
+        action_result: 调整贴纸暗角
+        reversible: true
+        explore_status: covered
+        assertions_hint: min=-100 max=100 step=1 默认 0
+
+notes:
+  - 无限画布贴纸调整菜单共 4 个功能分区（Filter / Reflection / Outline / Adjust），
+    与旧画布的 7 区（不透明度/调整/阴影/轮廓/反射/滤镜/混合）不同；
+    无独立「不透明度」「阴影」「混合」区。
+  - Filter 有 17 个分类 tab（Vintage/Brighten/Portrait/Wallpaper/Sparkle/Star/Elevated/
+    Vibes/Jingle/Snow/Journal/Holiday/Gentle/Jewelery/Monochrome/Perfume/Cuisine），
+    每个分类下是滤镜缩略图网格。
+  - Adjust 区含 14 个滑杆（Opacity/Brightness/Contrast/Vibrance/Saturation/Exposure/
+    Highlight/Shadow/Clarity/Sharpen/Temperature/Tint/Grain/Vignette），无独立开关。
+  - Outline 区含 Types 样式按钮组 + Color 色块（约 27 个）+ Size/Distance/Blur/Smooth 四滑杆。
+  - Filter/Reflection/Outline 三个开关的 ON 判据均为背景色 rgb(35,35,35)，OFF 为 rgb(209,213,219)。
+  - 入口确认：/create → 关定价弹窗 → Trending Tools → Start with Photos → 上传 1K.jpg → /agent。
+  - 证据截图 shots/01~07（详见 sync.md）。

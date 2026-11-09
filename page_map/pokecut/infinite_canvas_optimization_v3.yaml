@@ -1,0 +1,523 @@
+# Pokecut Infinite Canvas Optimization - page map v1
+# 采集环境: 测试服 http://10.17.1.66:3001，PC 1440x900，desktop UA / pointer fine
+# 入口: /create -> Start from a Photo -> test_images/1K.jpg -> /agent?pid=<uuid>
+# 采集时间: 2026-09-22
+page: Infinite Canvas Optimization
+version: v3
+supersedes: page_map/pokecut/infinite_canvas_optimization_v2.yaml
+url: /agent?pid=<uuid>
+landmark:
+  selector: "button[aria-label='Rotation'], button[data-rotate-handle='true']"
+  description: 无限画布选中图层后出现的旋转控制
+entry:
+  from: /create
+  trigger: 点击 Start from a Photo 后选择 test_images/1K.jpg
+  selector: "button:has-text('Start from a Photo')"
+  file_chooser: true
+elements:
+  canvas_stage:
+    selector: "div.absolute.inset-0.overflow-visible"
+    description: 无限画布主区域
+  canvas_layer_image:
+    selector: "div[data-element-id] img[alt='图片 1']"
+    description: 上传图片图层；实际交互点击其 data-element-id 容器
+  canvas_layer_result_remove_bg:
+    selector: "img[alt*='Remove BG']"
+    description: Remove BG 结果图层
+  canvas_layer_text:
+    selector: "img[alt^='文字']"
+    description: 文字图层渲染图
+  recent_used_row:
+    selector: "div:has-text('Inspiration'):has-text('Crop'):has-text('Remove BG')"
+    description: 底部 textbox 上方最近使用区域；本次出现 Inspiration / Crop / Remove BG
+  create_recently_used:
+    selector: "text=Recently Used"
+    description: Create 页最近使用区块，离开画布后展示 Crop / Remove BG
+states:
+  create_entry:
+    description: Create 页 PC 布局，可点击 Start from a Photo 触发文件选择器
+    trigger: 打开 /create
+    url_or_state_key: /create
+    buttons:
+      start_from_photo:
+        selector: "button:has-text('Start from a Photo')"
+        role_or_text: Start from a Photo
+        visible_condition: PC Create 页 Trending Tools 已渲染
+        enabled_condition: 始终可点击
+        action_result: 触发浏览器 file chooser；选择 test_images/1K.jpg 后进入 /agent?pid=*
+        reversible: true
+        explore_status: covered
+        dependencies: [test_images/1K.jpg]
+        assertions_hint: file chooser 出现且 URL 跳到 /agent?pid=*
+        notes: 进入前若出现语言提示或定价遮罩，应按页面实际处理，不能直接注入 file input。
+  canvas_default_image_selected:
+    description: 上传后图片图层默认选中，顶部工具栏、Rotation、底部生成输入区可见
+    trigger: 上传 test_images/1K.jpg
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      enhance_toolbar:
+        selector: "button:has-text('Enhance')"
+        role_or_text: Enhance
+        visible_condition: 图片图层被选中
+        enabled_condition: 图片图层可编辑
+        action_result: 打开 Enhance 模型下拉；点击模型后打开对应 AI Enhancer 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [test_images/1K.jpg]
+        assertions_hint: 出现 Standard Mode / Old Photo Mode / Portrait Mode / Text Mode / Ultra HD Mode
+        notes: 需求埋点期望 无限画布Enhance_xx使用；实测 Standard Mode 为 无限画布Enhance_Standard Mode点击。
+      remove_bg_toolbar:
+        selector: "button[aria-label='Remove BG'], button:has-text('Remove BG')"
+        role_or_text: Remove BG
+        visible_condition: 图片图层被选中
+        enabled_condition: 图片图层可编辑
+        action_result: 打开 Remove Background 面板
+        reversible: true
+        explore_status: covered
+        dependencies: [test_images/1K.jpg]
+        assertions_hint: 面板含 Close、General/Head&Face/Text、Remove Background 主按钮
+      crop_toolbar:
+        selector: "button[aria-label='Crop'], button:has-text('Crop')"
+        role_or_text: Crop
+        visible_condition: 图片或结果图层被选中
+        enabled_condition: 图层可编辑
+        action_result: 打开 Crop 面板，显示 Width/Height 数字输入与 Template/Select template
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Width/Height min=1 max=4096；本次初始 1200x1600，Width 改 2000 后 Height 不变
+      history_toolbar:
+        selector: "button[aria-label='History'], button:has-text('History')"
+        role_or_text: History
+        visible_condition: 画布已加载
+        enabled_condition: 始终可点击
+        action_result: 打开左侧 Edit History 面板
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 面板标题 Edit History；有记录时显示 Crop / Remove BG
+      rotation_handle:
+        selector: "button[data-rotate-handle='true']"
+        role_or_text: Rotation
+        visible_condition: 图片/结果图层被选中
+        enabled_condition: 干净画布默认状态下可交互
+        action_result: 干净画布重测：Rotation 中心点 elementFromPoint 命中 button.rotation-button，可点击；长按旋转逻辑本轮未继续深入
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Rotation 显示在图层下方，右侧角度 0°；长按旋转待补
+         notes: 默认状态可交互；但旋转到 340° 后取消选择再选中仍显示 340°，未按 AC-022 重置为 0°，列为 bug_candidate。
+      show_tutorial:
+        selector: "button[aria-label='Show Tutorial'], button:has-text('Show Tutorial')"
+        role_or_text: Show Tutorial
+        visible_condition: 画布已加载
+        enabled_condition: 始终可点击
+        action_result: 打开 6 步使用引导
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 6 步文案与 Skip/Back/Next/Finish 可见
+  enhance_dropdown:
+    description: 图片浮动工具栏 Enhance 下拉框
+    trigger: 点击 Enhance
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      standard_mode:
+        selector: "menuitem:has-text('Standard Mode')"
+        role_or_text: Standard Mode
+        visible_condition: Enhance 下拉打开
+        enabled_condition: 图片图层选中
+        action_result: 打开 AI Enhancer 面板并选中 Standard Mode
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 埋点实际为 无限画布Enhance_Standard Mode点击
+      old_photo_mode:
+        selector: "menuitem:has-text('Old Photo Mode')"
+        role_or_text: Old Photo Mode
+        visible_condition: Enhance 下拉打开
+        enabled_condition: 图片图层选中
+        action_result: 打开 Old Photo Mode
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 与旧 page_map 一致
+      portrait_mode:
+        selector: "menuitem:has-text('Portrait Mode')"
+        role_or_text: Portrait Mode
+        visible_condition: Enhance 下拉打开
+        enabled_condition: 图片图层选中
+        action_result: 打开 Portrait Mode
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      text_mode:
+        selector: "menuitem:has-text('Text Mode')"
+        role_or_text: Text Mode
+        visible_condition: Enhance 下拉打开
+        enabled_condition: 图片图层选中
+        action_result: 打开 Text Mode
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      ultra_hd_mode:
+        selector: "menuitem:has-text('Ultra HD Mode')"
+        role_or_text: Ultra HD Mode
+        visible_condition: Enhance 下拉打开
+        enabled_condition: 图片图层选中
+        action_result: 打开 Ultra HD Mode
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+  remove_bg_panel:
+    description: Remove Background 功能面板
+    trigger: 点击 Remove BG
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      close:
+        selector: "button[aria-label='Close'].tool-panel-close"
+        role_or_text: Close
+        visible_condition: 面板打开
+        enabled_condition: 始终可点击
+        action_result: 关闭面板
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 新关闭按钮存在
+      general:
+        selector: "button:has-text('General')"
+        role_or_text: General
+        visible_condition: 面板打开
+        enabled_condition: 始终可点击
+        action_result: 选中 General
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      head_face:
+        selector: "button:has-text('Head&Face')"
+        role_or_text: Head&Face
+        visible_condition: 面板打开
+        enabled_condition: 始终可点击
+        action_result: 选中 Head&Face
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      text:
+        selector: "button:has-text('Text')"
+        role_or_text: Text
+        visible_condition: 面板打开
+        enabled_condition: 始终可点击
+        action_result: 选中 Text
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      submit:
+        selector: "button:has-text('Remove Background')"
+        role_or_text: Remove Background
+        visible_condition: 面板打开
+        enabled_condition: 图片图层已选中
+        action_result: 生成 Remove BG 结果图层，通常 10-20 秒内完成
+        reversible: false
+        explore_status: covered
+        dependencies: [logged_in]
+        assertions_hint: 新增 img[alt*='Remove BG']，credits 本次未扣减仍 11416
+  remove_bg_result_refine:
+    description: 选中 Remove BG 结果图层后显示 Refine 入口
+    trigger: 点击 Remove BG 结果图层
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      refine:
+        selector: "button:has-text('Refine')"
+        role_or_text: Refine
+        visible_condition: Remove BG 结果图层被选中
+        enabled_condition: 结果图层存在
+        action_result: 打开 Refine 弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 埋点 无限画布Refine_进入
+  refine_modal:
+    description: Refine 弹窗
+    trigger: 点击 Refine
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      keep:
+        selector: "button:has-text('Keep')"
+        role_or_text: Keep
+        visible_condition: Refine 弹窗打开
+        enabled_condition: 始终
+        action_result: 切换 Keep
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      eraser:
+        selector: "button:has-text('Eraser')"
+        role_or_text: Eraser
+        visible_condition: Refine 弹窗打开
+        enabled_condition: 始终
+        action_result: 切换 Eraser
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      cancel:
+        selector: "button:has-text('Cancel')"
+        role_or_text: Cancel
+        visible_condition: Refine 弹窗打开
+        enabled_condition: 始终
+        action_result: 关闭 Refine，不上报应用；实测 credits 不变
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 埋点 无限画布Refine_退出
+      confirm:
+        selector: "button:has-text('Confirm')"
+        role_or_text: Confirm
+        visible_condition: Refine 弹窗打开
+        enabled_condition: 始终
+        action_result: 应用效果
+        reversible: false
+        explore_status: skipped
+        dependencies: [需要确认可逆性]
+        assertions_hint: 未点击；埋点 无限画布Refine_应用 未本轮验证
+  history_panel:
+    description: 左侧 Edit History 面板
+    trigger: 点击 History
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      collapse:
+        selector: "complementary:has-text('Edit History') button[aria-label='History'], aside:has-text('Edit History') button"
+        role_or_text: History
+        visible_condition: 面板打开
+        enabled_condition: 始终
+        action_result: 收起 Edit History
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 埋点 无限画布编辑历史_收起
+      record_remove_bg:
+        selector: "complementary:has-text('Edit History') :text('Remove BG'), aside:has-text('Edit History') :text('Remove BG')"
+        role_or_text: Remove BG
+        visible_condition: 存在 Remove BG 编辑记录
+        enabled_condition: 记录可见
+        action_result: 重新打开 Remove Background 配置面板并恢复关联图层
+        reversible: true
+        explore_status: covered
+        dependencies: [Remove BG 已生成]
+        assertions_hint: 埋点 无限画布编辑历史_编辑记录点击
+  background_menu:
+    description: Background 下拉，包含 Remove BG / Change BG / BG Blur / AI Background
+    trigger: 点击 Background
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      change_bg:
+        selector: ":text('Change BG')"
+        role_or_text: Change BG
+        visible_condition: Background 下拉打开
+        enabled_condition: 图片图层选中；HTTP 环境可能受 crypto.randomUUID 影响
+        action_result: 本次触发 TypeError: crypto.randomUUID is not a function，面板未稳定打开
+        reversible: true
+        explore_status: blocked_by_dependency
+        dependencies: [secure_context_or_uuid_polyfill]
+        assertions_hint: Console TypeError: crypto.randomUUID is not a function
+      bg_blur:
+        selector: ":text('BG Blur')"
+        role_or_text: BG Blur
+        visible_condition: Background 下拉打开
+        enabled_condition: 图片图层选中；HTTP 环境可能受 crypto.randomUUID 影响
+        action_result: 本次触发 TypeError: crypto.randomUUID is not a function，面板未稳定打开
+        reversible: true
+        explore_status: blocked_by_dependency
+        dependencies: [secure_context_or_uuid_polyfill]
+        assertions_hint: Console TypeError: crypto.randomUUID is not a function
+      ai_background:
+        selector: ":text('AI Background')"
+        role_or_text: AI Background
+        visible_condition: Background 下拉打开
+        enabled_condition: 图片图层选中
+        action_result: 未展开验证
+        reversible: true
+        explore_status: skipped
+        dependencies: []
+        assertions_hint: 本轮未执行 AI 生成类路径
+  multi_mode_models:
+    description: 模型下拉开启 Multi Mode 后的模型列表
+    trigger: 点击底部模型选择后点击 Multi Mode
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      model_pokecut_pro:
+        selector: ":text('Pokecut Pro')"
+        role_or_text: Pokecut Pro
+        visible_condition: Multi Mode 打开
+        enabled_condition: 订阅用户
+        action_result: 选择模型
+        reversible: true
+        explore_status: covered
+        dependencies: [member]
+        assertions_hint: ''
+      model_nano_banana_2_lite:
+        selector: ":text('Nano Banana 2 Lite')"
+        role_or_text: Nano Banana 2 Lite
+        visible_condition: Multi Mode 打开
+        enabled_condition: 订阅用户
+        action_result: 选择模型
+        reversible: true
+        explore_status: covered
+        dependencies: [member]
+        assertions_hint: ''
+      model_nano_banana_pro:
+        selector: ":text('Nano Banana Pro')"
+        role_or_text: Nano Banana Pro
+        visible_condition: Multi Mode 打开
+        enabled_condition: 订阅用户
+        action_result: 选择模型
+        reversible: true
+        explore_status: covered
+        dependencies: [member]
+        assertions_hint: ''
+      model_nano_banana_2:
+        selector: ":text('Nano Banana 2')"
+        role_or_text: Nano Banana 2
+        visible_condition: Multi Mode 打开
+        enabled_condition: 订阅用户
+        action_result: 选择模型
+        reversible: true
+        explore_status: covered
+        dependencies: [member]
+        assertions_hint: ''
+      model_chatgpt_image_2:
+        selector: ":text('ChatGPT Image 2.0')"
+        role_or_text: ChatGPT Image 2.0
+        visible_condition: Multi Mode 打开
+        enabled_condition: 订阅用户
+        action_result: 选择模型
+        reversible: true
+        explore_status: covered
+        dependencies: [member]
+        assertions_hint: ''
+      model_seedream_5_pro:
+        selector: ":text('Seedream 5.0 Pro')"
+        role_or_text: Seedream 5.0 Pro
+        visible_condition: Multi Mode 打开
+        enabled_condition: 订阅用户
+        action_result: 选择模型
+        reversible: true
+        explore_status: covered
+        dependencies: [member]
+        assertions_hint: ''
+      model_seedream_5_lite:
+        selector: ":text('Seedream 5.0 Lite')"
+        role_or_text: Seedream 5.0 Lite
+        visible_condition: Multi Mode 打开
+        enabled_condition: 订阅用户
+        action_result: 选择模型
+        reversible: true
+        explore_status: covered
+        dependencies: [member]
+        assertions_hint: ''
+      model_seedream_4:
+        selector: ":text('Seedream4.0')"
+        role_or_text: Seedream4.0
+        visible_condition: Multi Mode 打开
+        enabled_condition: 订阅用户
+        action_result: 选择模型
+        reversible: true
+        explore_status: covered
+        dependencies: [member]
+        assertions_hint: 需求期望文案为 Seedream 4.0；页面实际无空格，存在文案差异候选
+  tutorial_dialog:
+    description: Show Tutorial 打开 6 步使用引导
+    trigger: 点击 Show Tutorial
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      skip:
+        selector: "button:has-text('Skip')"
+        role_or_text: Skip
+        visible_condition: 使用引导打开
+        enabled_condition: 始终
+        action_result: 跳过引导；埋点 无限画布使用引导_跳过
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+      next:
+        selector: "button:has-text('Next')"
+        role_or_text: Next
+        visible_condition: 非最后一步
+        enabled_condition: 始终
+        action_result: 进入下一步
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 1..6 步文案已采集
+      finish:
+        selector: "button:has-text('Finish')"
+        role_or_text: Finish
+        visible_condition: 第 6 步
+        enabled_condition: 始终
+        action_result: 完成引导；埋点 无限画布使用引导_完成
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: ''
+  leave_save_dialog:
+    description: 已登录用户离开画布时出现保存确认
+    trigger: 点击左上品牌按钮尝试离开
+    url_or_state_key: /agent?pid=<uuid>
+    buttons:
+      close:
+        selector: "[role='dialog'] button[aria-label='Close']"
+        role_or_text: Close
+        visible_condition: 弹窗打开
+        enabled_condition: 始终
+        action_result: 关闭弹窗；埋点 无限画布工程保存_关闭
+        reversible: true
+        explore_status: covered
+        dependencies: [logged_in]
+        assertions_hint: ''
+      leave_without_saving:
+        selector: "[role='dialog'] button:has-text('Leave Without Saving')"
+        role_or_text: Leave Without Saving
+        visible_condition: 弹窗打开
+        enabled_condition: 始终
+        action_result: 放弃保存并跳转 /create；埋点 无限画布工程保存_离开不保存
+        reversible: false
+        explore_status: covered
+        dependencies: [logged_in]
+        assertions_hint: ''
+      save_and_leave:
+        selector: "[role='dialog'] button:has-text('Save & Leave')"
+        role_or_text: Save & Leave
+        visible_condition: 弹窗打开
+        enabled_condition: 始终
+        action_result: 干净有效工程重测：点击后约 5 秒保存成功并跳转 /create
+        reversible: false
+        explore_status: covered
+        dependencies: [logged_in]
+        assertions_hint: 保存成功后离开；上一轮失败为重复操作污染状态导致，已撤回
+tabs: {}
+modals: {}
+notes:
+  - PC 布局需确保 desktop UA / pointer fine；本会话曾继承 iPhone emulation，已通过浏览器上下文初始化覆盖为 PC 口径。
+  - 页面 HTTP 非 secure context 下 crypto.randomUUID 不可用，影响部分 Background 面板打开。
+  - 键盘移动实测为屏幕坐标 1px/10px，而不是随缩放变化的画布坐标移动。
+  - Enhance 统计事件名与需求不同：实际 *_点击，需求 *_使用。
+  - Seedream 4.0 页面文案为 Seedream4.0，存在文案差异候选。
+  - v2 撤回 Rotation 遮挡、Save & Leave 失败、非订阅 Multi Mode 无弹窗三个误判；保留键盘移动、Enhance 埋点、crypto.randomUUID、Seedream 文案候选。
+  - v3 新增：Rotation 重新选中未重置 0°、Crop 锁定后仍可改宽高、Multi Mode 非订阅/已订阅购买成功目标统计缺失。
+
+
+# v3 round3 补充
+# - 图片四边/四角拉伸、最小尺寸、Undo/Redo 已覆盖。
+# - Multi Mode 1-5 模型限制、设置弹窗、支持 8 模型、每模型 1 张文案已覆盖。
+# - 非订阅购买弹窗出现、Debug 跳过购买成功已执行，但 Multi Mode_非订阅用户购买yy成功 缺失。
+# - 已订阅购买弹窗出现、Debug 跳过 5000c 购买成功已执行，但 Multi Mode_已订阅用户购买弹窗出现 / Multi Mode_已订阅用户购买yy成功 缺失。
+# - Crop 锁定状态下 width 仍可编辑，疑似与 AC-065 冲突。
+# - Rotation 取消选择后再选中未重置为 0°，与 AC-022 冲突。

@@ -3,14 +3,35 @@ name: ui-test-page-map-sync
 description: 用 Playwright MCP 安全探索提测后的目标页面与状态，生成版本化 page_map（不覆盖历史版本），并输出带覆盖矩阵和需求-实现差异的 sync.md 供用户确认。需要更新页面地图、selector 漂移、新功能提测后页面探索时使用。
 ---
 
+
+
 # page-map-sync
 
 > 共享契约（通用红线 / Artifact 接力 / progress / 项目约束）见 `artifacts/runtime/common.md`。
 > 编码与技术避坑规则（selector / 等待 / Vue 交互 / 状态持久化 / 截图粒度）另见 `rule.md`，探索前定向检索。
 > 本角色的页面探索驱动固定为 Playwright MCP only；不默认启用 Chrome DevTools MCP。
 
+## 职责
 
-## 输出产物契约
+- 探索目标页面 / 状态 / 导航路径，生成下一版 page_map：`<page>_v<N+1>.yaml`，不覆盖、不删除历史版本。
+- 输出 sync.md：覆盖矩阵 + 需求预期 vs 页面实际差异 + bug_candidates，供用户确认。
+- 输出 exploration_report.md：按 `artifacts/runtime/templates/exploration_report.md` 汇总范围、入口、覆盖、gap、bug、skipped、风险、决策项和自动化准备度；必须按用例名列出已执行（covered / bug_candidate）与未执行（gap / skipped）用例，并提供 Bug Candidate 明细。
+- 输出 automation_handoff.yaml：逐个覆盖点记录入口、账号、环境、状态链、动作、ready/exit 条件、特殊 driver、事件采集边界和证据。探索结束时只能标 `pending_review`。
+- 业务规则如需补入知识库，必须在 outputs.specs_updated 声明。
+
+## 触发
+
+- 用户主动更新地图；selector 漂移修复。
+- 新功能在 `requirement_draft` 后、页面已提测时由 orchestrator 派发；存量补资产先派本角色。
+
+## 输入契约
+
+- entry_url、entry_path、目标状态、特殊依赖、账号态、授权边界。
+- 新功能必传 PRD-derived expected states / `requirement_draft` 摘要。
+- 现有 page_map 只读参考。
+- 账号：登录 / 购买 / 订阅 / credits 需要账号时，按需求 / 账号态从 `PROJECT.md`「素材与环境」的账号表选择（不套 `conftest.py` 默认）。
+
+## 输出契约
 
 - page-map-sync 的标准 gate artifact 固定为 `artifacts/<task_id>/sync.md`；不得因执行方式、临时探索、复探、MCP/脚本等差异改成其他文件名作为接力产物。
 - 每次探索还必须生成两个 sidecar：`artifacts/<task_id>/exploration_report.md`（人审摘要）和 `artifacts/<task_id>/evidence/automation_handoff.yaml`（自动化交接契约）；二者不替代 `sync.md`。
@@ -19,22 +40,42 @@ description: 用 Playwright MCP 安全探索提测后的目标页面与状态，
 - frontmatter 只放状态、输入、输出摘要和接力字段；详细 expected / actual / evidence / bug steps 放正文表格或列表，避免把 frontmatter 写成完整报告。
 - 覆盖矩阵优先按需求用例 / AC 编号逐条列出，列包含“# / 用例或覆盖点 / 结论 / 证据”。
 
-## 职责
-- 探索目标页面 / 状态 / 导航路径，生成下一版 page_map：`<page>_v<N+1>.yaml`，不覆盖、不删除历史版本。
-- 输出 sync.md：覆盖矩阵 + 需求预期 vs 页面实际差异 + bug_candidates，供用户确认。
-- 输出 exploration_report.md：只汇总范围、入口、覆盖、gap、bug、skipped、风险、决策项和自动化准备度，供用户快速审核。
-- 输出 automation_handoff.yaml：逐个覆盖点记录入口、账号、环境、状态链、动作、ready/exit 条件、特殊 driver、事件采集边界和证据。探索结束时只能标 `pending_review`。
-- 业务规则如需补入知识库，必须在 outputs.specs_updated 声明。
+## Gate 与判定
 
-## 触发
-- 用户主动更新地图；selector 漂移修复。
-- 新功能在 `requirement_draft` 后、页面已提测时由 orchestrator 派发；存量补资产先派本角色。
+- 新功能 / 大改版 / 首次探索：`sync.md`、`exploration_report.md`、`automation_handoff.yaml` 一起生成；handoff 为 `pending_review`，用户审核探索报告后才将 sync 改 `confirmed`、handoff 改 `ready_for_case_design`。
+- 用户审核重点是范围、入口、差异、bug、skipped、风险和自动化准备度；报告还必须按 §8/§10 给出逐用例执行清单，bug 截图必须以 §9 的默认折叠 HTML 形式可展开查看。
+- 唯一例外：selector 漂移局部重探且用户授权豁免；仍需生成精简 exploration_report，并记录 `repair_scope`、授权来源与原因。
 
-## 输入
-- entry_url、entry_path、目标状态、特殊依赖、账号态、授权边界。
-- 新功能必传 PRD-derived expected states / `requirement_draft` 摘要。
-- 现有 page_map 只读参考。
-- 账号：登录 / 购买 / 订阅 / credits 需要账号时，按需求 / 账号态从 `PROJECT.md`「素材与环境」的账号表选择（不套 `conftest.py` 默认）。
+## 红线
+
+- 不写测试代码 / 用例。
+- 不启用 Chrome DevTools MCP 作为默认探索或诊断工具；Playwright MCP 无法判定根因时记录诊断边界。
+- 不覆盖、不删除历史 page_map。
+- 不把无法访问的页面伪装成 covered；不把需求实现错误伪装成 skipped。
+- 不绕过 sync pending_review gate。
+- 不改地图之外的文件。
+- 不省略 progress.log。
+
+## 循环约束
+
+- 同一 task 内调用上限 2 次；第 2 次仍失败，orchestrator 标 blocked。
+
+## 上下游
+
+- 上游：orchestrator。
+- 下游：sync confirmed → test-case-design；独立任务 → null；selector 漂移授权豁免 → test-writing。
+
+## progress
+
+- start driver=playwright_mcp_only / step:mcp_snapshot <page/state> / step:mcp_action <action> <page/state> / step:wrote <page_map|sync.md|exploration_report.md|automation_handoff.yaml> / gate:exploration_review / done:sync.md+exploration_report.md+automation_handoff.yaml
+
+## 业务知识库使用
+
+- 开始 MCP 探索前读取 orchestrator 传入的 `knowledge_context`，重点消费 `legacy_entry`、`state_transition`、`validation_rule`、`permission_rule`、`historical_pitfall` 和 `ui_residue`。
+- 知识库只生成探索清单，不替代 Playwright MCP 真实验证；知识库命中但页面不存在时记录 `conflict` / `requirement_actual_diffs`，不得伪造入口。
+- `needs_verification` 只能作为待验证候选；`ui_residue` 不作为有效业务入口；`superseded` / `retired` 不进入默认探索路径。
+- 入口、状态、权限或历史校验出现明确新歧义时，最多追加一次 runtime Query；selector 失效、白屏、pytest 错误等技术问题不走业务知识库。
+- 发现可复用经验时，在 `sync.md` 的关键发现或补充 evidence 中记录 `knowledge_candidate`，不得直接写入 `active`。
 
 ## 账号态与素材规则执行自检（每次探索必做）
 
@@ -44,17 +85,19 @@ description: 用 Playwright MCP 安全探索提测后的目标页面与状态，
 - 探索开始前（写 state.md assumptions 时）做账号态计划：扫描 requirement AC 中所有需要登录 / 账号态 / 扣点 / 会员 / 权限 / credits / 批量拦截的条目，逐条标注「所需账号态 → 计划使用账号（或 anonymous）」，计划写入 state.md assumptions 或 evidence 开头。
 - 未完成上述映射前，任何「需要用账号态的用例」不得直接标 gap / skipped。
 - 每条生成 / 账号态证据必须记录**所用账号（邮箱或 anonymous）与环境（测试服 / 预部署）**，写进 evidence 与 sync 覆盖矩阵说明，便于复核“这条是谁跑出来的”。
+- 项目已明确授权时，涉及积分的生成 / 处理 / 扣点 / credits 用例，只要账号态满足，就必须直接执行，不得仅因“会消耗积分”标 gap / skipped；执行后记录账号、环境、前后 credits、成功提交任务的 taskId（如有）及是否模拟支付。
 - 确实无可用账号态时才标 gap / skipped，并写明「已按 PROJECT.md 账号表核对，仍缺 <具体账号态>」。
 - 环境顺序：测试服优先；仅测试服生成失败才经 DEBUG 面板切预部署并重新登录，切换后不得复用旧登录态。上传只可用 `test_images/` 白名单。
 
 ## 模式判定
+
 - 新功能：**用例驱动探索**——按 `requirement_draft` 的用例 / AC 逐条在实际页面执行 / 核对，差异记 `gap` / `bug_candidate`，不混 `skipped`；不做脱离用例的全量盲扫。
 - 存量首次探索 / 补资产：以实际页面补齐 page_map / sync。
 - 稳定回归 / 局部变化：只探索漂移或变更，不全量重跑。
 - `skipped` 仅用于环境、数据、权限、授权或不可逆风险（共享红线）。
 
-
 ## 探索驱动（Playwright MCP only）
+
 - 本角色默认且仅使用 Playwright MCP 作为页面探索驱动；`exploration_driver` 记录为 `playwright_mcp_only`。
 - 不默认启用 Chrome DevTools MCP；探索阶段只记录页面可观察行为，不承担深度 DevTools / performance trace 诊断职责。
 - Playwright MCP 用于打开页面、获取 accessibility snapshot、点击、输入、hover、滚动、文件上传、截图和观察页面状态变化。
@@ -64,6 +107,9 @@ description: 用 Playwright MCP 安全探索提测后的目标页面与状态，
 - 后续 `test-writing` 阶段仍生成正式 pytest / Playwright 自动化脚本；不得以 MCP 会话替代可复跑脚本、Allure 报告或 regression registry 资产。
 - **每次恢复会话必须做 Playwright MCP preflight**：历史 `state.md` / `progress.log` / `sync.md` 不能证明当前会话工具已暴露。开始探索前，先调用任一已暴露的 Playwright MCP browser 工具；未通过则记录 `playwright_mcp_unavailable` blocker 并停止。
 - 禁止静默降级为本地 Playwright、CDP 或 CUA。只有用户明确授权替代驱动时，才可继续，并如实改写 `exploration_driver` 与 progress（例如 `local_playwright_headless`），不得把替代驱动结果归档为 `playwright_mcp_only`。
+- Playwright MCP 探索必须后台静默：不得调用 `bringToFront()` 或主动激活 MCP 浏览器窗口；若窗口可见，先移出可见区域并用离屏 page 操作。键盘/鼠标交互优先通过页面内 DOM 事件或 page 级 API 完成，避免弹出到用户桌面。
+- PC 端探索开工前必须确认设备模拟真的生效：先过 viewport guard（`innerWidth >= 1280`、非 Mobile/iPhone/Android UA、`hasTouch=false`），并记录 viewport/UA/touch/DPR。仅在当前 MCP 内创建 desktop context（Windows/macOS Chrome UA、`isMobile=false`、`hasTouch=false`）；不能创建时记录 `playwright_mcp_context_mismatch` blocker 并停止。
+- 不得用 `browser_resize(1440x900)` 代替 desktop context：resize 不改变 UA / isMobile / hasTouch / DPR；390x664 的 iPhone context 即使 resize 成 1440x900，站点仍可能按移动端渲染。
 
 - **MCP 实操边界**：无 `setTimeout`；`addInitScript` 对 SPA 新文档不生效；`browser_file_upload` 不可靠（改用按钮 + file chooser，回退 `set_input_files`）。
   高频时序探针改在 Node / Python 侧采样，不靠页面注入。
@@ -73,6 +119,7 @@ description: 用 Playwright MCP 安全探索提测后的目标页面与状态，
   自检通过再开始探索，并把 `vw` 写进每页观测。来源：`2026-09-15_seo_main_upload_mobile_interactions`（`evidence/explore_run1.log` 桌面态 vs `explore_run2.log` 通过）。
 
 ## 探索方法
+
 1. 登录（按需求账号态）并整理探索清单；新功能时探索清单必须来自 `requirement_draft` 的用例 / AC，逐条对照实际页面执行 / 核对，不做脱离用例的盲扫。
 2. 使用 Playwright MCP 打开入口并获取 accessibility snapshot，等待可见状态 / 关键元素；CSR 不盲信 networkidle。
 3. 通过 Playwright MCP click / fill / hover / scroll / file upload 等交互覆盖默认态 / tab / modal / popover / filter / hover / 滚动 / 上传后 / 登录后 / 选中 / 生成后 / 环境语言切换。
@@ -130,6 +177,37 @@ description: 用 Playwright MCP 安全探索提测后的目标页面与状态，
 - 统计 / Console 场景的 `event_capture.reset_before_action`、开始点、停止点和精确次数；
 - 截图、Console、DOM 或其他证据引用；
 - 特殊交互（touch、dispatchEvent、坐标点击、Debug 面板）必须显式声明，禁止让 test-writing 自行猜。
+
+### locator 与失败路由契约（2026-10-21 新增）
+
+在每个 actions[] 上补充定位稳定性信息，避免 test-writing 阶段因 selector 脆弱而反复返工：
+
+```yaml
+locator:
+  primary: {by: "role | css | text | testid", value: "<selector>", name: null}
+  fallback: []            # 主定位失效时的候选，按顺序尝试
+  stability: "high | medium | low"
+  reason: "<为什么这样定位 / 为什么脆弱>"
+not_visible_when: []      # 该状态下应不存在的可执行谓词（条件显隐必填）
+```
+
+- stability=high：role / data-testid / aria-label 等语义定位；
+- stability=medium：稳定属性 + 作用域（必须提供 fallback）；
+- stability=low：顺序、坐标、无属性结构容器（必须提供 fallback，并写入 risk_notes），例如 Outline 四滑杆按共享容器顺序定位。
+
+契约级补充字段：
+
+- confidence：本用例整体实现可信度，取值 high | medium | low；
+- risk_notes[]：已知脆弱点、动态显隐条件、需人工确认项；
+- failure_routing[]：symptom -> suspect -> action，用于失败时快速归因（回 page-map-sync / 改用例 / 改代码 / block）。
+
+校验脚本会输出 warning（不阻塞）但把问题暴露出来：
+
+```powershell
+python scripts/validate_automation_handoff.py --handoff <handoff> --cases <cases>
+python scripts/validate_automation_handoff.py --handoff <handoff> --cases <cases> --strict   # warning 视为失败
+```
+
 `automation_handoff.status`：
 
 - `pending_review`：探索已写完，等待用户审核 `exploration_report.md`；
@@ -140,58 +218,39 @@ description: 用 Playwright MCP 安全探索提测后的目标页面与状态，
 探索完成后运行：
 
 ```powershell
-python scripts/validate_automation_handoff.py --handoff artifacts/<task_id>/evidence/automation_handoff.yaml --sync artifacts/<task_id>/sync.md
+python scripts/validate_automation_handoff.py --handoff artifacts/<task_id>/evidence/automation_handoff.yaml
 ```
 
 cases confirmed 后追加 `--cases artifacts/<task_id>/cases.md`，校验通过后才可进入 test-writing。
+
 ## page_map 版本化
+
 - 读最高版本，生成 `_v<N+1>`；legacy 首版为 `_v2`；禁止覆盖历史。
 - `page_ref` 指向具体版本文件，如 `page_map/module/home_v3.yaml: link_topic`。
 - sync.md 记录版本变化与兼容影响。
 
 ## page_map 结构（字段表）
+
 - 顶层：`page`、`url`、`landmark(selector,description)`、`entry(from,trigger,selector)`、`elements`、`tabs`、`modals`。
 - `states.<state>` 必填：`description`、`trigger`、`url_or_state_key`、`buttons`。
 - `states.<state>.buttons.<button_id>` 字段：`selector`、`role_or_text`、`visible_condition`、`enabled_condition`、`action_result`、`reversible`、`explore_status(covered|skipped|blocked_by_dependency)`、`dependencies`、`assertions_hint`、`notes`。
 - 同一按钮多状态结果不同必须拆成不同 state；button_id 语义化；`enabled_condition` 写清前置；`action_result` 写可断言结果；`reversible=false` 不代表跳过。
 
+## exploration_report.md 结构（字段表）
+
+- 固定章节：`## 1. 任务概览`、`## 2. 探索范围与覆盖`、`## 3. 关键入口与状态`、`## 4. Bug Candidate`、`## 5. Gap / Skipped / Pending`、`## 6. 自动化准备度`、`## 7. 需要用户确认`、`## 8. 已执行用例（按用例名标注）`、`## 9. Bug Candidate 明细（可展开查看截图）`、`## 10. 未执行用例（按用例名标注）`。
+- §8 已执行用例：逐条写 `<AC-xxx> <用例名> — covered/bug_candidate`；不得只写数量。
+- §9 Bug Candidate 明细：每条至少含对应用例名、优先级、`[步骤]`、`[结果]`、`[期望]` 和证据截图。
+- Bug 截图格式必须是默认折叠的 HTML：
+  `<details><summary>点击展开：...</summary><img src="shots/....png" alt="..." width="100%"></details>`
+  不得使用 Markdown 图片语法；`<details>` 内不要空行，避免截图被渲染器拆出并默认展开。
+- §10 未执行用例：分别列出 `10.1 Gap` 与 `10.2 Skipped`，逐条写 `<AC-xxx> <用例名>`。
+- 无 bug / 无 gap / 无 skipped 时保留章节并明确写“无”。
+
 ## sync.md 结构（字段表）
+
 - frontmatter：`task_id`、`agent`、`status(pending_review|confirmed|failed|blocked)`、`repair_scope(full_exploration|selector_drift)`、`gate_exemption`、`inputs`、`outputs`、`human_report`、`automation_handoff`、`next_agent`、`created_at`。
 - outputs：`scanned_pages`、`page_map_versions`、`coverage_gates`、`state_button_coverage`、`requirement_actual_diffs`、`bug_candidates`、`skipped`、`special_dependencies`、`specs_updated`。
 - `human_report` 固定指向 `artifacts/<task_id>/exploration_report.md`；`automation_handoff` 固定指向 `artifacts/<task_id>/evidence/automation_handoff.yaml`。
 - `bug_candidates` 每条含 bug 标题、AC/模块、优先级、`[步骤]/[结果]/[期望]`、截图路径（见「疑似 Bug 输出模板」）。
 - 正文：探索摘要、页面覆盖矩阵、需求差异、关键发现、下游注意事项、状态化按钮覆盖摘要、版本差异摘要。
-
-## Human Gate
-- 新功能 / 大改版 / 首次探索：`sync.md`、`exploration_report.md`、`automation_handoff.yaml` 一起生成；handoff 为 `pending_review`，用户审核探索报告后才将 sync 改 `confirmed`、handoff 改 `ready_for_case_design`。
-- 用户审核重点是范围、入口、差异、bug、skipped、风险和自动化准备度，不要求先阅读全部 evidence。
-- 唯一例外：selector 漂移局部重探且用户授权豁免；仍需生成精简 exploration_report，并记录 `repair_scope`、授权来源与原因。
-
-## 角色红线（共享红线见 common.md）
-- 不写测试代码 / 用例。
-- 不启用 Chrome DevTools MCP 作为默认探索或诊断工具；Playwright MCP 无法判定根因时记录诊断边界。
-- 不覆盖、不删除历史 page_map。
-- 不把无法访问的页面伪装成 covered；不把需求实现错误伪装成 skipped。
-- 不绕过 sync pending_review gate。
-- 不改地图之外的文件。
-- 不省略 progress.log。
-
-## progress
-- start driver=playwright_mcp_only / step:mcp_snapshot <page/state> / step:mcp_action <action> <page/state> / step:wrote <page_map|sync.md|exploration_report.md|automation_handoff.yaml> / gate:exploration_review / done:sync.md+exploration_report.md+automation_handoff.yaml
-
-## 循环约束
-- 同一 task 内调用上限 2 次；第 2 次仍失败，orchestrator 标 blocked。
-
-## 上下游
-- 上游：orchestrator。
-- 下游：sync confirmed → test-case-design；独立任务 → null；selector 漂移授权豁免 → test-writing。
-
-
-
-## 业务知识库使用
-
-- 开始 MCP 探索前读取 orchestrator 传入的 `knowledge_context`，重点消费 `legacy_entry`、`state_transition`、`validation_rule`、`permission_rule`、`historical_pitfall` 和 `ui_residue`。
-- 知识库只生成探索清单，不替代 Playwright MCP 真实验证；知识库命中但页面不存在时记录 `conflict` / `requirement_actual_diffs`，不得伪造入口。
-- `needs_verification` 只能作为待验证候选；`ui_residue` 不作为有效业务入口；`superseded` / `retired` 不进入默认探索路径。
-- 入口、状态、权限或历史校验出现明确新歧义时，最多追加一次 runtime Query；selector 失效、白屏、pytest 错误等技术问题不走业务知识库。
-- 发现可复用经验时，在 `sync.md` 的关键发现或补充 evidence 中记录 `knowledge_candidate`，不得直接写入 `active`。

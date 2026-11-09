@@ -1,0 +1,16 @@
+F....                                                                    [100%]
+================================== FAILURES ===================================
+____________ test_p_stk_01_entry_add_sticker_open_adjust[chromium] ____________
+tests\test_infinite_canvas_sticker_v1.py:364: in test_p_stk_01_entry_add_sticker_open_adjust
+    assert page.locator(SEL_STICKER_TILE).count() > 0, "��ֽ���ȱ������ͼ"
+E   AssertionError: ��ֽ���ȱ������ͼ
+E   assert 0 > 0
+E    +  where 0 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3001/agent?pid=a170f9d7-59b9-42d2-9a5b-38e793a810c4#'> selector="img[alt='sticker_valentine1']">.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3001/agent?pid=a170f9d7-59b9-42d2-9a5b-38e793a810c4#'> selector="img[alt='sticker_valentine1']"> = locator("img[alt='sticker_valentine1']")
+E    +        where locator = <Page url='http://10.17.1.66:3001/agent?pid=a170f9d7-59b9-42d2-9a5b-38e793a810c4#'>.locator
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_infinite_canvas_sticker_v1.py::test_p_stk_01_entry_add_sticker_open_adjust[chromium]
+1 failed, 4 passed in 119.50s (0:01:59)
+

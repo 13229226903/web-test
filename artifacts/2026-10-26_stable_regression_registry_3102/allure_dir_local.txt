@@ -1,0 +1,1 @@
+artifacts\2026-10-26_stable_regression_registry_3102\allure-results-local-20261026-112212

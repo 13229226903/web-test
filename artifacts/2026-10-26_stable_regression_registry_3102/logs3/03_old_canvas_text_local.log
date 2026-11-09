@@ -1,0 +1,109 @@
+EEEEEEEEEEEEE                                                            [100%]
+=================================== ERRORS ====================================
+_ ERROR at setup of TestL1OldCanvasTextPanelStructure.test_l1_001_text_panel_and_layer_structure _
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_ ERROR at setup of TestL2OldCanvasTextPanelEntry.test_l2_001_template_entry_to_canvas _
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_ ERROR at setup of TestL2OldCanvasTextPanelAddLayer.test_l2_002_add_text_layer _
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_ ERROR at setup of TestL2OldCanvasTextPanelLeftStyle.test_l2_003_alignment_toggle _
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_ ERROR at setup of TestL2OldCanvasTextPanelLeftStyle.test_l2_004_font_and_fill _
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_ ERROR at setup of TestL2OldCanvasTextPanelLeftStyle.test_l2_005_style_preset_and_section_shrink _
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_ ERROR at setup of TestL2OldCanvasTextPanelSliders.test_l2_006_sliders_and_accordion _
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+____ ERROR at setup of TestL2OldCanvasTextPanelEffects.test_l2_007_shadow _____
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+____ ERROR at setup of TestL2OldCanvasTextPanelEffects.test_l2_008_outline ____
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+__ ERROR at setup of TestL2OldCanvasTextPanelEffects.test_l2_009_reflection ___
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+__ ERROR at setup of TestL2OldCanvasTextPanelEffects.test_l2_010_background ___
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_____ ERROR at setup of TestL2OldCanvasTextPanelEffects.test_l2_011_blend _____
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_ ERROR at setup of TestL2OldCanvasTextPanelContentEdit.test_l2_012_content_edit _
+tests\test_old_canvas_text_panel_v1.py:440: in canvas_session
+    canvas_url = enter_canvas_via_template(page)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_text_panel_v1.py:279: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 3 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL1OldCanvasTextPanelStructure::test_l1_001_text_panel_and_layer_structure
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEntry::test_l2_001_template_entry_to_canvas
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelAddLayer::test_l2_002_add_text_layer
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelLeftStyle::test_l2_003_alignment_toggle
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelLeftStyle::test_l2_004_font_and_fill
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelLeftStyle::test_l2_005_style_preset_and_section_shrink
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelSliders::test_l2_006_sliders_and_accordion
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEffects::test_l2_007_shadow
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEffects::test_l2_008_outline
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEffects::test_l2_009_reflection
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEffects::test_l2_010_background
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelEffects::test_l2_011_blend
+ERROR tests/test_old_canvas_text_panel_v1.py::TestL2OldCanvasTextPanelContentEdit::test_l2_012_content_edit
+13 errors in 313.66s (0:05:13)

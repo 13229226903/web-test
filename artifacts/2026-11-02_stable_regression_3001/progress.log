@@ -1,0 +1,4 @@
+[2026-11-02 19:01:50] orchestrator start 2026-11-02_stable_regression_3001 (stable_regression, codex_single_context)
+[2026-11-02 19:01:50] scope: 17 stable_regression on http://10.17.1.66:3001; exclude #25 pending_fix
+[2026-11-02 22:17:40] ALL DONE: 17/17 suites executed; allure -> reports/allure-report-regression-3001; served on 8124
+[2026-11-02 22:20:00] user notice: PC Batch v1 redesigned; after remaining suites go back to exploration (page-map-sync) for Batch v1

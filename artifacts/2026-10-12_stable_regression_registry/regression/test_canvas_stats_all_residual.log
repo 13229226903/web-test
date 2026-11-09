@@ -1,0 +1,60 @@
+FFFFF                                                                    [100%]
+================================== FAILURES ===================================
+___________________________ test_m_new_10[chromium] ___________________________
+tests\test_canvas_stats_all.py:1373: in _test
+    _run_case(browser, playwright, base_url, case)
+tests\test_canvas_stats_all.py:1360: in _run_case
+    FLOWS[case["flow"]](page, base, case, rec)
+tests\test_canvas_stats_all.py:1041: in flow_seo_new_canvas
+    assert wait_purchase_modal(page), "未出现购买弹窗，无法断言购买出现统计"
+E   AssertionError: 未出现购买弹窗，无法断言购买出现统计
+E   assert False
+E    +  where False = wait_purchase_modal(<Page url='http://10.17.1.66:3001/create/edit?pid=cdbba94c-f8f0-4dd5-8451-ad9e9f34a32f'>)
+___________________________ test_m_new_11[chromium] ___________________________
+tests\test_canvas_stats_all.py:1373: in _test
+    _run_case(browser, playwright, base_url, case)
+tests\test_canvas_stats_all.py:1360: in _run_case
+    FLOWS[case["flow"]](page, base, case, rec)
+tests\test_canvas_stats_all.py:1041: in flow_seo_new_canvas
+    assert wait_purchase_modal(page), "未出现购买弹窗，无法断言购买出现统计"
+E   AssertionError: 未出现购买弹窗，无法断言购买出现统计
+E   assert False
+E    +  where False = wait_purchase_modal(<Page url='http://10.17.1.66:3001/create/edit?pid=443c7e35-0855-41da-a305-9d81279a9fcb'>)
+___________________________ test_m_new_12[chromium] ___________________________
+tests\test_canvas_stats_all.py:1373: in _test
+    _run_case(browser, playwright, base_url, case)
+tests\test_canvas_stats_all.py:1360: in _run_case
+    FLOWS[case["flow"]](page, base, case, rec)
+tests\test_canvas_stats_all.py:1041: in flow_seo_new_canvas
+    assert wait_purchase_modal(page), "未出现购买弹窗，无法断言购买出现统计"
+E   AssertionError: 未出现购买弹窗，无法断言购买出现统计
+E   assert False
+E    +  where False = wait_purchase_modal(<Page url='http://10.17.1.66:3001/create/edit?pid=095a1027-bdf2-46c8-b640-81d1a9c0b616'>)
+___________________________ test_m_new_13[chromium] ___________________________
+tests\test_canvas_stats_all.py:1373: in _test
+    _run_case(browser, playwright, base_url, case)
+tests\test_canvas_stats_all.py:1360: in _run_case
+    FLOWS[case["flow"]](page, base, case, rec)
+tests\test_canvas_stats_all.py:1041: in flow_seo_new_canvas
+    assert wait_purchase_modal(page), "未出现购买弹窗，无法断言购买出现统计"
+E   AssertionError: 未出现购买弹窗，无法断言购买出现统计
+E   assert False
+E    +  where False = wait_purchase_modal(<Page url='http://10.17.1.66:3001/create/edit?pid=8977c509-f4cc-4b2a-b617-71f87a1ad80e'>)
+___________________________ test_m_new_14[chromium] ___________________________
+tests\test_canvas_stats_all.py:1373: in _test
+    _run_case(browser, playwright, base_url, case)
+tests\test_canvas_stats_all.py:1360: in _run_case
+    FLOWS[case["flow"]](page, base, case, rec)
+tests\test_canvas_stats_all.py:1041: in flow_seo_new_canvas
+    assert wait_purchase_modal(page), "未出现购买弹窗，无法断言购买出现统计"
+E   AssertionError: 未出现购买弹窗，无法断言购买出现统计
+E   assert False
+E    +  where False = wait_purchase_modal(<Page url='http://10.17.1.66:3001/create/edit?pid=782e7a63-424a-4803-ab6c-06df999daafe'>)
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_canvas_stats_all.py::test_m_new_10[chromium] - AssertionErr...
+FAILED tests/test_canvas_stats_all.py::test_m_new_11[chromium] - AssertionErr...
+FAILED tests/test_canvas_stats_all.py::test_m_new_12[chromium] - AssertionErr...
+FAILED tests/test_canvas_stats_all.py::test_m_new_13[chromium] - AssertionErr...
+FAILED tests/test_canvas_stats_all.py::test_m_new_14[chromium] - AssertionErr...
+5 failed in 542.76s (0:09:02)

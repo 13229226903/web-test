@@ -1,0 +1,27 @@
+tests/test_old_canvas_insert_panel_v3.py::test_l1_003_insert_entry_and_panel
+tests/test_old_canvas_insert_panel_v3.py::test_l1_004_right_panel_container
+tests/test_old_canvas_insert_panel_v3.py::test_l2_001_template_entry_to_canvas
+tests/test_old_canvas_insert_panel_v3.py::test_l2_004_text_draw_panel
+tests/test_old_canvas_insert_panel_v3.py::test_l2_005_general_draw_panel
+tests/test_old_canvas_insert_panel_v3.py::test_l2_021_image_blend
+tests/test_old_canvas_insert_panel_v3.py::test_l2_015_image_opacity
+tests/test_old_canvas_insert_panel_v3.py::test_l2_016_image_adjust
+tests/test_old_canvas_insert_panel_v3.py::test_l2_017_image_shadow
+tests/test_old_canvas_insert_panel_v3.py::test_l2_018_image_outline
+tests/test_old_canvas_insert_panel_v3.py::test_l2_020_image_filter
+tests/test_old_canvas_insert_panel_v3.py::test_l2_019_image_reflection
+tests/test_old_canvas_insert_panel_v3.py::test_l3_004_color_overlay_dismiss
+tests/test_old_canvas_insert_panel_v3.py::test_l2_002_local_upload
+tests/test_old_canvas_insert_panel_v3.py::test_l2_003_my_cuts_insert
+tests/test_old_canvas_insert_panel_v3.py::test_l2_006_shape_added
+tests/test_old_canvas_insert_panel_v3.py::test_l2_007_line_added
+tests/test_old_canvas_insert_panel_v3.py::test_l2_008_custom_line_dialog
+tests/test_old_canvas_insert_panel_v3.py::test_l2_009_text_draw_apply
+tests/test_old_canvas_insert_panel_v3.py::test_l2_010_general_draw_apply
+tests/test_old_canvas_insert_panel_v3.py::test_l2_011_shape_params
+tests/test_old_canvas_insert_panel_v3.py::test_l2_012_shape_fill_image
+tests/test_old_canvas_insert_panel_v3.py::test_l2_013_line_params
+tests/test_old_canvas_insert_panel_v3.py::test_l2_014_custom_line_apply
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+24 tests collected in 0.29s

@@ -1,0 +1,265 @@
+schema_version: '1.0'
+task_id: 2026-10-12_stable_regression_registry
+status: ready_for_case_design
+repair_scope: selector_drift
+page_map_ref: page_map/pokecut/mobile_canvas_v12.yaml
+page_map_refs_all:
+- page_map/pokecut/infinite_canvas_text_layer_v3.yaml
+- page_map/pokecut/mobile_canvas_v12.yaml
+- page_map/pokecut/ai_image_text_enhancer_v4.yaml
+sync_ref: artifacts/2026-10-12_stable_regression_registry/sync.md
+exploration_report_ref: artifacts/2026-10-12_stable_regression_registry/exploration_report.md
+created_at: '2026-10-12 15:20:00'
+updated_at: '2026-10-12 15:45:00'
+blocking_items: []
+unresolved_conflicts: []
+contracts:
+- case_id: DRIFT-F1-create-entry-card
+  source_case: 'tests/test_infinite_canvas_text_layer_v2.py :: enter_canvas（6 条用例共用入口）'
+  source_evidence:
+  - artifacts/2026-10-12_stable_regression_registry/shots/fam1_create_entry_card.png
+  - artifacts/2026-10-12_stable_regression_registry/sync.md
+  platform: desktop
+  viewport: 1920x1080 / desktop / hasTouch=false / DPR=1
+  environment: test
+  account:
+    state: anonymous
+    isolation: fresh_context
+    reuse_allowed: false
+    reset_strategy: 清 Cookie / localStorage / sessionStorage 后进入，保持未登录态
+  data:
+    assets:
+    - test_images/低分辨率.JPG
+    values:
+      code: '123456'
+  entry:
+    url: http://10.17.1.66:3001/create
+    flow:
+    - 打开 /create 并等待 Trending Tools 渲染
+    - 点击入口卡 button[data-tool-id='start-photo']（文案 Start with Photos）
+    - 文件选择器选择 test_images/低分辨率.JPG
+    - 等待进入 /agent?pid=<uuid>
+  state_chain:
+  - state: pc_create_upload_entry
+    ready_when:
+    - /create 已加载
+    - button[data-tool-id='start-photo'][data-tool-surface='trending'] 可见（文案 Start
+      with Photos）
+    exit_when:
+    - 文件选择器回调完成
+    - URL 变为 /agent?pid=<uuid>
+  - state: pc_canvas_text_panel_open
+    ready_when:
+    - /agent?pid=<uuid> 已加载
+    - button[data-tool-id='text'] 可见且唯一
+    exit_when:
+    - 点击 Add Text 后面板出现 Adjust / Basic / Space / Reflection / Background / Outline
+  actions:
+  - action_id: f1_a1_upload
+    button_ref: states.pc_create_upload_entry.buttons.pc_create_start_photo
+    action: upload
+    value: test_images/低分辨率.JPG
+    driver: playwright
+    ready_when:
+    - button[data-tool-id='start-photo'] 可见且可点击
+    result:
+    - 文件选择器被唤起（expect_file_chooser 成功）
+    - URL 进入 /agent?pid=<uuid>
+  - action_id: f1_a2_add_text
+    button_ref: states.pc_canvas_text_panel_open.buttons.pc_canvas_add_text
+    action: click
+    value: null
+    driver: playwright
+    ready_when:
+    - 画布已加载且图片图层可见
+    result:
+    - 文字图层新增并被选中
+    - 右侧文字面板出现 Basic / Adjust Tab 与四个折叠区
+  event_capture:
+    enabled: false
+    reason: F1 为 selector 漂移修复，不涉及埋点断言
+  evidence:
+    screenshots:
+    - artifacts/2026-10-12_stable_regression_registry/shots/fam1_create_entry_card.png
+    notes:
+    - 旧 selector div.cursor-pointer:has-text('Start from a Photo') 实测命中 0
+    - 现网为 button.create-tool-pill[data-tool-id='start-photo'][data-tool-surface='trending']，文案
+      Start with Photos
+    - 画布内 button[data-tool-id='text']、Adjust 工具栏、Basic 下 Alignment/Font/Fill、Space/Reflection/Background/Outline
+      实测全部存在
+  implementation_status: ready
+  expected_assertion_change: 仅替换入口 selector 与文案定位；画布内业务断言保持不变（不得弱化）。
+- case_id: DRIFT-F2-mobile-signup-entry
+  source_case: 'tests/test_canvas_stats_all.py :: register_or_login(mobile=True /
+    pro=True) 与 flow_seo_new_canvas（16 条）'
+  source_evidence:
+  - artifacts/2026-10-12_stable_regression_registry/shots/fam2_mobile_signup_entry.png
+  - artifacts/2026-10-12_stable_regression_registry/shots/fam2_promo_modal.png
+  - artifacts/2026-10-12_stable_regression_registry/sync.md
+  platform: mobile
+  viewport: 390x844 / iPhone UA / isMobile=true / hasTouch=true / DPR=3
+  environment: test
+  account:
+    state: free_new_user
+    isolation: fresh_context
+    reuse_allowed: false
+    reset_strategy: 每个 case 新建移动端 context，用唯一邮箱 autotest<时间戳>@qq.com 注册，避免复用已消耗试用资格的账号
+  data:
+    assets:
+    - test_images/1K.jpg
+    values:
+      code: '123456'
+      plan: 月SE试用（Debug 跳过真实购买）
+  entry:
+    url: http://10.17.1.66:3001/en
+    flow:
+    - 移动端 context 打开 /en
+    - 点击 .credits-entry__pill 展开 .credits-entry__panel
+    - 点击 button.credits-entry__signup（文案 Sign up to get more）
+    - 填 Email + Verification Code(123456)，点 [data-testid='auth-submit']
+    - 确认已登录后再跳转 case.entry（不带语言前缀的路径）
+  state_chain:
+  - state: mobile_home_anonymous
+    ready_when:
+    - /en 已加载
+    - .credits-entry__pill 可见
+    exit_when:
+    - 注册成功，credits 面板收起且不再出现 'Sign up to get more'
+  - state: mobile_signup_modal_open
+    ready_when:
+    - 出现 Email 与 Verification Code 输入框
+    - '[data-testid=''auth-submit''] 可见'
+    exit_when:
+    - 点击 auth-submit 后弹窗关闭并进入登录态
+  - state: mobile_seo_new_canvas_purchase
+    ready_when:
+    - URL 为 /create/edit?pid=<uuid>
+    - .mobile-feature-workspace 已展开
+    - button.mobile-ai-generate-button 可见
+    exit_when:
+    - 出现 .purchase-gift-modal（促销，li.purchase-pro-plan__card=0）
+    - 关闭后出现内购弹窗（li.purchase-pro-plan__card>=1）
+  actions:
+  - action_id: f2_a1_open_credits_panel
+    button_ref: states.mobile_home_anonymous.buttons.mobile_home_credits_pill
+    action: click
+    value: null
+    driver: playwright
+    ready_when:
+    - /en 已加载且 header credits 胶囊可见
+    result:
+    - .credits-entry__panel 可见，含 'Sign up to get more'
+  - action_id: f2_a2_click_signup
+    button_ref: states.mobile_home_anonymous.buttons.mobile_home_signup_entry
+    action: click
+    value: null
+    driver: playwright
+    ready_when:
+    - .credits-entry__panel 已展开
+    result:
+    - 注册弹窗出现，含 Email / Verification Code 输入框
+  - action_id: f2_a3_upload_and_submit
+    button_ref: states.mobile_seo_new_canvas_purchase.buttons.mobile_feature_primary_submit
+    action: click
+    value: null
+    driver: playwright
+    ready_when:
+    - 已登录
+    - case.entry 对应页面已上传 test_images/1K.jpg 并进入 /create/edit?pid=<uuid>
+    result:
+    - 0 credits 账号点主提交后出现购买弹窗链路（促销 → 关闭 → 内购）
+  event_capture:
+    enabled: true
+    driver: page_console
+    reset_before_action: 每次 action 前清空已采集的 sendGaEvent 记录
+    start_after: 进入 /create/edit?pid=<uuid> 之后
+    stop_after: Debug 跳过真实购买完成之后
+    expected:
+    - event: case.expected[0]（购买出现）
+      send_count: 1
+      debug_count: 1
+      note: 事件名以 data/pokecut_canvas_stats_v1.yaml 为准
+  evidence:
+    screenshots:
+    - artifacts/2026-10-12_stable_regression_registry/shots/fam2_mobile_home_header.png
+    - artifacts/2026-10-12_stable_regression_registry/shots/fam2_mobile_signup_entry.png
+    - artifacts/2026-10-12_stable_regression_registry/shots/fam2_anon_submit_register_modal.png
+    - artifacts/2026-10-12_stable_regression_registry/shots/fam2_promo_modal.png
+    - artifacts/2026-10-12_stable_regression_registry/shots/fam2_iap_modal_after_close.png
+    notes:
+    - 首页 header 旧 selector button:has-text('Sign up') 实测命中 0
+    - 新入口 button.credits-entry__signup 文案 'Sign up to get more'，注册成功（实测 autotest20261012171500@qq.com）
+    - 匿名态点主提交 → .purchase-gift-modal=0 且 auth-submit 出现（注册弹窗），并非购买弹窗
+    - 注册态同一链路 → 促销弹窗(cards=0) → 关闭 img[src*='nav_btn_pop_close.svg'] → 内购弹窗(cards=3)
+    - M-CORE-06/07（pro=True）同样因该分支静默失败：实测旧路径抛 Timeout 且被吞，creditsPill 保持 0；换新入口后 pro
+      登录成功 credits=11500
+  implementation_status: ready
+  expected_assertion_change: '仅修复注册入口并取消 except Exception: pass 静默吞异常；购买弹窗链路与埋点断言不变。'
+- case_id: DRIFT-F3-text-enhancer-cost-rule
+  source_case: tests/test_ai_image_text_enhancer_experiment.py（9 条点数断言）
+  source_evidence:
+  - artifacts/2026-10-12_stable_regression_registry/shots/fam3_cost_paid_5.png
+  - artifacts/2026-10-12_stable_regression_registry/shots/fam3_cost_all_15.png
+  - artifacts/2026-10-12_stable_regression_registry/sync.md
+  platform: desktop
+  viewport: 1920x1080 / desktop / hasTouch=false
+  environment: test
+  account:
+    state: anonymous
+    isolation: fresh_context
+    reuse_allowed: true
+    reset_strategy: 匿名会话即可复现；会员档需另按 PROJECT.md 用 450832596@qq.com 在预部署验证
+  data:
+    assets:
+    - test_images/文字测例.jpg
+    values:
+      code: '123456'
+  entry:
+    url: http://10.17.1.66:3001/tools/ai-image-text-enhancer
+    flow:
+    - 打开工具页并等待 H1 与上传区可见
+    - 'set_input_files #singleUploadInput = test_images/文字测例.jpg'
+    - 按矩阵切换效果与 2k/4k/8k
+    - 读取 [data-text-enhance-total-cost] 与 data-text-enhance-cost-state
+  state_chain:
+  - state: text_enhance_after_upload
+    ready_when:
+    - '#singleUploadInput 上传完成'
+    - '[data-effect=''enhance_text''] 可见'
+    exit_when:
+    - 按组合读取到预期点数
+  actions:
+  - action_id: f3_a1_upload
+    button_ref: states.text_enhance_after_upload.buttons.f3_upload
+    action: upload
+    value: test_images/文字测例.jpg
+    driver: playwright
+    ready_when:
+    - H1 可见
+    result:
+    - 进入处理区
+  - action_id: f3_a2_select_effects_and_scale
+    button_ref: states.text_enhance_after_upload.buttons.f3_effect_and_scale
+    action: click
+    value: null
+    driver: playwright
+    ready_when:
+    - 处理区已出现
+    result:
+    - 点数随组合刷新，与确认后的新基线一致
+  event_capture:
+    enabled: false
+    reason: 阻塞中，未进入实现
+  evidence:
+    screenshots:
+    - artifacts/2026-10-12_stable_regression_registry/shots/fam3_cost_paid_5.png
+    - artifacts/2026-10-12_stable_regression_registry/shots/fam3_cost_all_15.png
+    - artifacts/2026-10-12_stable_regression_registry/shots/fam3_cost_enhance_free.png
+    notes:
+    - remove_glare/remove_moire/document_scanner 实测均 5（基线 2/2/4）
+    - enhance_text 2k/4k 为 Free，8k 为 10（基线 2）
+    - enhance+document_scanner 2k/4k=5、8k=15（基线 6）
+    - 全 4 效果 4k=15（基线 14）
+  implementation_status: ready
+  expected_assertion_change: 用户 2026-10-12 确认新点数规则为预期变更；按实测矩阵更新 expected（非增强单效果=5、enhance_text
+    2k/4k=Free/8k=10、enhance+scanner 2k/4k=5/8k=15、全 4 效果 4k=15）。

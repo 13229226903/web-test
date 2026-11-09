@@ -1,0 +1,7 @@
+[2026-09-24 17:24:31] orchestrator start task_id=2026-09-24_zentao_3.2_bug_regression type=regression_verify scope=zentao 3.2 resolved bugs (creator=liangjinrun) count=15
+[2026-09-24 18:06:29] regression 232052 PASS (rotation badge only during rotate; hidden when selected)
+[2026-09-24 18:06:29] regression 232058 PASS (multi mode switch toggles false/true reliably)
+[2026-09-24 18:06:29] regression 232057 PASS (Multi Mode + Pokecut Pro ref limit shows 1/3 not 1/9)
+[2026-09-24 18:06:29] regression 232020 PASS (entry model updates after deselecting default)
+[2026-09-24 18:06:29] regression 232056 PASS (inspiration preset turns Multi Mode off and sets preset model)
+[2026-09-24 18:06:29] regression 232054 OBSERVED (lock does not sync height when typing width; matches zentao resolution 'by design')

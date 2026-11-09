@@ -9,30 +9,37 @@ import pytest
 import allure
 from playwright.sync_api import Page, expect as pw_expect
 
+from helpers.waiting import wait_visible, wait_ready, settle
+
 
 # ── 工具函数 ──────────────────────────────────────────────────
 
 def goto_help(page: Page, base_url: str):
     """导航到 /help 并等待 Vue SPA 渲染完成。"""
     page.goto(f"{base_url}/help", wait_until="domcontentloaded", timeout=120000)
-    page.wait_for_timeout(8000)
+    # 可观察就绪条件：Hero 搜索框可见（替代固定 8s；超时后仍继续，交给后续断言报错）
+    wait_visible(page, page.locator('input[placeholder*="Search by keyword"]'), timeout=15000)
 
 
 def goto_help_mobile(page: Page, base_url: str):
     """移动端窄屏打开 /help。"""
     page.set_viewport_size({"width": 375, "height": 812})
     page.goto(f"{base_url}/help", wait_until="domcontentloaded", timeout=120000)
-    page.wait_for_timeout(8000)
+    wait_visible(page, page.locator('input[placeholder*="Search by keyword"]'), timeout=15000)
 
 
 def vue_click(page: Page, locator):
-    """点击 Vue 组件：滚动到可见后 dispatchEvent(MouseEvent)。"""
+    """点击 Vue 组件：滚动到可见后 dispatchEvent(MouseEvent)。
+
+    点击后的等待无法用单一条件描述（不同按钮触发不同状态），因此保留
+    一个有界 settle；调用方应在点击后自行断言目标状态。
+    """
     locator.scroll_into_view_if_needed()
-    page.wait_for_timeout(300)
+    settle(page, 300)
     handle = locator.element_handle()
     if handle:
         handle.evaluate("el => el.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true}))")
-    page.wait_for_timeout(900)
+    settle(page, 900)
 
 
 def do_search(page: Page, keyword: str):
@@ -40,9 +47,10 @@ def do_search(page: Page, keyword: str):
     inp = page.locator('input[placeholder*="Search by keyword"]').first
     inp.scroll_into_view_if_needed()
     inp.fill(keyword)
-    page.wait_for_timeout(400)
+    settle(page, 400)
     page.keyboard.press("Enter")
-    page.wait_for_timeout(2500)
+    # 可观察就绪条件：搜索面板结果容器出现（命中或空态都会渲染该容器）
+    wait_visible(page, page.locator("div.help-v2-search-panel__results"), timeout=8000)
 
 
 def shot(page: Page, name: str):
@@ -321,8 +329,8 @@ class TestL2Interactions:
 
         with allure.step("滚动到底并断言最后一条"):
             page.locator("div.help-v2-search-panel__results").evaluate("el => el.scrollTop = el.scrollHeight")
-            page.wait_for_timeout(500)
-            pw_expect(results.nth(12)).to_be_visible()
+            # 可观察就绪条件：滚动后最后一条结果可见（替代固定 500ms）
+            wait_visible(page, results.nth(12), timeout=5000)
 
         with allure.step("截图记录"):
             shot(page, "06搜索命中与PC滚动")
@@ -379,15 +387,17 @@ class TestL2Interactions:
         matrix_meta("L2-006")
         with allure.step("打开首页定位顶部 Contact us 链接"):
             page.goto(base_url, wait_until="domcontentloaded", timeout=120000)
-            page.wait_for_timeout(6000)
             link = page.locator("a[href*='/help?category=commercial-safety-support']").first
+            # 可观察就绪条件：目标 Contact us 链接出现（替代固定 6s）
+            wait_visible(page, link, timeout=15000)
             assert link.count() >= 1, "首页应存在 Contact us 深链入口"
             href = link.get_attribute("href") or ""
             assert "category=commercial-safety-support" in href and "question=commercial-safety-support-4" in href
 
         with allure.step("访问 Contact us 深链"):
             page.goto(f"{base_url}{href}", wait_until="domcontentloaded", timeout=120000)
-            page.wait_for_timeout(8000)
+            # 可观察就绪条件：导航项高亮（深链自动定位）出现（替代固定 8s）
+            wait_visible(page, page.locator("button.help-v2-faq-section__nav-item--active"), timeout=15000)
 
         with allure.step("断言自动定位并展开"):
             active = page.locator("button.help-v2-faq-section__nav-item--active").first

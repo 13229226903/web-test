@@ -6,23 +6,53 @@ account:
   email: "450832596@qq.com"
   code: "123456"
 
+# 2026-11-03 改版：/batch 上传 >=2 张图片后进入 /agent?pid=*（无限画布）并自动展开 Batch Edit：
+# 不再进入旧 /batch-edit/edit。主按钮与 7 个 Try Now 卡片共用 #file-upload。
 images:
   single: "test_images/1K.jpg"
-  multi:
+  # agent 入口要求一次上传 >=2 张（<2 张停留 /batch）
+  agent_upload:
     - "test_images/1K.jpg"
-    - "test_images/无人脸.jpg"
+    - "test_images/4K.jpg"
   third: "test_images/文字测例.jpg"
   custom_background: "test_images/4K.jpg"
 
 landing:
   upload_button: "Upload Images"
+  upload_min_count: 2
+  file_input: "#file-upload"
   cards:
     remove_bg: "Batch Remove Backgrounds"
     resizer: "Batch Resizer"
     change_bg: "Batch Change Backgrounds"
     enhancer: "Batch Enhancer"
+    erase: "Batch Erase"
+    change_clothes: "Batch Change Clothes"
+    watermark: "Batch Watermarking"
 
-edit:
+agent:
+  path_pattern: "/agent?pid="
+  batch_edit_title: "Batch Edit"
+  # 来源卡片 -> agent Batch Edit 弹窗选中的 tab（实测）
+  default_tab_for_upload_button: "Remove BG"
+  card_tab_map:
+    "Batch Remove Backgrounds": "Remove BG"
+    "Batch Resizer": "Crop"
+    "Batch Change Backgrounds": "Change BG"
+    "Batch Enhancer": "Enhance"
+    "Batch Erase": "Erase"
+    "Batch Change Clothes": "Clothes Changer"
+    "Batch Watermarking": "Watermark"
+  tabs:
+    - "Enhance"
+    - "Remove BG"
+    - "Change BG"
+    - "Erase"
+    - "Crop"
+    - "Clothes Changer"
+    - "Watermark"
+
+edit:  # RETIRED: 旧 /batch-edit/edit 编辑器已废弃并重定向 /agent；以下仅历史参考，不再被用例引用
   main_tabs:
     - "Background"
     - "Enhance"

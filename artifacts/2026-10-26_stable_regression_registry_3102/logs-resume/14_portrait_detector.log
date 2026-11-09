@@ -1,0 +1,155 @@
+..FFFFFFF..FF.                                                           [100%]
+================================== FAILURES ===================================
+_______________ TestL2Interaction.test_l2_003_ethnicity_result ________________
+tests\test_pokecut_portrait_detector.py:176: in test_l2_003_ethnicity_result
+    wait_result(page)
+tests\test_pokecut_portrait_detector.py:114: in wait_result
+    page.wait_for_function(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 150000ms exceeded.
+__________________ TestL2Interaction.test_l2_004_body_result __________________
+tests\test_pokecut_portrait_detector.py:195: in test_l2_004_body_result
+    wait_result(page, timeout_ms=120000)
+tests\test_pokecut_portrait_detector.py:114: in wait_result
+    page.wait_for_function(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 120000ms exceeded.
+__________________ TestL2Interaction.test_l2_005_face_result __________________
+tests\test_pokecut_portrait_detector.py:214: in test_l2_005_face_result
+    wait_result(page, timeout_ms=150000)
+tests\test_pokecut_portrait_detector.py:114: in wait_result
+    page.wait_for_function(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 150000ms exceeded.
+____________ TestL2Interaction.test_l2_006_download_questionnaire _____________
+tests\test_pokecut_portrait_detector.py:224: in test_l2_006_download_questionnaire
+    wait_result(page)
+tests\test_pokecut_portrait_detector.py:114: in wait_result
+    page.wait_for_function(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 150000ms exceeded.
+________________ TestL2Interaction.test_l2_007_unsaved_report _________________
+tests\test_pokecut_portrait_detector.py:244: in test_l2_007_unsaved_report
+    wait_result(page, timeout_ms=120000)
+tests\test_pokecut_portrait_detector.py:114: in wait_result
+    page.wait_for_function(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 120000ms exceeded.
+_________________ TestL2Interaction.test_l2_008_try_my_photo __________________
+tests\test_pokecut_portrait_detector.py:263: in test_l2_008_try_my_photo
+    wait_result(page, timeout_ms=120000)
+tests\test_pokecut_portrait_detector.py:114: in wait_result
+    page.wait_for_function(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 120000ms exceeded.
+____________ TestL3Exception.test_l3_001_anonymous_auth[chromium] _____________
+tests\test_pokecut_portrait_detector.py:286: in test_l3_001_anonymous_auth
+    assert page.locator('[data-testid="auth-dialog"]').count(), "�����ϴ�Ӧ�� auth modal"
+E   AssertionError: �����ϴ�Ӧ�� auth modal
+E   assert 0
+E    +  where 0 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3102/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'>.count
+E    +      where <Locator frame=<Frame name= url='http://10.17.1.66:3102/tools/ethnicity-guesser-ai'> selector='[data-testid="auth-dialog"]'> = locator('[data-testid="auth-dialog"]')
+E    +        where locator = <Page url='http://10.17.1.66:3102/tools/ethnicity-guesser-ai'>.locator
+_____________________ TestL3Exception.test_l3_004_noface ______________________
+tests\test_pokecut_portrait_detector.py:317: in test_l3_004_noface
+    page.wait_for_function("() => document.body.innerText.includes('No Face Found')", timeout=60000)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 60000ms exceeded.
+____________________ TestL3Exception.test_l3_005_multiface ____________________
+tests\test_pokecut_portrait_detector.py:330: in test_l3_005_multiface
+    page.wait_for_function("() => document.body.innerText.includes('Choose a Face to Analyze')", timeout=90000)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 90000ms exceeded.
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_003_ethnicity_result
+FAILED tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_004_body_result
+FAILED tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_005_face_result
+FAILED tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_006_download_questionnaire
+FAILED tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_007_unsaved_report
+FAILED tests/test_pokecut_portrait_detector.py::TestL2Interaction::test_l2_008_try_my_photo
+FAILED tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_001_anonymous_auth[chromium]
+FAILED tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_004_noface
+FAILED tests/test_pokecut_portrait_detector.py::TestL3Exception::test_l3_005_multiface
+9 failed, 5 passed in 1124.65s (0:18:44)

@@ -1,0 +1,162 @@
+entry_path: /create
+account:
+  email: 450832596@qq.com
+  code: "123456"
+  display_name: User8JY
+  state: vip
+reference_image: test_images/低分辨率.JPG
+target_url: http://10.17.1.66:3001/create
+multi_mode_first_four:
+  - Pokecut Pro
+  - Nano Banana 2 Lite
+  - Nano Banana Pro
+  - Nano Banana 2
+debug_official_url: https://appinference-upload.flockiaapps.com
+waits:
+  page_load_ms: 7000
+  action_settle_ms: 1200
+  submit_timeout_ms: 90000
+  result_timeout_ms: 300000
+  poll_interval_ms: 2000
+cases:
+  - case_id: P-MX-L2-001
+    page: create
+    model: Pokecut Pro
+    kind: t2i
+    count: 1
+    multi_mode: false
+    reference_image: null
+  - case_id: P-MX-L2-002
+    page: create
+    model: Pokecut Pro
+    kind: t2i
+    count: 2
+    multi_mode: false
+    reference_image: null
+  - case_id: P-MX-L2-003
+    page: create
+    model: Pokecut Pro
+    kind: i2i
+    count: 1
+    multi_mode: false
+    reference_image: test_images/低分辨率.JPG
+  - case_id: P-MX-L2-004
+    page: create
+    model: Pokecut Pro
+    kind: i2i
+    count: 2
+    multi_mode: false
+    reference_image: test_images/低分辨率.JPG
+  - case_id: P-MX-L2-005
+    page: create
+    model: Nano Banana 2 Lite
+    kind: t2i
+    count: 1
+    multi_mode: false
+    reference_image: null
+  - case_id: P-MX-L2-006
+    page: create
+    model: Nano Banana 2 Lite
+    kind: i2i
+    count: 1
+    multi_mode: false
+    reference_image: test_images/低分辨率.JPG
+  - case_id: P-MX-L2-007
+    page: create
+    model: Nano Banana 2 Lite
+    kind: t2i
+    count: 2
+    multi_mode: false
+    reference_image: null
+  - case_id: P-MX-L2-008
+    page: create
+    model: Nano Banana 2 Lite
+    kind: i2i
+    count: 2
+    multi_mode: false
+    reference_image: test_images/低分辨率.JPG
+  - case_id: P-MX-L2-009
+    page: create
+    model: 多模型前四
+    kind: t2i
+    count: 1
+    multi_mode: true
+    reference_image: null
+  - case_id: P-MX-L2-010
+    page: create
+    model: 多模型前四
+    kind: i2i
+    count: 1
+    multi_mode: true
+    reference_image: test_images/低分辨率.JPG
+  - case_id: P-MX-L2-011
+    page: agent
+    model: Pokecut Pro
+    kind: t2i
+    count: 1
+    multi_mode: false
+    reference_image: null
+  - case_id: P-MX-L2-012
+    page: agent
+    model: Pokecut Pro
+    kind: i2i
+    count: 1
+    multi_mode: false
+    reference_image: test_images/低分辨率.JPG
+  - case_id: P-MX-L2-013
+    page: agent
+    model: Pokecut Pro
+    kind: t2i
+    count: 2
+    multi_mode: false
+    reference_image: null
+  - case_id: P-MX-L2-014
+    page: agent
+    model: Nano Banana 2 Lite
+    kind: t2i
+    count: 1
+    multi_mode: false
+    reference_image: null
+  - case_id: P-MX-L2-015
+    page: agent
+    model: Nano Banana 2 Lite
+    kind: i2i
+    count: 1
+    multi_mode: false
+    reference_image: test_images/低分辨率.JPG
+  - case_id: P-MX-L2-016
+    page: agent
+    model: Nano Banana 2 Lite
+    kind: t2i
+    count: 2
+    multi_mode: false
+    reference_image: null
+  - case_id: P-MX-L2-017
+    page: agent
+    model: Nano Banana 2 Lite
+    kind: i2i
+    count: 2
+    multi_mode: false
+    reference_image: test_images/低分辨率.JPG
+  - case_id: P-MX-L2-018
+    page: agent
+    model: 多模型前四
+    kind: t2i
+    count: 1
+    multi_mode: true
+    reference_image: null
+  - case_id: P-MX-L2-019
+    page: agent
+    model: 多模型前四
+    kind: i2i
+    count: 1
+    multi_mode: true
+    reference_image: test_images/低分辨率.JPG
+  - case_id: P-MX-L2-020
+    page: agent
+    model: Pokecut Pro
+    kind: i2i
+    count: 2
+    multi_mode: false
+    reference_image: test_images/低分辨率.JPG
+    assumed_pass: true

@@ -1,0 +1,33 @@
+F.....                                                                   [100%]
+================================== FAILURES ===================================
+________________ test_text_001_entry_and_left_tools[chromium] _________________
+tests\test_infinite_canvas_text_layer_v2.py:254: in test_text_001_entry_and_left_tools
+    assert text in body
+E   AssertionError: assert 'Rotation' in '$1 USD offer ending soon\n23\n:\n59\n:\n26\n0\nSign up\nLog in\n450 x 234\nAdjust\nMove Up\nMove Down\nTo Top\nTo Bot...old Right-click or Space + Left-click to drag the canvas\nInspiration\n0/3000\nNano Banana 2 Lite\n10\nDEBUG\nAdd Text'
+============================== warnings summary ===============================
+tests/test_infinite_canvas_text_layer_v2.py::test_text_004_reflection[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:350: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero = sum(1 for p in diff.getdata() if p != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_005_background[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:408: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero_mode = sum(1 for px in diff_mode.getdata() if px != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_005_background[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:429: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero_applied = sum(1 for px in diff_applied.getdata() if px != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:452: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    nonzero = sum(1 for p in diff.getdata() if p != (0, 0, 0))
+
+tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]
+tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]
+  D:\Test\web-test\tests\test_infinite_canvas_text_layer_v2.py:204: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    return sum(1 for px in diff.getdata() if px != (0, 0, 0))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_infinite_canvas_text_layer_v2.py::test_text_001_entry_and_left_tools[chromium]
+1 failed, 5 passed, 6 warnings in 303.98s (0:05:03)

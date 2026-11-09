@@ -1,0 +1,197 @@
+EEEEEEEEEEEEEEEEEEEEEEEE                                                 [100%]
+=================================== ERRORS ====================================
+____________ ERROR at setup of test_l1_003_insert_entry_and_panel _____________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_____________ ERROR at setup of test_l1_004_right_panel_container _____________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+___________ ERROR at setup of test_l2_001_template_entry_to_canvas ____________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+________________ ERROR at setup of test_l2_004_text_draw_panel ________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+______________ ERROR at setup of test_l2_005_general_draw_panel _______________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+__________________ ERROR at setup of test_l2_021_image_blend __________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_________________ ERROR at setup of test_l2_015_image_opacity _________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_________________ ERROR at setup of test_l2_016_image_adjust __________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_________________ ERROR at setup of test_l2_017_image_shadow __________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_________________ ERROR at setup of test_l2_018_image_outline _________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_________________ ERROR at setup of test_l2_020_image_filter __________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_______________ ERROR at setup of test_l2_019_image_reflection ________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_____________ ERROR at setup of test_l3_004_color_overlay_dismiss _____________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_________________ ERROR at setup of test_l2_002_local_upload __________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+________________ ERROR at setup of test_l2_003_my_cuts_insert _________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+__________________ ERROR at setup of test_l2_006_shape_added __________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+__________________ ERROR at setup of test_l2_007_line_added ___________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+______________ ERROR at setup of test_l2_008_custom_line_dialog _______________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+________________ ERROR at setup of test_l2_009_text_draw_apply ________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+______________ ERROR at setup of test_l2_010_general_draw_apply _______________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_________________ ERROR at setup of test_l2_011_shape_params __________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_______________ ERROR at setup of test_l2_012_shape_fill_image ________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+__________________ ERROR at setup of test_l2_013_line_params __________________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+_______________ ERROR at setup of test_l2_014_custom_line_apply _______________
+tests\test_old_canvas_insert_panel_v3.py:71: in canvas_session
+    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_insert_panel_v3.py:125: in enter_canvas_via_template
+    raise AssertionError(f"ģ����ڽ���ɻ���ʧ�ܣ������� {attempts} �Σ�: {last_err}")
+E   AssertionError: ģ����ڽ���ɻ���ʧ�ܣ������� 4 �Σ�: ģ�忨�ϴ���δ���뻭������ǰ URL: http://10.17.1.66:3102/template
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l1_003_insert_entry_and_panel
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l1_004_right_panel_container
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_001_template_entry_to_canvas
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_004_text_draw_panel
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_005_general_draw_panel
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_021_image_blend - Ass...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_015_image_opacity - A...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_016_image_adjust - As...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_017_image_shadow - As...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_018_image_outline - A...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_020_image_filter - As...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_019_image_reflection
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l3_004_color_overlay_dismiss
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_002_local_upload - As...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_003_my_cuts_insert - ...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_006_shape_added - Ass...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_007_line_added - Asse...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_008_custom_line_dialog
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_009_text_draw_apply
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_010_general_draw_apply
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_011_shape_params - As...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_012_shape_fill_image
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_013_line_params - Ass...
+ERROR tests/test_old_canvas_insert_panel_v3.py::test_l2_014_custom_line_apply
+24 errors in 415.57s (0:06:55)

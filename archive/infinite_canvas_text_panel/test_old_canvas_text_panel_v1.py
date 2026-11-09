@@ -17,6 +17,8 @@ from pathlib import Path
 from playwright.sync_api import Page, expect as pw_expect
 from PIL import Image, ImageChops
 
+from helpers.waiting import poll_until, settle
+
 
 def _repo_root() -> Path:
     """定位仓库根目录（同时兼容 tests/ 与 archive/<module>/ 两种存放位置）。"""
@@ -29,6 +31,11 @@ def _repo_root() -> Path:
 
 BASE_DIR = _repo_root()
 DATA = yaml.safe_load((BASE_DIR / "data" / "pokecut_old_canvas_text_panel_v1.yaml").read_text(encoding="utf-8"))
+
+
+def resolve_base_url(base_url=None) -> str:
+    import os as _os
+    return (base_url or _os.environ.get("POKECUT_BASE_URL") or DATA["base_url"]).rstrip("/")
 
 BASE_URL = os.environ.get("POKECUT_BASE_URL", DATA["base_url"])
 EMAIL = os.environ.get("POKECUT_TEST_EMAIL", DATA["accounts"]["vip"]["email"])
@@ -218,27 +225,43 @@ NAV_JS = """() => [...document.querySelectorAll('img')]
 def wait_canvas_ready(page: Page, timeout_s: int = WAIT_READY):
     """等加载遮罩消失且左侧功能栏渲染完成（复用 pid 重新打开时偶发长时间 loading）。"""
     overlay_gone = False
-    for _ in range(int(timeout_s / 1.5)):
+
+    def _ready() -> bool:
+        nonlocal overlay_gone
         if not overlay_gone and page.evaluate(READY_JS) == 0:
             overlay_gone = True
-        if overlay_gone and page.evaluate(NAV_JS) >= 8:
-            page.wait_for_timeout(1500)
-            return True
-        page.wait_for_timeout(1500)
-    return False
+        return overlay_gone and page.evaluate(NAV_JS) >= 8
+
+    return poll_until(page, _ready, timeout=int(timeout_s * 1000), interval=1500)
 
 
-def login(page: Page):
-    page.goto(BASE_URL + DATA["entry_path"], wait_until="domcontentloaded", timeout=120000)
-    page.wait_for_timeout(4500)
+def login(page: Page, base_url: str = None):
+    page.goto(resolve_base_url(base_url) + DATA["entry_path"], wait_until="domcontentloaded", timeout=120000)
+    poll_until(
+        page,
+        lambda: page.get_by_role("button", name="Log in", exact=True).count() > 0
+        or page.evaluate(NAV_JS) >= 8,
+        timeout=30000,
+        interval=1000,
+    )
     btn = page.get_by_role("button", name="Log in", exact=True)
     if btn.count():
-        btn.first.click()
-        page.wait_for_timeout(1800)
-        page.locator('input[type="email"]').fill(EMAIL)
+        email_input = page.locator('input[type="email"]')
+        # 按钮可见可能早于 Vue 绑定点击事件；点完等弹层，未出现则重试点击。
+        for _ in range(5):
+            btn.first.click()
+            if poll_until(page, lambda: email_input.count() > 0, timeout=3000, interval=300):
+                break
+        assert email_input.count() > 0, "登录入口点击后未出现邮箱输入框"
+        email_input.fill(EMAIL)
         page.locator('input[placeholder*="Verification"]').fill(CODE)
         page.locator('[data-testid="auth-submit"]').click()
-        page.wait_for_timeout(8000)
+        poll_until(
+            page,
+            lambda: page.get_by_role("button", name="Log in", exact=True).count() == 0,
+            timeout=40000,
+            interval=1000,
+        )
     state = page.evaluate(
         """() => { try { const a = window.useNuxtApp();
             return {vip: a.__basicAccountState?.userBenefit?.value?.vipType}; } catch(e){ return {vip:null}; } }"""
@@ -247,13 +270,12 @@ def login(page: Page):
     return state
 
 
-def enter_canvas_via_template(page: Page, attempts: int = 3):
+def enter_canvas_via_template(page: Page, base_url: str = None, attempts: int = 3):
     """从 /template 的 Colorful Background 首卡上传并进入旧画布。"""
     last_err = None
     for attempt in range(1, attempts + 1):
         try:
-            page.goto(BASE_URL + DATA["entry_path"], wait_until="domcontentloaded", timeout=120000)
-            page.wait_for_timeout(5000)
+            page.goto(resolve_base_url(base_url) + DATA["entry_path"], wait_until="domcontentloaded", timeout=120000)
             heading = page.get_by_role("heading", name=DATA["assets"]["template_group"], exact=True).first
             pw_expect(heading).to_be_visible(timeout=30000)
             section = heading.locator("xpath=..").locator("xpath=..")
@@ -263,19 +285,22 @@ def enter_canvas_via_template(page: Page, attempts: int = 3):
             with page.expect_file_chooser(timeout=30000) as fc:
                 overlay.click()
             fc.value.set_files(IMG_1K)
-            for _ in range(90):
-                page.wait_for_timeout(1000)
-                if DATA["canvas_path_pattern"] in page.url:
-                    break
-            else:
+            entered = poll_until(
+                page,
+                lambda: DATA["canvas_path_pattern"] in page.url,
+                timeout=90000,
+                interval=1000,
+            )
+            if not entered:
                 raise AssertionError(f"模板卡上传后未进入画布，当前 URL: {page.url}")
-            page.wait_for_timeout(WAIT_SETTLE)
+            wait_canvas_ready(page)
             return page.url
         except Exception as exc:  # noqa: BLE001
             last_err = exc
             if attempt == attempts:
                 break
-            page.wait_for_timeout(2500)
+            # 重试间隔：等上一条失败请求释放连接。
+            settle(page, 2500)
     raise AssertionError(f"模板入口进入旧画布失败（已重试 {attempts} 次）: {last_err}")
 
 
@@ -291,7 +316,9 @@ LAYER_ROWS_JS = """() => [...document.querySelectorAll('div')].filter(e => {
 def open_layer_panel(page: Page):
     """打开左侧 Layer 面板（图层列表）。"""
     page.locator(LAYER_NAV).first.click()
-    page.wait_for_timeout(1500)
+    # 图层行列表是异步挂载的，且空列表也返回 []；这里需要等面板渲染完成，
+    # 没有单一可观察信号（无图层时列表本就为空），保留有界 settle。
+    settle(page, 1500)
 
 
 def text_layer_count(page: Page) -> int:
@@ -311,12 +338,17 @@ def clear_text_layers(page: Page, max_rounds: int = 12):
         if not rows:
             return
         row = rows[0]
+        before_count = len(rows)
         page.mouse.click(row["x"] + 40, row["y"] + row["h"] // 2)
-        page.wait_for_timeout(1200)
         icon = page.locator(DELETE_ICON).first
-        pw_expect(icon).to_be_visible(timeout=8000)
+        pw_expect(icon).to_be_visible(timeout=15000)
         icon.click()
-        page.wait_for_timeout(1600)
+        poll_until(
+            page,
+            lambda: sum(1 for r in page.evaluate(LAYER_ROWS_JS) if r["text"] == "Text") < before_count,
+            timeout=15000,
+            interval=500,
+        )
     raise AssertionError(f"清理文字图层未完成，仍有 {text_layer_count(page)} 层")
 
 
@@ -327,10 +359,9 @@ def open_text_panel(page: Page):
     loc = page.locator(TEXT_TAB).first
     pw_expect(loc).to_be_visible(timeout=30000)
     loc.click()
-    page.wait_for_timeout(SETTLE_ACTION)
-    if not page.locator(ADD_TEXT).first.is_visible():
+    if not poll_until(page, lambda: page.locator(ADD_TEXT).first.is_visible(), timeout=10000, interval=500):
         loc.click()
-        page.wait_for_timeout(SETTLE_ACTION)
+        poll_until(page, lambda: page.locator(ADD_TEXT).first.is_visible(), timeout=10000, interval=500)
     assert page.locator(ADD_TEXT).first.is_visible(), "Text 面板未展开（Add a text 不可见）"
 
 
@@ -344,7 +375,8 @@ def click_fill(page: Page, color: str):
         return {x: Math.round(b.x + b.width / 2), y: Math.round(b.y + b.height / 2)}; }""", color)
     assert box, f"左侧 Fill 未找到颜色 {color}"
     page.mouse.click(box["x"], box["y"])
-    page.wait_for_timeout(SETTLE_ACTION)
+    # 填色效果由调用方的画布像素差异断言负责校验。
+    settle(page, SETTLE_ACTION)
     return box
 
 
@@ -376,12 +408,18 @@ def add_text_layer(page: Page, distinct: bool = True):
     btn = page.locator(ADD_TEXT).first
     pw_expect(btn).to_be_visible(timeout=15000)
     btn.click()
-    page.wait_for_timeout(3000)
+    poll_until(
+        page,
+        lambda: bool(page.evaluate(SECTIONS_JS)),
+        timeout=20000,
+        interval=500,
+    )
     if distinct:
         pick = pick_distinct_fill(page)
         if pick:
             page.mouse.click(pick["x"], pick["y"])
-            page.wait_for_timeout(SETTLE_ACTION + 600)
+            # 颜色生效由后续像素差异断言校验。
+            settle(page, SETTLE_ACTION + 600)
 
 
 def expand_section(page: Page, name: str, probe=None):
@@ -393,7 +431,7 @@ def expand_section(page: Page, name: str, probe=None):
         btn = section_box(page, name)
         assert btn, f"右面板未找到分区 {name}"
         page.mouse.click(btn["x"] + 8, btn["y"] + btn["h"] // 2)
-        page.wait_for_timeout(1300)
+        poll_until(page, probe, timeout=8000, interval=500)
     assert probe(), f"分区 {name} 未能展开"
 
 
@@ -406,7 +444,7 @@ def click_switch(page: Page, name: str, probe=None):
         sw = switch_box(page, name)
         assert sw, f"右面板未找到 {name} 开关"
         page.mouse.click(sw["x"] + sw["w"] // 2, sw["y"] + sw["h"] // 2)
-        page.wait_for_timeout(1800)
+        poll_until(page, probe, timeout=10000, interval=500)
     assert probe(), f"{name} 开关未能开启"
     return switch_box(page, name)
 
@@ -424,20 +462,21 @@ def drag_range(page: Page, label: str, target: float, window_px: int = 220):
     page.mouse.down()
     page.mouse.move(x + 2, y, steps=2)
     page.mouse.up()
-    page.wait_for_timeout(SETTLE_ACTION)
+    poll_until(page, lambda: (range_box(page, label, window_px) or {}).get("value") != rb["value"],
+               timeout=SETTLE_ACTION + 3000, interval=300)
     after = range_box(page, label, window_px)
     return {"before": rb["value"], "after": after["value"] if after else None, "min": lo, "max": hi}
 
 
 # ── fixtures ─────────────────────────────────────────────
 @pytest.fixture(scope="session")
-def canvas_session(playwright):
+def canvas_session(playwright, base_url):
     """session 级前置：VIP 登录 + 进入旧画布 1 次（模板入口有频率限制）。"""
     browser = playwright.chromium.launch(headless=True)
     context = browser.new_context(viewport={"width": 1920, "height": 1080}, locale="en-US")
     page = context.new_page()
-    login(page)
-    canvas_url = enter_canvas_via_template(page)
+    login(page, base_url)
+    canvas_url = enter_canvas_via_template(page, base_url)
     assert DATA["canvas_path_pattern"] in canvas_url, f"会话入口未进入旧画布: {canvas_url}"
     page.close()
     yield {"context": context, "url": canvas_url}
@@ -450,7 +489,6 @@ def canvas_page(canvas_session):
     """每条用例复用同一 pid，重新打开得到干净页面（不重新上传）。"""
     page = canvas_session["context"].new_page()
     page.goto(canvas_session["url"], wait_until="domcontentloaded", timeout=120000)
-    page.wait_for_timeout(6000)
     ready = wait_canvas_ready(page)
     assert ready, "画布未在超时内加载完成（左侧功能栏未渲染）"
     yield page
@@ -616,7 +654,12 @@ class TestL2OldCanvasTextPanelLeftStyle:
                 loc = page.locator(f'div.cursor-pointer:has(> img[src*="{icon}"])').first
                 box = loc.bounding_box()
                 page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
-                page.wait_for_timeout(SETTLE_ACTION)
+                poll_until(
+                    page,
+                    lambda: any(icon in s and s.endswith(suffix + ".svg") for s in alignment_state(page)),
+                    timeout=SETTLE_ACTION + 3000,
+                    interval=300,
+                )
                 srcs = alignment_state(page)
                 assert any(icon in s and s.endswith(suffix + ".svg") for s in srcs),                     f"{key} 未切换为选中态: {srcs}"
                 assert_changed(page, f"l2_003_{key}", THRESHOLD_MEDIUM, f"alignment={key}")
@@ -648,7 +691,8 @@ class TestL2OldCanvasTextPanelLeftStyle:
             pw_expect(loc).to_be_visible(timeout=15000)
             box = loc.bounding_box()
             page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
-            page.wait_for_timeout(SETTLE_ACTION)
+            # 字体渲染完成由画布像素差异断言校验。
+            settle(page, SETTLE_ACTION)
             assert_changed(page, "l2_004_font", THRESHOLD_STRONG, f"font={font}")
             shot(page, "l2_004_font_switched")
 
@@ -688,7 +732,8 @@ class TestL2OldCanvasTextPanelLeftStyle:
             assert loc.count() > idx, f"Style 瓦片数量不足: {loc.count()}"
             box = loc.nth(idx).bounding_box()
             page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
-            page.wait_for_timeout(SETTLE_ACTION)
+            # 预设渲染完成由画布像素差异断言校验。
+            settle(page, SETTLE_ACTION)
             assert_changed(page, "l2_005_style", THRESHOLD_STRONG, "style preset")
 
         with allure.step("断言右面板分区收敛为 4 个"):
@@ -856,7 +901,8 @@ class TestL2OldCanvasTextPanelEffects:
             sw = swatch_box(page, "Outline", 6)
             assert sw, f"Outline 未找到色块，实际色块数未知"
             page.mouse.click(sw["x"] + sw["w"] // 2, sw["y"] + sw["h"] // 2)
-            page.wait_for_timeout(SETTLE_ACTION)
+            # 描边渲染完成由画布像素差异断言校验。
+            settle(page, SETTLE_ACTION)
             assert_changed(page, "l2_008_outline", THRESHOLD_WEAK, f"size={target}+color")
             shot(page, "l2_008_outline_after")
 
@@ -918,7 +964,8 @@ class TestL2OldCanvasTextPanelEffects:
             sw = swatch_box(page, "Background", idx)
             assert sw, f"Background 未找到色块 index={idx}"
             page.mouse.click(sw["x"] + sw["w"] // 2, sw["y"] + sw["h"] // 2)
-            page.wait_for_timeout(SETTLE_ACTION)
+            # 背景色渲染完成由画布像素差异断言校验。
+            settle(page, SETTLE_ACTION)
             assert_changed(page, "l2_010_background", THRESHOLD_WEAK, f"swatch={idx}")
             shot(page, "l2_010_background_after")
 
@@ -948,7 +995,8 @@ class TestL2OldCanvasTextPanelEffects:
             tile = blend_tile_box(page, mode)
             assert tile, f"Blend 未找到模式 {mode}"
             page.mouse.click(tile["x"] + tile["w"] // 2, tile["y"] + tile["h"] // 2)
-            page.wait_for_timeout(SETTLE_ACTION)
+            # 混合模式渲染完成由画布像素差异断言校验。
+            settle(page, SETTLE_ACTION)
             assert_changed(page, "l2_011_blend", THRESHOLD_WEAK, f"blend={mode}")
             shot(page, "l2_011_blend_screen")
 
@@ -984,7 +1032,14 @@ class TestL2OldCanvasTextPanelContentEdit:
 
         with allure.step("双击文字进入编辑态并断言初始文案"):
             page.mouse.dblclick(box["x"] + box["w"] // 2, box["y"] + box["h"] // 2)
-            page.wait_for_timeout(1500)
+            poll_until(
+                page,
+                lambda: page.evaluate(
+                    "() => [...document.querySelectorAll('textarea')].some(e => e.getBoundingClientRect().width > 20)"
+                ) is True,
+                timeout=10000,
+                interval=300,
+            )
             value = page.evaluate("""() => { const t = [...document.querySelectorAll('textarea')]
                 .find(e => e.getBoundingClientRect().width > 20); return t ? t.value : null; }""")
             assert value == DATA["text_panel"]["default_text"], f"编辑态初始文案异常: {value}"
@@ -996,7 +1051,14 @@ class TestL2OldCanvasTextPanelContentEdit:
             assert focused is not None, "未找到可编辑的 textarea"
             page.keyboard.press("Control+A")
             page.keyboard.type(new_text, delay=40)
-            page.wait_for_timeout(1200)
+            poll_until(
+                page,
+                lambda: page.evaluate(
+                    "() => { const t = [...document.querySelectorAll('textarea')].find(e => e.getBoundingClientRect().width > 20); return t ? t.value : null; }"
+                ) == new_text,
+                timeout=10000,
+                interval=300,
+            )
             typed = page.evaluate("""() => { const t = [...document.querySelectorAll('textarea')]
                 .find(e => e.getBoundingClientRect().width > 20); return t ? t.value : null; }""")
             assert typed == new_text, f"输入后 textarea 值异常: {typed}"
@@ -1005,13 +1067,21 @@ class TestL2OldCanvasTextPanelContentEdit:
 
         with allure.step("点击图层外空白处应用文案并断言画布变化"):
             page.mouse.click(box["x"] + 80, box["y"] + 80)
-            page.wait_for_timeout(SETTLE_ACTION)
+            # 提交后画布重绘由像素差异断言校验。
+            settle(page, SETTLE_ACTION)
             assert_changed(page, "l2_012_edit_applied", THRESHOLD_STRONG, "click outside to commit")
             shot(page, "l2_012_edit_applied")
 
         with allure.step("再次双击断言文案已保存"):
             page.mouse.dblclick(box["x"] + box["w"] // 2, box["y"] + box["h"] // 2)
-            page.wait_for_timeout(1500)
+            poll_until(
+                page,
+                lambda: page.evaluate(
+                    "() => [...document.querySelectorAll('textarea')].some(e => e.getBoundingClientRect().width > 20)"
+                ) is True,
+                timeout=10000,
+                interval=300,
+            )
             reopened = page.evaluate("""() => { const t = [...document.querySelectorAll('textarea')]
                 .find(e => e.getBoundingClientRect().width > 20); return t ? t.value : null; }""")
             assert reopened == new_text, f"复开文案未保存: {reopened}"

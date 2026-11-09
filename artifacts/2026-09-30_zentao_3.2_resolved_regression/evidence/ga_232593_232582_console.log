@@ -1,0 +1,40 @@
+Total messages: 46 (Errors: 2, Warnings: 2)
+Returning 31 messages for level "info"
+
+[LOG] 当前环境不启用 Firebase Analytics @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleOneTap][idle-setup-scheduled] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, online: true, timeoutMs: 12000} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: (missing) @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent en_hd-pic-converter页面_进入 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [GoogleOneTap][idle-setup-start] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, online: true} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][load-script-start] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, src: https://accounts.google.com/gsi/client?hl=en} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [GoogleIdentity][load-script-timeout] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, src: https://accounts.google.com/gsi/client?hl=en} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][ensure-load-failed] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, error: Error: Timed out loading https://accounts.google.com/gsi/client?hl=en
+    at http://10.17.1.66:3001…} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][one-tap-setup-skip] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, reason: google_identity_api_unavailable} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[WARNING] [Vue warn]: Hydration class mismatch on JSHandle@node 
+  - rendered on server: class="seo-content-container effect-display w-full seo-section-defer mt-[5.625rem] md:mt-[7.5rem] is-in"
+  - expected on client: class="seo-content-container effect-display w-full seo-section-defer mt-[5.625rem] md:mt-[7.5rem]"
+  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
+  You should fix the source of the mismatch. @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[ERROR] Hydration completed but contains mismatches. @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[ERROR] Failed to load resource: net::ERR_CONNECTION_TIMED_OUT @ https://accounts.google.com/gsi/client?hl=en:0
+[LOG] [GoogleIdentity][load-script-error] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, src: https://accounts.google.com/gsi/client?hl=en} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] sendGaEvent 上传成功 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 画质实验_默认2K选项 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 画质实验_默认2K选项_hd-pic-converter @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [HD SEO 画质增强] 提交决策 {用户模式: normal, 目标清晰度: 2k, 输入来源: 原始上传图, 输入起始清晰度: none, 原始图长边: 1600} @ http://10.17.1.66:3001/_nuxt/DJ6A-Umg.js:1
+[LOG] sendGaEvent 画质实验_触发登录_hd-pic-converter @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] sendGaEvent 注册弹窗_出现 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [AccountApi] queryUserBenefit - uid: (missing) @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] userBenefit {anonymousNewIpGiftGranted: false, vipType: 0, vipExpiredTime: 0, vipRenewalStatus: 0, vipInTrailTime: false} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [GoogleIdentity][load-script-timeout] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, src: https://accounts.google.com/gsi/client?hl=en} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][ensure-load-failed] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, error: Error: Timed out loading https://accounts.google.com/gsi/client?hl=en
+    at http://10.17.1.66:3001…} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [GoogleIdentity][button-display-failed] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, fedcmEnabled: true, userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb…ike Gecko) HeadlessChrome/153.0.0.0 Safari/537.36, reason: google_identity_api_unavailable} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[WARNING] [GoogleLogin][gis-button-render-failed] {origin: http://10.17.1.66:3001, href: http://10.17.1.66:3001/tools/hd-pic-converter, online: true, gaPageType: none, isLogin: false} @ http://10.17.1.66:3001/_nuxt/BGaMsExq.js:1
+[LOG] [postForm] NONCE encryption result {identityType: deviceFingerprint, NONCE: 3z+EsHeMXy7qQX2JFybfjDsQNnTP+n+EkPXw0Meo2BTRg6z0wop5LzXYkLV18Yjh} @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1
+[LOG] [postForm] authToken is empty, url: http://hxxservice.ad.com/gateway/pokecut/api/9968163fcd32c00f79283c5de267e89d/5o7Wx53qK19of985 @ http://10.17.1.66:3001/_nuxt/BbjgR_CV.js:1

@@ -1,0 +1,14 @@
+tests/test_create_chat_to_edit_auto_v1.py::TestL1CreateChatToEditAutoStructure::test_create_chat_to_edit_structure[chromium]
+tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-001]
+tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-002]
+tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-003]
+tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-004]
+tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-005]
+tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-006]
+tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-007]
+tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-008]
+tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-009]
+tests/test_create_chat_to_edit_auto_v1.py::TestL6CreateChatToEditAutoHappyPath::test_auto_intent_prompt[chromium-L6-010]
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+11 tests collected in 0.16s

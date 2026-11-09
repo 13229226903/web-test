@@ -1,0 +1,75 @@
+{
+  "task_id": "2026-11-02_stable_regression_3002",
+  "generated_at": "2026-11-02 16:44:22",
+  "policy": "archive-cleanup: remove temp artifacts not referenced by formal outputs; keep referenced evidence",
+  "deleted": [
+    {
+      "path": "_find_att.py",
+      "size": 383
+    },
+    {
+      "path": "_ls.py",
+      "size": 563
+    },
+    {
+      "path": "_st.py",
+      "size": 346
+    },
+    {
+      "path": "_cleanup.py",
+      "size": 1423
+    },
+    {
+      "path": "_t.py",
+      "size": 13
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/rerun_ai_text.err",
+      "size": 0
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/rerun_detection.err",
+      "size": 0
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/rerun_l2_002.err",
+      "size": 0
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/runner_stderr.log",
+      "size": 0
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/runner_stdout.log",
+      "size": 2332
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/failures.txt",
+      "size": 4150
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/suite_Create_Chat_Auto_意图识别.log",
+      "size": 196
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/suite_PC_首页_Home_v6.log",
+      "size": 196
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/suite_SEO_主上传交互（移动端）.log",
+      "size": 207
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/suite_帮助中心.log",
+      "size": 196
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/suite_旧画布贴纸调参面板.log",
+      "size": 195
+    },
+    {
+      "path": "artifacts/2026-11-02_stable_regression_3002/shots/probe_L2-002_pre.png",
+      "size": 1091299
+    }
+  ]
+}

@@ -1,0 +1,388 @@
+# Pokecut Legacy Canvas - AI Tools 功能栏（旧画布 / en-US）
+# Version: v1
+# Explored: 2026-10-13, http://10.17.1.66:3001/template, PRO 会员 450832596@qq.com
+# Scope: 旧画布左侧 AI Tools tab 内 19 个功能的面板状态机（初始态 / 任务生成中 / 任务结束态）
+#        与预设结构（含"同面板多分类需跨分类各取一个预设"）。
+# 备注：本轮为存量补资产，不做埋点 / GA 统计探索。
+page: Legacy Canvas AI Tools Panel
+url: /create/edit?pid=<uuid>#
+landmark:
+  selector: 'div.flex.w-\[5rem\].flex-shrink-0.flex-col'
+  description: 旧画布左侧竖向导航（Insert / AI Tools / AI BG / Change BG / Template / Text / Sticker / Adjust / Resize / Layer）
+entry:
+  from: /template
+  trigger: >-
+    /template 第一个模板卡（Colorful Background 分类第一张，template_id 12_7_20240909）→ 唤起 file chooser →
+    上传 test_images/1K.jpg → 自动跳转旧画布 /create/edit?pid=<uuid>#
+  selector: 'div.relative.flex.w-\[9\.625rem\].cursor-pointer'
+  file_selector: 'input[type=file]'
+  account: PRO 会员 450832596@qq.com / 123456（匿名亦可进入，但本轮按用户要求使用会员账号）
+  after_upload: /create/edit?pid=<uuid>#
+elements:
+  left_nav:
+    selector: 'div.flex.w-\[5rem\].flex-shrink-0.flex-col'
+    description: 左侧竖向导航容器；子项为 div，内含 img[src$='edit_left_tab_btn_*.svg']
+  ai_tools_tab:
+    selector: 'div.flex.w-\[5rem\].flex-shrink-0.flex-col > div:has(img[src*="edit_left_tab_btn_s_ai_tools"])'
+    role_or_text: AI Tools
+    description: 点击后打开 AI Tools 工具列表（左起第三个 tab，选中态图标 edit_left_tab_btn_s_ai_tools_select.svg）
+  ai_tools_list_panel:
+    selector: 'div.h-\[calc\(100vh-5rem\)\].w-\[25rem\]:has-text("Common Tools")'
+    description: >-
+      AI Tools 工具列表面板（400px 宽）。滚动容器为内部 .mel-scrollbar__wrap（scrollHeight≈1255 / clientHeight≈1000）。
+      两个分类标题：Common Tools、Popular Al（原文如此，非 AI）。
+  tool_card:
+    selector: 'li.flex.flex-col.items-center'
+    description: 工具卡（每个工具一个 li，宽 w-[7rem]）；工具名即 li.innerText
+  right_property_panel:
+    selector: 'div.h-\[calc\(100vh-5rem\)\].w-\[25rem\].bg-white'
+    description: 右侧图层属性面板（Opacity / Adjust / Shadow / Outline / Reflection / Filter / Blend）；与 AI Tools 面板同时可见
+  feature_modal:
+    selector: 'div.fixed.left-0.top-0.z-10.flex.h-full.w-full.items-center.justify-center'
+    description: >-
+      功能面板遮罩层（半透明白 rgba(255,255,255,0.7)）；内部白卡为
+      div.h-\[47\.5rem\].mx-auto.flex.w-\[83\.125rem\]（部分工具为 1330x760，部分为 480 宽右栏布局）
+  preview_area:
+    selector: 'div.relative.mt-\[1\.25rem\].w-\[41\.25rem\].h-\[37\.5rem\]'
+    description: 预览区容器；模式工具（Magic Eraser / Watermark Remover / AI Replace）的可涂抹 canvas 位于其内
+  masks_paint_canvas:
+    selector: 'canvas.absolute.left-0.top-0.z-0.h-full.w-full'
+    description: 蒙版涂抹 canvas；必须向其派发 pointerdown/mousedown + pointermove/mousemove 序列才能写字
+
+tabs: {}
+
+modals:
+  tips_busy:
+    selector: 'div:has-text("This feature is busy due to high demand")'
+    description: 服务端容量限流 Tips 弹窗，含 OK 按钮；环境态，非脚本缺陷
+
+states:
+  ai_tools_list_open:
+    description: AI Tools 列表展开态；Common Tools 6 个 + Popular Al 12 个 = 18 张工具卡（AI Image Generator 在内，共 19 个入口见 tool_panels）
+    trigger: 点击左侧导航 AI Tools
+    url_or_state_key: /create/edit?pid=<uuid>#
+    buttons:
+      ai_tools_tab:
+        selector: 'div.flex.w-\[5rem\].flex-shrink-0.flex-col > div:has(img[src*="edit_left_tab_btn_s_ai_tools"])'
+        role_or_text: AI Tools
+        visible_condition: 旧画布任意状态
+        enabled_condition: 画布已加载
+        action_result: 打开 AI Tools 工具列表面板（400px），右侧图层属性面板保持
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 面板内可见标题 'Common Tools' 与 'Popular Al'
+        notes: 证据 shots/02_canvas_ai_tools_panel.png
+      tool_card_generic:
+        selector: 'li.flex.flex-col.items-center'
+        role_or_text: <工具名>
+        visible_condition: AI Tools 列表展开（Popular Al 分组的卡需先滚动）
+        enabled_condition: 画布已有输入图片
+        action_result: 打开对应功能面板；AI Image Generator 例外，改为新开标签页跳转 /agent?pid=<新 uuid>
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后应出现 feature_modal；若 30 分钟内未出现且页内出现 tips_busy 文案，判环境限流
+        notes: 滚动容器 .mel-scrollbar__wrap 需先滚到底才能取到 Popular Al 分组
+  tool_panel_initial:
+    description: 功能面板初始态（打开后、提交前）
+    trigger: 点击任意 tool_card
+    url_or_state_key: /create/edit?pid=<uuid>#（面板为居中模态或右侧 480 宽布局）
+    buttons:
+      primary_submit:
+        selector: 'div.btn-bg-gradient1 / button.btn-bg-gradient1'
+        role_or_text: 依工具而变（Enhance / Generate / Remove / Remove Background / Start Photo Restoration / AI Extend / Refresh）
+        visible_condition: 功能面板已打开
+        enabled_condition: 依工具而变——纯预设工具（Photo Enhancer / AI Upscaler / Text Enhancer / Old Photo Restore / AI Filter / HairStyle / AI Facial Expression / AI Body Editor / AI Clothes Changer）打开即可用；
+                          需蒙版工具（AI Replace）必须先涂抹 mask，否则 cursor-not-allowed；
+                          结果态工具（Background Remover / Face Cutout / Blur Background / Watermark Remover / Magic Eraser）打开即为结果态，主按钮显示为 Refine
+        action_result: 提交任务；按钮区域出现百分比进度，Confirm 保持禁用
+        reversible: true
+        explore_status: covered
+        dependencies: [已上传图片]
+        assertions_hint: '判别可用性：class 含 cursor-not-allowed = 禁用；含 cursor-pointer / custom-bg = 可用'
+        notes: 证据见 shots/03_04（Photo Enhancer）、05_06_07（Background Remover）、16_17（AI Replace）
+      cancel:
+        selector: 'div.flex-1.bg-c-bg-light-gray / div:has(> span:text-is("Cancel"))'
+        role_or_text: Cancel
+        visible_condition: 功能面板已打开
+        enabled_condition: 恒可用
+        action_result: 关闭面板，返回 AI Tools 列表，画布内容不变
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 点击后面板消失、AI Tools 列表仍可见
+        notes: 用于保持底图干净（预览不落盘），本轮大量使用
+      confirm:
+        selector: 'div.flex-1.cursor-pointer.bg-c-theme.text-white / div:has(> span:text-is("Confirm"))'
+        role_or_text: Confirm
+        visible_condition: 功能面板已打开
+        enabled_condition: 结果就绪前为 cursor-not-allowed；结果就绪后变为 cursor-pointer bg-c-theme text-white
+        action_result: 将预览结果应用到画布图层
+        reversible: false
+        explore_status: covered
+        dependencies: [任务已结束]
+        assertions_hint: 初始态与生成中均为禁用（class 含 cursor-not-allowed），结束后启用
+        notes: 判定"任务结束"的稳定判据
+      preset_category_tab:
+        selector: 'button.rounded-\[0\.375rem\] / button.rounded-\[0\.5089rem\]'
+        role_or_text: 依工具而变（如 Face / Body / Mark / Object / Wedding Dress / Expression / Color / Ramadan）
+        visible_condition: 该工具面板有多个预设分类时
+        enabled_condition: 恒可用
+        action_result: 切换预设分类，网格内容随之更新
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 选中项 class 含 bg-c-theme（白字），未选中含 bg-c-light-purple
+        notes: 满足"同一面板多分类需跨分类各取一个预设"的取预设入口
+      preset_tile:
+        selector: 'div.cursor-pointer（含 img 子元素）'
+        role_or_text: 预设名（如 Blonde / Silent Film / Remove Acne / Wedding Dress 缩略图）
+        visible_condition: 分类已选中
+        enabled_condition: 恒可用
+        action_result: 选中该预设；结果态工具（Background Remover / Face Cutout）会触发重新生成
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 选中后 tile 容器出现 border-c-theme 高亮
+        notes: 结果态工具切预设会先回到 Before 并禁用 Confirm
+      brush_slider:
+        selector: 'input.colorValueSlider / input.adjustSlider'
+        role_or_text: 笔刷粗细（数值 30~51）
+        visible_condition: 需涂抹类工具（AI Replace / Magic Eraser / Watermark Remover / Hair Removal 的 Manual Mode）
+        enabled_condition: 恒可用
+        explore_status: covered
+        notes: Manual Mode 必须手动涂抹，本轮改用 Smart Auto Mode 预设链路验证生成
+      manual_paint_canvas:
+        selector: 'canvas.absolute.left-0.top-0.z-0.h-\\[500px\\].w-\\[660px\\]'
+        role_or_text: 手绘蒙版画布（Manual Mode 专用）
+        visible_condition: 工具面板切到 Manual Mode
+        enabled_condition: 恒可用
+        action_result: 按住拖拽涂抹目标区域；涂抹完成后主按钮 Remove 由 cursor-not-allowed 变为可用
+        reversible: true
+        explore_status: covered
+        dependencies: [test_images/1K.jpg]
+        assertions_hint: 'Manual Mode 的 ready 判据＝涂抹后 Remove 由禁用变可用；涂抹前恒禁用。命中目标必须是该 canvas，勿点被遮挡的容器。'
+        notes: 证据 shots/38（Magic Eraser）、shots/39（Watermark Remover）、shots/40/41（Hair Removal）
+  tool_panel_generating:
+    description: 任务生成中（已点主提交按钮，结果未就绪）
+    trigger: 点击 primary_submit
+    url_or_state_key: /create/edit?pid=<uuid>#
+    buttons:
+      confirm_disabled:
+        selector: 'div.flex-1.cursor-not-allowed'
+        role_or_text: Confirm
+        visible_condition: 生成中
+        enabled_condition: 恒不可用（cursor-not-allowed）
+        action_result: 点击无效果
+        reversible: true
+        explore_status: covered
+        assertions_hint: '进度呈现分两类——Photo Enhancer / Background Remover 显示百分比文字（实测 5% / 53% / 60% / 71% / 76% / 78%）；其余工具无百分比文字，仅 Confirm 保持禁用'
+        notes: 判别"生成中"的稳定判据＝Confirm 禁用；百分比非通用
+  tool_panel_done:
+    description: 任务结束态（结果已生成、可确认）
+    trigger: 生成中自动迁移
+    url_or_state_key: /create/edit?pid=<uuid>#
+    buttons:
+      confirm_enabled:
+        selector: 'div.flex-1.cursor-pointer.bg-c-theme.text-white'
+        role_or_text: Confirm
+        visible_condition: 结果已就绪
+        enabled_condition: 恒可用
+        action_result: 应用结果到画布
+        reversible: false
+        explore_status: covered
+        assertions_hint: Confirm class 由 cursor-not-allowed 变为 cursor-pointer bg-c-theme text-white
+        notes: 判别"任务结束"的稳定判据；Before/After 切换也在此态可用
+      after_tab:
+        selector: 'div:has-text("After")（Before/After 切换）'
+        role_or_text: After
+        visible_condition: 结果已就绪
+        enabled_condition: 恒可用
+        action_result: 预览切换到结果图
+        reversible: true
+        explore_status: covered
+        assertions_hint: 选中态为黑底白字
+        notes: 部分工具（AI Image Extender / AI Filter）默认停在 Before，需点 After 才看结果
+
+tool_panels:
+  - tool: Photo Enhancer
+    group: Common Tools
+    surface: centered_modal
+    submit_label: Enhance
+    presets: {categories: [model], items: [Standard Mode, Portrait Mode, Text Mode, Ultra HD Mode], default: Ultra HD Mode}
+    verified_preset: Portrait Mode
+    progress_text: true
+    credits_per_run: 10
+    shots: [shots/03_after_click_photo_enhancer.png, shots/04_photo_enhancer_after_generate.png]
+  - tool: Background Remover
+    group: Common Tools
+    surface: centered_modal
+    submit_label: Refine（结果态）/ Remove Background（切预设后重新生成）
+    presets: {categories: [model], items: [General, Head&Face, Text], default: General}
+    verified_preset: Head&Face
+    opens_with_result: true
+    progress_text: true
+    shots: [shots/05_bg_remover_initial.png, shots/06_bg_remover_headface.png, shots/07_bg_remover_done.png]
+  - tool: Magic Eraser
+    group: Common Tools
+    surface: centered_modal
+    submit_label: Remove
+    presets: {modes: [Manual Mode, Smart Auto Mode], smart_auto_categories: [Face, Body, Mark, Object],
+              samples: {Face: [Remove Acne, Remove Braces, Whiten Teeth, No Eye bags, Remove Lip Wrinkles, No Beard, Red-eye Removal],
+                        Body: [Remove Nails, Fix Bra Bulge, Remove Blemishes, Remove Tattoos, Remove Flyaways]}}
+    verified_presets: [Smart Auto Mode > Face > Remove Acne, Smart Auto Mode > Body > Remove Blemishes]
+    progress_text: false
+    shots: [shots/08_magic_eraser_probe.png, shots/09_magic_eraser_smart_auto.png, shots/10_magic_eraser_face_acne_done.png, shots/11_magic_eraser_body_blemishes_done.png]
+    manual_mode: "已实测（涂抹→Remove 启用→提交→Confirm 启用）；shots: [shots/38_magic_eraser_manual_painted.png]"
+  - tool: Watermark Remover
+    group: Common Tools
+    surface: centered_modal
+    submit_label: Remove
+    presets: {modes: [Manual Mode, Smart Auto Mode], smart_auto_categories: {Mark: [Remove Watermark, Remove Mosaic], Object: [Remove Glare, Remove Wrinkles]}}
+    verified_presets: [Mark > Remove Watermark, Object > Remove Glare]
+    opens_with_result: true
+    note: 打开即 Confirm 可用，无百分比进度（本图无水印，属 no-op 快速返回）
+    shots: [shots/12_watermark_remover_initial.png, shots/13_watermark_remover_object_glare.png]
+    manual_mode: "已实测（涂抹→Remove 启用→提交→Confirm 启用）；shots: [shots/39_watermark_remover_manual_painted.png]"
+  - tool: AI Image Extender
+    group: Common Tools
+    surface: centered_modal
+    submit_label: AI Extend
+    presets: {categories: {ratio: [Customize, Square, Story, Portrait, PC Wallpaper, Lanscape2, Lanscape, Amazon],
+                           platform: [Instagram story, Instagram post, Instagram reel, Ebay, Etsy, X post, X square, Pinterest, LinkedIn Profile, Youtube, Facebook marketplace, Poshmark]}}
+    verified_presets: [ratio Portrait, platform Instagram post]
+    progress_text: false
+    shots: [shots/14_ai_image_extender_initial.png, shots/15_ai_image_extender_done.png]
+  - tool: AI Replace
+    group: Common Tools
+    surface: centered_modal
+    submit_label: Generate
+    presets: {modes: [Replace Object, Clothes Changer, Background Replacer, Virtual Try-On], prompt_modes: [Description, Reference]}
+    verified_presets: [Replace Object + Description + mask + 'a red apple']
+    special_driver: 必须向预览 canvas 派发 pointer 事件序列涂抹蒙版，Generate 才启用
+    progress_text: false
+    shots: [shots/16_ai_replace_initial.png, shots/17_ai_replace_replace_object_done.png]
+  - tool: AI Image Generator
+    group: Popular Al
+    surface: navigates_away
+    submit_label: null
+    presets: {status: unknown}
+    verified_preset: null
+    user_confirmed_expected: true
+    note: 用户确认（2026-10-13）：跳转无限画布属预期行为，旧画布内本就不产生功能面板；不再探索 /agent 内部。用例仅断言新标签页跳转 /agent?pid=<新 uuid>，断言后关闭新页回到旧画布继续
+    shots: [shots/18_ai_image_generator_new_tab_agent.png, shots/26_ai_image_generator_new_tab_agent.png]
+  - tool: AI Upscaler
+    group: Popular Al
+    submit_label: Enhance
+    presets: {categories: [model], items: [Standard Mode, Portrait Mode, Self Mode, Ultra HD Mode]}
+    verified_preset: Portrait Mode
+    progress_text: false
+    progress_text: false（实测无百分比文字）
+    shots: [shots/29_ai_upscaler_portrait_done.png]
+  - tool: Old Photo Restore
+    group: Popular Al
+    submit_label: Start Photo Restoration
+    presets: {categories: [effects], items: [Fix blur, Restore old photo color, Remove scratches]}
+    verified_preset: 默认勾选组合
+    progress_text: false
+    shots: [shots/30_old_photo_restore_done.png]
+  - tool: AI Face Editor
+    group: Popular Al
+    submit_label: Generate
+    presets: {categories: [Retouch, Teeth, Nose, Lips, Male, AI Makeup, Shape, Eye, Eyebrow, Expression]}
+    verified_preset: Remove Blemishes
+    progress_text: false
+    shots: [shots/31_ai_face_editor_remove_acne_done.png]
+  - tool: AI Body Editor
+    group: Popular Al
+    submit_label: Generate
+    presets: {categories: [Bust, Hips, Abs, Body, Others, Skin], items_sample: [Natural Breast, Fuller Breast, Push Up]}
+    verified_preset: Fuller Breast
+    progress_text: false
+    shots: [shots/32_ai_body_editor_fuller_breast_done.png]
+  - tool: AI Clothes Changer
+    group: Popular Al
+    submit_label: Generate
+    presets: {modes: [Replace Object, Clothes Changer, Background Replacer, Virtual Try-On],
+              categories: [Formal Wear, Dresses, Activewear, Outerwear, Kids Wear, Men's Wear, Bikinis, Wedding Dress, Casual Wear, Lingerie, Tops, Festive]}
+    verified_preset: Clothes Changer > Wedding Dress > 第 1 张礼服
+    credits_per_run: 10
+    note: Replace Object 模式未涂蒙版时 Generate 恒禁用
+    progress_text: false
+    shots: [shots/20_ai_clothes_changer_debug.png, shots/21_ai_clothes_changer_done.png]
+  - tool: Blur Background
+    group: Common Tools
+    submit_label: Refine
+    presets: {categories: [General, Motion]}
+    verified_preset: Motion
+    opens_with_result: true
+    progress_text: true（实测 85%）
+    shots: [shots/35_blur_background_motion_done.png]
+  - tool: Face Cutout
+    group: Common Tools
+    submit_label: Refine（结果态）
+    presets: {categories: [General, Head&Face, Text], default: General}
+    verified_preset: Head&Face
+    opens_with_result: true
+    destructive: true
+    note: >-
+      打开即按默认 General 出结果；切 Head&Face 触发重新生成（首次命中服务端容量限流 Tips，重试成功）。
+      破坏性工具（只保留头部），按用户指示应放到其他任务之后执行，执行后须重新上传新图。
+    progress_text: false
+    shots: [shots/27_face_cutout_headface_on_clean.png, shots/28_face_cutout_headface_state.png]
+  - tool: AI Filter
+    group: Popular Al
+    submit_label: Generate
+    presets: {categories: [Popular, Ramadan, Change Pose],
+              samples: {Popular: [IG Lofi Filter, Crayon Art, Silent Film, Fridge Magnet, Jelly Photo Filter, Remove Fog, Glasses-Free 3D, Flash Effect, Snowy Stroll, Snowy Story, Snowy Trio, Snowy Pair, Snowy Sunshine, Action Figure, Ghibli, Rain Effect, Avatar],
+                        Ramadan: [Ramadan Glow, Lantern Glow, Ramadan Moon, Ramadan Rose]}}
+    verified_presets: [Popular > Silent Film, Ramadan > Lantern Glow]
+    progress_text: false
+    shots: [shots/23_ai_filter_silent_film_on_clean.png]
+  - tool: HairStyle Try On
+    group: Popular Al
+    submit_label: Generate
+    presets: {categories: [Restore, Male, Color, Hairstyle],
+              Color: [Blonde, Black, Brown, Red, Pink, Silver, Grey, Red Highlights, Gray Highlights, Golden Highlights, Caramel Highlights, Platinum Highlights]}
+    verified_preset: Color > Blonde
+    credits_per_run: 10
+    progress_text: false
+    shots: [shots/24_hairstyle_color_blonde_on_clean.png]
+  - tool: AI Facial Expression
+    group: Popular Al
+    submit_label: Generate
+    presets: {categories: [Retouch, Teeth, Nose, Lips, Male, AI Makeup, Shape, Eye, Eyebrow, Expression],
+              Expression: [Teeth Smile, Closed-mouth Smile, Shock, Anger, Sadness, Fear, Disgust]}
+    verified_presets: [Expression > Teeth Smile, Expression > Disgust]
+    progress_text: false
+    shots: [shots/25_ai_facial_expression_teeth_smile_on_clean.png]
+  - tool: Text Enhancer
+    group: Popular Al
+    submit_label: Enhance
+    presets: {categories: [model], items: [Standard Mode, Portrait Mode, Text Mode, Ultra HD Mode]}
+    verified_preset: Standard Mode
+    progress_text: true（实测 15%）
+    shots: [shots/36_text_enhancer_standard_done.png]
+  - tool: Hair Removal
+    group: Popular Al
+    submit_label: Remove
+    presets: {modes: [Manual Mode, Smart Auto Mode], categories: [Face, Body, Mark, Object, Other],
+              Body: [Remove Nails, Fix Bra Bulge, Remove Blemishes, Remove Tattoos, Remove Flyaways]}
+    verified_presets: [Smart Auto Mode > Body > Fix Bra Bulge, Smart Auto Mode > Body > Remove Blemishes]
+
+    progress_text: false
+    shots: [shots/37_hair_removal_fix_bra_bulge_done.png]
+    manual_mode: "已实测（涂抹→Remove 启用→提交→Confirm 启用；首次提交 Processing failed，服务恢复后重试成功）；shots: [shots/40_hair_removal_manual_painted.png, shots/41_hair_removal_manual_done.png]"
+
+notes:
+  - 旧画布 AI Tools 共 19 个入口：Common Tools 6（Photo Enhancer / Background Remover / Magic Eraser / Watermark Remover / AI Image Extender / AI Replace）+ Popular Al 13。
+  - 面板呈两种布局：居中大模态（1660x760，含 Before/After 大预览）与右侧 480 宽窄栏；判定面板存在统一用遮罩 div.fixed.z-10 + "Confirm" 文案。
+  - 状态机统一判据：初始态 -> 点 primary_submit -> 生成中（Confirm 保持 cursor-not-allowed）-> 结束态（Confirm 变 cursor-pointer bg-c-theme text-white）。
+  - 百分比进度文字实测出现于 Photo Enhancer（53%/71%）、Background Remover（5%/60%/76%/78%）、Blur Background（85%）、Text Enhancer（15%）；其余工具未观察到。统一仍以 Confirm 可用性判结束。
+  - 结果态工具（Background Remover / Blur Background / Watermark Remover / Magic Eraser / Face Cutout）打开时 Confirm 可能已可用，属"自动用默认预设出结果"，不代表任务已提交。
+  - 破坏性工具 Face Cutout 必须最后执行；执行后需重新上传新图，否则同图后续工具效果无法判读（2026-10-13 实测教训）。
+  - Manual Mode（手绘蒙版）链路已补验：Magic Eraser / Watermark Remover / Hair Removal 三个工具均需先在预览 canvas 上拖拽涂抹目标区域，主按钮 Remove 才会由禁用变可用；ready 判据＝涂抹后 Remove 可用。详见 states.tool_panel_initial.buttons.manual_paint_canvas。
+  - AI Image Generator 不从旧画布内联出面板，而是新开标签页跳 /agent（无限画布）；须关闭新页回到旧画布继续。
+  - 新画布会话首次打开任一 AI 工具会先弹「The current layer is a cutout with no background. Do you want to merge layers?」确认框（Cancel / Confirm，两个 button h=4.5rem）；必须点 Confirm 才会继续打开功能面板；点 Cancel 会被该遮罩吞掉点击（现象＝反复点工具卡但面板不出现）。
+  - 服务端容量限流 Tips「This feature is busy due to high demand … 30 minutes」在本轮多次出现（Magic Eraser 切档、AI Clothes Changer、Face Cutout 切档、AI Image Generator 长时间无响应）；属环境态，重试或等待后可恢复。

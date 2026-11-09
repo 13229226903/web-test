@@ -1,0 +1,9 @@
+x..........s......x....F.....x....s....x                                 [100%]
+================================== FAILURES ===================================
+E   AssertionError: ���ƶ��˻���ҳ_AI�����������֡�sendGaEvent ����ӦΪ 1��ʵ�� 0��0=©����>=2=�౨������� sendGaEvent: �û��豸��Ϣ | ��վ��ҳ_���� | ��վ��ҳ_����_en���԰� | �ƶ���_�ײ���upload��� | �ϴ��ɹ� | en_editҳ��_���� | �ƶ��˻���ҳ_���� | AITools_Photo | �ƶ��˻���ҳ_������ǿ��������
+    assert 0 == 1
+D:\Test\web-test\tests\test_canvas_stats_all.py:95: AssertionError: ���ƶ��˻���ҳ_AI�����������֡�sendGaEvent ����ӦΪ 1��ʵ�� 0��0=©����>=2=�౨������� sendGaEvent: �û��豸��Ϣ | ��վ��ҳ_���� | ��վ��ҳ_����_en���԰� | �ƶ���_�ײ���upload��� | �ϴ��ɹ� | en_editҳ��_���� | �ƶ��˻���ҳ_���� | AITools_Photo | �ƶ��˻���ҳ_������ǿ��������
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_canvas_stats_all.py::test_m_core_05[chromium] - AssertionEr...
+1 failed, 33 passed, 2 skipped, 4 xfailed in 3693.82s (1:01:33)

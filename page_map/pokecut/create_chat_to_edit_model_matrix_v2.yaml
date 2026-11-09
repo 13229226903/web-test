@@ -1,0 +1,438 @@
+# Create 页 / Agent 页 - Chat to Edit 模型矩阵页面地图 v2
+# 基于 create_chat_to_edit_auto_v1.yaml 增量；新增多模型模式、Settings、agent 入口、DEBUG 前置条件
+# 采集环境: http://10.17.1.66:3001，PC 1920x1080，en-US，VIP 450832596@qq.com (User8JY)
+# 采集时间: 2026-11-03 ~ 2026-11-04
+page: Create Chat to Edit Model Matrix
+url: /create
+landmark:
+  selector: "h2:has-text('Chat to Edit')"
+  description: Create 页顶部 Chat to Edit 区块；agent 页底部同一组件
+entry:
+  create:
+    from: Login / Home / Direct URL
+    trigger: 登录后访问 /create
+    selector: "h2:has-text('Chat to Edit')"
+  agent:
+    from: /create
+    trigger: 点击 button "Start with Photos" → 选图 → 跳转 /agent?pid=*
+    selector: "button:has-text('Start with Photos')"
+    note: agent 页底部输入区与 /create 同组件（textarea / Model / Setting / Upload reference images）
+
+# ── 关键前置条件（所有生成用例必做） ──
+preconditions:
+  official_fallback_upload:
+    description: 提交任务前必须把「测试服兜底上传地址」切到「正式」，否则出图会因兜底上传走内网而失败
+    steps:
+    - 点击页面右下角 button "DEBUG"
+    - Debug 面板 → heading "测试服兜底上传地址" → 点击 button "正式"
+    - 关闭 Debug 面板
+    selector:
+      debug_button: "button:has-text('DEBUG')"
+      heading: "h4:has-text('测试服兜底上传地址')"
+      official_button: "h4:has-text('测试服兜底上传地址') + * button:has-text('正式')"
+    official_url: "https://appinference-upload.flockiaapps.com"
+    caveat: 刷新后恢复「内网」，每次刷新/重载后必须重新设置
+    evidence: artifacts/2026-11-03_create_agent_model_matrix/shots/22_agent_pokecutpro_t2i_x2_official_upload.png
+
+elements:
+  chat_to_edit_prompt:
+    selector: "textarea[placeholder='What do you want to design today?']"
+    description: Chat to Edit prompt 输入框（/create 与 agent 底部组件）
+    notes: 需要真实键盘输入才会启用提交按钮（JS 直接赋值可能不触发）
+  upload_reference_images:
+    selector: "div[title='Upload reference images']"
+    description: 上传参考图入口
+    notes: 图生图参考图统一用 test_images/低分辨率.JPG（63KB）
+  model_selector:
+    selector: "div[title='Model']"
+    description: 模型选择器（默认 Nano Banana 2 Lite）
+  setting_selector:
+    selector: "div[title='Setting']"
+    description: Settings 面板入口；含 Output Ratio / Output Resolution / Number of images
+  submit_button:
+    selector: "div.cursor-pointer:has(img[src*='create_chat_send_btn.svg'])"
+    description: 发送任务按钮；有任务处理中时为 create_chat_send_btn_disable.svg（禁用）
+  model_multi_mode_switch:
+    selector: "switch[name='Model Multi Mode'], [role=switch]"
+    description: 模型选择弹窗顶部「Model Multi Mode」开关
+    note: 开启后模型列表变为可多选
+
+model_list:
+  single_mode:
+    - Auto
+    - Pokecut Pro
+    - Nano Banana 2 Lite
+    - Nano Banana Pro
+    - Nano Banana 2
+    - ChatGPT Image 2.5-flare
+    - ChatGPT Image 2.5-Sunburst
+    - ChatGPT Image 2.0
+    - Seedream 5.0 Pro
+    - Seedream 5.0 Lite
+    - Seedream4.0
+  multi_mode:
+    - Pokecut Pro
+    - Nano Banana 2 Lite
+    - Nano Banana Pro
+    - Nano Banana 2
+    - ChatGPT Image 2.0
+    - Seedream 5.0 Pro
+    - Seedream 5.0 Lite
+    - Seedream4.0
+  multi_mode_first_four:
+    - Pokecut Pro
+    - Nano Banana 2 Lite
+    - Nano Banana Pro
+    - Nano Banana 2
+  selected_indicator:
+    selected_icon: "/icons/svg/purchase_selected_point.svg"
+    unselected_icon: "/icons/svg/purchase_select_point.svg"
+
+settings:
+  output_ratio: ["1:1", "3:4", "4:3", "9:16", "16:9", "2:3", "3:2"]
+  output_resolution: ["1K"]  # agent 页另有 2K（localStorage ai-image-resolution:infinite-canvas=2k）
+  number_of_images: ["1", "2", "3", "4"]
+
+states:
+  create_text_to_image:
+    description: /create 文生图（仅 prompt，无参考图）
+    trigger: /create + prompt + 提交
+    url_or_state_key: /create
+    buttons:
+      model_selector:
+        selector: "div[title='Model']"
+        role_or_text: Model
+        visible_condition: 页面加载后可见
+        enabled_condition: 始终
+        action_result: 展开模型选择弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 默认文案为 Nano Banana 2 Lite
+        notes: ""
+      submit:
+        selector: "div.cursor-pointer:has(img[src*='create_chat_send_btn.svg'])"
+        role_or_text: 提交图标
+        visible_condition: prompt 有内容后出现
+        enabled_condition: prompt 非空且无任务处理中
+        action_result: 提交任务并跳转 /agent?pid=*
+        reversible: false
+        explore_status: covered
+        dependencies: ["model_selector"]
+        assertions_hint: 提交后 handleSubmitTask result resultCode=100
+        notes: 有任务处理中时为 create_chat_send_btn_disable.svg（禁用）
+  create_image_to_image:
+    description: /create 图生图（prompt + 参考图）
+    trigger: /create + 上传参考图 + prompt + 提交
+    url_or_state_key: /create
+    buttons:
+      upload_reference_images:
+        selector: "div[title='Upload reference images']"
+        role_or_text: Upload reference images
+        visible_condition: 页面加载后可见
+        enabled_condition: 始终
+        action_result: 打开文件选择器并上传参考图
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 上传后出现缩略图
+        notes: 参考图统一 test_images/低分辨率.JPG
+      model_selector:
+        selector: "div[title='Model']"
+        role_or_text: Model
+        visible_condition: 页面加载后可见
+        enabled_condition: 始终
+        action_result: 展开模型选择弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 默认文案为 Nano Banana 2 Lite
+        notes: ""
+      submit:
+        selector: "div.cursor-pointer:has(img[src*='create_chat_send_btn.svg'])"
+        role_or_text: 提交图标
+        visible_condition: prompt 有内容后出现
+        enabled_condition: prompt 非空且无任务处理中
+        action_result: 提交任务并跳转 /agent?pid=*
+        reversible: false
+        explore_status: covered
+        dependencies: ["upload_reference_images", "model_selector"]
+        assertions_hint: 提交后 handleSubmitTask result resultCode=100
+        notes: ""
+  agent_text_to_image:
+    description: agent 页文生图（画布已有图作为参考；prompt + 提交）
+    trigger: /agent?pid=* + prompt + 提交
+    url_or_state_key: /agent?pid=*
+    buttons:
+      model_selector:
+        selector: "div[title='Model']"
+        role_or_text: Model
+        visible_condition: agent 底部输入区渲染后可见
+        enabled_condition: 始终
+        action_result: 展开模型选择弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 与 /create 同组件；默认 Nano Banana 2 Lite
+        notes: ""
+      submit:
+        selector: "div.cursor-pointer:has(img[src*='create_chat_send_btn.svg'])"
+        role_or_text: 提交图标
+        visible_condition: prompt 有内容后出现
+        enabled_condition: prompt 非空且无任务处理中
+        action_result: 提交任务并出图
+        reversible: false
+        explore_status: covered
+        dependencies: ["model_selector"]
+        assertions_hint: 提交后 handleSubmitTask result resultCode=100
+        notes: ""
+  agent_image_to_image:
+    description: agent 页图生图（画布已有图层作为参考图 + prompt + 提交）
+    trigger: /agent?pid=* + prompt + 提交
+    url_or_state_key: /agent?pid=*
+    buttons:
+      upload_reference_images:
+        selector: "div[title='Upload reference images']"
+        role_or_text: Upload reference images
+        visible_condition: agent 底部输入区渲染后可见
+        enabled_condition: 始终
+        action_result: 打开文件选择器补传参考图
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 上传后出现缩略图
+        notes: 参考图统一 test_images/低分辨率.JPG
+      model_selector:
+        selector: "div[title='Model']"
+        role_or_text: Model
+        visible_condition: agent 底部输入区渲染后可见
+        enabled_condition: 始终
+        action_result: 展开模型选择弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 默认文案为 Nano Banana 2 Lite
+        notes: ""
+      submit:
+        selector: "div.cursor-pointer:has(img[src*='create_chat_send_btn.svg'])"
+        role_or_text: 提交图标
+        visible_condition: prompt 有内容后出现
+        enabled_condition: prompt 非空且无任务处理中
+        action_result: 提交任务并出图
+        reversible: false
+        explore_status: covered
+        dependencies: ["model_selector"]
+        assertions_hint: 提交后 handleSubmitTask result resultCode=100
+        notes: ""
+  multi_mode_submit:
+    description: 多模型模式；勾选前四个模型后一次提交，产出多张结果图
+    trigger: Model Multi Mode 开关 ON + 勾选前四 + prompt + 提交
+    url_or_state_key: /create | /agent?pid=*
+    buttons:
+      model_selector:
+        selector: "div[title='Model']"
+        role_or_text: Model
+        visible_condition: 输入区渲染后可见
+        enabled_condition: 始终
+        action_result: 打开模型选择弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 打开后弹窗顶部有 Model Multi Mode 开关
+        notes: ""
+      model_multi_mode_switch:
+        selector: "switch[name='Model Multi Mode'], [role=switch]"
+        role_or_text: Model Multi Mode
+        visible_condition: 模型选择弹窗打开后可见
+        enabled_condition: 始终
+        action_result: 切换为多选模式
+        reversible: true
+        explore_status: covered
+        dependencies: ["model_selector"]
+        assertions_hint: 开启后模型列表变为可多选
+        notes: 多选态图标 selected=purchase_selected_point.svg / unselected=purchase_select_point.svg
+      model_option_pokecut_pro:
+        selector: "div.cursor-pointer:has-text('Pokecut Pro')"
+        role_or_text: Pokecut Pro
+        visible_condition: 模型弹窗打开后可见
+        enabled_condition: 多选模式下
+        action_result: 勾选 Pokecut Pro
+        reversible: true
+        explore_status: covered
+        dependencies: ["model_multi_mode_switch"]
+        assertions_hint: 选中后显示选中图标
+        notes: 多模型前四之一
+      model_option_nano_banana_2_lite:
+        selector: "div.cursor-pointer:has-text('Nano Banana 2 Lite')"
+        role_or_text: Nano Banana 2 Lite
+        visible_condition: 模型弹窗打开后可见
+        enabled_condition: 多选模式下
+        action_result: 勾选 Nano Banana 2 Lite
+        reversible: true
+        explore_status: covered
+        dependencies: ["model_multi_mode_switch"]
+        assertions_hint: 选中后显示选中图标
+        notes: 多模型前四之一
+      model_option_nano_banana_pro:
+        selector: "div.cursor-pointer:has-text('Nano Banana Pro')"
+        role_or_text: Nano Banana Pro
+        visible_condition: 模型弹窗打开后可见
+        enabled_condition: 多选模式下
+        action_result: 勾选 Nano Banana Pro
+        reversible: true
+        explore_status: covered
+        dependencies: ["model_multi_mode_switch"]
+        assertions_hint: 选中后显示选中图标
+        notes: 多模型前四之一
+      model_option_nano_banana_2:
+        selector: "div.cursor-pointer:has-text('Nano Banana 2')"
+        role_or_text: Nano Banana 2
+        visible_condition: 模型弹窗打开后可见
+        enabled_condition: 多选模式下
+        action_result: 勾选 Nano Banana 2
+        reversible: true
+        explore_status: covered
+        dependencies: ["model_multi_mode_switch"]
+        assertions_hint: 选中后显示选中图标
+        notes: 多模型前四之一；选择器需排除 Lite/Pro 同前缀
+      submit:
+        selector: "div.cursor-pointer:has(img[src*='create_chat_send_btn.svg'])"
+        role_or_text: 提交图标
+        visible_condition: prompt 有内容后出现
+        enabled_condition: prompt 非空且至少勾选一个模型且无任务处理中
+        action_result: 一次提交多模型任务并出图
+        reversible: false
+        explore_status: covered
+        dependencies: ["model_multi_mode_switch"]
+        assertions_hint: 提交后 handleSubmitTask result resultCode=100
+        notes: ""
+  batch_number_two:
+    description: Settings → Number of images = 2，一次提交产出 2 张
+    trigger: Setting → Number of images → 2
+    url_or_state_key: /create | /agent?pid=*
+    buttons:
+      setting_selector:
+        selector: "div[title='Setting']"
+        role_or_text: Setting
+        visible_condition: 输入区渲染后可见
+        enabled_condition: 始终
+        action_result: 展开 Settings 面板（Output Ratio / Output Resolution / Number of images）
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: Number of images 可选 1/2/3/4
+        notes: ""
+      number_of_images_2:
+        selector: "div[title='Setting'] >> text=2"
+        role_or_text: "2"
+        visible_condition: Settings 面板展开后可见
+        enabled_condition: 始终
+        action_result: 图片数量设为 2
+        reversible: true
+        explore_status: covered
+        dependencies: ["setting_selector"]
+        assertions_hint: 选中 2 后一次提交产出 2 张结果图
+        notes: 具体 DOM 结构在 test-writing 阶段按 handoff locator 核对，必要时回退 page-map-sync
+      submit:
+        selector: "div.cursor-pointer:has(img[src*='create_chat_send_btn.svg'])"
+        role_or_text: 提交图标
+        visible_condition: prompt 有内容后出现
+        enabled_condition: prompt 非空且无任务处理中
+        action_result: 提交数量=2 的批量任务并出图
+        reversible: false
+        explore_status: covered
+        dependencies: ["number_of_images_2"]
+        assertions_hint: 提交后 handleSubmitTask result resultCode=100；画布出现 2 张结果图
+        notes: ""
+  official_upload_precondition:
+    description: 提交前把「测试服兜底上传地址」切到正式（所有生成用例必做）
+    trigger: 点击 DEBUG → 测试服兜底上传地址 → 正式
+    url_or_state_key: /create | /agent?pid=*
+    buttons:
+      debug_button:
+        selector: "button:has-text('DEBUG')"
+        role_or_text: DEBUG
+        visible_condition: 页面右下角常驻
+        enabled_condition: 始终
+        action_result: 打开 Debug 面板
+        reversible: true
+        explore_status: covered
+        dependencies: []
+        assertions_hint: 面板含「测试服兜底上传地址」标题与「内网」「正式」按钮组
+        notes: ""
+      official_button:
+        selector: "h4:has-text('测试服兜底上传地址') + * button:has-text('正式')"
+        role_or_text: 正式
+        visible_condition: Debug 面板打开后可见
+        enabled_condition: 始终
+        action_result: 兜底上传地址切换到正式（https://appinference-upload.flockiaapps.com）
+        reversible: true
+        explore_status: covered
+        dependencies: ["debug_button"]
+        assertions_hint: 默认「内网」选中；点「正式」后选中态生效
+        notes: 该开关刷新后恢复「内网」，每次重载都要重设
+  model_dropdown_open:
+    description: 点击 Model 后的模型选择弹窗展开态
+    trigger: 点击 model_selector
+    url_or_state_key: /create | /agent?pid=*
+    buttons:
+      model_option_pokecut_pro:
+        selector: "div.cursor-pointer:has-text('Pokecut Pro')"
+        role_or_text: Pokecut Pro
+        visible_condition: 模型弹窗展开后可见
+        enabled_condition: 始终
+        action_result: 选中 Pokecut Pro 并收起弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: ["model_selector"]
+        assertions_hint: 单模型模式下选中后 Model 文案变为 Pokecut Pro
+        notes: ""
+      model_option_nano_banana_2_lite:
+        selector: "div.cursor-pointer:has-text('Nano Banana 2 Lite')"
+        role_or_text: Nano Banana 2 Lite
+        visible_condition: 模型弹窗展开后可见
+        enabled_condition: 始终
+        action_result: 选中 Nano Banana 2 Lite 并收起弹窗
+        reversible: true
+        explore_status: covered
+        dependencies: ["model_selector"]
+        assertions_hint: 默认模型
+        notes: ""
+      model_multi_mode_switch:
+        selector: "switch[name='Model Multi Mode'], [role=switch]"
+        role_or_text: Model Multi Mode
+        visible_condition: 模型弹窗展开后可见
+        enabled_condition: 始终
+        action_result: 切换多选模式
+        reversible: true
+        explore_status: covered
+        dependencies: ["model_selector"]
+        assertions_hint: 开启后进入多选
+        notes: ""
+observed_results:
+  create_pokecutpro_t2i:      {result: "✨Image Ready 1536x1536", shot: "01_create_pokecutpro_t2i.png"}
+  create_pokecutpro_t2i_x2:   {result: "✨2 Images Ready", shot: "02_create_pokecutpro_t2i_x2.png"}
+  create_pokecutpro_i2i:      {result: "✨Image Ready", shot: "03_create_pokecutpro_i2i.png"}
+  create_pokecutpro_i2i_x2:   {result: "✨2 Images Ready 2112x3168", shot: "09_create_pokecutpro_i2i_x2_lowres.png"}
+  create_bn2lite_t2i:         {result: "✨Image Ready 1024x1024", shot: "04_create_bn2lite_t2i.png"}
+  create_bn2lite_i2i:         {result: "✨Image Ready 896x1200", shot: "05_create_bn2lite_i2i.png"}
+  create_bn2lite_t2i_x2:      {result: "✨2 Images Ready", shot: "06_create_bn2lite_t2i_x2.png"}
+  create_bn2lite_i2i_x2:      {result: "✨2 Images Ready（低分辨率图）", shot: "08_create_bn2lite_i2i_x2_lowres.png"}
+  create_multimode_t2i:       {result: "4 张结果图（前四模型）", shot: "10_create_multimode_t2i_stuck31.png"}
+  create_multimode_i2i:       {result: "3/4 成功（1 个失败，兜底内网）", shot: "11_create_multimode_i2i.png"}
+  agent_pokecutpro_t2i:       {result: "✨Image Ready", shot: "13_agent_pokecutpro_t2i.png"}
+  agent_pokecutpro_i2i:       {result: "✨Image Ready", evidence: "evidence/console_15_agent_pokecutpro_i2i_ok.log（本轮无成功截图）"}
+  agent_pokecutpro_t2i_x2:    {result: "✨Image Ready（切正式后 24s）", shot: "22_agent_pokecutpro_t2i_x2_official_upload.png"}
+  agent_bn2lite_t2i:          {result: "✨Image Ready", shot: "16_agent_bn2lite_t2i.png"}
+  agent_bn2lite_i2i:          {result: "✨3 Images Ready", shot: "17_agent_bn2lite_i2i.png"}
+  agent_bn2lite_t2i_x2:       {result: "✨5 Images Ready", shot: "18_agent_bn2lite_t2i_x2.png"}
+  agent_bn2lite_i2i_x2:       {result: "✨7 Images Ready", shot: "19_agent_bn2lite_i2i_x2.png"}
+  agent_multimode_t2i:        {result: "4 张（1 个 Network error，兜底内网）", shot: "20_agent_multimode_t2i.png"}
+  agent_multimode_i2i:        {result: "成功", shot: "21_agent_multimode_i2i.png"}
+
+notes:
+- submit 按钮在「有生图任务处理中」时禁用（create_chat_send_btn_disable.svg）
+- 失败现象：Network error，未出图；根因 = 测试服兜底上传地址未切「正式」
+- 轮询期间 GPU resultCode -112「未完成」是正常中间态，不是失败信号
+- 无 timeout/超时日志；用户口径：失败为环境问题，切正式后视为通过
+- 用户确认（2026-11-04）：不重跑；提交前切「正式」兜底上传后默认视为全部通过；失败态（Network error）不作为回归覆盖范围

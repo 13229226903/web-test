@@ -1,0 +1,24 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+______________________ test_p_ait_01_preset_select_group ______________________
+tests\test_old_canvas_ai_tools_all.py:1290: in test_p_ait_01_preset_select_group
+    mid = submit_and_wait_done(page, name, timeout_s=120)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_old_canvas_ai_tools_all.py:635: in submit_and_wait_done
+    assert wait_done_settled(page, timeout_s=timeout_s), \
+E   AssertionError: Photo Enhancer ����δ�ڳ�ʱ�ڽ������̬��Confirm/Cancel δͬʱ���ã�
+E   assert False
+E    +  where False = wait_done_settled(<Page url='http://10.17.1.66:3102/create/edit?pid=b1451fed-43fa-48f8-a490-234d183ff3e8'>, timeout_s=120)
+____________________ test_p_ait_02_mode_and_category_group ____________________
+tests\test_old_canvas_ai_tools_all.py:1358: in test_p_ait_02_mode_and_category_group
+    assert submit_and_wait_done(page, "%s %s" % (name, cat),
+tests\test_old_canvas_ai_tools_all.py:635: in submit_and_wait_done
+    assert wait_done_settled(page, timeout_s=timeout_s), \
+E   AssertionError: AI Clothes Changer Formal Wear ����δ�ڳ�ʱ�ڽ������̬��Confirm/Cancel δͬʱ���ã�
+E   assert False
+E    +  where False = wait_done_settled(<Page url='http://10.17.1.66:3102/create/edit?pid=b1451fed-43fa-48f8-a490-234d183ff3e8'>, timeout_s=180)
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_old_canvas_ai_tools_all.py::test_p_ait_01_preset_select_group
+FAILED tests/test_old_canvas_ai_tools_all.py::test_p_ait_02_mode_and_category_group
+2 failed in 977.12s (0:16:17)

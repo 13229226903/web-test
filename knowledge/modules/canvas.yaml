@@ -1,0 +1,195 @@
+module:
+  name: canvas
+  display_name: 画布（无限画布 / 移动画布）
+knowledge_slices:
+- schema_version: '1.0'
+  knowledge_id: KB-RULE-0009
+  knowledge_type: business_rule
+  title: 工具栏/工具卡只打开功能面板，面板主提交按钮才真正发起任务
+  subject_key: canvas.feature_panel.primary_submit_required
+  status: active
+  priority: P1
+  confidence: high
+  summary: PC 与移动端一致：点工具栏或工具卡只负责打开功能面板，只有面板内的主提交按钮才会真正发起任务并触发点统计。
+  rule:
+    given:
+    - 画布页已加载输入图片
+    - 需要触发某个功能的开始/提交/统计
+    when:
+    - 点击画布工具栏的同名按钮或工具卡
+    then:
+    - 只打开对应功能面板，不发起任务、不产出任务级统计
+    - 必须再点击面板内主提交按钮，才会真正发起任务
+    exceptions:
+    - SEO 功能介绍页进入画布时功能面板会自动打开，但同样需要点主提交按钮
+    - PC 与移动端按钮形态不同，但交互语义一致
+  source_refs:
+  - ref: artifacts/2026-09-17_mobile_canvas_stats_first10/exploration_report.md
+    type: task_artifact
+    note: 探索报告 §3 与 §6 自动化准备度
+  - ref: page_map/pokecut/mobile_canvas_v11.yaml
+    type: page_map
+    note: mobile_feature_panel_submit / pc_feature_panel_submit 状态
+  - ref: artifacts/2026-09-17_mobile_canvas_stats_first10/sync.md
+    type: task_artifact
+    note: 探索期间多次因此返工
+  retrieval_tags:
+    module:
+    - canvas
+    page:
+    - canvas
+    entry:
+    - feature_panel
+    state:
+    - panel_opened
+    - task_submitted
+    action:
+    - click_open
+    - click_submit
+    account:
+    - free
+    - member
+    - anonymous
+    error:
+    - no_task_submitted
+    platform:
+    - desktop
+    - mobile
+  created_at: '2026-09-22T11:05:00+08:00'
+  updated_at: '2026-09-22T11:05:00+08:00'
+  source_of_truth: knowledge
+  evidence:
+  - kind: task_verification
+    ref: artifacts/2026-09-17_mobile_canvas_stats_first10/evidence/automation_handoff.yaml
+    verified_at: '2026-09-22'
+    result: confirmed（修正为点主提交后 40 条用例链路可跑通）
+  last_verified_at: '2026-09-22'
+
+- schema_version: '1.0'
+  knowledge_id: KB-RULE-0011
+  knowledge_type: technical_test_rule
+  title: 旧画布 AIGC 生成中的进度提示只画在 canvas 上，判忙需用画面指纹或 Confirm+Cancel 组合态
+  subject_key: canvas.aigc_panel.generating_state_detection
+  status: active
+  priority: P0
+  confidence: high
+  summary: >-
+    旧画布 AI Tools 功能面板在生成中会渲染百分比进度环，但该环是**画在 canvas 上**的，
+    DOM 文本里取不到 "NN%"；且进度层会吞掉页面点击（包括 Cancel）。
+    因此判断"是否仍在生成"不能依赖 DOM 文本，也不能只依赖 Confirm 的可用性——
+    同一面板内第二次提交时，面板仍显示上一次结果的状态，Confirm 在生成期间保持可用。
+  rule:
+    given:
+    - 已打开旧画布 AI Tools 的某个功能面板
+    - 已点击面板主提交按钮（或正在等待任务结束）
+    when:
+    - 需要判断任务是否仍在生成 / 是否真正结束
+    then:
+    - 不要用 DOM 文本判断百分比：进度环只在 canvas 上，panel.innerText 取不到 "NN%"
+    - 不要只用 Confirm 可用性判断结束：同一面板第二次提交时 Confirm 生成期间仍可用（假结束）
+    - 结束判据应为 Confirm 可用 **且 Cancel 可用**，再等预览画面指纹连续稳定
+    - 生成期间进度层会吞掉点击（含 Cancel），需先等空闲再交互
+    exceptions:
+    - 首次提交时 Confirm 会正常转为禁用，此时仅凭 Confirm 亦可判断"生成中"
+    - 无进度环的工具（如 AI Face Editor / AI Body Editor）不会出现百分比，但仍受 Cancel 判据约束
+  source_refs:
+  - ref: artifacts/2026-10-13_old_canvas_ai_tools_exploration/impl.md
+    type: task_artifact
+    note: §2.y 二次提交竞态（实测 Clothes Changer 二次提交 Confirm t=4~28 全程 enabled）
+  - ref: artifacts/2026-10-13_old_canvas_ai_tools_exploration/sync.md
+    type: task_artifact
+    note: 面板三态与进度环取证
+  - ref: page_map/pokecut/infinite_canvas_ai_tools_v1.yaml
+    type: page_map
+    note: states.tool_panel_generating.buttons.confirm_disabled
+  retrieval_tags:
+    module:
+    - canvas
+    page:
+    - legacy_canvas
+    - old_canvas
+    entry:
+    - ai_tools
+    - feature_panel
+    state:
+    - panel_opened
+    - generating
+    - done
+    action:
+    - wait
+    - click_submit
+    error:
+    - false_done
+    - click_swallowed
+    platform:
+    - desktop
+  created_at: '2026-10-14T15:30:00+08:00'
+  updated_at: '2026-10-14T15:30:00+08:00'
+  source_of_truth: knowledge
+  evidence:
+  - kind: task_verification
+    ref: artifacts/2026-10-13_old_canvas_ai_tools_exploration/selfrun_round12.log
+    verified_at: '2026-10-14'
+    result: confirmed（改用 Confirm+Cancel 判据后 6 条用例全过；改用前同一用例出现假结束且截图仍带 10%/20% 进度环）
+  last_verified_at: '2026-10-14'
+
+- schema_version: '1.0'
+  knowledge_id: KB-RULE-0012
+  knowledge_type: technical_test_rule
+  title: 旧画布 AIGC 任务记录从 console 抓 handleSubmitTask result 的 taskId，链路区分 efMode / styleId
+  subject_key: canvas.aigc_panel.taskid_console_capture
+  status: active
+  priority: P1
+  confidence: high
+  summary: >-
+    旧画布 AI Tools 各功能的真实提交证据可从浏览器 console 抓取：
+    `handleSubmitTask result {"resultCode":100,...,"data":{"taskId":"..."}}` 提供 taskId；
+    `[AIGC 公告板][开始检查] {funcType, styleId, serverFuncType}` 提供 styleId。
+    legacy picEnhance 链路会额外出现 `efMode`（实测 240900033），ComfyUI 链路则带 `styleId`（形如 pkweb_comfyui_*）。
+  rule:
+    given:
+    - 旧画布 AI Tools 面板已提交一次真实任务
+    - 需要记录该次任务的 taskId（及可得的 efMode / styleId）
+    when:
+    - 在提交前注册 page.on("console") 监听并清空历史日志
+    then:
+    - taskId 取 `"taskId":"..."`；真实提交时断言其非空
+    - efMode 取 `efMode:\s*(\d+)`（legacy picEnhance 链路，如 240900033 / 240100021）
+    - styleId 取 `styleId:\s*([^,}\s]+)`（ComfyUI 链路，如 pkweb_comfyui_silentfilm、pkweb_comfyui_transfer_outfit_whitebg）
+    - 无 handleSubmitTask 的路径（客户端即时预览、no-op）**不伪造 taskId**，只记录"无提交"
+    exceptions:
+    - 结果态工具切到已生成过的模型会命中缓存，不产生新提交，此时不出现 handleSubmitTask
+  source_refs:
+  - ref: artifacts/2026-10-13_old_canvas_ai_tools_exploration/impl.md
+    type: task_artifact
+    note: §4 提交任务记录（含四条链路的实测 taskId / styleId / efMode）
+  - ref: skills/ui-test-test-writing/SKILL.md
+    type: skill
+    note: 提交类用例任务记录规则
+  retrieval_tags:
+    module:
+    - canvas
+    page:
+    - legacy_canvas
+    - old_canvas
+    entry:
+    - ai_tools
+    - feature_panel
+    state:
+    - task_submitted
+    action:
+    - capture_console
+    - record_taskid
+    error:
+    - missing_taskid
+    platform:
+    - desktop
+  created_at: '2026-10-14T15:30:00+08:00'
+  updated_at: '2026-10-14T15:30:00+08:00'
+  source_of_truth: knowledge
+  evidence:
+  - kind: task_verification
+    ref: artifacts/2026-10-13_old_canvas_ai_tools_exploration/impl.md
+    verified_at: '2026-10-14'
+    result: confirmed（实测 Photo Enhancer/AI Upscaler=legacy picEnhance(efMode=240900033)；AI Filter/AI Clothes Changer/Face Cutout=ComfyUI(styleId=pkweb_comfyui_*、pc_head_extract、removebg_textExtract)）
+  last_verified_at: '2026-10-14'

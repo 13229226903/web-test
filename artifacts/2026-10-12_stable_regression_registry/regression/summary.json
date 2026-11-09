@@ -1,0 +1,183 @@
+{
+  "task_id": "2026-10-12_stable_regression_registry",
+  "base_url": "http://10.17.1.66:3001",
+  "suite_count": 12,
+  "passed_suites": 6,
+  "suites_with_skips": 0,
+  "failed_suites": 6,
+  "total_seconds": 10345.61,
+  "aggregate_counts": {
+    "passed": 183,
+    "failed": 41,
+    "skipped": 7,
+    "xfailed": 1
+  },
+  "complete": true,
+  "rows": [
+    {
+      "feature": "人像检测三入口页（Ethnicity / Body Shape / Face Comparison）",
+      "task_id": "2026-08-28_pokecut_portrait_detector_interactions",
+      "tests": "tests/test_pokecut_portrait_detector.py",
+      "archive": "archive/portrait_detector/test_pokecut_portrait_detector.py",
+      "exit_code": 0,
+      "seconds": 366.77,
+      "counts": {
+        "passed": 14
+      },
+      "result": "passed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_pokecut_portrait_detector.log"
+    },
+    {
+      "feature": "文字画质增强实验页（AI Image Text Enhancer）",
+      "task_id": "2026-08-29_pokecut_ai_image_text_enhancer",
+      "tests": "tests/test_ai_image_text_enhancer_experiment.py",
+      "archive": "archive/tool_pages/test_ai_image_text_enhancer_experiment.py",
+      "exit_code": 1,
+      "seconds": 769.91,
+      "counts": {
+        "passed": 6,
+        "failed": 9,
+        "skipped": 3
+      },
+      "result": "failed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_ai_image_text_enhancer_experiment.log"
+    },
+    {
+      "feature": "画布页文字功能",
+      "task_id": "2026-08-30_pokecut_canvas_text_layer",
+      "tests": "tests/test_infinite_canvas_text_layer_v2.py",
+      "archive": "archive/infinite_canvas/test_infinite_canvas_text_layer_v2.py",
+      "exit_code": 1,
+      "seconds": 240.83,
+      "counts": {
+        "failed": 6
+      },
+      "result": "failed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_infinite_canvas_text_layer_v2.log"
+    },
+    {
+      "feature": "Pokecut 移动端首页优化（Mobile Home v3）",
+      "task_id": "task-22_feishu_mobile_home",
+      "tests": "tests/test_mobile_home.py",
+      "archive": "archive/mobile_home/test_mobile_home.py",
+      "exit_code": 1,
+      "seconds": 437.75,
+      "counts": {
+        "passed": 37,
+        "failed": 1
+      },
+      "result": "failed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_mobile_home.log"
+    },
+    {
+      "feature": "帮助中心（/help）",
+      "task_id": "2026-08-31_pokecut_help_center",
+      "tests": "tests/test_help_page.py",
+      "archive": "archive/help_center/test_help_page.py",
+      "exit_code": 0,
+      "seconds": 189.84,
+      "counts": {
+        "passed": 11
+      },
+      "result": "passed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_help_page.log"
+    },
+    {
+      "feature": "旧画布 Insert 面板与图层属性（legacy canvas）",
+      "task_id": "2026-09-10_old_canvas_insert_panel_exploration",
+      "tests": "tests/test_old_canvas_insert_panel_v3.py",
+      "archive": "archive/infinite_canvas_insert_panel/test_old_canvas_insert_panel_v3.py",
+      "exit_code": 0,
+      "seconds": 602.42,
+      "counts": {
+        "passed": 24
+      },
+      "result": "passed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_old_canvas_insert_panel_v3.log"
+    },
+    {
+      "feature": "旧画布文字功能（Text 面板 + 文字图层参数）",
+      "task_id": "2026-09-11_old_canvas_text_panel_exploration",
+      "tests": "tests/test_old_canvas_text_panel_v1.py",
+      "archive": "archive/infinite_canvas_text_panel/test_old_canvas_text_panel_v1.py",
+      "exit_code": 0,
+      "seconds": 389.78,
+      "counts": {
+        "passed": 13
+      },
+      "result": "passed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_old_canvas_text_panel_v1.log"
+    },
+    {
+      "feature": "旧画布贴纸调参面板（legacy canvas，一个贴纸）",
+      "task_id": "2026-09-11_old_canvas_sticker_panel_exploration",
+      "tests": "tests/test_old_canvas_sticker_panel_v1.py",
+      "archive": "archive/infinite_canvas_sticker_panel/test_old_canvas_sticker_panel_v1.py",
+      "exit_code": 0,
+      "seconds": 212.08,
+      "counts": {
+        "passed": 9
+      },
+      "result": "passed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_old_canvas_sticker_panel_v1.log"
+    },
+    {
+      "feature": "SEO 页面主上传按钮交互（24 个唯一 SEO 页面）",
+      "task_id": "2026-09-14_seo_main_upload_interactions",
+      "tests": "tests/test_seo_main_upload_interactions_v1.py",
+      "archive": "archive/seo_upload_interactions/test_seo_main_upload_interactions_v1.py",
+      "exit_code": 1,
+      "seconds": 826.97,
+      "counts": {
+        "passed": 23,
+        "failed": 1
+      },
+      "result": "failed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_seo_main_upload_interactions_v1.log"
+    },
+    {
+      "feature": "SEO 页面主上传按钮交互（24 个唯一 SEO 页面）· 移动端",
+      "task_id": "2026-09-15_seo_main_upload_mobile_interactions",
+      "tests": "tests/mobile/test_seo_main_upload_mobile_v1.py",
+      "archive": "archive/seo_upload_mobile/test_seo_main_upload_mobile_v1.py",
+      "exit_code": 1,
+      "seconds": 531.91,
+      "counts": {
+        "passed": 20,
+        "failed": 3,
+        "xfailed": 1
+      },
+      "result": "failed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_seo_main_upload_mobile_v1.log"
+    },
+    {
+      "feature": "Create / Chat to Edit / Auto 意图识别（10 条 prompt）",
+      "task_id": "2026-09-17_create_auto_intent_recognition",
+      "tests": "tests/test_create_chat_to_edit_auto_v1.py",
+      "archive": "archive/create_auto_intent_recognition/test_create_chat_to_edit_auto_v1.py",
+      "exit_code": 0,
+      "seconds": 377.27,
+      "counts": {
+        "passed": 11
+      },
+      "result": "passed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_create_chat_to_edit_auto_v1.log"
+    },
+    {
+      "feature": "画布统计优化（PC 无限画布/新画布 + 移动端画布页/新画布统计埋点，40 条）",
+      "task_id": "2026-09-17_mobile_canvas_stats_first10",
+      "tests": "tests/test_canvas_stats_all.py",
+      "archive": "archive/canvas_stats/test_canvas_stats_all.py",
+      "exit_code": "timeout+rerun",
+      "seconds": 5942.81,
+      "counts": {
+        "passed": 15,
+        "failed": 21,
+        "skipped": 4
+      },
+      "result": "failed",
+      "log": "artifacts/2026-10-12_stable_regression_registry/regression/test_canvas_stats_all.log + artifacts/2026-10-12_stable_regression_registry/regression/test_canvas_stats_all_residual.log",
+      "note": "首轮 5400s 上限内完成 35/40（15 passed / 16 failed / 4 skipped），剩余 5 条 M-NEW-10..14 单独复跑补全（5 failed）；合并后 40 条"
+    }
+  ]
+}

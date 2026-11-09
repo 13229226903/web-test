@@ -1,6 +1,7 @@
 # 探索报告 — <功能名称>
 
 > 面向用户审核的摘要；权威细节仍在同任务 `sync.md`、`page_map` 和 evidence。
+> 格式红线：Bug 证据截图必须放在未展开的 HTML `<details>` 内，使用 `<img src="...">`；不得使用 Markdown 图片语法，且 `<details>` 内不要空行，避免渲染器把截图拆出折叠块导致默认展开。
 
 ## 1. 任务概览
 
@@ -13,6 +14,11 @@
 - 平台: `<desktop / mobile / both>`
 - 探索驱动: `<driver>`
 - 当前状态: `pending_review`
+- 关联产物:
+  - sync: `artifacts/<task_id>/sync.md`
+  - page_map: `<page_map_ref>`
+  - automation_handoff: `artifacts/<task_id>/evidence/automation_handoff.yaml`
+  - evidence: `artifacts/<task_id>/evidence/`
 
 ## 2. 探索范围与覆盖
 
@@ -30,16 +36,11 @@
 
 ## 4. Bug Candidate
 
-### Bug `<N>`｜<标题>
+| AC / 用例名 | 标题 | 优先级 | 是否阻塞 | 明细 |
+|---|---|---|---|---|
+| `<AC-xxx 用例名>` | `<bug title>` | `<P0/P1/P2/P3>` | `<yes/no>` | [见 §9](#9-bug-candidate-明细可展开查看截图) |
 
-- 影响范围: `<case / AC / module>`
-- 步骤:
-  1. `<step>`
-  2. `<step>`
-- 实际: `<actual>`
-- 期望: `<expected>`
-- 证据: `<screenshot / console / DOM>`
-- 是否阻塞自动化: `<yes / no>`
+> 无 bug 时写明“无”，并在 §9 保留章节和“无”。
 
 ## 5. Gap / Skipped / Pending
 
@@ -64,10 +65,41 @@
 
 1. `<范围 / 差异 / bug / skipped / 账号 / 风险>`
 
-## 8. 关联产物
+## 8. 已执行用例（按用例名标注）
 
-- sync: `artifacts/<task_id>/sync.md`
-- page_map: `<page_map_ref>`
-- automation_handoff: `artifacts/<task_id>/evidence/automation_handoff.yaml`
-- evidence: `artifacts/<task_id>/evidence/`
+- `<AC-xxx> <用例名> — covered`
+- `<AC-xxx> <用例名> — bug_candidate`
 
+> “已执行”包含 `covered` 与 `bug_candidate`；不得只给数量。
+
+## 9. Bug Candidate 明细（可展开查看截图）
+
+### `<AC-xxx> 用例名`
+
+- 用例名：`<用例名>`
+- 优先级：`<P0/P1/P2/P3>`
+- [步骤]
+  1. `<step>`
+  2. `<step>`
+- [结果] `<actual>`
+- [期望] `<expected>`
+- 证据截图：
+
+<details>
+<summary>点击展开：<AC-xxx> <截图说明></summary>
+<img src="shots/<screenshot>.png" alt="<AC-xxx> <截图说明>" width="100%">
+</details>
+
+> 无 bug 时写“无”；有 bug 时每条必须包含对应用例名、步骤、实际、期望，并使用上述折叠截图格式。
+
+## 10. 未执行用例（按用例名标注）
+
+### 10.1 Gap（本轮未完成实测）
+
+- `<AC-xxx> <用例名>`
+
+### 10.2 Skipped（需失败注入、支付完成、额外账号或不可构造数据）
+
+- `<AC-xxx> <用例名>`
+
+> “未执行”必须区分 `gap` 与 `skipped`，按用例名逐条列出，不得只写统计数字。

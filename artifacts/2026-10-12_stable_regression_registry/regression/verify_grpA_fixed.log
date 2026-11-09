@@ -1,0 +1,19 @@
+.F                                                                       [100%]
+================================== FAILURES ===================================
+___________________________ test_p_inf_03[chromium] ___________________________
+tests\test_canvas_stats_all.py:1422: in _test
+    def _test(browser, playwright, base_url):
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_canvas_stats_all.py:1409: in _run_case
+    try:
+        ^
+tests\test_canvas_stats_all.py:993: in flow_pc_infinite_download
+    assert_event_pair(rec, case["expected"][0])
+tests\test_canvas_stats_all.py:95: in assert_event_pair
+    assert send == 1, (
+E   AssertionError: 「无限画布页画质增强ultra功能图片下载保存」sendGaEvent 次数应为 1，实际 0（0=漏报，>=2=多报）；最近 sendGaEvent: en_agent页面_进入 | 无限画布页进入 | 无限画布使用引导_首次气泡展示 | 无限画布Enhance_Standard | 画质增强功能_开始处理 | 无限画布页画质增强2K-通用模型使用 | 画质增强功能_处理成功 | 生成成功 | 无限画布页单图下载 | 下载成功 | 无限画布页画质增强通用功能图片下载保存 | 无限画布页画质增强2K-通用模型图片下载保存
+E   assert 0 == 1
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_canvas_stats_all.py::test_p_inf_03[chromium] - AssertionErr...
+1 failed, 1 passed in 176.85s (0:02:56)

@@ -1,0 +1,15 @@
+....E                                                                    [100%]
+=================================== ERRORS ====================================
+________ ERROR at setup of test_p_stk_05_adjust_all_sliders[chromium] _________
+tests\test_infinite_canvas_sticker_v1.py:244: in sticker_session
+    add_sticker(page)
+tests\test_infinite_canvas_sticker_v1.py:125: in add_sticker
+    assert cat.count() > 0, "δ�ҵ� Valentine1 ���� tab"
+E   AssertionError: δ�ҵ� Valentine1 ���� tab
+E   assert 0 > 0
+E    +  where 0 = count()
+E    +    where count = <Locator frame=<Frame name= url='http://10.17.1.66:3102/agent?pid=e605042f-63ac-4587-b16a-ef94d058b689#'> selector="button:has-text('Valentine1')">.count
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+ERROR tests/test_infinite_canvas_sticker_v1.py::test_p_stk_05_adjust_all_sliders[chromium]
+4 passed, 1 error in 123.44s (0:02:03)

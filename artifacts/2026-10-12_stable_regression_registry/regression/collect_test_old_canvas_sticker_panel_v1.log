@@ -1,0 +1,12 @@
+tests/test_old_canvas_sticker_panel_v1.py::TestL2OldCanvasStickerEntry::test_l2_001_template_entry_to_canvas
+tests/test_old_canvas_sticker_panel_v1.py::TestL1OldCanvasStickerStructure::test_l1_001_sticker_structure
+tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerOpacity::test_l2_002_opacity
+tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerAdjust::test_l2_003_adjust
+tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerShadow::test_l2_004_shadow
+tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerOutline::test_l2_005_outline
+tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerReflection::test_l2_006_reflection
+tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerFilter::test_l2_007_filter
+tests/test_old_canvas_sticker_panel_v1.py::TestL2StickerBlend::test_l2_008_blend
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+9 tests collected in 0.24s

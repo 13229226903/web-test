@@ -98,6 +98,7 @@ cases:
   execution: full
   title: /tools/cv-photo-editor 上传 1K.jpg 后到达 Photo Size
   page_path: /tools/cv-photo-editor
+  image: test_images/低分辨率.JPG
   page_map: page_map/pokecut/seo_upload/tools__cv_photo_editor_v1.yaml
   state_ref: states.guide_upload.buttons.guide_upload
   upload_mode: cv_guide
@@ -141,7 +142,7 @@ cases:
   layer: L2
   priority: P1
   execution: full
-  title: /tools/ai-beard-remover 上传 1K.jpg 后到达 AI Enhancer
+  title: /tools/ai-beard-remover 上传 1K.jpg 后到达 Erase 面板（No Beard 默认选中）
   page_path: /tools/ai-beard-remover
   page_map: page_map/pokecut/seo_upload/tools__ai_beard_remover_v1.yaml
   state_ref: states.landing.buttons.main_upload
@@ -158,7 +159,13 @@ cases:
   timeout_ms: 120000
   assert_no_right_panel: false
   screenshot: L2-007_final.png
-  expected_panel: Enhance (Manual Mode / Smart Auto Mode)
+  expected_panel: Erase（No Beard 默认选中）
+  # 2026-11-05 修正：原记录写成 Enhance/AI Enhancer，实测上传后默认展开 Erase 面板，
+  # 激活分类 Face，No Beard（Mark 分类）默认选中；原证据截图停 91% Thinking，误读工具栏按钮。
+  assert_panel_title: Erase
+  assert_panel_mode: Manual Mode
+  assert_active_category: Face
+  assert_selected_preset: No Beard
 - id: L2-008
   layer: L2
   priority: P1
@@ -168,7 +175,10 @@ cases:
   page_map: page_map/pokecut/seo_upload/ai_replace__ai_clothes_changer_v1.yaml
   state_ref: states.landing.buttons.main_upload
   upload_mode: seo_first_screen
-  main_selector: button.seo-first-screen-upload-button
+  # 2026-11-08 产品漂移：本页主 CTA 由 `Upload Image`（class=button.seo-first-screen-upload-button）
+  # 改版为 `Change Clothes in Photo`（旧 class 已移除，实测 count=0）。
+  # 22 个 SEO 页中仅此页改版（其余 21 页旧 class 仍在），故只单独修本条，不动其它用例。
+  main_selector: button:has-text("Change Clothes in Photo")
   guide_selector: null
   expected_kind: agent
   expected_url: http://10.17.1.66:3001/agent?pid=293902c6-ac02-4591-9b3c-9f223b63ce27#

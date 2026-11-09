@@ -1,0 +1,10 @@
+..F..........s...s                                                       [100%]
+================================== FAILURES ===================================
+___________ test_text_l2_result_non_enhance_no_resolution[chromium] ___________
+tests\test_ai_image_text_enhancer_experiment.py:449: in test_text_l2_result_non_enhance_no_resolution
+    assert "Before" in body and "Now" in body
+E   AssertionError: assert ('Before' in 'AI Free Tools\\nPortrait Editor\\nDiscover\\nPricing\\n60% OFF\\n11815\\nUser8JY\\n\\nHome > Tools > AI Image Text Enhancer: ...\\n\\nDownload on the\\n\\nApp Store\\n\\nGET IT ON\\n\\nGoogle Play\\n\\nCopyright \xa9 2026 Pokecut All Rights Reserved.\\n\\nDEBUG')
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_ai_image_text_enhancer_experiment.py::test_text_l2_result_non_enhance_no_resolution[chromium]
+1 failed, 15 passed, 2 skipped in 725.60s (0:12:05)

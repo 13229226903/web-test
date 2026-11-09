@@ -1,0 +1,12 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________ TestL3Exceptions.test_l3_004_id_photo_success[chromium] ___________
+tests\test_mobile_home.py:579: in test_l3_004_id_photo_success
+    assert "/tools/id-photo-edit?pid=" in page.url, f"未进入证件照画布: url={page.url}"
+E   AssertionError: 未进入证件照画布: url=http://10.17.1.66:3001/
+E   assert '/tools/id-photo-edit?pid=' in 'http://10.17.1.66:3001/'
+E    +  where 'http://10.17.1.66:3001/' = <Page url='http://10.17.1.66:3001/'>.url
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_mobile_home.py::TestL3Exceptions::test_l3_004_id_photo_success[chromium]
+1 failed in 56.47s

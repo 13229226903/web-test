@@ -1,0 +1,42 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+______________ TestL6DetectionUiSmoke.test_l6_001_face_full_flow ______________
+tests\test_detection_ui_seo_l6.py:259: in test_l6_001_face_full_flow
+    wait_analysis_success(page, timeout_ms=150000)
+tests\test_detection_ui_seo_l6.py:131: in wait_analysis_success
+    page.wait_for_function(_column_ready("Analysis Result", False), timeout=timeout_ms)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 150000ms exceeded.
+______________ TestL6DetectionUiSmoke.test_l6_002_nose_full_flow ______________
+tests\test_detection_ui_seo_l6.py:324: in test_l6_002_nose_full_flow
+    wait_analysis_success(page, timeout_ms=150000)
+tests\test_detection_ui_seo_l6.py:131: in wait_analysis_success
+    page.wait_for_function(_column_ready("Analysis Result", False), timeout=timeout_ms)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\sync_api\_generated.py:11942: in wait_for_function
+    self._sync(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_page.py:1122: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_frame.py:878: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+C:\Users\liangjinrun\AppData\Local\Programs\Python\Python312\Lib\site-packages\playwright\_impl\_connection.py:559: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 150000ms exceeded.
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_detection_ui_seo_l6.py::TestL6DetectionUiSmoke::test_l6_001_face_full_flow
+FAILED tests/test_detection_ui_seo_l6.py::TestL6DetectionUiSmoke::test_l6_002_nose_full_flow
+2 failed in 349.07s (0:05:49)
+

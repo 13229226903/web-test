@@ -90,12 +90,72 @@ npm install -g @playwright/mcp allure-commandline
 python -m pytest tests/<file>.py -q            # 跑单个归档脚本（headless）
 python -m pytest --headed tests/<file>.py      # 有头模式调试
 python -m pytest --collect-only -q             # 只收集用例，检查无 error / warning
+# 生成新报告前先清掉旧报告（保留本次要用的目录）
+python scripts/allure_cleanup.py --keep allure-results --keep allure-report-regression
 allure generate reports/allure-results -o reports/allure-report-regression --clean
 python -m http.server 8123 --directory reports/allure-report-regression
 # 浏览器打开 http://localhost:8123/index.html
 ```
 
+> **旧报告清理规则**：每次生成新报告前运行 `python scripts/allure_cleanup.py`，
+> 清掉 `reports/` 下的旧 `allure-*` 目录（默认全清，只保留 `--keep` 指定的），
+> 避免多轮结果混在一起（同名截图被覆盖、Allure 报告出现重复用例）。
+> 如需保留被 `artifacts/**/*.md` 引用的归档报告，加 `--protect-archived`；
+> 先预览删除清单用 `--dry-run`。
+
+> **注意**：Allure 报告必须经本地 HTTP 服务器（`http://localhost:8123/index.html`）访问，不能直接用 `file://` 打开静态 HTML（会白屏 / 打不开）。未起服务器并打印「简易回归报告」，不得视为回归完成。
+
 更完整的执行流程与报告规范见 `artifacts/runtime/orchestrator.md` 与 `skills/ui-test-test-writing/SKILL.md`。
+
+## 回归治理入口
+
+两条回归路径，都会产出汇总门禁：
+
+**A. registry 稳定回归**
+
+```bash
+python scripts/regression_runner.py --base-url http://10.17.1.66:3001 --label 3001
+# 或薄封装
+python run_regression_3001.py
+python run_regression_3002.py
+```
+
+**B. 完整回归（-m regression）**
+
+```bash
+python scripts/run_full_regression.py --base-url http://10.17.1.66:3001
+```
+
+共同约定：
+
+- attempt 级事实：`reports/attempts/<run_id>.jsonl`。
+- 汇总报告：`reports/regression-<label>/<run_id>/regression_summary.json|md`，
+  包含 `clean_pass / retry_pass / quarantined / xfail / skipped / failed / broken`。
+- 退出码反映 `regression_summary.gate.status`，不只看 pytest 是否红。
+- 归档证据必须同时给出 `clean_pass_rate` / `retry_pass` / `quarantined` 三项。
+- `gate.status != passed` 时不得标记完成、不得归档。
+- 隔离登记：`artifacts/regression_quarantine.yaml`（可见、不计通过、到期须复评）。
+- case_id 解析：label 标记 > Allure case_id 标签 > 严格标题提取 > MISSING 债务；
+  短 ID（如 `L2-001`）加文件命名空间（如 `MH-L2-001`）避免跨脚本冲突。
+- `scripts/regression_summary.py` 是门禁数据源；Allure 仍是步骤、截图、附件明细层。
+- 并行执行暂未启用；必须先完成账号态与数据隔离标记。
+
+失败分流与 flaky 治理：
+
+```bash
+python scripts/flaky_report.py                 # 跨轮判定 flaky / new_fail / fixed
+python scripts/quarantine.py list              # 查看隔离项与到期
+python scripts/quarantine.py add <case_id> --reason "..." --owner qa --evidence <path>
+python scripts/quarantine.py audit             # 标出过期与连续多轮未修项
+```
+
+- 失败分类：`test_code` / `runtime_environment` / `page_behavior_unknown` / `product_bug` / `flaky`。
+- 跨轮结果不稳定（pass/fail 交替或需重试）判为 `flaky`，必须隔离并追根因，禁止调大 retries 收尾。
+- 隔离条目只置状态、不删除；`released` 保留供审计。
+
+> **数据保留提醒**：`reports/attempts/*.jsonl` 是跨轮 flaky 分析的唯一数据源，
+> **不要整体清空**。`scripts/allure_cleanup.py` 只清理 `reports/` 下 `allure-*` 目录，
+> 不会碰 `attempts/`；如需减量，用 `python scripts/flaky_report.py --last N` 只分析最近 N 轮。
 
 ## 流程总览
 
@@ -170,4 +230,5 @@ state.md=completed，收工
 ## 项目约定
 
 本项目对接 Pokecut：站点 / 账号 / 素材白名单 / DEBUG 切换等见 `PROJECT.md`；编码与技术避坑见 `rule.md`，不在此重复。
+
 

@@ -1,0 +1,9 @@
+tests/test_infinite_canvas_text_layer_v2.py::test_text_001_entry_and_left_tools[chromium]
+tests/test_infinite_canvas_text_layer_v2.py::test_text_002_select_reopen_tabs_basic[chromium]
+tests/test_infinite_canvas_text_layer_v2.py::test_text_003_space[chromium]
+tests/test_infinite_canvas_text_layer_v2.py::test_text_004_reflection[chromium]
+tests/test_infinite_canvas_text_layer_v2.py::test_text_005_background[chromium]
+tests/test_infinite_canvas_text_layer_v2.py::test_text_006_outline[chromium]
+
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+6 tests collected in 0.12s

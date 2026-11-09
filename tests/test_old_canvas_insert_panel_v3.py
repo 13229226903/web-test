@@ -16,6 +16,8 @@ from pathlib import Path
 from playwright.sync_api import Page, expect as pw_expect
 from PIL import Image, ImageChops
 
+from helpers.waiting import poll_until, settle, wait_network_quiet, wait_ready, wait_visible
+
 
 def _repo_root() -> Path:
     """定位仓库根目录（同时兼容 tests/ 与 archive/<module>/ 两种存放位置）。"""
@@ -33,29 +35,47 @@ BASE_URL = os.environ.get("POKECUT_BASE_URL", "http://10.17.1.66:3001")
 EMAIL = os.environ.get("POKECUT_TEST_EMAIL", "450832596@qq.com")
 CODE = os.environ.get("POKECUT_TEST_CODE", "123456")
 RED = "rgb(174, 41, 42)"
+SCREENSHOT_DIR = BASE_DIR / "data" / "screenshots"
 INSERT_TAB = 'div.cursor-pointer:has(> img[src$="edit_left_tab_btn_insert.svg"])'
 
 
 @pytest.fixture(scope="session")
 def canvas_session(playwright):
-    """session 级前置：VIP 登录一次 + 进入旧画布一次，记录画布 URL。
+    """session 级前置：只做一次 VIP 登录，提供已登录 context。
 
-    旧画布的模板上传有频率限制（连续约 17 次后会触发人机校验/不跳转），
-    因此整个测试会话只做 1 次上传，其余用例复用同一个 pid。
+    2026-11-06 修正：不再由 session 上传一次并复用 pid URL。复用 pid URL
+    重新打开会被 302 落回 /create（编辑器未挂载），不是真实用户路径。改为
+    每条用例各自走正常入口上传，见 canvas_page。
     """
     browser = playwright.chromium.launch(headless=True)
     context = browser.new_context(viewport={"width": 1920, "height": 1080}, locale="en-US")
     page = context.new_page()
     page.goto(BASE_URL + "/template", wait_until="domcontentloaded", timeout=120000)
-    page.wait_for_timeout(4500)
+    # 就绪信号：Log in 入口 或 模板区标题出现（替代固定 4.5s）
+    assert wait_ready(
+        page,
+        lambda: page.get_by_role("button", name="Log in", exact=True).count() > 0
+        or page.get_by_role("heading", name="Colorful Background", exact=True).count() > 0,
+        timeout=30000,
+        settle_ms=0,
+    ), "模板页未在超时内渲染（Log in / Colorful Background 均未出现）"
+    # 元素挂载 != Vue 事件绑定完成：等网络静默后再点，避免点击被 hydration 竞态吞掉
+    wait_network_quiet(page, timeout=4000, idle_ms=500)
     login_btn = page.get_by_role("button", name="Log in", exact=True)
     if login_btn.count():
         login_btn.first.click()
-        page.wait_for_timeout(1800)
+        # 登录弹窗就绪信号：email 输入框真实可见可填（不是仅挂载）
+        assert wait_visible(page, page.locator('input[type="email"]'), timeout=20000), \
+            "点击 Log in 后登录弹窗未出现（email 输入框不可见）"
         page.locator('input[type="email"]').fill(EMAIL)
         page.locator('input[placeholder*="Verification"]').fill(CODE)
         page.locator('button:has-text("Log in")').last.click()
-        page.wait_for_timeout(8000)
+        poll_until(
+            page,
+            lambda: page.locator('input[type="email"]').count() == 0,
+            timeout=40000,
+            interval=1000,
+        )
     state = page.evaluate(
         """() => {
             try {
@@ -68,67 +88,85 @@ def canvas_session(playwright):
         }"""
     )
     assert state.get("vip") and state["vip"] > 0, f"VIP 登录失败: {state}"
-    canvas_url = enter_canvas_via_template(page, BASE_URL, attempts=4)
-    assert "/create/edit?pid=" in canvas_url, f"会话入口未进入旧画布: {canvas_url}"
     page.close()
-    yield {"context": context, "url": canvas_url}
+    yield {"context": context}
     context.close()
     browser.close()
 
 
 @pytest.fixture
 def canvas_page(canvas_session):
-    """每条用例：复用会话画布 pid，重新打开得到干净初始态。
+    """每条用例：从正常入口（/template 模板首卡上传）进入旧画布，得到干净初始态。
 
-    刷新画布不会重新上传/新建任务，避免触发模板入口的频率限制。
+    2026-11-06 修正：复用 pid URL 重新打开不是真实用户路径，且会落回 /create。
+    每条用例走一次真实入口上传 -> 每条用例天然拿到独立画布，消除跨用例污染。
     """
     page = canvas_session["context"].new_page()
-    page.goto(canvas_session["url"], wait_until="domcontentloaded", timeout=120000)
-    page.wait_for_timeout(9000)
+    enter_canvas_via_template(page, BASE_URL)
     yield page
     page.close()
 
 
 def enter_canvas_via_template(page: Page, base_url: str, image: str = IMG_1K, attempts: int = 3):
-    """从 /template 的 Colorful Background 首卡上传并进入旧画布（L2-001 专用）。
+    """从 /template 的 Colorful Background 首卡上传并进入旧画布。
 
-    模板卡点击存在竞态，做多次重试 + URL 轮询；若多次仍不跳转则视为该入口当前不可用。
+    2026-11-06：
+    - 模板页 Vue 冷启动早于事件绑定；元素挂载后立刻点会吞掉点击（filechooser 不触发），
+      故点前等网络静默，且点击用「filechooser 事件」作为受理判据并重试。
+    - 进入编辑器后等「编辑器专属」就绪信号（左侧工具栏 / Insert tab），
+      不能用「任意大图」判据——/create 模板页有 189 张缩略图会造成假就绪。
     """
     last_err = None
     for attempt in range(1, attempts + 1):
         try:
             with allure.step(f"进入 /template 并上传 Colorful Background 首卡（第 {attempt} 次）"):
                 page.goto(base_url + "/template", wait_until="domcontentloaded", timeout=120000)
-                page.wait_for_timeout(5000)
                 heading = page.get_by_role("heading", name="Colorful Background", exact=True).first
                 pw_expect(heading).to_be_visible(timeout=30000)
+                # 等 Vue hydration 完成再做交互，避免点击被冷启动竞态吞掉
+                wait_network_quiet(page, timeout=10000, idle_ms=1200)
                 section = heading.locator("xpath=..").locator("xpath=..")
                 card = section.locator('div.relative.flex.w-\\[9\\.625rem\\].cursor-pointer').first
                 overlay = card.locator("div.absolute.left-0.top-0.flex.size-full.items-center > div").first
                 pw_expect(overlay).to_be_visible(timeout=15000)
-                with page.expect_file_chooser(timeout=30000) as fc:
-                    overlay.click()
-                fc.value.set_files(image)
-                for _ in range(90):
-                    page.wait_for_timeout(1000)
-                    if "/create/edit?pid=" in page.url:
+                # 点击受理判据 = filechooser 弹出；未弹出则重试点击（hydration 竞态）
+                opened = False
+                for _ in range(3):
+                    try:
+                        with page.expect_file_chooser(timeout=12000) as fc:
+                            overlay.click()
+                        fc.value.set_files(image)
+                        opened = True
                         break
-                else:
+                    except Exception:
+                        wait_network_quiet(page, timeout=3000, idle_ms=0)
+                if not opened:
+                    raise AssertionError(f"模板卡点击未触发文件选择器，当前 URL: {page.url}")
+                if not wait_ready(page, lambda: "/create/edit?pid=" in page.url,
+                                 timeout=90000, settle_ms=0):
                     raise AssertionError(f"模板卡上传后未进入画布，当前 URL: {page.url}")
-                page.wait_for_timeout(9000)
+                # 编辑器专属就绪信号：左侧工具栏 Insert tab 出现
+                assert wait_ready(
+                    page,
+                    lambda: page.locator(INSERT_TAB).count() > 0 and page.locator("canvas").count() > 0,
+                    timeout=60000,
+                    settle_ms=0,
+                ), f"旧画布编辑器未就绪（Insert tab 未出现），URL: {page.url}"
             return page.url
         except Exception as exc:  # noqa: BLE001
             last_err = exc
             if attempt == attempts:
                 break
-            page.wait_for_timeout(2500)
+            # 重试间隔：等上一条失败上传请求释放
+            settle(page, 2500)
     raise AssertionError(f"模板入口进入旧画布失败（已重试 {attempts} 次）: {last_err}")
 
 
 def dismiss_color_overlay(page: Page):
     if page.locator('div[data-color-picker-overlay="true"]').count():
         page.keyboard.press("Escape")
-        page.wait_for_timeout(300)
+        poll_until(page, lambda: page.locator('div[data-color-picker-overlay="true"]').count() == 0,
+                   timeout=5000, interval=200)
 
 
 def canvas_box(page: Page) -> dict:
@@ -144,7 +182,8 @@ def canvas_box(page: Page) -> dict:
 def click_canvas_center(page: Page, ry: float = 0.45):
     bb = canvas_box(page)
     page.mouse.click(bb["x"] + bb["width"] / 2, bb["y"] + bb["height"] * ry)
-    page.wait_for_timeout(600)
+    # 点选生效信号：右侧出现图片属性行 Opacity（比固定停等更快更准）
+    poll_until(page, lambda: _has_visible_section_label(page, "Opacity"), timeout=6000, interval=250)
 
 
 def shot(page: Page, name: str, clip: dict = None) -> str:
@@ -186,14 +225,31 @@ def pixel_diff_pct(path_a: str, path_b: str) -> float:
     return round(pts / (a.width * a.height) * 100, 3)
 
 
+def _has_visible_section_label(page: Page, label: str) -> bool:
+    """右侧面板是否已出现可见的属性行（供轮询就绪判断，不抛异常）。"""
+    locs = page.get_by_text(label, exact=True)
+    for i in range(locs.count()):
+        try:
+            e = locs.nth(i)
+            if not e.is_visible():
+                continue
+            bb = e.bounding_box()
+            if bb and bb["x"] > 1500 and bb["width"] < 400:
+                return True
+        except Exception:
+            continue
+    return False
+
+
 def find_section(page: Page, label: str, timeout_ms: int = 15000):
     """定位右侧面板中**可见**的属性行。
 
     页面同时挂载多套隐藏复用节点（当前图层/其它图层/绘制态），必须按可见性过滤，
     否则会命中隐藏 section，导致改值不生效、像素差异为 0。
     """
-    waited = 0
-    while True:
+    holder: dict = {}
+
+    def _found() -> bool:
         locs = page.get_by_text(label, exact=True)
         for i in range(locs.count()):
             e = locs.nth(i)
@@ -204,11 +260,13 @@ def find_section(page: Page, label: str, timeout_ms: int = 15000):
                 continue
             bb = e.bounding_box()
             if bb and bb["x"] > 1500 and bb["width"] < 400:
-                return e, e.locator('xpath=ancestor::div[contains(@class,"border-b")][1]')
-        if waited >= timeout_ms:
-            raise AssertionError(f"右侧面板未找到可见属性行: {label}")
-        page.wait_for_timeout(500)
-        waited += 500
+                holder["row"] = (e, e.locator('xpath=ancestor::div[contains(@class,"border-b")][1]'))
+                return True
+        return False
+
+    if not poll_until(page, _found, timeout=timeout_ms, interval=500):
+        raise AssertionError(f"右侧面板未找到可见属性行: {label}")
+    return holder["row"]
 
 
 def ensure_image_layer_selected(page: Page, attempts: int = 3) -> None:
@@ -220,15 +278,82 @@ def ensure_image_layer_selected(page: Page, attempts: int = 3) -> None:
         except AssertionError:
             bb = canvas_box(page)
             page.mouse.click(bb["x"] + bb["width"] / 2, bb["y"] + bb["height"] * 0.45)
-            page.wait_for_timeout(1200)
+            # 不额外停等：下一轮 find_section 会以属性行可见作为判据
     find_section(page, "Opacity", timeout_ms=8000)
+
+
+def _section_controls_visible(page: Page, sec) -> bool:
+    """分区内是否已有可见的滑杆或开关（用于判定展开完成）。"""
+    for sel in ('input[type="range"]', 'input[type="checkbox"]'):
+        loc = sec.locator(sel)
+        for i in range(loc.count()):
+            try:
+                if loc.nth(i).is_visible():
+                    return True
+            except Exception:
+                continue
+    return False
+
+
+def wait_section_expanded(page: Page, sec, timeout_ms: int = 6000) -> None:
+    """等分区展开完成（分区内出现可见控件），替代固定停等。"""
+    poll_until(page, lambda: _section_controls_visible(page, sec), timeout=timeout_ms, interval=200)
+
+
+def wait_section_collapsed(page: Page, sec, timeout_ms: int = 4000) -> None:
+    """等分区收起完成（分区内不再有可见控件），替代固定停等。"""
+    poll_until(page, lambda: not _section_controls_visible(page, sec), timeout=timeout_ms, interval=200)
+
+
+def _section_content_visible(page: Page, sec) -> bool:
+    """分区内是否已有可见内容（含滑杆/开关/图片/按钮）。
+
+    比 `_section_controls_visible` 更宽：Style / Start / End / Fill 这类分区
+    展开后出现的是图片磁贴或按钮，没有 range/checkbox；用内容可见判定展开完成。
+    """
+    for sel in ('input[type="range"]', 'input[type="checkbox"]', "img", "button"):
+        loc = sec.locator(sel)
+        for i in range(loc.count()):
+            try:
+                if loc.nth(i).is_visible():
+                    return True
+            except Exception:
+                continue
+    return False
+
+
+def wait_section_content(page: Page, sec, timeout_ms: int = 6000) -> None:
+    """等分区展开出可见内容（图片磁贴/按钮亦可），替代固定停等。"""
+    poll_until(page, lambda: _section_content_visible(page, sec), timeout=timeout_ms, interval=200)
+
+
+def _right_panel_button_visible(page: Page, name: str) -> bool:
+    """右侧属性面板内是否存在可见的同名按钮（按 x>1500 过滤左侧工具栏）。"""
+    btns = page.get_by_role("button", name=name, exact=True)
+    for i in range(btns.count()):
+        try:
+            bb = btns.nth(i).bounding_box()
+            if bb and bb["x"] > 1500 and bb["width"] > 0:
+                return True
+        except Exception:
+            continue
+    return False
 
 
 def expand_section(page: Page, label: str):
     lab, sec = find_section(page, label)
     lab.scroll_into_view_if_needed()
     lab.click()
-    page.wait_for_timeout(450)
+    # 展开生效信号：该分区内滑杆或开关变为可见
+    poll_until(
+        page,
+        lambda: (sec.locator('input[type="range"]').count() > 0
+                 and any(sec.locator('input[type="range"]').nth(i).is_visible()
+                         for i in range(sec.locator('input[type="range"]').count())))
+        or sec.locator('input[type="checkbox"]').count() > 0,
+        timeout=6000,
+        interval=200,
+    )
     return lab, sec
 
 
@@ -236,7 +361,8 @@ def section_switch_on(page: Page, sec):
     ck = sec.locator('input[type="checkbox"]').first
     if ck.count() and not ck.is_checked():
         sec.locator("span.slider").first.click()
-        page.wait_for_timeout(500)
+        # 开关生效信号：checkbox 变为 checked
+        poll_until(page, lambda: ck.is_checked(), timeout=5000, interval=200)
     return ck
 
 
@@ -260,7 +386,8 @@ def click_swatch(page: Page, sec, rgb: str) -> bool:
         bg = e.evaluate("el => getComputedStyle(el).backgroundColor")
         if bg == rgb:
             e.locator('xpath=ancestor::div[contains(@class,"cursor-pointer")][1]').click()
-            page.wait_for_timeout(400)
+            poll_until(page, lambda: page.locator('div[data-color-picker-overlay="true"]').count() > 0,
+                       timeout=3000, interval=150)
             dismiss_color_overlay(page)
             return True
     return False
@@ -299,17 +426,58 @@ def click_toolbar_apply(page: Page) -> bool:
     return True
 
 
+def wait_canvas_change(page: Page, clip: dict, base_png: str, min_pct: float = 0.0,
+                       timeout_ms: int = 5000, poll_ms: int = 250) -> float:
+    """轮询截图直到画布相对 base_png 产生 >= min_pct 的像素变化，返回最终差异百分比。
+
+    替代「改值后固定 sleep 再截图比对」：变化一出现即返回，通常比固定等待更快，
+    且不会因渲染慢而截到未生效的画面。
+    """
+    import time as _time
+    SCREENSHOT_DIR.mkdir(parents=True, exist_ok=True)
+    deadline = _time.monotonic() + timeout_ms / 1000.0
+    pct = 0.0
+    while True:
+        cur = str(SCREENSHOT_DIR / "_wait_change.png")
+        page.screenshot(path=cur, clip=clip)
+        pct = pixel_diff_pct(base_png, cur)
+        if pct > min_pct or _time.monotonic() >= deadline:
+            return pct
+        # 轮询间隔（本函数自带有界 deadline，属显式轮询）
+        page.wait_for_timeout(poll_ms)
+
+
+def wait_canvas_stable(page: Page, clip: dict, quiet_ms: int = 250,
+                       timeout_ms: int = 4000) -> str:
+    """轮询画布 hash 直到连续两次采样一致（渲染已稳定），返回稳定 hash。
+
+    用于「截图留证」类等待，替代固定 sleep：渲染一稳定即返回。
+    """
+    import time as _time
+    deadline = _time.monotonic() + timeout_ms / 1000.0
+    prev = canvas_hash(page, clip)
+    while True:
+        # 稳定采样间隔（本函数自带有界 deadline，属显式轮询）
+        page.wait_for_timeout(quiet_ms)
+        cur = canvas_hash(page, clip)
+        if cur == prev or _time.monotonic() >= deadline:
+            return cur
+        prev = cur
+
+
 def wait_hash_change(page: Page, clip: dict, prev: str, timeout_ms: int = 2500) -> str:
     """轮询等待画布 hash 相对 prev 发生变化（应对渲染 debounce）。
 
     先给渲染留出固定时间，再最多补两次采样，避免高频截图拖慢用例。
     """
-    page.wait_for_timeout(700)
+    import time as _time
+    deadline = _time.monotonic() + timeout_ms / 1000.0
+    # 渲染 debounce 初等（无独立可观察信号，且有界）
+    page.wait_for_timeout(250)
     cur = canvas_hash(page, clip)
-    waited = 700
-    while cur == prev and waited < timeout_ms:
-        page.wait_for_timeout(600)
-        waited += 600
+    while cur == prev and _time.monotonic() < deadline:
+        # 补采样间隔（有界 deadline）
+        page.wait_for_timeout(300)
         cur = canvas_hash(page, clip)
     return cur
 
@@ -328,7 +496,6 @@ def reset_image_properties(page: Page) -> None:
         if rng.count():
             set_range(rng, 100)
         lab.click()
-        page.wait_for_timeout(200)
     except AssertionError:
         pass
     # Adjust -> 全部 0
@@ -338,7 +505,6 @@ def reset_image_properties(page: Page) -> None:
         for i in range(rngs.count()):
             set_range(rngs.nth(i), 0)
         lab.click()
-        page.wait_for_timeout(200)
     except AssertionError:
         pass
     # 效果类开关全部关闭
@@ -348,16 +514,21 @@ def reset_image_properties(page: Page) -> None:
             ck = sec.locator('input[type="checkbox"]').first
             if ck.count() and ck.is_checked():
                 sec.locator("span.slider").first.click()
-                page.wait_for_timeout(300)
+                poll_until(page, lambda: not ck.is_checked(), timeout=3000, interval=200)
         except AssertionError:
             pass
-    page.wait_for_timeout(500)
 
 
 def open_insert(page: Page):
     with allure.step("打开左侧 Insert 面板"):
         page.locator(INSERT_TAB).first.click()
-        page.wait_for_timeout(1200)
+        # Insert 面板展开信号：面板内素材项出现
+        poll_until(
+            page,
+            lambda: page.locator('img[src*="home_pop_add_bursh_"]').count() > 0,
+            timeout=10000,
+            interval=300,
+        )
 
 
 def asset_exists(path: str) -> bool:
@@ -406,12 +577,12 @@ def test_l1_004_right_panel_container(canvas_page: Page):
 @allure.feature("交互行为 / 状态迁移")
 @allure.story("L2-交互")
 @pytest.mark.p0
-def test_l2_001_template_entry_to_canvas(canvas_page: Page, canvas_session):
-    """L2-001: 模板首卡上传后进入旧画布（入口由 session fixture 执行 1 次并记录 URL）。"""
+def test_l2_001_template_entry_to_canvas(canvas_page: Page):
+    """L2-001: 模板首卡上传后进入旧画布（由 canvas_page 走真实入口上传）。"""
     allure.dynamic.title("L2-001: 模板首卡上传并进入旧画布")
     page = canvas_page
-    with allure.step("断言会话入口已进入 /create/edit 且主画布可见"):
-        assert "/create/edit?pid=" in canvas_session["url"], f"入口 URL 异常: {canvas_session['url']}"
+    with allure.step("断言已进入 /create/edit 且主画布可见"):
+        assert "/create/edit?pid=" in page.url, f"入口 URL 异常: {page.url}"
         pw_expect(page.locator("canvas").first).to_be_visible(timeout=20000)
     shot(page, "l2_canvas_entered")
 
@@ -427,7 +598,13 @@ def test_l2_004_text_draw_panel(canvas_page: Page):
     open_insert(page)
     with allure.step("进入 Draw → Text"):
         page.locator('img[src$="home_pop_add_bursh_text.webp"]').first.click()
-        page.wait_for_timeout(2200)
+        # 进入 Text 绘制态信号：Contents textarea 出现且左侧 Apply 可用
+        poll_until(
+            page,
+            lambda: page.locator('textarea[rows="1"]').count() > 0 and has_visible_apply(page),
+            timeout=20000,
+            interval=300,
+        )
     with allure.step("断言左侧 Apply/Cancel 与右侧参数结构"):
         body = page.locator("body").inner_text()
         assert "Apply" in body and "Cancel" in body
@@ -453,7 +630,13 @@ def test_l2_005_general_draw_panel(canvas_page: Page):
     open_insert(page)
     with allure.step("进入 Draw → General"):
         page.locator('img[src$="home_pop_add_bursh_general.webp"]').first.click()
-        page.wait_for_timeout(2200)
+        # 进入 General 绘制态信号：可见 range + 左侧 Apply
+        poll_until(
+            page,
+            lambda: page.locator('input[type="range"]:visible').count() > 0 and has_visible_apply(page),
+            timeout=20000,
+            interval=300,
+        )
     with allure.step("断言进入 General 绘制态并出现 Size/Opacity"):
         ranges = page.locator('input[type="range"]:visible')
         pw_expect(ranges.first).to_be_visible(timeout=20000)
@@ -482,7 +665,8 @@ def test_l2_021_image_blend(canvas_page: Page, tmp_path):
         opt = sec.get_by_text("Multiply", exact=True)
         assert opt.count() >= 1, "Blend 模式中未找到 Multiply"
         opt.first.click()
-        page.wait_for_timeout(800)
+        # 生效信号：画布相对基线出现变化（轮询到位即停，不必等满固定时长）
+        wait_canvas_change(page, bb, base, min_pct=0.5, timeout_ms=6000)
         mul = str(tmp_path / "_blend_multiply.png")
         page.screenshot(path=mul, clip=bb)
         shot(page, "l2_image_blend_multiply")
@@ -495,11 +679,11 @@ def test_l2_021_image_blend(canvas_page: Page, tmp_path):
         for i in range(n):
             rng = rngs.nth(i)
             assert set_range(rng, 100) == "100"
-            page.wait_for_timeout(500)
+            wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=3000)
             hi = str(tmp_path / f"_blend_r{i}_100.png")
             page.screenshot(path=hi, clip=bb)
             assert set_range(rng, 0) == "0"
-            page.wait_for_timeout(500)
+            wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=3000)
             lo = str(tmp_path / f"_blend_r{i}_0.png")
             page.screenshot(path=lo, clip=bb)
             diff = pixel_diff_pct(hi, lo)
@@ -509,7 +693,7 @@ def test_l2_021_image_blend(canvas_page: Page, tmp_path):
         # 复位到 80 作为证据态
         rng = rngs.nth(best["index"])
         assert set_range(rng, 80) == "80"
-        page.wait_for_timeout(600)
+        wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=3000)
         shot(page, "l2_image_blend_strength80")
 
 
@@ -604,7 +788,7 @@ def test_l2_017_image_shadow(canvas_page: Page, tmp_path):
         vals = [55, 32, 22, 28, 50]
         for i in range(min(rngs.count(), 5)):
             set_range(rngs.nth(i), vals[i])
-        page.wait_for_timeout(500)
+        wait_canvas_change(page, bb, base, min_pct=0.1, timeout_ms=6000)
         cur = str(tmp_path / "_shadow_effect.png")
         page.screenshot(path=cur, clip=bb)
         assert pixel_diff_pct(base, cur) >= 1, "Shadow Effect 改值后画布无足够变化"
@@ -614,7 +798,8 @@ def test_l2_017_image_shadow(canvas_page: Page, tmp_path):
             t = sec.get_by_text(tab, exact=True)
             if t.count():
                 t.first.click()
-                page.wait_for_timeout(500)
+                # tab 生效信号：该 tab 文本进入选中/可见态（用自身可见性兜底）
+                poll_until(page, lambda: t.first.is_visible(), timeout=3000, interval=200)
                 shot(page, f"l2_image_shadow_tab_{tab.replace(' ', '')}")
         assert sec.get_by_text("Effect", exact=True).count() >= 1
 
@@ -640,7 +825,7 @@ def test_l2_018_image_outline(canvas_page: Page, tmp_path):
         vals = [20, 10, 5, 10]
         for i in range(rngs.count()):
             set_range(rngs.nth(i), vals[i] if i < len(vals) else 10)
-        page.wait_for_timeout(500)
+        wait_canvas_change(page, bb, base, min_pct=0.1, timeout_ms=6000)
         sliders_png = str(tmp_path / "_outline_sliders.png")
         page.screenshot(path=sliders_png, clip=bb)
         assert pixel_diff_pct(base, sliders_png) >= 1, "Outline 滑杆修改后画布无足够变化"
@@ -649,19 +834,19 @@ def test_l2_018_image_outline(canvas_page: Page, tmp_path):
         types = sec.locator("div.rounded-full")
         assert types.count() == 5, f"Outline Types 应为 5 个，实际 {types.count()}"
         types.nth(1).click()
-        page.wait_for_timeout(600)
+        wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=4000)
         t2 = str(tmp_path / "_outline_type2.png")
         page.screenshot(path=t2, clip=bb)
         shot(page, "l2_image_outline_type2")
         types.nth(3).click()
-        page.wait_for_timeout(600)
+        wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=4000)
         t4 = str(tmp_path / "_outline_type4.png")
         page.screenshot(path=t4, clip=bb)
         shot(page, "l2_image_outline_type4")
         assert pixel_diff_pct(t2, t4) >= 1, "Outline Type2 与 Type4 差异不足"
     with allure.step("选择红色并断言画布变化"):
         assert click_swatch(page, sec, RED), f"未找到色板颜色 {RED}"
-        page.wait_for_timeout(500)
+        wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=4000)
         color_png = str(tmp_path / "_outline_color.png")
         page.screenshot(path=color_png, clip=bb)
         shot(page, "l2_image_outline_color")
@@ -686,7 +871,17 @@ def test_l2_020_image_filter(canvas_page: Page, tmp_path):
         cat = sec.get_by_text("Vintage", exact=True)
         if cat.count():
             cat.first.click()
-            page.wait_for_timeout(700)
+            # 分类生效信号：该分类下缩略图挂载完成
+            poll_until(
+                page,
+                lambda: page.evaluate(
+                    "() => [...document.querySelectorAll('img')].filter(e => {"
+                    "const r=e.getBoundingClientRect(); return r.x>1500 && r.width>40 && r.height>40;"
+                    "}).length >= 2"
+                ) is True,
+                timeout=8000,
+                interval=250,
+            )
         picked = page.evaluate(
             """() => {
                 const imgs = [...document.querySelectorAll('img')].filter(e => {
@@ -699,7 +894,7 @@ def test_l2_020_image_filter(canvas_page: Page, tmp_path):
             }"""
         )
         assert picked, "未找到可点击的滤镜缩略图"
-        page.wait_for_timeout(1000)
+        wait_canvas_change(page, bb, unfiltered, min_pct=0.5, timeout_ms=8000)
         thumb = str(tmp_path / "_filter_thumb.png")
         page.screenshot(path=thumb, clip=bb)
         shot(page, "l2_image_filter_thumb")
@@ -710,8 +905,7 @@ def test_l2_020_image_filter(canvas_page: Page, tmp_path):
         s0_png = str(tmp_path / "_filter_s0.png")
         for v in [0, 25, 50, 75, 100]:
             assert set_range(rng, v) == str(v)
-            page.wait_for_timeout(500)
-            hashes[v] = canvas_hash(page, bb)
+            hashes[v] = wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=3000)
             if v == 0:
                 page.screenshot(path=s0_png, clip=bb)
             shot(page, f"l2_image_filter_s{v}")
@@ -746,7 +940,7 @@ def test_l2_019_image_reflection(canvas_page: Page, tmp_path):
         page.mouse.down()
         page.mouse.move(x + (cx - x) * 0.55, y + (cy - y) * 0.55, steps=14)
         page.mouse.up()
-        page.wait_for_timeout(900)
+        wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=4000)
         tl = next((b for b, c in pts if "top" in c and "left" in c), None)
         if tl:
             x2, y2 = tl["x"] + tl["width"] / 2, tl["y"] + tl["height"] / 2
@@ -754,7 +948,7 @@ def test_l2_019_image_reflection(canvas_page: Page, tmp_path):
             page.mouse.down()
             page.mouse.move(x2 + (cx - x2) * 0.35, y2 + (cy - y2) * 0.35, steps=12)
             page.mouse.up()
-            page.wait_for_timeout(800)
+            wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=4000)
     shot_canvas(page, "l2_image_shrunk", clip=bb)
     # 缩小后图片不再铺满画布，点击其实际中心重新选中，确保右侧属性面板回到图片图层
     anchors = page.locator("span.scale-point")
@@ -767,13 +961,13 @@ def test_l2_019_image_reflection(canvas_page: Page, tmp_path):
                 ys.append(b["y"] + b["height"] / 2)
         if xs and ys:
             page.mouse.click(sum(xs) / len(xs), sum(ys) / len(ys))
-            page.wait_for_timeout(900)
+            wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=4000)
     lab, sec = expand_section(page, "Reflection")
     base = str(tmp_path / "_reflection_base.png")
     page.screenshot(path=base, clip=bb)
     with allure.step("开启 Reflection 并断言画布出现倒影变化"):
         section_switch_on(page, sec)
-        page.wait_for_timeout(500)
+        wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=4000)
         on = str(tmp_path / "_reflection_on.png")
         page.screenshot(path=on, clip=bb)
         shot(page, "l2_image_reflection_on")
@@ -783,7 +977,7 @@ def test_l2_019_image_reflection(canvas_page: Page, tmp_path):
         vals = [80, 80, 60, 120]
         for i in range(min(rngs.count(), 4)):
             set_range(rngs.nth(i), vals[i])
-        page.wait_for_timeout(500)
+        wait_canvas_change(page, bb, on, min_pct=0.1, timeout_ms=6000)
         changed = str(tmp_path / "_reflection_changed.png")
         page.screenshot(path=changed, clip=bb)
         shot(page, "l2_image_reflection_changed")
@@ -804,19 +998,18 @@ def test_l3_004_color_overlay_dismiss(canvas_page: Page):
         swatches = sec.locator("div.h-full.w-full")
         assert swatches.count() >= 1, "Outline 未找到色块"
         swatches.last.locator('xpath=ancestor::div[contains(@class,"cursor-pointer")][1]').click()
-        page.wait_for_timeout(700)
         overlay = page.locator('div[data-color-picker-overlay="true"]')
         appeared = overlay.count() > 0
         shot(page, "l3_color_overlay")
     with allure.step("按 Escape 关闭 overlay"):
         if appeared:
             page.keyboard.press("Escape")
-            page.wait_for_timeout(500)
+            poll_until(page, lambda: not overlay.first.is_visible(), timeout=5000, interval=200)
             assert not overlay.first.is_visible(), "Escape 后调色板 overlay 未关闭"
     with allure.step("关闭后仍可操作其他属性行"):
         lab2, sec2 = find_section(page, "Opacity")
         lab2.click()
-        page.wait_for_timeout(400)
+        wait_section_expanded(page, sec2, timeout_ms=6000)
         assert sec2.locator('input[type="range"]').count() >= 1
     shot(page, "l3_color_overlay_dismiss")
 
@@ -834,7 +1027,8 @@ def test_l2_002_local_upload(canvas_page: Page):
         with page.expect_file_chooser(timeout=30000) as fc:
             page.locator('button:text-is("Image")').first.click()
         fc.value.set_files(IMG_FACE)
-        page.wait_for_timeout(3500)
+        # 上传完成信号：图层选中锚点出现（替代固定 3.5s）
+        poll_until(page, lambda: page.locator("span.scale-point").count() >= 4, timeout=20000, interval=300)
     with allure.step("断言新增图层并出现四角缩放锚点"):
         assert page.locator("span.scale-point").count() >= 4, "未出现图层选择框缩放锚点"
     shot(page, "l2_upload_local")
@@ -853,7 +1047,6 @@ def test_l2_003_my_cuts_insert(canvas_page: Page):
         if not dlg_btn.count():
             pytest.skip("当前账号无 My Cuts 入口（依赖账号已有抠图记录）")
         dlg_btn.click()
-        page.wait_for_timeout(2500)
         modal = page.locator('div.fixed:has-text("My Cuts")').first
         pw_expect(modal).to_be_visible(timeout=10000)
         assert "My Cuts" in modal.inner_text()
@@ -863,7 +1056,7 @@ def test_l2_003_my_cuts_insert(canvas_page: Page):
         if thumbs.count() == 0:
             pytest.skip("My Cuts 无可选缩略图")
         thumbs.first.click()
-        page.wait_for_timeout(3000)
+        poll_until(page, lambda: not modal.is_visible(), timeout=20000, interval=300)
         assert not modal.is_visible(), "My Cuts 弹窗未关闭"
     shot(page, "l2_my_cuts_inserted")
 
@@ -878,8 +1071,13 @@ def test_l2_006_shape_added(canvas_page: Page):
     page = canvas_page
     open_insert(page)
     with allure.step("点击第一个方形"):
-        page.locator('img[src$="thumb_shape_style_square.webp"]').first.click()
-        page.wait_for_timeout(2500)
+        square = page.locator('img[src$="thumb_shape_style_square.webp"]').first
+        # 形状磁贴就绪信号：面板内 Shape 缩略图可见（避免点击落空）
+        poll_until(page, lambda: page.locator('img[src$="thumb_shape_style_square.webp"]').count() > 0,
+                   timeout=10000, interval=300)
+        pw_expect(square).to_be_visible(timeout=10000)
+        square.click()
+        poll_until(page, lambda: page.locator("span.scale-point").count() >= 4, timeout=20000, interval=300)
     with allure.step("断言形状自动选中并出现参数行"):
         assert page.locator("span.scale-point").count() >= 4
         body = page.locator("body").inner_text()
@@ -897,10 +1095,22 @@ def test_l2_007_line_added(canvas_page: Page):
     page = canvas_page
     open_insert(page)
     with allure.step("点击第二种预设线条"):
-        page.locator('img[src$="edit_bottom_icon_line1.webp"]').first.click()
-        page.wait_for_timeout(2500)
+        line_tile = page.locator('img[src$="edit_bottom_icon_line1.webp"]').first
+        # 线磁贴就绪信号：缩略图可见（open_insert 只等到 Draw 素材，Line 区可能后渲染）
+        poll_until(page, lambda: page.locator('img[src$="edit_bottom_icon_line1.webp"]').count() > 0,
+                   timeout=10000, interval=300)
+        pw_expect(line_tile).to_be_visible(timeout=10000)
+        # 点后以「线属性行 Fill」出现作为生效判据；未生效则重试点击一次
+        for _ in range(3):
+            line_tile.click()
+            if poll_until(page, lambda: _has_visible_section_label(page, "Fill"), timeout=8000, interval=300):
+                break
+            # 点击落空后重试前的最小间隔（无独立可观察信号）
+            settle(page, 1000)
+        poll_until(page, lambda: page.locator("span.scale-point").count() >= 4, timeout=20000, interval=300)
     with allure.step("断言线图层自动选中并出现参数行"):
         assert page.locator("span.scale-point").count() >= 4
+        poll_until(page, lambda: _has_visible_section_label(page, "Fill"), timeout=10000, interval=300)
         body = page.locator("body").inner_text()
         for t in ["Fill", "Weight", "Style", "Start", "End", "Opacity", "Shadow", "Outline", "Reflection"]:
             assert t in body, f"线条参数面板缺少: {t}"
@@ -917,7 +1127,6 @@ def test_l2_008_custom_line_dialog(canvas_page: Page):
     open_insert(page)
     with allure.step("点击 Line 第一项打开弹窗"):
         page.locator('img[src$="edit_line_add.svg"]').first.click()
-        page.wait_for_timeout(2000)
         modal = page.locator('div.fixed:has-text("Custom Line Style")').first
         pw_expect(modal).to_be_visible(timeout=10000)
         body = modal.inner_text()
@@ -926,7 +1135,7 @@ def test_l2_008_custom_line_dialog(canvas_page: Page):
     shot(page, "l2_custom_line_dialog")
     with allure.step("点击关闭图标并断言弹窗消失"):
         page.locator('img[src$="colos_pop_btn_close.svg"]').first.click()
-        page.wait_for_timeout(1500)
+        poll_until(page, lambda: not modal.is_visible(), timeout=15000, interval=300)
         assert not modal.is_visible(), "Custom Line Style 弹窗未关闭"
 
 
@@ -940,11 +1149,16 @@ def test_l2_009_text_draw_apply(canvas_page: Page):
     page = canvas_page
     open_insert(page)
     page.locator('img[src$="home_pop_add_bursh_text.webp"]').first.click()
-    page.wait_for_timeout(2200)
+    poll_until(
+        page,
+        lambda: page.locator('textarea[rows="1"]').count() > 0 and has_visible_apply(page),
+        timeout=20000,
+        interval=300,
+    )
     with allure.step("设置 Contents=POKECUT、Size=85、Opacity=60"):
         ta = page.locator('textarea[rows="1"]').first
         ta.fill("POKECUT")
-        page.wait_for_timeout(600)
+        wait_ready(page, lambda: ta.input_value() == "POKECUT", timeout=5000, settle_ms=0)
         ranges = page.locator('input[type="range"]:visible')
         pw_expect(ranges.first).to_be_visible(timeout=15000)
         assert ranges.count() >= 2, f"Text 绘制可见 range 少于 2 个: {ranges.count()}"
@@ -960,17 +1174,13 @@ def test_l2_009_text_draw_apply(canvas_page: Page):
         page.mouse.down()
         page.mouse.move(x0 + 260, y0 + 40, steps=18)
         page.mouse.up()
-        page.wait_for_timeout(1500)
-        after = canvas_hash(page, bb)
+        after = wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=5000)
         assert before != after, "涂抹后画布未发生变化"
     shot(page, "l2_text_after_stroke")
     with allure.step("点击左侧工具栏的 Apply 并断言绘制态退出"):
         assert click_toolbar_apply(page), "未找到左侧工具栏可见的 Apply 按钮"
-        page.wait_for_timeout(2500)
-        for _ in range(20):
-            if not has_visible_apply(page):
-                break
-            page.wait_for_timeout(500)
+        # Apply 生效信号：左侧绘制态 Apply 控件消失
+        poll_until(page, lambda: not has_visible_apply(page), timeout=20000, interval=400)
         assert not has_visible_apply(page), "Apply 后左侧绘制态未退出"
     shot(page, "l2_text_applied")
 
@@ -984,7 +1194,12 @@ def test_l2_010_general_draw_apply(canvas_page: Page):
     page = canvas_page
     open_insert(page)
     page.locator('img[src$="home_pop_add_bursh_general.webp"]').first.click()
-    page.wait_for_timeout(2200)
+    poll_until(
+        page,
+        lambda: page.locator('input[type="range"]:visible').count() > 0 and has_visible_apply(page),
+        timeout=20000,
+        interval=300,
+    )
     with allure.step("设置 Size=80、Opacity=55"):
         ranges = page.locator('input[type="range"]:visible')
         pw_expect(ranges.first).to_be_visible(timeout=15000)
@@ -1001,17 +1216,13 @@ def test_l2_010_general_draw_apply(canvas_page: Page):
         page.mouse.down()
         page.mouse.move(x0 + 300, y0 - 60, steps=20)
         page.mouse.up()
-        page.wait_for_timeout(1500)
-        after = canvas_hash(page, bb)
+        after = wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=5000)
         assert before != after, "涂抹后画布未发生变化"
     shot(page, "l2_general_after")
     with allure.step("点击左侧工具栏的 Apply 并断言绘制态退出"):
         assert click_toolbar_apply(page), "未找到左侧工具栏可见的 Apply 按钮"
-        page.wait_for_timeout(2500)
-        for _ in range(20):
-            if not has_visible_apply(page):
-                break
-            page.wait_for_timeout(500)
+        # Apply 生效信号：左侧绘制态 Apply 控件消失
+        poll_until(page, lambda: not has_visible_apply(page), timeout=20000, interval=400)
         assert not has_visible_apply(page), "Apply 后左侧绘制态未退出"
     shot(page, "l2_general_applied")
 
@@ -1026,7 +1237,8 @@ def test_l2_011_shape_params(canvas_page: Page, tmp_path):
     page = canvas_page
     open_insert(page)
     page.locator('img[src$="thumb_shape_style_square.webp"]').first.click()
-    page.wait_for_timeout(2500)
+    # 形状新增生效信号：出现图层选择框缩放锚点（比固定停等更快更准）
+    poll_until(page, lambda: page.locator("span.scale-point").count() >= 4, timeout=20000, interval=300)
     bb = canvas_box(page)
     # 新形状可能叠加在历史图层之上，点其可见框中心确保选中的是本次新增形状
     anchors = page.locator("span.scale-point")
@@ -1039,7 +1251,8 @@ def test_l2_011_shape_params(canvas_page: Page, tmp_path):
                 ys.append(bx["y"] + bx["height"] / 2)
         if xs and ys:
             page.mouse.click(sum(xs) / len(xs), sum(ys) / len(ys))
-            page.wait_for_timeout(800)
+            # 点选框后画布重绘稳定即继续（后续像素 diff 断言）
+            wait_canvas_stable(page, bb, quiet_ms=250, timeout_ms=4000)
     base = str(tmp_path / "_shape_base.png")
     page.screenshot(path=base, clip=bb)
     shot(page, "l2_shape_param_base")
@@ -1047,7 +1260,8 @@ def test_l2_011_shape_params(canvas_page: Page, tmp_path):
         for label, value in [("Corner", 100), ("Opacity", 30)]:
             lab, sec = find_section(page, label)
             lab.click()
-            page.wait_for_timeout(500)
+            # 展开生效信号：分区内滑杆可见
+            wait_section_expanded(page, sec)
             rngs = sec.locator('input[type="range"]')
             n = rngs.count()
             assert n >= 1, f"{label} 展开后未找到滑杆"
@@ -1055,44 +1269,59 @@ def test_l2_011_shape_params(canvas_page: Page, tmp_path):
             changed_values = []
             for i in range(n):
                 changed_values.append(set_range(rngs.nth(i), value))
-            page.wait_for_timeout(1300)
+            # 改值生效信号：画布相对 base 产生像素变化
+            diff = wait_canvas_change(page, bb, base, min_pct=0.0, timeout_ms=6000)
             cur = str(tmp_path / f"_shape_{label}.png")
             page.screenshot(path=cur, clip=bb)
-            diff = pixel_diff_pct(base, cur)
             assert diff > 0, f"{label} 修改后画布无变化（滑杆数={n}，值={changed_values}）"
             shot(page, f"l2_shape_param_{label.lower()}")
             lab.click()
-            page.wait_for_timeout(250)
+            # 收起生效信号：分区内不再有可见控件
+            wait_section_collapsed(page, sec)
     with allure.step("开启 Border 并断言画布变化"):
         lab, sec = find_section(page, "Border")
         lab.click()
-        page.wait_for_timeout(400)
+        # 展开生效信号：分区内控件可见
+        wait_section_expanded(page, sec)
         section_switch_on(page, sec)
         rng = sec.locator('input[type="range"]')
         if rng.count():
             set_range(rng.first, 20)
-        page.wait_for_timeout(400)
+        # 改值/开关生效信号：画布相对 base 产生像素变化
+        diff = wait_canvas_change(page, bb, base, min_pct=0.0, timeout_ms=6000)
         cur = str(tmp_path / "_shape_border.png")
         page.screenshot(path=cur, clip=bb)
-        assert pixel_diff_pct(base, cur) > 0, "Border 修改后画布无变化"
+        assert diff > 0, "Border 修改后画布无变化"
         shot(page, "l2_shape_param_border")
         lab.click()
-        page.wait_for_timeout(250)
+        # 收起生效信号：分区内不再有可见控件
+        wait_section_collapsed(page, sec)
     with allure.step("开启 Shadow 并断言画布变化"):
         lab, sec = find_section(page, "Shadow")
         lab.click()
-        page.wait_for_timeout(400)
+        # 展开生效信号：分区内控件可见
+        wait_section_expanded(page, sec)
         section_switch_on(page, sec)
-        page.wait_for_timeout(400)
+        # 开关生效信号：画布相对 base 产生像素变化
+        diff = wait_canvas_change(page, bb, base, min_pct=0.0, timeout_ms=6000)
         cur = str(tmp_path / "_shape_shadow.png")
         page.screenshot(path=cur, clip=bb)
-        assert pixel_diff_pct(base, cur) > 0, "Shadow 开启后画布无变化"
+        assert diff > 0, "Shadow 开启后画布无变化"
         shot(page, "l2_shape_param_shadow")
     with allure.step("展开 Reflection 并断言四个控件存在"):
         lab, sec = find_section(page, "Reflection")
         lab.click()
-        page.wait_for_timeout(400)
+        # 展开生效信号：分区内控件可见
+        wait_section_expanded(page, sec)
         section_switch_on(page, sec)
+        # 开启生效信号：出现可见滑杆（四个 Reflection 控件之一）
+        poll_until(
+            page,
+            lambda: any(sec.locator('input[type="range"]').nth(i).is_visible()
+                        for i in range(sec.locator('input[type="range"]').count())),
+            timeout=6000,
+            interval=200,
+        )
         assert sec.locator('input[type="range"]').count() >= 1
         shot(page, "l2_shape_param_reflection")
 
@@ -1106,11 +1335,13 @@ def test_l2_012_shape_fill_image(canvas_page: Page):
     page = canvas_page
     open_insert(page)
     page.locator('img[src$="thumb_shape_style_square.webp"]').first.click()
-    page.wait_for_timeout(2500)
+    # 形状新增生效信号：出现图层选择框缩放锚点
+    poll_until(page, lambda: page.locator("span.scale-point").count() >= 4, timeout=20000, interval=300)
     with allure.step("展开 Fill 并点击 Image 打开素材库"):
         fill = page.get_by_text("Fill", exact=True).last
         fill.click()
-        page.wait_for_timeout(600)
+        # Fill 展开生效信号：右侧面板 Image 按钮可见
+        poll_until(page, lambda: _right_panel_button_visible(page, "Image"), timeout=6000, interval=200)
         img_btns = page.get_by_role("button", name="Image", exact=True)
         target = None
         for i in range(img_btns.count()):
@@ -1120,14 +1351,14 @@ def test_l2_012_shape_fill_image(canvas_page: Page):
                 break
         assert target is not None, "Fill 下未找到右侧面板的 Image 按钮"
         target.click()
-        page.wait_for_timeout(1200)
+        # 素材库打开生效信号：出现可见 Upload 入口
+        pw_expect(page.get_by_text("Upload", exact=True).last).to_be_visible(timeout=15000)
     with allure.step("在素材库点击 Upload 并上传 test_images/有人脸.JPG"):
         up = page.get_by_text("Upload", exact=True).last
-        pw_expect(up).to_be_visible(timeout=15000)
         with page.expect_file_chooser(timeout=30000) as fc:
             up.click()
         fc.value.set_files(IMG_FACE)
-        page.wait_for_timeout(4000)
+        poll_until(page, lambda: page.locator("span.scale-point").count() >= 4, timeout=20000, interval=300)
     with allure.step("断言画布仍可见且填充已应用"):
         assert page.locator("canvas").count() >= 1
     shot(page, "l2_shape_fill_image")
@@ -1143,7 +1374,8 @@ def test_l2_013_line_params(canvas_page: Page, tmp_path):
     page = canvas_page
     open_insert(page)
     page.locator('img[src$="edit_bottom_icon_line1.webp"]').first.click()
-    page.wait_for_timeout(2500)
+    # Line 新增生效信号：出现图层选择框缩放锚点
+    poll_until(page, lambda: page.locator("span.scale-point").count() >= 4, timeout=20000, interval=300)
     bb = canvas_box(page)
     base = str(tmp_path / "_line_base.png")
     page.screenshot(path=base, clip=bb)
@@ -1151,49 +1383,62 @@ def test_l2_013_line_params(canvas_page: Page, tmp_path):
     with allure.step("修改 Weight 并断言画布变化"):
         lab, sec = find_section(page, "Weight")
         lab.click()
-        page.wait_for_timeout(400)
+        # 展开生效信号：分区内滑杆可见
+        wait_section_expanded(page, sec)
         set_range(sec.locator('input[type="range"]').first, 70)
+        # 改值生效信号：画布相对 base 产生像素变化
+        diff = wait_canvas_change(page, bb, base, min_pct=0.0, timeout_ms=6000)
         cur = str(tmp_path / "_line_weight.png")
         page.screenshot(path=cur, clip=bb)
-        assert pixel_diff_pct(base, cur) > 0, "Weight 修改后画布无变化"
+        assert diff > 0, "Weight 修改后画布无变化"
         shot(page, "l2_line_param_weight")
         lab.click()
-        page.wait_for_timeout(250)
+        # 收起生效信号：分区内不再有可见控件
+        wait_section_collapsed(page, sec)
     with allure.step("修改 Opacity 并断言画布变化"):
         lab, sec = find_section(page, "Opacity")
         lab.click()
-        page.wait_for_timeout(400)
+        # 展开生效信号：分区内滑杆可见
+        wait_section_expanded(page, sec)
         set_range(sec.locator('input[type="range"]').first, 40)
+        # 改值生效信号：画布相对 base 产生像素变化
+        diff = wait_canvas_change(page, bb, base, min_pct=0.0, timeout_ms=6000)
         cur = str(tmp_path / "_line_opacity.png")
         page.screenshot(path=cur, clip=bb)
-        assert pixel_diff_pct(base, cur) > 0, "Opacity 修改后画布无变化"
+        assert diff > 0, "Opacity 修改后画布无变化"
         shot(page, "l2_line_param_opacity")
         lab.click()
-        page.wait_for_timeout(250)
+        # 收起生效信号：分区内不再有可见控件
+        wait_section_collapsed(page, sec)
     with allure.step("切换 Style / Start / End 选项并断言画布变化"):
         for label in ["Style", "Start", "End"]:
             lab, sec = find_section(page, label)
             lab.click()
-            page.wait_for_timeout(500)
+            # 展开生效信号：分区内出现可见图片磁贴
+            wait_section_content(page, sec)
             tiles = sec.locator("img")
             if tiles.count() >= 2:
                 tiles.nth(1).click()
-                page.wait_for_timeout(600)
+                # 切换生效信号：画布相对 base 产生像素变化
+                diff = wait_canvas_change(page, bb, base, min_pct=0.0, timeout_ms=6000)
                 cur = str(tmp_path / f"_line_{label}.png")
                 page.screenshot(path=cur, clip=bb)
-                assert pixel_diff_pct(base, cur) > 0, f"{label} 切换后画布无变化"
+                assert diff > 0, f"{label} 切换后画布无变化"
                 shot(page, f"l2_line_param_{label.lower()}")
             lab.click()
-            page.wait_for_timeout(250)
+            # 收起生效信号：分区内不再有可见控件
+            wait_section_collapsed(page, sec)
     with allure.step("开启 Outline 并断言画布变化"):
         lab, sec = find_section(page, "Outline")
         lab.click()
-        page.wait_for_timeout(400)
+        # 展开生效信号：分区内控件可见
+        wait_section_expanded(page, sec)
         section_switch_on(page, sec)
-        page.wait_for_timeout(400)
+        # 开启生效信号：画布相对 base 产生像素变化
+        diff = wait_canvas_change(page, bb, base, min_pct=0.0, timeout_ms=6000)
         cur = str(tmp_path / "_line_outline.png")
         page.screenshot(path=cur, clip=bb)
-        assert pixel_diff_pct(base, cur) > 0, "Outline 开启后画布无变化"
+        assert diff > 0, "Outline 开启后画布无变化"
         shot(page, "l2_line_param_outline")
 
 
@@ -1206,7 +1451,7 @@ def test_l2_014_custom_line_apply(canvas_page: Page):
     page = canvas_page
     open_insert(page)
     page.locator('img[src$="edit_line_add.svg"]').first.click()
-    page.wait_for_timeout(2000)
+    # 弹窗打开生效信号：Custom Line Style 弹窗可见
     modal = page.locator('div.fixed:has-text("Custom Line Style")').first
     pw_expect(modal).to_be_visible(timeout=10000)
     with allure.step("选择 Start/Line/End 组合并 Apply"):
@@ -1219,7 +1464,7 @@ def test_l2_014_custom_line_apply(canvas_page: Page):
                 break
         if not applied:
             modal.get_by_text("Apply", exact=True).first.click()
-        page.wait_for_timeout(3000)
+        poll_until(page, lambda: not modal.is_visible(), timeout=20000, interval=300)
     with allure.step("断言弹窗关闭且画布新增图层"):
         assert not modal.is_visible(), "Apply 后弹窗未关闭"
         assert page.locator("canvas").count() >= 1

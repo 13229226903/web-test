@@ -1,0 +1,15 @@
+[2026-09-30 11:20:20] orchestrator start task_id=2026-09-30_zentao_3.2_resolved_regression type=regression_verify scope=zentao 3.2 resolved (creator=liangjinrun) count=44
+[2026-09-30 11:41:30] regression 232349 PASS (create 'Start with Photos' supports multi-select; 2 layers entered canvas + Batch Edit shown)
+[2026-09-30 12:23:34] regression 232407 OBSERVED (Enhance disabled after enhance in same mode; re-enabled when switching mode) - matches zentao resolution 'by design'
+[2026-09-30 12:23:34] regression 232461 PASS (batch crop 1:1 template; width 3000 no longer syncs height)
+[2026-09-30 12:43:56] regression 232453 OBSERVED (VIP batch erase no credit change 10651->10651; credit deduction not verifiable with VIP)
+[2026-09-30 12:43:56] stage1 report written: evidence/regression_stage1.md ; verified 4 (232349/232461 PASS, 232407 by-design, 232453 not-verifiable); remaining 40
+[2026-09-30 18:35:36] regression 231590 PASS (anonymous + 0 credits + Enhance Standard Mode -> GA events: 无限画布页画质增强通用功能点数用完触发注册 / ...触发注册成功 both fired; registration modal shown)
+[2026-09-30 19:30:00] regression 231698 PARTIAL (anonymous 0-credit account + AI Replace purchase flow via Debug skip real purchase; console fired 新画布改图年ultra购买成功it_ai-replace / 无限画布页AI改图功能点数用完触发购买年ultra成功; mobile-specific confirmation still pending)
+[2026-09-30 19:55:00] regression 232593 FAIL (anonymous + Ultra Mode + Enhance on /tools/hd-pic-converter: observed Sign Up to Get Free Credits modal and console events 画质实验_触发登录_hd-pic-converter / 注册弹窗_出现; expected no registration intercept)
+[2026-09-30 19:55:00] regression 232582 FAIL (anonymous + upload on /tools/nose-shape-detector: observed Sign Up to Get Up to 30 Credits registration modal; expected no submit intercept)
+[2026-09-30 20:05:00] regression 232054 PASS (Crop lock enabled: width 1200->1000, height auto-adjusted 1600->1333, ratio retained)
+[2026-09-30 20:05:00] regression 232241 PASS (Erase Smart Auto Mode shows object-recognition categories: Face/Body/Mark/Object/Other; Object category available)
+[2026-09-30 20:05:00] regression 232048 PASS (History click on Remove BG record selects Remove BG result layer, opens Remove Background panel, and displays Refine entry)
+[2026-09-30 20:15:00] regression 232248 PASS (History click on AI Expand record selects related layer and reopens AI Extend/Expand panel)
+[2026-09-30 20:35:00] regression 231698 PASS (mobile iPhone13 390x844; free 0-credit account; AI Replace->purchase with Debug skip real purchase; fired 新画布改图购买出现it_ai-replace and 新画布改图年ultra购买成功it_ai-replace; no old 画布页改图... event observed)

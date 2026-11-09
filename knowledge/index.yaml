@@ -1,5 +1,5 @@
 index_schema_version: '1.0'
-generated_at: '2026-09-21T19:47:55+08:00'
+generated_at: '2026-10-14T15:36:28+08:00'
 knowledge_index:
 - knowledge_id: KB-RULE-0003
   file: shared.yaml
@@ -48,6 +48,123 @@ knowledge_index:
   - member
   - mobile
   - signup
+- knowledge_id: KB-RULE-0007
+  file: shared.yaml
+  subject_key: auth.signup.feature_level_success_event_attribution
+  knowledge_type: business_rule
+  status: active
+  priority: P1
+  confidence: high
+  source_of_truth: knowledge
+  last_verified_at: '2026-09-22'
+  title: 移动端功能级注册成功事件归属于打开注册弹窗的那个功能
+  summary: 移动端由某功能触发的注册弹窗，注册成功后只产出该功能自己的功能级注册成功事件；PC 侧该功能级事件缺失。
+  tags:
+  - anonymous
+  - anonymous_credits_empty
+  - auth
+  - feature_level_event_missing_on_desktop
+  - feature_panel
+  - free
+  - mobile
+  - register_modal_visible
+  - signup
+  - submit
+- knowledge_id: KB-RULE-0011
+  file: modules/canvas.yaml
+  subject_key: canvas.aigc_panel.generating_state_detection
+  knowledge_type: technical_test_rule
+  status: active
+  priority: P0
+  confidence: high
+  source_of_truth: knowledge
+  last_verified_at: '2026-10-14'
+  title: 旧画布 AIGC 生成中的进度提示只画在 canvas 上，判忙需用画面指纹或 Confirm+Cancel 组合态
+  summary: 旧画布 AI Tools 功能面板在生成中会渲染百分比进度环，但该环是**画在 canvas 上**的， DOM 文本里取不到 "NN%"；且进度层会吞掉页面点击（包括
+    Cancel）。 因此判断"是否仍在生成"不能依赖 DOM 文本，也不能只依赖 Confirm 的可用性—— 同一面板内第二次提交时，面板仍显示上一次结果的状态，Confirm
+    在生成期间保持可用。
+  tags:
+  - ai_tools
+  - canvas
+  - click_submit
+  - click_swallowed
+  - desktop
+  - done
+  - false_done
+  - feature_panel
+  - generating
+  - legacy_canvas
+  - old_canvas
+  - panel_opened
+  - wait
+- knowledge_id: KB-RULE-0012
+  file: modules/canvas.yaml
+  subject_key: canvas.aigc_panel.taskid_console_capture
+  knowledge_type: technical_test_rule
+  status: active
+  priority: P1
+  confidence: high
+  source_of_truth: knowledge
+  last_verified_at: '2026-10-14'
+  title: 旧画布 AIGC 任务记录从 console 抓 handleSubmitTask result 的 taskId，链路区分 efMode / styleId
+  summary: 旧画布 AI Tools 各功能的真实提交证据可从浏览器 console 抓取： `handleSubmitTask result {"resultCode":100,...,"data":{"taskId":"..."}}`
+    提供 taskId； `[AIGC 公告板][开始检查] {funcType, styleId, serverFuncType}` 提供 styleId。
+    legacy picEnhance 链路会额外出现 `efMode`（实测 240900033），ComfyUI 链路则带 `styleId`（形如 pkweb_comfyui_*）。
+  tags:
+  - ai_tools
+  - canvas
+  - capture_console
+  - desktop
+  - feature_panel
+  - legacy_canvas
+  - missing_taskid
+  - old_canvas
+  - record_taskid
+  - task_submitted
+- knowledge_id: KB-RULE-0009
+  file: modules/canvas.yaml
+  subject_key: canvas.feature_panel.primary_submit_required
+  knowledge_type: business_rule
+  status: active
+  priority: P1
+  confidence: high
+  source_of_truth: knowledge
+  last_verified_at: '2026-09-22'
+  title: 工具栏/工具卡只打开功能面板，面板主提交按钮才真正发起任务
+  summary: PC 与移动端一致：点工具栏或工具卡只负责打开功能面板，只有面板内的主提交按钮才会真正发起任务并触发点统计。
+  tags:
+  - anonymous
+  - canvas
+  - click_open
+  - click_submit
+  - desktop
+  - feature_panel
+  - free
+  - member
+  - mobile
+  - no_task_submitted
+  - panel_opened
+  - task_submitted
+- knowledge_id: KB-PITFALL-0010
+  file: shared.yaml
+  subject_key: debug_overlay.result_download.must_move_before_click
+  knowledge_type: technical_test_rule
+  status: active
+  priority: P1
+  confidence: high
+  source_of_truth: knowledge
+  last_verified_at: '2026-09-22'
+  title: 结果弹窗底部下载前必须先移开 DEBUG 浮层
+  summary: '移动端结果弹窗底部下载按钮与右下角 DEBUG 浮层位置重叠；DEBUG 为 position: static，必须改成 fixed 才能移开，否则点击会被遮挡。'
+  tags:
+  - canvas
+  - download
+  - free
+  - member
+  - mobile
+  - overlay_blocks_click
+  - result_generated
+  - result_popup
 - knowledge_id: KB-ENV-0004
   file: shared.yaml
   subject_key: environment.generation.test_then_predeploy
@@ -76,6 +193,50 @@ knowledge_index:
   - submitted
   - subscribe
   - subscription
+- knowledge_id: KB-RULE-0008
+  file: modules/magic-eraser.yaml
+  subject_key: magic_eraser.quick_select.no_object_detected_is_normal
+  knowledge_type: data_constraint
+  status: active
+  priority: P2
+  confidence: high
+  source_of_truth: knowledge
+  last_verified_at: '2026-09-22'
+  title: Magic Eraser Quick Select 未检测到物体属正常结果，需手动涂抹
+  summary: 图片本身没有多余物体时，Magic Eraser 的 Quick Select 会提示未检测到物体并要求手动涂抹，这是正常业务结果，不是缺陷。
+  tags:
+  - ai_delete
+  - anonymous
+  - canvas
+  - detect
+  - free
+  - magic-eraser
+  - mobile
+  - no_object_detected
+  - paint_mask
+  - quick_select_no_detection
+  - submit
+- knowledge_id: KB-RULE-0006
+  file: modules/purchase.yaml
+  subject_key: purchase.checkout.promo_modal_before_iap_modal
+  knowledge_type: business_rule
+  status: active
+  priority: P1
+  confidence: high
+  source_of_truth: knowledge
+  last_verified_at: '2026-09-22'
+  title: 新用户促销弹窗先于内购弹窗出现，两者共用容器靠套餐卡片区分
+  summary: 新用户 24h 内触发购买时，促销弹窗先出现；关闭后才弹出真正的内购弹窗，两者共用同一弹窗容器，只能靠套餐卡片数量区分。
+  tags:
+  - anonymous
+  - canvas
+  - checkout
+  - desktop
+  - free
+  - iap_modal_visible
+  - mobile
+  - promo_modal_visible
+  - purchase
 - knowledge_id: KB-PITFALL-0005
   file: modules/seo-landing.yaml
   subject_key: seo_landing.gateway_502_entry_not_mounted.retry_once

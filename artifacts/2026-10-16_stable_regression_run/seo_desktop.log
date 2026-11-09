@@ -1,0 +1,45 @@
+.F..F........F.F..F.....                                                 [100%]
+================================== FAILURES ===================================
+E   AssertionError: L2-002 �ϴ��󻭲�����ӦΪ��ɫ rgb(47,156,238)������ 10% ������ɫռ��>=35%����ʵ�� ratio=0.000 region={'x': 332, 'y': 307, 'w': 409, 'h': 546}
+    assert 0.0 >= 0.35
+D:\Test\web-test\tests\test_seo_main_upload_interactions_v1.py:146: AssertionError: L2-002 �ϴ��󻭲�����ӦΪ��ɫ rgb(47,156,238)������ 10% ������ɫռ��>=35%����ʵ�� ratio=0.000 region={'x': 332, 'y': 307, 'w': 409, 'h': 546}
+E   AssertionError: Page URL expected to be 're.compile('/tools/id-photo-edit\\?pid=[0-9a-f\\-]+#?$')'
+    Actual value: http://10.17.1.66:3102/tools/cv-photo-editor 
+    Call log:
+      - Expect "to_have_url" with timeout 120000ms
+        122 �� unexpected value "http://10.17.1.66:3102/tools/cv-photo-editor"
+D:\Test\web-test\tests\test_seo_main_upload_interactions_v1.py:275: AssertionError: Page URL expected to be 're.compile('/tools/id-photo-edit\\?pid=[0-9a-f\\-]+#?$')'
+E   AssertionError: Page URL expected to be 're.compile('/create/edit\\?pid=[0-9a-f\\-]+#?$')'
+    Actual value: http://10.17.1.66:3102/tools/phone-wallpaper-maker 
+    Call log:
+      - Expect "to_have_url" with timeout 120000ms
+        122 �� unexpected value "http://10.17.1.66:3102/tools/phone-wallpaper-maker"
+D:\Test\web-test\tests\test_seo_main_upload_interactions_v1.py:275: AssertionError: Page URL expected to be 're.compile('/create/edit\\?pid=[0-9a-f\\-]+#?$')'
+E   AssertionError: Locator expected to contain text 'Brightness'
+    Actual value: 10708User8JYView ProfileMy ProjectMy OrderContact usNotification99%Thinking...1200 x 1600Chat to editEnhanceBackgroundPortrait EditorEraseAI ReplaceAI Clothes ChangerHistoryRemove BGExpandAdjustCropToolboxDelete34%Hold Right-click or Space + Left-click to drag the canvasInspirationRemove BGAI Erase0/30001/9Nano Banana 2 Lite10DEBUG
+     
+    Call log:
+      - Expect "to_contain_text" with timeout 120000ms
+      - waiting for locator("body")
+        122 �� locator resolved to <body>��</body>
+            - unexpected value "10708User8JYView ProfileMy ProjectMy OrderContact usNotification99%Thinking...1200 x 1600Chat to editEnhanceBackgroundPortrait EditorEraseAI ReplaceAI Clothes ChangerHistoryRemove BGExpandAdjustCropToolboxDelete34%Hold Right-click or Space + Left-click to drag the canvasInspirationRemove BGAI Erase0/30001/9Nano Banana 2 Lite10DEBUG
+    "
+D:\Test\web-test\tests\test_seo_main_upload_interactions_v1.py:282: AssertionError: Locator expected to contain text 'Brightness'
+E   AssertionError: Locator expected to contain text 'AI Background'
+    Actual value: 10708User8JYView ProfileMy ProjectMy OrderContact usNotification99%Thinking...1200 x 1600Chat to editEnhanceBackgroundPortrait EditorEraseAI ReplaceAI Clothes ChangerHistoryRemove BGExpandAdjustCropToolboxDelete34%Hold Right-click or Space + Left-click to drag the canvasInspirationRemove BGAI Erase0/30001/9Nano Banana 2 Lite10DEBUG
+     
+    Call log:
+      - Expect "to_contain_text" with timeout 120000ms
+      - waiting for locator("body")
+        122 �� locator resolved to <body>��</body>
+            - unexpected value "10708User8JYView ProfileMy ProjectMy OrderContact usNotification99%Thinking...1200 x 1600Chat to editEnhanceBackgroundPortrait EditorEraseAI ReplaceAI Clothes ChangerHistoryRemove BGExpandAdjustCropToolboxDelete34%Hold Right-click or Space + Left-click to drag the canvasInspirationRemove BGAI Erase0/30001/9Nano Banana 2 Lite10DEBUG
+    "
+D:\Test\web-test\tests\test_seo_main_upload_interactions_v1.py:282: AssertionError: Locator expected to contain text 'AI Background'
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_002[chromium]
+FAILED tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_005[chromium]
+FAILED tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_014[chromium]
+FAILED tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_016[chromium]
+FAILED tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_019[chromium]
+5 failed, 19 passed in 1512.33s (0:25:12)

@@ -1,0 +1,61 @@
+module:
+  name: magic-eraser
+  display_name: Magic Eraser（消除）
+knowledge_slices:
+- schema_version: '1.0'
+  knowledge_id: KB-RULE-0008
+  knowledge_type: data_constraint
+  title: Magic Eraser Quick Select 未检测到物体属正常结果，需手动涂抹
+  subject_key: magic_eraser.quick_select.no_object_detected_is_normal
+  status: active
+  priority: P2
+  confidence: high
+  summary: 图片本身没有多余物体时，Magic Eraser 的 Quick Select 会提示未检测到物体并要求手动涂抹，这是正常业务结果，不是缺陷。
+  rule:
+    given:
+    - 图片中没有需要消除的多余物体
+    - Magic Eraser 处于 AI Delete 模式
+    when:
+    - 调用 Quick Select 自动检测
+    then:
+    - 页面提示未检测到人/物体，请手动涂抹
+    - 不出现 All / Confirm 自动检测结果
+    - 后续路径改为手动涂抹蒙版再提交
+    exceptions:
+    - 移动端走 Quick Select 路径，PC 走 All 路径，两端结论不同故不合并为一套断言
+  source_refs:
+  - ref: artifacts/2026-09-17_mobile_canvas_stats_first10/exploration_report.md
+    type: task_artifact
+    note: 探索报告 §3 状态表与 magic-eraser 候选说明
+  - ref: page_map/pokecut/mobile_canvas_v11.yaml
+    type: page_map
+    note: mobile_magic_eraser_ai_delete_mask 状态与按钮
+  retrieval_tags:
+    module:
+    - magic-eraser
+    page:
+    - canvas
+    entry:
+    - ai_delete
+    state:
+    - quick_select_no_detection
+    action:
+    - detect
+    - paint_mask
+    - submit
+    account:
+    - free
+    - anonymous
+    error:
+    - no_object_detected
+    platform:
+    - mobile
+  created_at: '2026-09-22T11:05:00+08:00'
+  updated_at: '2026-09-22T11:05:00+08:00'
+  source_of_truth: knowledge
+  evidence:
+  - kind: playwright_mcp_recheck
+    ref: artifacts/2026-09-17_mobile_canvas_stats_first10/shots/backfill_mobile_ai_delete_mask_ready_20260922.png
+    verified_at: '2026-09-22'
+    result: confirmed（提示需手动涂抹，涂抹后 Remove 才可用）
+  last_verified_at: '2026-09-22'

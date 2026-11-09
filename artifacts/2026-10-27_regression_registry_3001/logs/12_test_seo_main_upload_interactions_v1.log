@@ -1,0 +1,18 @@
+....F...................                                                 [100%]
+================================== FAILURES ===================================
+____________ TestL2SeoMainUploadInteractions.test_l2_005[chromium] ____________
+tests\test_seo_main_upload_interactions_v1.py:390: in test_l2_005
+    _run_case(session_page, base_url, CASES["L2-005"])
+tests\test_seo_main_upload_interactions_v1.py:326: in _run_case
+    _wait_for_stable_state(page, case)
+tests\test_seo_main_upload_interactions_v1.py:294: in _wait_for_stable_state
+    expect(page).to_have_url(re.compile(url_pattern), timeout=timeout)
+E   AssertionError: Page URL expected to be 're.compile('/tools/id-photo-edit\\?pid=[0-9a-f\\-]+#?$')'
+E   Actual value: http://10.17.1.66:3001/tools/cv-photo-editor 
+E   Call log:
+E     - Expect "to_have_url" with timeout 120000ms
+E       122 �� unexpected value "http://10.17.1.66:3001/tools/cv-photo-editor"
+----- Generated html report: file:///D:/Test/web-test/reports/report.html -----
+=========================== short test summary info ===========================
+FAILED tests/test_seo_main_upload_interactions_v1.py::TestL2SeoMainUploadInteractions::test_l2_005[chromium]
+1 failed, 23 passed in 697.78s (0:11:37)

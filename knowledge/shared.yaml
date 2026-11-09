@@ -172,3 +172,127 @@ knowledge_slices:
     verified_at: '2026-09-21'
     result: confirmed
   last_verified_at: '2026-09-21'
+- schema_version: '1.0'
+  knowledge_id: KB-RULE-0007
+  knowledge_type: business_rule
+  title: 移动端功能级注册成功事件归属于打开注册弹窗的那个功能
+  subject_key: auth.signup.feature_level_success_event_attribution
+  status: active
+  priority: P1
+  confidence: high
+  summary: 移动端由某功能触发的注册弹窗，注册成功后只产出该功能自己的功能级注册成功事件；PC 侧该功能级事件缺失。
+  rule:
+    given:
+    - 移动端匿名或 0 credits 用户
+    - 用户在某个功能面板提交任务触发注册弹窗
+    when:
+    - 用户完成注册
+    then:
+    - 功能级注册事件与注册成功事件都带「打开弹窗的那个功能」这一归属
+    - 不同功能各自产出自己的功能级事件，不会互相串号
+    exceptions:
+    - PC 侧当前只有通用注册事件（注册弹窗_出现 / 注册弹窗_注册成功 + 登录成功_邮箱登录方式），功能级事件缺失，已记为 known_bug
+    - 移动端结论不适用于 PC，故本切片 platform 仅记 mobile
+  source_refs:
+  - ref: artifacts/2026-09-17_mobile_canvas_stats_first10/exploration_report.md
+    type: task_artifact
+    note: 探索报告第 4 节 Bug A / §3 状态表
+  - ref: artifacts/2026-09-17_mobile_canvas_stats_first10/evidence/automation_handoff.yaml
+    type: task_artifact
+    note: M-CORE-01 / M-CORE-02 与 P-INF-01 known_bug 契约
+  retrieval_tags:
+    module:
+    - auth
+    page:
+    - mobile
+    entry:
+    - signup
+    - feature_panel
+    state:
+    - anonymous_credits_empty
+    - register_modal_visible
+    action:
+    - signup
+    - submit
+    account:
+    - anonymous
+    - free
+    error:
+    - feature_level_event_missing_on_desktop
+    platform:
+    - mobile
+  created_at: '2026-09-22T11:05:00+08:00'
+  updated_at: '2026-09-22T11:05:00+08:00'
+  source_of_truth: knowledge
+  evidence:
+  - kind: playwright_mcp_evidence
+    ref: artifacts/2026-09-17_mobile_canvas_stats_first10/evidence/console_credits_register_success.log
+    verified_at: '2026-09-22'
+    result: confirmed（画质增强ultra 功能级注册/注册成功成对出现）
+  - kind: playwright_mcp_evidence
+    ref: artifacts/2026-09-17_mobile_canvas_stats_first10/evidence/console_credits_register_extra_features.log
+    verified_at: '2026-09-22'
+    result: confirmed（AI扩图 功能级注册/注册成功成对出现）
+  - kind: playwright_mcp_evidence
+    ref: artifacts/2026-09-17_mobile_canvas_stats_first10/evidence/console_stat12_pc_enhance_ultra_register_debug.log
+    verified_at: '2026-09-22'
+    result: PC 反例：仅 注册弹窗_出现，无功能级事件
+  last_verified_at: '2026-09-22'
+- schema_version: '1.0'
+  knowledge_id: KB-PITFALL-0010
+  knowledge_type: technical_test_rule
+  title: 结果弹窗底部下载前必须先移开 DEBUG 浮层
+  subject_key: debug_overlay.result_download.must_move_before_click
+  status: active
+  priority: P1
+  confidence: high
+  summary: '移动端结果弹窗底部下载按钮与右下角 DEBUG 浮层位置重叠；DEBUG 为 position: static，必须改成 fixed 才能移开，否则点击会被遮挡。'
+  rule:
+    given:
+    - 移动端结果图已生成，footer 出现底部下载按钮
+    when:
+    - 准备点击结果弹窗底部下载按钮
+    then:
+    - 先把 DEBUG 浮层移动或隐藏（需把 position 改为 fixed 才能生效）
+    - 再用「位于视口下半部」区分底部下载按钮与顶部工具栏同图标按钮
+    exceptions:
+    - 仅移动端存在该重叠；PC 结果下载按钮 button[class*='download-left'] 不受影响
+    - 不得用 force=True 绕过遮挡，可能点到错误元素
+  source_refs:
+  - ref: artifacts/2026-09-17_mobile_canvas_stats_first10/exploration_report.md
+    type: task_artifact
+    note: 探索报告 §3 状态表与 §7 待确认项
+  - ref: page_map/pokecut/mobile_canvas_v11.yaml
+    type: page_map
+    note: mobile_result_popup_download 状态（含位置区分说明）
+  retrieval_tags:
+    module:
+    - canvas
+    page:
+    - canvas
+    entry:
+    - result_popup
+    state:
+    - result_generated
+    action:
+    - download
+    account:
+    - member
+    - free
+    error:
+    - overlay_blocks_click
+    platform:
+    - mobile
+  created_at: '2026-09-22T11:05:00+08:00'
+  updated_at: '2026-09-22T11:05:00+08:00'
+  source_of_truth: knowledge
+  evidence:
+  - kind: playwright_mcp_recheck
+    ref: artifacts/2026-09-17_mobile_canvas_stats_first10/shots/backfill_mobile_result_footer_download_blocked_by_debug_20260922.png
+    verified_at: '2026-09-22'
+    result: confirmed（浮层与下载按钮 rect 重叠）
+  - kind: playwright_mcp_evidence
+    ref: artifacts/2026-09-17_mobile_canvas_stats_first10/evidence/mobile_stat11_enhance_popup_download_after_full_debug.log
+    verified_at: '2026-09-22'
+    result: confirmed（移开后点击成功并触发弹窗下载统计 send=1/debug=1）
+  last_verified_at: '2026-09-22'
